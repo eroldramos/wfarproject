@@ -1,3 +1,4 @@
+from statistics import mode
 from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -17,7 +18,7 @@ class User(AbstractUser):
 
 # Faculty
 class Faculty(models.Model):
-    user_type = models.PositiveSmallIntegerField(default=1)
+    user_type = models.PositiveSmallIntegerField(default=1) # determines if normal faculty, area chair or dept head
     emp_no = models.CharField(max_length=25, unique=True)
     username = models.CharField(max_length=200, unique=True)
     email_address = models.CharField(max_length=100, unique=True)
@@ -42,3 +43,19 @@ class Faculty(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)
+    assignee_id = models.ForeignKey('self', on_delete=models.CASCADE) #foreign key, area chair or dept head id
+
+# Semester
+class Semester(models.Model):
+    label = models.CharField(200)
+    school_year = models.CharField(200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True)
+
+# Week
+class Week(models.Model):
+    label = models.CharField(200)
+    start_date = models.DateTimeField
+    end_date = models.DateTimeField
+    semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE) # fk for semester
