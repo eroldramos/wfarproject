@@ -68,7 +68,9 @@ class WFAR(models.Model):
     status = models.PositiveSmallIntegerField(default=1) # 1 - not checked, 2 - ok, 3 - with revisions
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE) #fk for faculty
+    checked_at = models.DateTimeField(null=True)
+    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
+    faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
 
 # WFAR Entry
 class WFAR_Entry(models.Model):
@@ -77,6 +79,9 @@ class WFAR_Entry(models.Model):
     course_year_section = models.CharField(max_length=200)
     no_of_attendees = models.PositiveIntegerField()
     recording_url = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True)
     wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE)
 
 # WFAR Entry Attachment
