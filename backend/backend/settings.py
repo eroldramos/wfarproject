@@ -38,10 +38,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "corsheaders",
+    # Installed Libraries
+    'corsheaders',
     'rest_framework',
 
+    # Installed App per feature
+    'core.apps.CoreConfig',
+    'Dashboard.apps.DashboardConfig',
+    'ManageFaculties.apps.ManagefacultiesConfig',
+    'ManageSemester.apps.ManagesemesterConfig',
+    'MyWfar.apps.MywfarConfig',
+    'Notifications.apps.NotificationsConfig',
+    'PendingAccounts.apps.PendingaccountsConfig',
+    'ReportGeneration.apps.ReportgenerationConfig',
+    'UserAccount.apps.UseraccountConfig',
+    'UserAuthentications.apps.UserauthenticationsConfig',
+    'WfarSubmissions.apps.WfarsubmissionsConfig'
+
 ]
+
+AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
