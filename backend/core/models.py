@@ -9,11 +9,11 @@ class Faculty(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
     user_type = models.PositiveSmallIntegerField(default=1) # determines if normal faculty, area chair or dept head
     emp_no = models.CharField(max_length=25, unique=True)
-    fname = models.CharField(max_length=200)
-    mname = models.CharField(max_length=200, null=True)
-    lname = models.CharField(max_length=200)
-    is_activated = models.BooleanField(null=True, blank=True, default=False)
-    ext_name = models.CharField(max_length=200, null=True)
+    # fname = models.CharField(max_length=200) remove na natin kasi may first_name naman kay abstract user
+    middle_name = models.CharField(max_length=200, null=True) # edited column title
+    # lname = models.CharField(max_length=200) remove na natin kasi may last_name naman kay abstract user
+    is_activated = models.BooleanField(null=True, blank=True, default=False) # pwede na natin 'to i-remove kasi may deleted_at naman
+    extension_name = models.CharField(max_length=200, null=True) # edited column title
     birthdate = models.DateField(null=True) # added null=true, error upon createsuperuser, can be set new value upon registration 
     civil_status = models.PositiveSmallIntegerField(default=0) # added default=0, error upon createsuperuser due to can't be null
     sex = models.PositiveSmallIntegerField(default=0)
@@ -33,7 +33,7 @@ class Faculty(AbstractUser):
     assignee_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True) #foreign key, area chair or dept head id
     # added null=True for assignee_id to avoid can't be null error
     class Meta:
-        ordering = ['last_name']
+        ordering = ['last_name'] #para saan pala 'to?
 
 
     def __str__(self):
