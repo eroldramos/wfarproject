@@ -1,0 +1,39 @@
+from re import T
+from rest_framework import serializers
+from core.models import Faculty
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from datetime import datetime
+
+class FacultySerializer(serializers.ModelSerializer):
+    isAdmin = serializers.SerializerMethodField(read_only=True)
+    userType = serializers.SerializerMethodField(read_only=True)
+    name = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType']
+
+    def get_isAdmin(self, obj):   
+        return obj.is_staff
+
+    def get_userType(self, obj):
+        return obj.user_type
+    def get_name(self, obj):
+        return f"{obj.fname} {obj.lname}"
+
+class FacultySerializerWithToken(FacultySerializer):
+    token =  serializers.SerializerMethodField(read_only=True)
+    expirationDate =  serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'token', 'expirationDate']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)
+    def get_expirationDate(self, obj):
+        expirationDate = AccessToken.for_user(obj)
+        return str(datetime.now() + expirationDate.lifetime)
+
+
+
+    
