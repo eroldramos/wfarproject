@@ -1,13 +1,37 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-class User(AbstractUser):
-    email = models.EmailField(unique = True, null=True)
-    type = models.IntegerField(null=True, blank=True, default=1)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_activated = models.BooleanField(null=True, blank=True, default=False)
 
+class Faculty(AbstractUser):
+    # Mayroong default email yung AbstractUser, have to call it again here para ioverride para don sa unique=True
+    # Mayroon narin username password
+    # Bale pag ni call ung field user.password, kahit di man kita dito ung password field
+    email = models.EmailField(max_length=100, unique=True)
+    user_type = models.PositiveSmallIntegerField(default=1) # determines if normal faculty, area chair or dept head
+    emp_no = models.CharField(max_length=25, unique=True)
+    fname = models.CharField(max_length=200)
+    mname = models.CharField(max_length=200, null=True)
+    lname = models.CharField(max_length=200)
+    is_activated = models.BooleanField(null=True, blank=True, default=False)
+    ext_name = models.CharField(max_length=200, null=True)
+    birthdate = models.DateField(null=True) # added null=true, error upon createsuperuser, can be set new value upon registration 
+    civil_status = models.PositiveSmallIntegerField(default=0) # added default=0, error upon createsuperuser due to can't be null
+    sex = models.PositiveSmallIntegerField(default=0)
+    house_no = models.PositiveIntegerField(default=0)
+    street = models.CharField(max_length=200)
+    subdivision = models.CharField(max_length=200, null=True)
+    barangay = models.CharField(max_length=200)
+    municipality = models.CharField(max_length=200)
+    province = models.CharField(max_length=200)
+    zip_code = models.PositiveIntegerField(default=0)
+    contact_no = models.CharField(max_length=20, unique=True)
+    specialization = models.CharField(max_length=200, null=True)
+    program = models.CharField(max_length=200, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True)
+    assignee_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True) #foreign key, area chair or dept head id
+    # added null=True for assignee_id to avoid can't be null error
     class Meta:
         ordering = ['last_name']
 
@@ -15,38 +39,41 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.email}"
 
+# class AssignFaculty(models.Model):
+#     pass
+
 # Kung saka-sakali na si Faculty is User na lang din, palipat na lang nung fields ni Faculty kay user hehe.
 # Tapos, lahat ng Faculty na foreign key pakigawa na lang na User 
 # faculty_id => user_id
 
 # Faculty
-class Faculty(models.Model):
-    user_type = models.PositiveSmallIntegerField(default=1) # determines if normal faculty, area chair or dept head
-    emp_no = models.CharField(max_length=25, unique=True)
-    username = models.CharField(max_length=200, unique=True)
-    email_address = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
-    fname = models.CharField(max_length=200)
-    mname = models.CharField(max_length=200, null=True)
-    lname = models.CharField(max_length=200)
-    ext_name = models.CharField(max_length=200, null=True)
-    birthdate = models.DateField()
-    civil_status = models.PositiveSmallIntegerField()
-    sex = models.PositiveSmallIntegerField()
-    house_no = models.PositiveIntegerField()
-    street = models.CharField(max_length=200)
-    subdivision = models.CharField(max_length=200, null=True)
-    barangay = models.CharField(max_length=200)
-    municipality = models.CharField(max_length=200)
-    province = models.CharField(max_length=200)
-    zip_code = models.PositiveIntegerField()
-    contact_no = models.CharField(max_length=20, unique=True)
-    specialization = models.CharField(max_length=200, null=True)
-    program = models.CharField(max_length=200, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(null=True)
-    assignee_id = models.ForeignKey('self', on_delete=models.CASCADE) #foreign key, area chair or dept head id
+# class Faculty(models.Model):
+#     user_type = models.PositiveSmallIntegerField(default=1) # determines if normal faculty, area chair or dept head
+#     emp_no = models.CharField(max_length=25, unique=True)
+#     username = models.CharField(max_length=200, unique=True)
+#     email_address = models.CharField(max_length=100, unique=True)
+#     password = models.CharField(max_length=100)
+#     fname = models.CharField(max_length=200)
+#     mname = models.CharField(max_length=200, null=True)
+#     lname = models.CharField(max_length=200)
+#     ext_name = models.CharField(max_length=200, null=True)
+#     birthdate = models.DateField()
+#     civil_status = models.PositiveSmallIntegerField()
+#     sex = models.PositiveSmallIntegerField()
+#     house_no = models.PositiveIntegerField()
+#     street = models.CharField(max_length=200)
+#     subdivision = models.CharField(max_length=200, null=True)
+#     barangay = models.CharField(max_length=200)
+#     municipality = models.CharField(max_length=200)
+#     province = models.CharField(max_length=200)
+#     zip_code = models.PositiveIntegerField()
+#     contact_no = models.CharField(max_length=20, unique=True)
+#     specialization = models.CharField(max_length=200, null=True)
+#     program = models.CharField(max_length=200, null=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#     deleted_at = models.DateTimeField(null=True)
+#     assignee_id = models.ForeignKey('self', on_delete=models.CASCADE) #foreign key, area chair or dept head id
 
 # Semester
 class Semester(models.Model):
