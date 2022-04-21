@@ -1,6 +1,6 @@
 from re import T
 from rest_framework import serializers
-from core.models import Faculty
+from core.models import Faculty, Semester, Week
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from datetime import datetime
 
@@ -18,7 +18,10 @@ class FacultySerializer(serializers.ModelSerializer):
     def get_userType(self, obj):
         return obj.user_type
     def get_name(self, obj):
-        return f"{obj.fname} {obj.lname}"
+        name = f"{obj.first_name} {obj.last_name}"
+        if name == " ":
+            name = obj.email
+        return name
 
 class FacultySerializerWithToken(FacultySerializer):
     token =  serializers.SerializerMethodField(read_only=True)
@@ -34,6 +37,23 @@ class FacultySerializerWithToken(FacultySerializer):
         expirationDate = AccessToken.for_user(obj)
         return str(datetime.now() + expirationDate.lifetime)
 
+class SemesterSerializerYearAndSem(serializers.ModelSerializer):
+    class Meta:
+        model = Semester
+        fields = ('id', 'label','school_year')
+   
+class WeekSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Week
+        fields = ('id','label', 'start_date', 'end_date' )
 
+class WeeksInASemesterSerializer(serializers.ModelSerializer):
+    weeks = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Semester
+        fields = ('id', 'label', 'school_year', 'weeks')
 
-    
+    def get_weeks(self, obj):
+        weeks = obj.week_set.all()
+        serializer =    WeekSerializer(weeks, many=True)
+        return serializer.data
