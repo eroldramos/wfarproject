@@ -12,7 +12,7 @@ class Faculty(AbstractUser):
     # fname = models.CharField(max_length=200) remove na natin kasi may first_name naman kay abstract user
     middle_name = models.CharField(max_length=200, null=True) # edited column title
     # lname = models.CharField(max_length=200) remove na natin kasi may last_name naman kay abstract user
-    is_activated = models.BooleanField(null=True, blank=True, default=False) # pwede na natin 'to i-remove kasi may deleted_at naman
+    accepted_at = models.DateTimeField(null=True)
     extension_name = models.CharField(max_length=200, null=True) # edited column title
     birthdate = models.DateField(null=True) # added null=true, error upon createsuperuser, can be set new value upon registration 
     civil_status = models.PositiveSmallIntegerField(default=0) # added default=0, error upon createsuperuser due to can't be null
