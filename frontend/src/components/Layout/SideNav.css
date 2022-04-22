@@ -1,0 +1,124 @@
+#side-nav {
+    background: #BE5A40;
+    width: 85px;
+    height: 100vh;
+    position: fixed;
+    user-select: none;
+    display: flex;
+    transition: .3s width ease-in-out;
+    /* justify-content: center; */
+}
+
+ul {
+    list-style-type: none;
+    padding: 30px 20px;
+    /* padding: 30px 0px; */
+    /* padding: 0; */
+    margin: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nav-open, #nav-close {
+    padding: 0px 10px;
+    align-self: center;
+}
+
+#nav-logo {
+    padding: 20px 5px 10px;
+    align-self: center;
+}
+
+.nav-menu-item, .nav-footer-menu-item{ 
+    margin: 18px 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: .125s linear;
+    cursor: pointer;
+    opacity: .5;
+}
+
+
+span {
+    margin-left: 19px;
+    color: #FFFFFF;
+    font-size: .875em;
+}
+
+.nav-menu-item:hover, .nav-footer-menu-item:hover {
+    opacity: 1;
+}
+
+.nav-menu-item--active {
+    opacity: 1;
+    background: rgba(255, 255, 255, .25);
+}
+
+/* nav footer */
+
+.nav-footer {
+    padding: 0px 20px;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.nav-footer-menu-item {
+    display: flex;
+    align-items: center;
+}
+
+.account-profile {
+    align-items: center;
+}
+
+.account-profile-image-container {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    padding: 4px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .5);
+}
+
+.account-profile-image-container > div {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.account-label {
+    display: inline-block;
+    color: #FFFFFF;
+    /* display: none; */
+}
+
+.account-label-name {
+    font-size: .875em;
+    display: block;
+    margin-left: 12px;
+}
+
+.account-label-type {
+    font-size: .75em;
+    display: block;
+    margin-left: 12px;
+}
+
+/* open */
+
+.nav-open-text {
+    display: none;
+}
+
+#nav-close {
+    display: none;
+}

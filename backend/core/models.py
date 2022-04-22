@@ -78,9 +78,9 @@ class Faculty(AbstractUser):
 # Semester
 class Semester(models.Model):
     label = models.CharField(max_length=200)
-    school_year = models.CharField(max_length=200)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    school_year = models.CharField(max_length=200) # naulit lang
+    created_at = models.DateTimeField(auto_now_add=True) # datefield lang
+    updated_at = models.DateTimeField(auto_now=True) #datefield lang
     deleted_at = models.DateTimeField(null=True)
 
 # Week
