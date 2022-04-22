@@ -12,7 +12,7 @@ class Faculty(AbstractUser):
     # fname = models.CharField(max_length=200) remove na natin kasi may first_name naman kay abstract user
     middle_name = models.CharField(max_length=200, null=True) # edited column title
     # lname = models.CharField(max_length=200) remove na natin kasi may last_name naman kay abstract user
-    is_activated = models.BooleanField(null=True, blank=True, default=False) # pwede na natin 'to i-remove kasi may deleted_at naman
+    accepted_at = models.DateTimeField(null=True)
     extension_name = models.CharField(max_length=200, null=True) # edited column title
     birthdate = models.DateField(null=True) # added null=true, error upon createsuperuser, can be set new value upon registration 
     civil_status = models.PositiveSmallIntegerField(default=0) # added default=0, error upon createsuperuser due to can't be null
@@ -98,7 +98,7 @@ class WFAR(models.Model):
     checked_at = models.DateTimeField(null=True)
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
     faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
-
+    week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
 # WFAR Entry
 class WFAR_Entry(models.Model):
     accomplishment_date = models.DateTimeField(default=datetime.now)
