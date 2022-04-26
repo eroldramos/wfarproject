@@ -4,6 +4,18 @@
     position: relative;
 }
 
+.form-control.rg {
+    width: 30%;
+}
+
+.form-control.md {
+    width: 50%;
+}
+
+.form-control.lg {
+    width: 100%;
+}
+
 .form-control input {
     outline: none;
     border: 2px solid transparent;

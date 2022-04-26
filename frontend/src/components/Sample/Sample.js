@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
 import SearchField from "../UI/FormControl/InputField/SearchField";
+import DropdownField from "../UI/FormControl/InputField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
 
 function Sample() {
@@ -17,6 +18,16 @@ function Sample() {
         event.target.value.indexOf("bad") != -1 ? setSampleError("There's a bad keyword.") : setSampleError(null);
     }
 
+    const SAMPLE_OPTIONS = [
+        { label: "Semester 1", value: "1" },
+        { label: "Semester 2", value: "2" },
+        { label: "Semester 3", value: "3" }
+    ];
+
+    const myFunction = () => {
+        alert("You selected something, now configure this on the dropdown field component.");
+    }
+
     return (
         <Fragment>
 
@@ -24,7 +35,7 @@ function Sample() {
                 <legend>Sample TextField components</legend>
 
 
-                <div style={{ display: "flex"}}>
+                <div style={{ display: "flex" }}>
                     <TextField
                         id="sampleText"
                         labelName="Sample Text"
@@ -85,12 +96,12 @@ function Sample() {
                     inputName="link"
                     placeholder="Enter ms teams link"
                     error={null}
-                    size="lg" 
+                    size="lg"
                 />
 
             </fieldset>
 
-            <br/>
+            <br />
 
             <fieldset>
                 <legend>Sample Date-field components</legend>
@@ -118,7 +129,7 @@ function Sample() {
                     <Button
                         label="Save"
                         type="primary" />
-                    
+
                     <hr />
 
                     <Button
@@ -141,7 +152,7 @@ function Sample() {
                     size="lg"
                 />
 
-                
+
 
             </fieldset>
 
@@ -154,9 +165,24 @@ function Sample() {
                     labelName="search"
                     inputName="search"
                     placeholder="Search faculty"
+                    size="rg"
                 />
 
             </fieldset>
+
+            <fieldset>
+                <legend>Sample Dropdown</legend>
+                <DropdownField
+                    id="sample"
+                    name="sample"
+                    onChange={myFunction}
+                    options={SAMPLE_OPTIONS}
+                    size="rg"
+                />
+
+            </fieldset>
+
+            <p id="demo"></p>
 
         </Fragment>
     );
