@@ -2,8 +2,9 @@ import { Fragment, useState } from "react";
 import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
 import SearchField from "../UI/FormControl/InputField/SearchField";
-import DropdownField from "../UI/FormControl/InputField/DropdownField";
+import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
+import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
 
 function Sample() {
 
@@ -26,6 +27,11 @@ function Sample() {
 
     const myFunction = () => {
         alert("You selected something, now configure this on the dropdown field component.");
+    }
+
+
+    const myFunctionCheckbox = () => {
+        alert("Configure this on the checkbox field component.");
     }
 
     return (
@@ -185,7 +191,33 @@ function Sample() {
 
             </fieldset>
 
-            <p id="demo"></p>
+
+            <fieldset>
+                <legend>Sample Dropdown</legend>
+                <DropdownField
+                    id="sample"
+                    name="sample"
+                    labelName="Semesters"
+                    onChange={myFunction}
+                    options={SAMPLE_OPTIONS}
+                    width="rg"
+                    height="th" /*th - table height; fh - form height*/
+                />
+
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Sample Checkbox</legend>
+                <Checkbox
+                    id="sample"
+                    name="sample"
+                    label="Checkbox Sample"
+                    labelName="Sample thing"
+                    onChange={myFunctionCheckbox}
+                />
+
+            </fieldset>
 
         </Fragment>
     );
