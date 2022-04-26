@@ -55,17 +55,22 @@ class FacultyLogin(APIView):
             user = authenticate(request, username = username, password = password)
 
             if user is not None:
-                if not user.is_staff:
+                if not user.is_staff and user.accepted_at:
                     serializer = FacultySerializerWithToken(user, many=False)
                     return Response(serializer.data, status = status.HTTP_200_OK)
+                if not user.is_staff and not user.accepted_at:
+                    message = {
+                        "detail": "Login declined! Please contact your administrator to validate your account."
+                    }
+                    return Response(message, status = status.HTTP_401_UNAUTHORIZED)
                 if user.is_staff:
                     message = {
-                    "detail" : "Invalid login route!"
+                    "detail" : "Access denied!"
                     }
-                    return Response(message ,status = status.HTTP_400_BAD_REQUEST)
+                    return Response(message ,status = status.HTTP_403_FORBIDDEN)
             else:
                 message = {
-                    "detail" : "Invalid credentials"
+                    "detail" : "Invalid credentials."
                 }
                 return Response(message ,status = status.HTTP_400_BAD_REQUEST)
 
@@ -110,12 +115,12 @@ class AdminLogin(APIView):
                     return Response(serializer.data, status = status.HTTP_200_OK)
                 if not user.is_staff:
                     message = {
-                    "detail" : "Invalid login route!"
+                    "detail" : "Access denied!"
                     }
-                    return Response(message ,status = status.HTTP_400_BAD_REQUEST)
+                    return Response(message ,status = status.HTTP_403_FORBIDDEN)
             else:
                 message = {
-                    "detail" : "Invalid credentials"
+                    "detail" : "Invalid credentials."
                 }
                 return Response(message ,status = status.HTTP_400_BAD_REQUEST)
 
@@ -138,28 +143,28 @@ class FacultyRegister(APIView):
 
         if formErrors == 0:
             try:
-                # data = request.data
-                # user = Faculty.objects.create(
-                # first_name = data['first_name'],
-                # last_name = data['last_name'],
-                # middle_name = data['middle_name'],
-                # extension_name = data['extension_name'],
-                # username = data['username'],
-                # email = data['email'],
-                # password = make_password(data['password']),
-                # emp_no = data['emp_no'],
-                # birthdate = data['birthdate'],
-                # civil_status = data['civil_status'],
-                # sex = data['sex'],
-                # house_no = data['house_no'],
-                # street = data['street'],
-                # subdivision = data['subdivision'],
-                # barangay = data['barangay'],
-                # municipality = data['municipality'],
-                # province = data['province'],
-                # zip_code = data['zip_code'],
-                # contact_no = data['contact_no'],
-                # )
+                data = request.data
+                user = Faculty.objects.create(
+                first_name = data['first_name'],
+                last_name = data['last_name'],
+                middle_name = data['middle_name'],
+                extension_name = data['extension_name'],
+                username = data['username'],
+                email = data['email'],
+                password = make_password(data['password']),
+                emp_no = data['emp_no'],
+                birthdate = data['birthdate'],
+                civil_status = data['civil_status'],
+                sex = data['sex'],
+                house_no = data['house_no'],
+                street = data['street'],
+                subdivision = data['subdivision'],
+                barangay = data['barangay'],
+                municipality = data['municipality'],
+                province = data['province'],
+                zip_code = data['zip_code'],
+                contact_no = data['contact_no'],
+                )
             
                 return Response({"detail": "Registered successfully!"}, status=status.HTTP_200_OK)
             except:
