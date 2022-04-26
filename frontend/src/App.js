@@ -1,16 +1,23 @@
+import { useState } from "react";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
-import TextField from "./components/UI/TextField";
+import Sample from "./components/Sample/Sample";
 
 function App() {
+
+  // sample use state for two-way binding
+  const [sampleValue, setSampleValue] = useState('');
+
+  const sampleOnChangeHandlerFunction = (event) => {
+    console.log(event.target.value); // outputs the value on console
+    setSampleValue(event.target.value);
+  }
+
   return (
     <div>
-      <SideNav></SideNav>
+      <SideNav userLevel="1"></SideNav>
       <div id="main">
-        <TextField id="sample" name="Sample" label="Sample Label" placeholder="Enter a text"></TextField>
-        <TextField id="sample" name="Sample" label="Sample Label" placeholder="Enter a text"></TextField>
-        <TextField id="sample" name="Sample" label="Sample Label" placeholder="Enter a text"></TextField>
-        <TextField id="sample" name="Sample" label="Sample Label" placeholder="Enter a text"></TextField>
+        <Sample></Sample>
       </div>
     </div>
   );
