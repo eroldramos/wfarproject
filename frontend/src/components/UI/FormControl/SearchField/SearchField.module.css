@@ -23,7 +23,7 @@
     font-style: normal;
     width: 100%;
     font-weight: 400;
-    font-size: 16px;
+    font-size: .875em;
     line-height: 19px;
     display: flex;
     align-items: center;
@@ -33,10 +33,12 @@
 }
 
 .form-control.filter input {
+    font-size: .875em;
     height: 45px;
 }
 
-.form-control.table input {
+.form-control.form input {
+    font-size: 1em;
     height: 56px;
 }
 

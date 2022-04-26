@@ -45,7 +45,7 @@ const SideNav = props => {
     return (
         <Fragment>
             <div id="side-nav">
-                <ul>
+                <ul class="side-nav-ul">
                     <li id="nav-open" onClick={openNav}>
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.75 16.5H19.25V14.6667H2.75V16.5ZM2.75 11.9167H19.25V10.0833H2.75V11.9167ZM2.75 5.5V7.33333H19.25V5.5H2.75Z" fill="white" />

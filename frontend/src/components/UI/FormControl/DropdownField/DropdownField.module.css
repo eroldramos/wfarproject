@@ -44,7 +44,7 @@
     font-style: normal;
     width: 100%;
     font-weight: 400;
-    font-size: 16px;
+    font-size: .875em;
     line-height: 19px;
     display: flex;
     align-items: center;
@@ -63,6 +63,13 @@
     margin: 0;
 }
 
+.form-control.filter select {
+    font-size: .875em;
+}
+
+.form-control.form select {
+    font-size: 1em;
+}
 
 .form-control select:hover {
     border-color: #CCC;

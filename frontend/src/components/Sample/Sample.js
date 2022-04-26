@@ -5,6 +5,8 @@ import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
+import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
+import Tab from "../UI/Tab/Tab";
 
 function Sample() {
 
@@ -23,6 +25,12 @@ function Sample() {
         { label: "Semester 1", value: "1" },
         { label: "Semester 2", value: "2" },
         { label: "Semester 3", value: "3" }
+    ];
+
+    const SAMPLE_ITEMS = [
+        { label: "Tab 1", id: "1" },
+        { label: "Tab 2", id: "2" },
+        { label: "Tab 3", id: "3" }
     ];
 
     const myFunction = () => {
@@ -204,6 +212,27 @@ function Sample() {
                 />
 
             </fieldset>
+
+
+
+            <fieldset>
+                <legend>Image Cards</legend>
+                <ImageCard
+                    imageUrl="https://mspoweruser.com/wp-content/uploads/2020/09/Microsoft-Teams-meeting-recap.jpg"
+                    onClickAddImage={null}
+                    onRemoveImage={null}>
+                </ImageCard>
+                <ImageCard
+                    imageUrl={null}
+                    onClickAddImage={null}
+                    onRemoveImage={null}>
+                </ImageCard>
+            </fieldset>
+
+            <Tab
+                items={SAMPLE_ITEMS}
+                onClick={null}
+                ></Tab>
 
         </Fragment>
     );
