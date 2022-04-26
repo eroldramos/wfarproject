@@ -32,11 +32,11 @@
     transition: .05s linear;
 }
 
-.form-control.th input {
+.form-control.filter input {
     height: 45px;
 }
 
-.form-control.fh input {
+.form-control.table input {
     height: 56px;
 }
 

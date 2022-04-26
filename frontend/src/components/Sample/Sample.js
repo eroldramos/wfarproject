@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
-import SearchField from "../UI/FormControl/InputField/SearchField";
+import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
@@ -171,8 +171,8 @@ function Sample() {
                     labelName="search"
                     inputName="search"
                     placeholder="Search faculty"
-                    width="rg"
-                    height="th" /*th - table height; fh - form height*/
+                    size="rg"
+                    type="filter"
                 />
 
             </fieldset>
@@ -185,23 +185,8 @@ function Sample() {
                     labelName="Semesters"
                     onChange={myFunction}
                     options={SAMPLE_OPTIONS}
-                    width="rg"
-                    height="th" /*th - table height; fh - form height*/
-                />
-
-            </fieldset>
-
-
-            <fieldset>
-                <legend>Sample Dropdown</legend>
-                <DropdownField
-                    id="sample"
-                    name="sample"
-                    labelName="Semesters"
-                    onChange={myFunction}
-                    options={SAMPLE_OPTIONS}
-                    width="rg"
-                    height="th" /*th - table height; fh - form height*/
+                    size="rg"
+                    type="filter"
                 />
 
             </fieldset>
@@ -215,6 +200,7 @@ function Sample() {
                     label="Checkbox Sample"
                     labelName="Sample thing"
                     onChange={myFunctionCheckbox}
+                    type="filter"
                 />
 
             </fieldset>

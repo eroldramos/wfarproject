@@ -18,9 +18,21 @@
 
 .form-control label {
     font-style: normal;
+    font-weight: 800;
+    font-size: .75em;
+    margin: 15px 0;
+    display: block;
+}
+
+.form-control.filter label {
+    font-weight: 800;
+    font-size: .75em;
+    margin: 5px 0;
+}
+
+.form-control.form label {
     font-weight: 600;
     font-size: 1em;
-    display: block;
     margin: 15px 0;
 }
 
@@ -57,12 +69,12 @@
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
-.form-control.th select {
+.form-control.filter select {
     height: 45px;
     background-position-y: 10px;
 }
 
-.form-control.fh select {
+.form-control.form select {
     height: 56px;
     background-position-y: 16px;
 }
