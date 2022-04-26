@@ -16,11 +16,19 @@
     width: 100%;
 }
 
+.form-control label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1em;
+    display: block;
+    margin: 15px 0;
+}
+
 .form-control select {
     outline: none;
     border: 2px solid transparent;
     border-radius: 5px;
-    height: 56px;
+    height: 45px;
     font-style: normal;
     width: 100%;
     font-weight: 400;
@@ -39,7 +47,7 @@
     background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-position-x: 98%;
-    background-position-y: 15px;
+    background-position-y: 10px;
     margin: 0;
 }
 
@@ -47,6 +55,16 @@
 .form-control select:hover {
     border-color: #CCC;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-control.th select {
+    height: 45px;
+    background-position-y: 10px;
+}
+
+.form-control.fh select {
+    height: 56px;
+    background-position-y: 16px;
 }
 
 @media only screen and (max-width: 768px) {

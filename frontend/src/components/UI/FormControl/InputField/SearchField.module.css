@@ -20,7 +20,6 @@
     outline: none;
     border: 2px solid transparent;
     border-radius: 5px;
-    height: 56px;
     font-style: normal;
     width: 100%;
     font-weight: 400;
@@ -33,6 +32,14 @@
     transition: .05s linear;
 }
 
+.form-control.th input {
+    height: 45px;
+}
+
+.form-control.fh input {
+    height: 56px;
+}
+
 .form-control input:focus {
     background-color: #FFFFFF;
     border: 2px solid #323232;
@@ -40,9 +47,17 @@
 }
 
 .form-control svg {
-    top: 18px;
     left: 15px;
+    top: 27%;
     position: absolute;
+}
+
+.form-control.th svg {
+    top: 27%;
+}
+
+.form-control.fh svg {
+    top: 32.5%;
 }
 
 @media only screen and (max-width: 768px) {

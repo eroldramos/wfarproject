@@ -2,7 +2,8 @@ import styles from './DropdownField.module.css';
 
 const DropdownField = (props) => {
     return (
-        <div class={styles["form-control"] + " " + styles[props.size]}>
+        <div class={styles["form-control"] + " " + styles[props.width] + " " + styles[props.height]}>
+            <label htmlFor={props.id}>{props.labelName}</label>
             <select class={styles["form-control"]} onChange={props.onChange}>
                 {props.options.map(option => {
                     return (

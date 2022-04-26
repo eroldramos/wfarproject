@@ -165,7 +165,8 @@ function Sample() {
                     labelName="search"
                     inputName="search"
                     placeholder="Search faculty"
-                    size="rg"
+                    width="rg"
+                    height="th" /*th - table height; fh - form height*/
                 />
 
             </fieldset>
@@ -175,9 +176,11 @@ function Sample() {
                 <DropdownField
                     id="sample"
                     name="sample"
+                    labelName="Semesters"
                     onChange={myFunction}
                     options={SAMPLE_OPTIONS}
-                    size="rg"
+                    width="rg"
+                    height="th" /*th - table height; fh - form height*/
                 />
 
             </fieldset>
