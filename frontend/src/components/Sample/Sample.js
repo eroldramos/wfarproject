@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
+import SearchField from "../UI/FormControl/InputField/SearchField";
 import Button from "../UI/FormControl/Button/Button";
 
 function Sample() {
@@ -145,6 +146,17 @@ function Sample() {
             </fieldset>
 
 
+            <fieldset>
+                <legend>Sample Searchfield</legend>
+                <SearchField
+                    id="link"
+                    onChange={null}
+                    labelName="search"
+                    inputName="search"
+                    placeholder="Search faculty"
+                />
+
+            </fieldset>
 
         </Fragment>
     );
