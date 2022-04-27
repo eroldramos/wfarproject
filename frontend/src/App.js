@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Routes,Route } from "react-router-dom";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
 import Sample from "./components/Sample/Sample";
+
 
 function App() {
 
@@ -17,7 +19,9 @@ function App() {
     <div>
       <SideNav userLevel="1"></SideNav>
       <div id="main">
-        <Sample></Sample>
+        <Routes>
+          <Route path='/sample' element={<Sample/>}></Route>
+        </Routes>
       </div>
     </div>
   );
