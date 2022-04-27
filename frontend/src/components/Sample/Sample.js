@@ -1,7 +1,12 @@
 import { Fragment, useState } from "react";
 import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
+import SearchField from "../UI/FormControl/SearchField/SearchField";
+import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
+import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
+import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
+import Tab from "../UI/Tab/Tab";
 
 function Sample() {
 
@@ -16,6 +21,27 @@ function Sample() {
         event.target.value.indexOf("bad") != -1 ? setSampleError("There's a bad keyword.") : setSampleError(null);
     }
 
+    const SAMPLE_OPTIONS = [
+        { label: "Semester 1", value: "1" },
+        { label: "Semester 2", value: "2" },
+        { label: "Semester 3", value: "3" }
+    ];
+
+    const SAMPLE_ITEMS = [
+        { label: "Tab 1", id: "1" },
+        { label: "Tab 2", id: "2" },
+        { label: "Tab 3", id: "3" }
+    ];
+
+    const myFunction = () => {
+        alert("You selected something, now configure this on the dropdown field component.");
+    }
+
+
+    const myFunctionCheckbox = () => {
+        alert("Configure this on the checkbox field component.");
+    }
+
     return (
         <Fragment>
 
@@ -23,7 +49,7 @@ function Sample() {
                 <legend>Sample TextField components</legend>
 
 
-                <div style={{ display: "flex"}}>
+                <div style={{ display: "flex" }}>
                     <TextField
                         id="sampleText"
                         labelName="Sample Text"
@@ -84,12 +110,12 @@ function Sample() {
                     inputName="link"
                     placeholder="Enter ms teams link"
                     error={null}
-                    size="lg" 
+                    size="lg"
                 />
 
             </fieldset>
 
-            <br/>
+            <br />
 
             <fieldset>
                 <legend>Sample Date-field components</legend>
@@ -117,7 +143,7 @@ function Sample() {
                     <Button
                         label="Save"
                         type="primary" />
-                    
+
                     <hr />
 
                     <Button
@@ -140,11 +166,73 @@ function Sample() {
                     size="lg"
                 />
 
-                
+
 
             </fieldset>
 
 
+            <fieldset>
+                <legend>Sample Searchfield</legend>
+                <SearchField
+                    id="link"
+                    onChange={null}
+                    labelName="search"
+                    inputName="search"
+                    placeholder="Search faculty"
+                    size="rg"
+                    type="filter"
+                />
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Sample Dropdown</legend>
+                <DropdownField
+                    id="sample"
+                    name="sample"
+                    labelName="Semesters"
+                    onChange={myFunction}
+                    options={SAMPLE_OPTIONS}
+                    size="rg"
+                    type="filter"
+                />
+
+            </fieldset>
+
+
+            <fieldset>
+                <legend>Sample Checkbox</legend>
+                <Checkbox
+                    id="sample"
+                    name="sample"
+                    label="Checkbox Sample"
+                    labelName="Sample thing"
+                    onChange={myFunctionCheckbox}
+                    type="filter"
+                />
+
+            </fieldset>
+
+
+
+            <fieldset>
+                <legend>Image Cards</legend>
+                <ImageCard
+                    imageUrl="https://mspoweruser.com/wp-content/uploads/2020/09/Microsoft-Teams-meeting-recap.jpg"
+                    onClickAddImage={null}
+                    onRemoveImage={null}>
+                </ImageCard>
+                <ImageCard
+                    imageUrl={null}
+                    onClickAddImage={null}
+                    onRemoveImage={null}>
+                </ImageCard>
+            </fieldset>
+
+            <Tab
+                items={SAMPLE_ITEMS}
+                onClick={null}
+                ></Tab>
 
         </Fragment>
     );

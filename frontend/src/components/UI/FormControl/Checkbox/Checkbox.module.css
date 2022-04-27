@@ -1,0 +1,42 @@
+.form-control {
+    width: 320px;
+    margin: 5px 15px;
+    position: relative;
+}
+
+.form-control .title {
+    font-style: normal;
+    font-weight: 800;
+    font-size: .75em;
+    margin: 5px 0;
+    display: block;
+}
+
+.form-control .container {
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.form-control .text {
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+.form-control.filter .title {
+    font-weight: 800;
+    font-size: .75em;
+    margin: 5px 0;
+}
+
+.form-control.form .title {
+    font-weight: 600;
+    font-size: 1em;
+    margin: 15px 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .form-control {
+        width: 100% !important;
+    }
+}

@@ -1,0 +1,12 @@
+.tab {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    border: 2px solid black;
+    list-style-type: none;
+}
+
+.tab li {
+    padding: 5px 35px;
+    border: 2px solid black;
+}

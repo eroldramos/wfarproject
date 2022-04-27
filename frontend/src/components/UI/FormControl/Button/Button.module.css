@@ -28,3 +28,9 @@
 .button.cancel:hover {
     background: #777777;
 }
+
+@media only screen and (max-width: 768px) {
+    .button {
+        width: 100% !important;
+    }
+}

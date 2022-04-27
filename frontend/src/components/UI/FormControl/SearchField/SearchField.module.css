@@ -1,0 +1,69 @@
+.form-control {
+    width: 320px;
+    margin: 5px 15px;
+    position: relative;
+}
+
+.form-control.rg {
+    width: 30%;
+}
+
+.form-control.md {
+    width: 50%;
+}
+
+.form-control.lg {
+    width: 100%;
+}
+
+.form-control input {
+    outline: none;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    font-style: normal;
+    width: 100%;
+    font-weight: 400;
+    font-size: .875em;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 48px;
+    background: #F4F4F4;
+    transition: .05s linear;
+}
+
+.form-control.filter input {
+    font-size: .875em;
+    height: 45px;
+}
+
+.form-control.form input {
+    font-size: 1em;
+    height: 56px;
+}
+
+.form-control input:focus {
+    background-color: #FFFFFF;
+    border: 2px solid #323232;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-control svg {
+    left: 15px;
+    top: 27%;
+    position: absolute;
+}
+
+.form-control.th svg {
+    top: 27%;
+}
+
+.form-control.fh svg {
+    top: 32.5%;
+}
+
+@media only screen and (max-width: 768px) {
+    .form-control {
+        width: 100% !important;
+    }
+}
