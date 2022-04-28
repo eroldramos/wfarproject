@@ -1,19 +1,12 @@
 import { Fragment, useState } from "react";
-import './InputField.css';
-// import styles from './TextField.module.css';
+import styles from './InputField.module.css';
 
-const TextField = (props) => {
-
-    let classes = "form-control ";
-    classes += props.error != null ? "invalid " : "";
-    classes += props.size;
-
-    const inputSize = props.inputSize;
+const InputField = (props) => {
 
     return (
-        <div className={classes}>
+        <div className={styles["form-control"] + " " + styles["invalidClass"] + " " + styles[props.size]}>
             <label htmlFor={props.id}>{props.labelName}</label>
-            <input type="text" 
+            <input type={props.type} 
                 id={props.id}
                 onChange={props.onChange}
                 name={props.inputName} 
@@ -25,4 +18,4 @@ const TextField = (props) => {
     );
 }
 
-export default TextField;
+export default InputField;

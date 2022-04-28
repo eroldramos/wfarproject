@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
-import TextField from "../UI/FormControl/InputField/TextField";
-import DateField from "../UI/FormControl/InputField/DateField";
+import InputField from "../UI/FormControl/InputField/InputField";
+import DateField from "../UI/FormControl/DateField/DateField";
 import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
@@ -50,22 +50,25 @@ function Sample() {
 
 
                 <div style={{ display: "flex" }}>
-                    <TextField
+                    <InputField
                         id="sampleText"
+                        type="text"
                         labelName="Sample Text"
                         inputName="sampleText"
                         placeholder="Enter any sample text"
                         size="rg"
                     />
-                    <TextField
+                    <InputField
                         id="sampleText"
+                        type="text"
                         labelName="Sample Text"
                         inputName="sampleText"
                         placeholder="Enter any sample text"
                         size="rg"
                     />
-                    <TextField
+                    <InputField
                         id="sampleText"
+                        type="number"
                         labelName="Sample Text"
                         inputName="sampleText"
                         placeholder="Enter any sample text"
@@ -77,8 +80,9 @@ function Sample() {
                 {/* How to use the text field component */}
                 {/* Valid textfield - Regular */}
 
-                <TextField
+                <InputField
                     id="name"
+                    type="text"
                     onChange={sampleOnChangeHandlerFunction}
                     labelName="Full Name"
                     inputName="name"
@@ -91,8 +95,9 @@ function Sample() {
 
 
                 {/* Invalid textfield - Medium */}
-                <TextField
+                <InputField
                     id="age"
+                    type="text"
                     onChange={null}
                     labelName="Age"
                     inputName="age"
@@ -103,8 +108,9 @@ function Sample() {
 
 
                 {/* Invalid textfield - Large */}
-                <TextField
+                <InputField
                     id="link"
+                    type="text"
                     onChange={null}
                     labelName="MS Teams Link"
                     inputName="link"
@@ -152,23 +158,6 @@ function Sample() {
 
                 </fieldset>
             </form>
-
-
-            <fieldset>
-                <legend>Sample Textfield with X button</legend>
-                <TextField
-                    id="link"
-                    onChange={null}
-                    labelName="MS Teams Link"
-                    inputName="link"
-                    placeholder="Enter ms teams link"
-                    error={null}
-                    size="lg"
-                />
-
-
-
-            </fieldset>
 
 
             <fieldset>

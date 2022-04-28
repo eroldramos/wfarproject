@@ -20,7 +20,7 @@ function App() {
       <SideNav userLevel="1"></SideNav>
       <div id="main">
         <Routes>
-          <Route path='/sample' element={<Sample/>}></Route>
+          <Route path='/sample' element={<Sample />}></Route>
         </Routes>
       </div>
     </div>
