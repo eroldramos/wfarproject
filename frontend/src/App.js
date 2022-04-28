@@ -19,12 +19,8 @@ function App() {
       <SideNav userLevel="1"></SideNav>
       <div id="main">
         <Routes>
-<<<<<<< HEAD
           <Route path="/sample" element={<Sample />}></Route>
           <Route path="/register" element={<RegisterScreen />}></Route>
-=======
-          <Route path='/sample' element={<Sample />}></Route>
->>>>>>> 3b90cbe2d757c5f9dc23535bddbd3d2e3ae2dd9f
         </Routes>
       </div>
     </div>

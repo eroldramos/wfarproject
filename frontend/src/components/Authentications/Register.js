@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
-import TextField from "../UI/FormControl/InputField/TextField";
-import DateField from "../UI/FormControl/InputField/DateField";
+import InputField from "../UI/FormControl/InputField/InputField";
+import DateField from "../UI/FormControl/DateField/DateField";
 import classes from "./Register.module.css";
 import Button from "../UI/FormControl/Button/Button";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
@@ -135,7 +135,7 @@ const Register = () => {
       <div className={classes.container}>
         <form onSubmit={onRegisterHandler}>
           <h1 style={{ textAlign: "center" }}>Register Page</h1>
-          <TextField
+          <InputField
             id="username"
             name="username"
             labelName="Username"
@@ -148,7 +148,7 @@ const Register = () => {
             }
           />
 
-          <TextField
+          <InputField
             id="email"
             name="email"
             labelName="Email"
@@ -157,7 +157,7 @@ const Register = () => {
             value={email}
             error={null}
           />
-          <TextField
+          <InputField
             id="password"
             name="password"
             labelName="Password"
@@ -167,7 +167,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="confirmPassowrd"
             name="confirmPassword"
             labelName="Confirm Password"
@@ -176,7 +176,7 @@ const Register = () => {
             value={confirmPassword}
             error={null}
           />
-          <TextField
+          <InputField
             id="empNo"
             name="empNo"
             labelName="Employee No."
@@ -185,7 +185,7 @@ const Register = () => {
             value={employeeNo}
             error={null}
           />
-          <TextField
+          <InputField
             id="firstName"
             name="firstName"
             labelName="First Name"
@@ -195,7 +195,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="middleName"
             name="middleName"
             labelName="Middle Name"
@@ -205,7 +205,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="lastName"
             name="lastName"
             labelName="Last Name"
@@ -215,7 +215,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="extensionName"
             name="extensionName"
             labelName="Extension Name"
@@ -235,7 +235,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="civilStatus"
             name="civilStatus"
             labelName="Civil Status"
@@ -255,7 +255,7 @@ const Register = () => {
             type="filter"
           />
 
-          <TextField
+          <InputField
             id="houseNo"
             name="houseNo"
             labelName="House No."
@@ -265,7 +265,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="street"
             name="street"
             labelName="Street"
@@ -275,7 +275,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="subdivision"
             name="subdivision"
             labelName="Subdivistion"
@@ -285,7 +285,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="barangay"
             name="barangay"
             labelName="Barangay"
@@ -295,7 +295,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="municipality"
             name="municipality"
             labelName="Municipality"
@@ -305,7 +305,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="province"
             name="province"
             labelName="Province"
@@ -315,7 +315,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="zipCode"
             name="zipCode"
             labelName="Zip Code"
@@ -325,7 +325,7 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <InputField
             id="contactNo"
             name="contactNo"
             labelName="Contact No."

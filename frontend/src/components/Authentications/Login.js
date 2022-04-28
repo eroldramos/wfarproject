@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import TextField from "../UI/FormControl/InputField/TextField";
+import InputField from "../UI/FormControl/InputField/InputField";
 import classes from "./Login.module.css";
 import Button from "../UI/FormControl/Button/Button";
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
       <div className={classes.container}>
         <form onSubmit={onLoginHandler}>
           <h1 style={{ textAlign: "center" }}>Login Page</h1>
-          <TextField
+          <InputField
             id="username"
             name="username"
             label="Username"
@@ -31,7 +31,7 @@ const Login = () => {
             value={username}
             error="invalid "
           />
-          <TextField
+          <InputField
             id="password"
             name="password"
             label="Password"
