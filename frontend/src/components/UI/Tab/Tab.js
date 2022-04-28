@@ -13,7 +13,8 @@ const Tab = (props) => {
                     <li key={item.id} 
                         data-id={item.id} 
                         onClick={props.onClick}
-                        className={item.id === 1 ? styles["active"] : ""}>
+                            className={(item.id === 1 ? styles["active"] : "") + " " +
+                                        (item.side === true ? styles["side"] : "")}>
                         {item.label}
                     </li>
                     );

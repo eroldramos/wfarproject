@@ -28,9 +28,9 @@ function Sample() {
     ];
 
     const SAMPLE_ITEMS = [
-        { label: "Tab 1", id: 1 },
-        { label: "Tab 2", id: 2 },
-        { label: "Tab 3", id: 3 }
+        { label: "Tab 1", id: 1, side: false },
+        { label: "Tab 2", id: 2, side: false},
+        { label: "Tab 3", id: 3, side: true }
     ];
 
     const myFunction = () => {
@@ -217,6 +217,8 @@ function Sample() {
                     onRemoveImage={null}>
                 </ImageCard>
             </fieldset>
+
+            <br></br>
 
             <Tab
                 items={SAMPLE_ITEMS}
