@@ -136,6 +136,7 @@ const Register = () => {
         <form onSubmit={onRegisterHandler}>
           <h1 style={{ textAlign: "center" }}>Register Page</h1>
           <InputField
+            type="text"
             id="username"
             name="username"
             labelName="Username"
@@ -149,6 +150,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="email"
             name="email"
             labelName="Email"
@@ -177,6 +179,7 @@ const Register = () => {
             error={null}
           />
           <InputField
+            type="text"
             id="empNo"
             name="empNo"
             labelName="Employee No."
@@ -186,6 +189,7 @@ const Register = () => {
             error={null}
           />
           <InputField
+            type="text"
             id="firstName"
             name="firstName"
             labelName="First Name"
@@ -196,6 +200,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="middleName"
             name="middleName"
             labelName="Middle Name"
@@ -206,6 +211,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="lastName"
             name="lastName"
             labelName="Last Name"
@@ -216,6 +222,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="extensionName"
             name="extensionName"
             labelName="Extension Name"
@@ -236,6 +243,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="civilStatus"
             name="civilStatus"
             labelName="Civil Status"
@@ -256,6 +264,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="houseNo"
             name="houseNo"
             labelName="House No."
@@ -266,6 +275,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="street"
             name="street"
             labelName="Street"
@@ -276,6 +286,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="subdivision"
             name="subdivision"
             labelName="Subdivistion"
@@ -286,6 +297,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="barangay"
             name="barangay"
             labelName="Barangay"
@@ -296,6 +308,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="municipality"
             name="municipality"
             labelName="Municipality"
@@ -306,6 +319,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="province"
             name="province"
             labelName="Province"
@@ -316,6 +330,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="zipCode"
             name="zipCode"
             labelName="Zip Code"
@@ -326,6 +341,7 @@ const Register = () => {
           />
 
           <InputField
+            type="text"
             id="contactNo"
             name="contactNo"
             labelName="Contact No."
