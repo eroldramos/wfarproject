@@ -15,7 +15,7 @@
     font-weight: 500;
     font-size: 1.125em;
     color: #777;
-    padding: 15px 50px;
+    padding: 1.15% 3%;
     transition: .12s linear;
 }
 
@@ -28,7 +28,7 @@
 
 .tab li.side {
     position: absolute;
-    right: 15px;
+    right: 3%;
 }
 
 .tab li:hover {
