@@ -3,8 +3,10 @@ import styles from './InputField.module.css';
 
 const InputField = (props) => {
 
+    let validationClass = props.error != null ? "invalid" : "";
+
     return (
-        <div className={styles["form-control"] + " " + styles["invalidClass"] + " " + styles[props.size]}>
+        <div className={styles["form-control"] + " " + styles[validationClass] + " " + styles[props.size]}>
             <label htmlFor={props.id}>{props.labelName}</label>
             <input type={props.type} 
                 id={props.id}
