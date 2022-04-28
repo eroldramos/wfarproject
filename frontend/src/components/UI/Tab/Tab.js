@@ -9,9 +9,14 @@ const Tab = (props) => {
         <Fragment>
             <ul class={styles["tab"]}>
                 {items.map(item => {
-                    return <li key={item.id} data-id={item.id} onClick={props.onClick}>
+                    return (
+                    <li key={item.id} 
+                        data-id={item.id} 
+                        onClick={props.onClick}
+                        className={item.id === 1 ? styles["active"] : ""}>
                         {item.label}
                     </li>
+                    );
                 })}
             </ul>
         </Fragment>

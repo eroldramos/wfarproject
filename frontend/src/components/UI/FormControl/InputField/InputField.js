@@ -2,12 +2,14 @@ import { Fragment, useState } from "react";
 import styles from "./InputField.module.css";
 
 const InputField = (props) => {
+  let validationClass = props.error != null ? "invalid" : "";
+
   return (
     <div
       className={
         styles["form-control"] +
         " " +
-        styles["invalidClass"] +
+        styles[validationClass] +
         " " +
         styles[props.size]
       }
@@ -17,7 +19,6 @@ const InputField = (props) => {
         type={props.type}
         id={props.id}
         onChange={props.onChange}
-        onBlur={props.onBlur}
         name={props.inputName}
         placeholder={props.placeholder}
         value={props.value}
