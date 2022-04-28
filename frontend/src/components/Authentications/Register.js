@@ -3,6 +3,8 @@ import TextField from "../UI/FormControl/InputField/TextField";
 import DateField from "../UI/FormControl/InputField/DateField";
 import classes from "./Register.module.css";
 import Button from "../UI/FormControl/Button/Button";
+import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
+import useValidateInput from "../../hooks/useValidateInput";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +26,13 @@ const Register = () => {
   const [zipCode, setZipCode] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [employeeNo, setEmployeeNo] = useState("");
+
+  const GENDERS = [
+    { label: "--Please Select Gender--", value: "" },
+    { label: "Male", value: "1" },
+    { label: "Female", value: "2" },
+    { label: "Others", value: "3" },
+  ];
 
   const setUsernameValue = (event) => {
     setUsername(event.target.value);
@@ -112,6 +121,15 @@ const Register = () => {
       employeeNo: employeeNo,
     });
   };
+  const {
+    value: enteredUsername,
+    isValid: enteredUsernameIsValid,
+    hasError: usernameInputHasError,
+    valueChangeHandler: usernameChangedHandler,
+    inputBlurHandler: usernameBlurHandler,
+    reset: resetUsernameInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
   return (
     <Fragment>
       <div className={classes.container}>
@@ -122,9 +140,12 @@ const Register = () => {
             name="username"
             labelName="Username"
             placeholder="Enter a username"
-            onChange={setUsernameValue}
-            value={username}
-            error={null}
+            onChange={usernameChangedHandler}
+            onBlur={usernameBlurHandler}
+            value={enteredUsername}
+            error={
+              usernameInputHasError ? "Please enter a valid username" : null
+            }
           />
 
           <TextField
@@ -155,7 +176,15 @@ const Register = () => {
             value={confirmPassword}
             error={null}
           />
-
+          <TextField
+            id="empNo"
+            name="empNo"
+            labelName="Employee No."
+            placeholder="Enter a employee no."
+            onChange={setEmployeeNoValue}
+            value={employeeNo}
+            error={null}
+          />
           <TextField
             id="firstName"
             name="firstName"
@@ -216,14 +245,14 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
+          <DropdownField
             id="sex"
             name="sex"
             labelName="Sex"
-            placeholder="Enter a sex"
+            options={GENDERS}
             onChange={setSexValue}
             value={sex}
-            error={null}
+            type="filter"
           />
 
           <TextField
@@ -306,15 +335,6 @@ const Register = () => {
             error={null}
           />
 
-          <TextField
-            id="empNo"
-            name="empNo"
-            labelName="Employee No."
-            placeholder="Enter a employee no."
-            onChange={setEmployeeNoValue}
-            value={employeeNo}
-            error={null}
-          />
           <Button label="Sign Up" type="primary" />
         </form>
       </div>
