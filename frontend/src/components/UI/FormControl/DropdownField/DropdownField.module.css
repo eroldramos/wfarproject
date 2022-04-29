@@ -29,6 +29,10 @@
     margin: 5px 0;
 }
 
+.form-control.filter.rg,.form-control.filter.md, .form-control.filter.lg {
+    width: fit-content;
+}
+
 
 .form-control.form label {
     font-weight: 600;

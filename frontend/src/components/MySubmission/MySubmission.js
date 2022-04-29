@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
+import SemesterDropdownField from "./components/SemesterDropdownField";
 
 const MySubmission = (props) => {
 
@@ -13,10 +13,10 @@ const MySubmission = (props) => {
     return (
         <Fragment>
             <h1>My Weekly Faculty Accomplishment Reports</h1>
-            <DropdownField
+            <SemesterDropdownField
                 id="semester"
                 name="semester"
-                labelName={null}
+                labelName={"Semester"}
                 onChange={null}
                 options={SAMPLE_ITEMS}
                 size="rg"
