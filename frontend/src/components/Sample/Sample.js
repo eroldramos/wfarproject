@@ -10,6 +10,7 @@ import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 import Tab from "../UI/Tab/Tab";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import FilterButton from "../UI/FormControl/Button/FilterButton";
+import PrintButton from "../UI/FormControl/Button/PrintButton";
 
 function Sample() {
 
@@ -267,7 +268,10 @@ function Sample() {
             <SmallButton
                 label="Check WFAR"
                 type="primary"></SmallButton>
-
+            <PrintButton
+                label = "Print"
+                type = "primary"
+            ></PrintButton>
 
             <Tab
                 items={SAMPLE_ITEMS}
