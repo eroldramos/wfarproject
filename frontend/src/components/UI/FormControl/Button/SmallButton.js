@@ -1,8 +1,7 @@
 import { Fragment } from "react";
-import styles from "./Button.module.css";
+import styles from "./SmallButton.module.css";
 
-const Button = (props) => {
-
+const SmallButton = (props) => {
     const buttonType = props.type == "primary" ? "submit" : "button";
 
     return (
@@ -14,4 +13,4 @@ const Button = (props) => {
     );
 }
 
-export default Button;
+export default SmallButton;

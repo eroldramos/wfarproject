@@ -4,9 +4,12 @@ import DateField from "../UI/FormControl/DateField/DateField";
 import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import Button from "../UI/FormControl/Button/Button";
+import TableCellButton from "../UI/FormControl/Button/TableCellButton";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
 import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 import Tab from "../UI/Tab/Tab";
+import SmallButton from "../UI/FormControl/Button/SmallButton";
+import FilterButton from "../UI/FormControl/Button/FilterButton";
 
 function Sample() {
 
@@ -159,6 +162,19 @@ function Sample() {
                 </fieldset>
             </form>
 
+            <div>
+
+                <SearchField
+                    id="link"
+                    onChange={null}
+                    labelName="search"
+                    inputName="search"
+                    placeholder="Search faculty"
+                    size="rg"
+                    type="filter"
+                />
+
+            </div>
 
             <fieldset>
                 <legend>Sample Searchfield</legend>
@@ -182,13 +198,33 @@ function Sample() {
                     labelName="Semesters"
                     onChange={myFunction}
                     options={SAMPLE_OPTIONS}
-                    size="rg"
+                    size="lg"
                     type="filter"
                 />
 
             </fieldset>
 
-
+            <div style={{display: "flex"}}>
+                <DropdownField
+                    id="sample"
+                    name="sample"
+                    labelName="Semesters"
+                    onChange={myFunction}
+                    options={SAMPLE_OPTIONS}
+                    size="rg"
+                    type="filter"
+                />
+                <DropdownField
+                    id="sample"
+                    name="sample"
+                    labelName="Semesters"
+                    onChange={myFunction}
+                    options={SAMPLE_OPTIONS}
+                    size="rg"
+                    type="filter"
+                />
+            </div>
+            
             <fieldset>
                 <legend>Sample Checkbox</legend>
                 <Checkbox
@@ -219,6 +255,19 @@ function Sample() {
             </fieldset>
 
             <br></br>
+
+            <TableCellButton
+                label="Check WFAR"
+                type="primary"></TableCellButton>
+
+            <FilterButton
+                label="Overview"
+                type="primary"></FilterButton>
+
+            <SmallButton
+                label="Check WFAR"
+                type="primary"></SmallButton>
+
 
             <Tab
                 items={SAMPLE_ITEMS}
