@@ -1,5 +1,4 @@
 .form-control {
-    width: 320px;
     margin: 5px 15px;
     position: relative;
 }
@@ -30,6 +29,7 @@
     margin: 5px 0;
 }
 
+
 .form-control.form label {
     font-weight: 600;
     font-size: 1em;
@@ -39,16 +39,16 @@
 .form-control select {
     outline: none;
     border: 2px solid transparent;
+    width: 100%;
     border-radius: 5px;
     height: 45px;
     font-style: normal;
-    width: 100%;
     font-weight: 400;
     font-size: .875em;
     line-height: 19px;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0 50px 0 20px;
     background: #F4F4F4;
     transition: .05s linear;
     border: 1.25px solid #E5E5E5;
@@ -58,17 +58,20 @@
     background: transparent;
     background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
-    background-position-x: 98%;
+    background-position-x: 95%;
     background-position-y: 10px;
     margin: 0;
 }
 
 .form-control.filter select {
     font-size: .875em;
+    background-position-x: 95%;
+    width: auto;
 }
 
 .form-control.form select {
     font-size: 1em;
+    width: 100%;
 }
 
 .form-control select:hover {

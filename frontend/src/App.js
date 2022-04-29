@@ -5,6 +5,7 @@ import SideNav from "./components/Layout/SideNav";
 import Sample from "./components/Sample/Sample";
 import RegisterScreen from "./components/Screens/RegisterScreen";
 import LoginScreen from "./components/Screens/LoginScreen";
+import MySubmission from "./components/MySubmission/MySubmission";
 function App() {
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
@@ -22,6 +23,7 @@ function App() {
           <Route path="/sample" element={<Sample />}></Route>
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/login" element={<LoginScreen />}></Route>
+          <Route path="/mySubmission" element={<MySubmission />}></Route>
         </Routes>
       </div>
     </div>
