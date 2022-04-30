@@ -92,7 +92,7 @@ class Week(models.Model):
 
 # WFAR
 class WFAR(models.Model):
-    status = models.PositiveSmallIntegerField(default=1) # 1 - not checked, 2 - ok, 3 - with revisions
+    status = models.PositiveSmallIntegerField(default=1) # 1 - not submitted, 2 - to be checked, 3 - ok, 4 - with revisions
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     checked_at = models.DateTimeField(null=True)

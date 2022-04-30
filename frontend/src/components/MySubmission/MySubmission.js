@@ -20,6 +20,47 @@ const MySubmission = (props) => {
         { label: "Archived WFAR Entries", id: 2, side: true }
     ];
 
+
+    const WFAR_ITEMS = [
+        {
+            weekTitle: "Week 3",
+            startDate: "2022-04-08",
+            endDate: "2022-04-14",
+            status: 3,
+            entryNo: 5
+        },
+        {
+            weekTitle: "Week 3",
+            startDate: "2022-04-08",
+            endDate: "2022-04-14",
+            status: 1,
+            entryNo: 2
+        }, 
+        {
+            weekTitle: "Week 3",
+            startDate: "2022-04-08",
+            endDate: "2022-04-14",
+            status: 1,
+            entryNo: 6
+        },
+        {
+            weekTitle: "Week 2",
+            startDate: "2022-04-01",
+            endDate: "2022-04-17",
+            status: 2,
+            entryNo: 5
+        },
+        {
+            weekTitle: "Week 1",
+            startDate: "2022-03-23",
+            endDate: "2022-03-30",
+            status: 4,
+            entryNo: 1
+        },
+    ]
+
+    // weekTitle = "Week 1" weekDate = "April 8 - April 14" wfarStatus = { 3} entryNo = { 5}
+
     return (
         <Fragment>
             <h1>My Weekly Faculty Accomplishment Reports</h1>
@@ -34,7 +75,7 @@ const MySubmission = (props) => {
 
             <div className={styles["tab-container"]}>
                 <Tab items={TABS} />
-                <MyWFAR />                
+                <MyWFAR items={WFAR_ITEMS}/>                
             </div>
         </Fragment>
     )
