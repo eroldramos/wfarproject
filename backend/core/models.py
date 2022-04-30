@@ -86,8 +86,8 @@ class Semester(models.Model):
 # Week
 class Week(models.Model):
     label = models.CharField(max_length=200)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
     semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE) # fk for semester
 
 # WFAR

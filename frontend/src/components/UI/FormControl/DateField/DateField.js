@@ -2,9 +2,17 @@ import { Fragment, useState } from "react";
 import styles from "./DateField.module.css";
 
 const DateField = (props) => {
-
+  let validationClass = props.error != null ? "invalid" : "";
   return (
-    <div className={styles["form-control"] + " " + styles["invalidClass"] + " " + styles[props.size]}>
+    <div
+      className={
+        styles["form-control"] +
+        " " +
+        styles[validationClass] +
+        " " +
+        styles[props.size]
+      }
+    >
       <label htmlFor={props.id}>{props.labelName}</label>
       <div className="date">
         <svg
@@ -23,12 +31,13 @@ const DateField = (props) => {
           type="date"
           id={props.id}
           onChange={props.onChange}
+          onBlur={props.onBlur}
           name={props.inputName}
           placeholder="MM/DD/YYYY"
           value={props.value}
         />
       </div>
-      <p>{props.error}</p>
+      <p className>{props.error}</p>
     </div>
   );
 };
