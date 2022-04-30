@@ -152,14 +152,20 @@ function Sample() {
                     {/* How to use the button component */}
                     <Button
                         label="Save"
-                        type="primary" />
+                        type="primary"
+                        size="rg" />
 
                     <hr />
 
                     <Button
                         label="Cancel"
-                        type="cancel" />
+                        type="cancel"
+                        size="s" />
 
+                    <Button
+                        label="Cancel"
+                        type="cancel"
+                        size="xs" />
                 </fieldset>
             </form>
 
@@ -277,7 +283,6 @@ function Sample() {
                 items={SAMPLE_ITEMS}
                 onClick={null}
                 ></Tab>
-
 
         </Fragment>
     );

@@ -3,13 +3,29 @@
     font-weight: 500;
     color: white;
     padding: 15px 25px;
-    min-width: 100px;
     outline: none;
     border: none;
     border-radius: 5px;
     transition: .2s linear;
     cursor: pointer;
-    margin: 5px 15px;
+    margin: 5px 2.5px;
+}
+
+.button.rg {
+    font-size: 1em;
+    padding: 15px 25px;
+    min-width: 100px;
+}
+
+.button.s {
+    font-size: .875em;
+    padding: 11.5px 25px;
+}
+
+.button.xs {
+    font-size: .875em;
+    padding: 8px 15px;
+    border: 1.75px solid transparent;
 }
 
 .button.primary {

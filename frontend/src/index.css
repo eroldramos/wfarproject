@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   font-family: 'Public Sans', sans-serif;
+  color: #323232;
 }
 
 html {
@@ -16,7 +17,7 @@ body {
 
 h1 {
   font-size: 1.5em;
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 
 #main {

@@ -1,0 +1,35 @@
+.card {
+    background: #F8F8FA;
+    border-radius: 8px;
+    padding: 25px 25px;
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.card .week-container {
+    display: inline-block;
+    width: fit-content;
+    border: 2px solid #ddd;
+}
+
+.card .week-container .week-label {
+    font-weight: 700;
+    font-size: 1em;
+    padding: 7.5px;
+    color: #BE5A40;
+    text-align: center;
+}
+
+.card .week-container .week-date {
+    font-weight: 500;
+    font-size: .875em;
+    padding: 5px 7.5px;
+    color: #999999;
+    text-align: center;
+}
+
+.card .entry-label {
+    font-weight: 600;
+}
