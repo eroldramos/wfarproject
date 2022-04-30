@@ -6,6 +6,8 @@
 .form-control.invalid select {
   border-color: red;
   border-width: 2px;
+  margin: 5px 15px;
+  position: relative;
 }
 
 .form-control.invalid p {
@@ -39,6 +41,12 @@
   font-weight: 800;
   font-size: 0.75em;
   margin: 5px 0;
+}
+
+.form-control.filter.rg,
+.form-control.filter.md,
+.form-control.filter.lg {
+  width: fit-content;
 }
 
 .form-control.form label {

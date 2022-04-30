@@ -7,7 +7,7 @@ const Button = (props) => {
 
     return (
         <Fragment>
-            <button className={styles["button"] + " " + styles[props.type]} type={buttonType}>
+            <button className={styles["button"] + " " + styles[props.type]} type={buttonType} onClick={props.onClick}>
                 {props.label}
             </button>
         </Fragment>

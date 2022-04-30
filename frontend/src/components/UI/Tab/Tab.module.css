@@ -3,13 +3,41 @@
     margin: 0;
     display: flex;
     list-style-type: none;
-    border-bottom: 3px solid pink;
+    border-bottom: 2px solid #E5E5E5;
+    /* border: 2px solid black; */
+    position: relative;
+    user-select: none;
 }
 
 .tab li {
-    padding: 5px 35px;
+    font-style: normal;
+    line-height: 150%;
+    font-weight: 500;
+    font-size: 1.125em;
+    color: #777;
+    padding: 1.15% 3%;
+    transition: .12s linear;
 }
 
-.active {
-    border-bottom: 3px solid pink;
+.tab li.active {
+    font-weight: 700;
+    font-size: 1.125em;
+    color: #BE5A40;
+    border-bottom: 3px solid #BE5A40;
+}
+
+.tab li.side {
+    position: absolute;
+    right: 3%;
+}
+
+.tab li:hover {
+    color: #BE5A40;
+    transition: .12s linear;
+}
+
+@media only screen and (max-width: 768px) {
+    .tab li.side {
+        position: static;
+    }
 }
