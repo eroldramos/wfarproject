@@ -29,10 +29,9 @@
     margin: 5px 0;
 }
 
-.form-control.filter.rg,.form-control.filter.md, .form-control.filter.lg {
+.form-control.filter.rg, .form-control.filter.md, .form-control.filter.lg {
     width: fit-content;
 }
-
 
 .form-control.form label {
     font-weight: 600;
@@ -65,6 +64,9 @@
     background-position-x: 95%;
     background-position-y: 10px;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-control.filter select {

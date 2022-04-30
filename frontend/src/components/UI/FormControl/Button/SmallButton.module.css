@@ -10,6 +10,9 @@
     transition: .2s linear;
     cursor: pointer;
     margin: 5px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button.primary {
