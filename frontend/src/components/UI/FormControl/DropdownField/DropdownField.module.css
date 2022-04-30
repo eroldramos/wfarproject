@@ -1,112 +1,102 @@
 .form-control {
-  width: 320px;
-  margin: 5px 15px;
-  position: relative;
-}
-.form-control.invalid select {
-  border-color: red;
-  border-width: 2px;
-  margin: 5px 15px;
-  position: relative;
+    margin: 5px 5px;
+    position: relative;
 }
 
-.form-control.invalid p {
-  margin: 3px 0 0 0;
-  color: red;
-  font-weight: 600;
-  font-size: 0.875em;
-  display: block;
-}
 .form-control.rg {
-  width: 30%;
+    width: 30%;
 }
 
 .form-control.md {
-  width: 50%;
+    width: 50%;
 }
 
 .form-control.lg {
-  width: 100%;
+    width: 100%;
 }
 
 .form-control label {
-  font-style: normal;
-  font-weight: 800;
-  font-size: 0.75em;
-  margin: 15px 0;
-  display: block;
+    font-style: normal;
+    font-weight: 800;
+    font-size: .75em;
+    margin: 15px 0;
+    display: block;
 }
 
 .form-control.filter label {
-  font-weight: 800;
-  font-size: 0.75em;
-  margin: 5px 0;
+    font-weight: 800;
+    font-size: .75em;
+    margin: 5px 0;
 }
 
-.form-control.filter.rg,
-.form-control.filter.md,
-.form-control.filter.lg {
-  width: fit-content;
+.form-control.filter.rg, .form-control.filter.md, .form-control.filter.lg {
+    width: fit-content;
 }
 
 .form-control.form label {
-  font-weight: 600;
-  font-size: 1em;
-  margin: 15px 0;
+    font-weight: 600;
+    font-size: 1em;
+    margin: 15px 0;
 }
 
 .form-control select {
-  outline: none;
-  border: 2px solid transparent;
-  border-radius: 5px;
-  height: 45px;
-  font-style: normal;
-  width: 100%;
-  font-weight: 400;
-  font-size: 0.875em;
-  line-height: 19px;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  background: #f4f4f4;
-  transition: 0.05s linear;
-  border: 1.25px solid #e5e5e5;
-  border-radius: 5px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: transparent;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-  background-repeat: no-repeat;
-  background-position-x: 98%;
-  background-position-y: 10px;
-  margin: 0;
+    outline: none;
+    border: 2px solid transparent;
+    width: 100%;
+    border-radius: 5px;
+    height: 45px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: .875em;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px 0 20px;
+    background: #F4F4F4;
+    transition: .05s linear;
+    border: 1.25px solid #E5E5E5;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 10px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-control.filter select {
-  font-size: 0.875em;
+    font-size: .875em;
+    background-position-x: 95%;
+    width: auto;
 }
 
 .form-control.form select {
-  font-size: 1em;
+    font-size: 1em;
+    width: 100%;
 }
 
 .form-control select:hover {
-  border-color: #ccc;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+    border-color: #CCC;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
 }
 
 .form-control.filter select {
-  height: 45px;
-  background-position-y: 10px;
+    height: 45px;
+    background-position-y: 10px;
 }
 
 .form-control.form select {
-  height: 56px;
-  background-position-y: 16px;
+    height: 56px;
+    background-position-y: 16px;
 }
 
 @media only screen and (max-width: 768px) {
-  .form-control {
-    width: 100% !important;
-  }
+    .form-control {
+        width: 100% !important;
+    }
 }

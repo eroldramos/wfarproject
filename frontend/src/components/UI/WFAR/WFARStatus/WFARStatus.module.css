@@ -1,0 +1,44 @@
+.card-status {
+    font-size: 0.875em;
+    font-weight: 500;
+    padding: 8.5px 15px;
+    outline: none;
+    width: fit-content;
+    color: #323232;
+    border: 1.75px solid #323232;
+    border-radius: 5px;
+    transition: .2s linear;
+    margin: 5px 15px;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card-status.toBeChecked {
+    color: #777777;
+    border: 1.75px solid #777777;
+}
+
+.card-status.ok {
+    color: #1A9E50;
+    border: 1.75px solid #1A9E50;
+}
+
+.card-status.withRevisions {
+    color: #F0BB31;
+    border: 1.75px solid #F0BB31;
+}
+
+.card-status.toBeChecked svg, .card-status.withRevisions svg{
+    border: 2px solid black;
+    display: none;
+}
+
+.card-status.ok svg {
+    display: block;
+}
+
+.card-status svg {
+    margin-right: 10px;
+}
