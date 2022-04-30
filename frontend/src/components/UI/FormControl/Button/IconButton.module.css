@@ -1,0 +1,59 @@
+.button {
+    font-size: 1em;
+    font-weight: 500;
+    color: white;
+    padding: 15px 25px 0 15px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: .2s linear;
+    cursor: pointer;
+    margin: 5px 2.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button.rg {
+    font-size: 1em;
+    padding: 15px 25px 11.5px 15px;
+    min-width: 100px;
+}
+
+.button.s {
+    font-size: .875em;
+    padding: 11.5px 25px 11.5px 15px;
+}
+
+.button.xs {
+    font-size: .875em;
+    padding: 8px 15px 8px 10px;
+    border: 1.75px solid transparent;
+}
+
+.button.primary {
+    background: #BE5A40;
+}
+
+.button.primary:hover {
+    background: #A83B1F;
+    transition: .2s linear;
+}
+
+.button.cancel {
+    background: #A1A1A1;
+}
+
+.button.cancel:hover {
+    background: #777777;
+}
+
+@media only screen and (max-width: 768px) {
+    .button {
+        width: 100% !important;
+    }
+}
+
+.button svg {
+    margin-right: 5px;
+}

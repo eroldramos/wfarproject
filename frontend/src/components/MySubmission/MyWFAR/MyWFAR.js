@@ -4,9 +4,17 @@ import styles from "./MyWFAR.module.css";
 
 const MyWFAR = (props) => {
 
+    let items = props.items;
+
     return (
         <div className={styles["my-wfar"]}>
-            <MyWFARCard weekTitle="Week 1" weekDate="April 8 - April 14" wfarStatus={3}></MyWFARCard>
+
+            {items.map(item => {
+                return (
+                    <MyWFARCard weekTitle={item.weekTitle} weekDate="April 8 - April 14" wfarStatus={item.status} entryNo={item.entryNo} />);
+            })}
+
+            
         </div>
     )
 }
