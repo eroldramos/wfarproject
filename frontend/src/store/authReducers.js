@@ -12,6 +12,7 @@ export const authLoginReducer = createSlice({
   reducers: {
     loginRequest(state, action) {
       state.isLoading = true;
+      state.error = null;
     },
     loginSuccess(state, action) {
       state.isLoading = false;
@@ -42,6 +43,7 @@ export const authRegisterReducer = createSlice({
   reducers: {
     registerRequest(state, action) {
       state.isLoading = true;
+      state.error = null;
     },
     registerSuccess(state, action) {
       state.isLoading = false;
