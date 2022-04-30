@@ -24,10 +24,10 @@ class FacultyLogin(APIView):
         username = ""
         password = ""
 
-        if request.POST.get('username'):
-            username = request.POST.get('username')
-        if request.POST.get('password'):
-            password = request.POST.get('password')
+        if request.data['username']:
+            username = request.data['username']
+        if request.data['password']:
+            password = request.data['password']
         
         formErrors = 0
 
@@ -72,17 +72,18 @@ class FacultyLogin(APIView):
                 message = {
                     "detail" : "Invalid credentials."
                 }
-                return Response(message ,status = status.HTTP_400_BAD_REQUEST)
+                return Response(message ,status = status.HTTP_401_UNAUTHORIZED)
 
 class AdminLogin(APIView):
     def post(self, request): #Create
         username = ""
         password = ""
 
-        if request.POST.get('username'):
-            username = request.POST.get('username')
-        if request.POST.get('password'):
-            password = request.POST.get('password')
+        
+        if request.data['username']:
+            username = request.data['username']
+        if request.data['password']:
+            password = request.data['password']
         
         formErrors = 0
 
@@ -129,16 +130,20 @@ class FacultyRegister(APIView):
         formErrors = 0
         errors = []
         if Faculty.objects.filter(username=request.data['username']).exists():
-            errors.append({"usernameErr": f"{request.data['username']} already exists!"})
+            # errors.append({"usernameErr": f"{request.data['username']} already exists!"})
+            errors.append(f"Username {request.data['username']} already exists.")
             formErrors += 1
         if Faculty.objects.filter(email=request.data['email']).exists():
-            errors.append({"emailErr": f"{request.data['email']} already exists"})
+            # errors.append({"emailErr": f"{request.data['email']} already exists"})
+            errors.append( f"Email {request.data['email']} already exists.")
             formErrors += 1
         if Faculty.objects.filter(emp_no=request.data['emp_no']).exists():
-            errors.append({"empNoErr": f"{request.data['emp_no']} already exists"})
+            # errors.append({"empNoErr": f"{request.data['emp_no']} already exists"})
+            errors.append( f"Employe No. {request.data['emp_no']} already exists.")
             formErrors += 1
         if Faculty.objects.filter(contact_no=request.data['contact_no']).exists():
-            errors.append({"contactNoErr": f"{request.data['contact_no']} already exists"})
+            # errors.append({"contactNoErr": f"{request.data['contact_no']} already exists"})
+            errors.append(f"Contact No. {request.data['contact_no']} already exists.")
             formErrors += 1
 
         if formErrors == 0:

@@ -11,7 +11,7 @@ import classes from "./Login.module.css";
 import Button from "../UI/FormControl/Button/Button";
 import { login } from "../../store/authActions";
 
-const Login = () => {
+const AdminLogin = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const Login = () => {
     }
 
     console.log(username, password);
-    dispatch(login(username, password, "Faculty"));
+    dispatch(login(username, password, "Admin"));
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Login = () => {
     <Fragment>
       <div className={classes.container}>
         <form onSubmit={onLoginHandler}>
-          <h1 style={{ textAlign: "center" }}>Login Page</h1>
+          <h1 style={{ textAlign: "center" }}>Admin Login Page</h1>
           {error && <p>{error}</p>}
           {isLoading && <p>loading...</p>}
           <InputField
@@ -79,4 +79,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

@@ -19,6 +19,7 @@ const InputField = (props) => {
         type={props.type}
         id={props.id}
         onChange={props.onChange}
+        onBlur={props.onBlur}
         name={props.inputName}
         placeholder={props.placeholder}
         value={props.value}

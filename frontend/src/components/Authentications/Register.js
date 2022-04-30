@@ -1,31 +1,32 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import {
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import InputField from "../UI/FormControl/InputField/InputField";
 import DateField from "../UI/FormControl/DateField/DateField";
 import classes from "./Register.module.css";
 import Button from "../UI/FormControl/Button/Button";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import useValidateInput from "../../hooks/useValidateInput";
+import { register } from "../../store/authActions";
+
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [extensionName, setExtensionName] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [civilStatus, setCivilStatus] = useState("");
-  const [sex, setSex] = useState("");
-  const [houseNo, setHouseNo] = useState("");
-  const [street, setStreet] = useState("");
-  const [subdivision, setSubdivision] = useState("");
-  const [barangay, setBarangary] = useState("");
-  const [municipality, setMunicipality] = useState("");
-  const [province, setProvince] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [employeeNo, setEmployeeNo] = useState("");
+  const dispatch = useDispatch(); //use to call actions
+  let navigate = useNavigate(); //use to navigate urls
+
+  const registerUser = useSelector((state) => state.register);
+  const { success, error, loading } = registerUser;
+
+  useEffect(() => {
+    if (success) {
+      // if userInfo is null, can't be login
+      navigate("/dummydashboard");
+    }
+  }, [navigate, success]);
 
   const GENDERS = [
     { label: "--Please Select Gender--", value: "" },
@@ -34,119 +35,352 @@ const Register = () => {
     { label: "Others", value: "3" },
   ];
 
-  const setUsernameValue = (event) => {
-    setUsername(event.target.value);
-  };
+  const CIVIL_STATUS = [
+    { label: "--Please Select Civil Status--", value: "" },
+    { label: "Married", value: "1" },
+    { label: "Widowed ", value: "2" },
+    { label: "Separated ", value: "3" },
+    { label: "Divorced ", value: "4" },
+    { label: "Single ", value: "5" },
+  ];
 
-  const setEmailValue = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const setPasswordValue = (event) => {
-    setPassword(event.target.value);
-  };
-  const setConfirmPasswordValue = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-  const setFirstNameValue = (event) => {
-    setFirstName(event.target.value);
-  };
-  const setMiddleNameValue = (event) => {
-    setMiddleName(event.target.value);
-  };
-  const setLastNameValue = (event) => {
-    setLastName(event.target.value);
-  };
-  const setExtensionnameValue = (event) => {
-    setExtensionName(event.target.value);
-  };
-  const setBirthdateValue = (event) => {
-    setBirthdate(event.target.value);
-  };
-  const setCivilStatusValue = (event) => {
-    setCivilStatus(event.target.value);
-  };
-  const setSexValue = (event) => {
-    setSex(event.target.value);
-  };
-  const setHouseNoValue = (event) => {
-    setHouseNo(event.target.value);
-  };
-  const setStreetValue = (event) => {
-    setStreet(event.target.value);
-  };
-  const setSubdivisionValue = (event) => {
-    setSubdivision(event.target.value);
-  };
-  const setBarangayValue = (event) => {
-    setBarangary(event.target.value);
-  };
-  const setMunicipalityValue = (event) => {
-    setMunicipality(event.target.value);
-  };
-  const setProvinceValue = (event) => {
-    setProvince(event.target.value);
-  };
-  const setZipCodeValue = (event) => {
-    setZipCode(event.target.value);
-  };
-  const setContactNoValue = (event) => {
-    setContactNo(event.target.value);
-  };
-  const setEmployeeNoValue = (event) => {
-    setEmployeeNo(event.target.value);
-  };
   const onRegisterHandler = (event) => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
-    console.log({
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      extensionName: extensionName,
-      birthdate: birthdate,
-      civilStatus: civilStatus,
-      sex: sex,
-      houseNo: houseNo,
-      street: street,
-      subdivision: subdivision,
-      barangay: barangay,
-      municipality: municipality,
-      province: province,
-      zipCode: zipCode,
-      contactNo: contactNo,
-      employeeNo: employeeNo,
-    });
+    let formIsValid =
+      enteredUsernameIsValid &&
+      enteredEmailIsValid &&
+      enteredPasswordIsValid &&
+      enteredConfirmPasswordIsValid &&
+      enteredFirstNameIsValid &&
+      enteredLastNameIsValid &&
+      enteredMiddleNameIsValid &&
+      enteredExtensionNameIsValid &&
+      enteredBirthdateIsValid &&
+      enteredCivilStatusIsValid &&
+      enteredSexIsValid &&
+      enteredHouseNoIsValid &&
+      enteredStreetIsValid &&
+      enteredSubdivisionIsValid &&
+      enteredBarangayIsValid &&
+      enteredMunicipalityIsValid &&
+      enteredProvinceIsValid &&
+      enteredZipCodeIsValid &&
+      enteredContactNoIsValid &&
+      enteredEmployeeNoIsValid;
+
+    if (!formIsValid) {
+      alert(formIsValid);
+      return;
+    }
+
+    let registrationObj = {
+      username: enteredUsername,
+      email: enteredEmail,
+      password: enteredPassword,
+      first_name: enteredFirstName,
+      last_name: enteredLastName,
+      middle_name: enteredMiddleName,
+      extension_name: enteredExtensionName,
+      birthdate: enteredBirthdate,
+      civil_status: enteredCivilStatus,
+      sex: enteredSex,
+      house_no: enteredHouseNo,
+      street: enteredStreet,
+      subdivision: enteredSubdivision,
+      barangay: enteredBarangay,
+      municipality: enteredMunicipality,
+      province: enteredProvince,
+      zip_code: enteredZipCode,
+      contact_no: enteredContactNo,
+      emp_no: enteredEmployeeNo,
+    };
+
+    console.log(registrationObj);
+
+    dispatch(register(registrationObj));
   };
+
+  // Username Validations
   const {
     value: enteredUsername,
     isValid: enteredUsernameIsValid,
     hasError: usernameInputHasError,
-    valueChangeHandler: usernameChangedHandler,
+    valueChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
     reset: resetUsernameInput,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && value.trim().length > 6
+  );
+
+  let usernameErrorMessage = "";
+
+  if (enteredUsername === "") {
+    usernameErrorMessage = "Please enter a valid username.";
+  }
+  if (enteredUsername.length <= 6 && enteredUsername !== "") {
+    usernameErrorMessage =
+      "Character must be at least morethan 6 characters long.";
+  }
+  //Email Validations
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
+
+  let emailErrorMessage = "";
+  if (!enteredEmail.includes("@") || enteredEmail === "") {
+    emailErrorMessage = "Please enter a valid email address.";
+  }
+
+  //Password Validations
+  const {
+    value: enteredPassword,
+    isValid: enteredPasswordIsValid,
+    hasError: passwordInputHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: resetPasswordInput,
+  } = useValidateInput(
+    (value) =>
+      value.trim() !== "" &&
+      value.trim().length > 8 &&
+      containsNumber(value.trim())
+  );
+
+  function containsNumber(str) {
+    return /[0-9]/.test(str);
+  }
+
+  let passwordErrorMessage = "";
+
+  if (enteredPassword === "") {
+    passwordErrorMessage = "Please enter a valid password.";
+  }
+  if (enteredPassword.length <= 8 && enteredPassword !== "") {
+    passwordErrorMessage =
+      "Character must be at least morethan 8 characters long.";
+  }
+  if (!containsNumber(enteredPassword.trim()) && enteredPassword !== "") {
+    passwordErrorMessage = "Please include a number in the password.";
+  }
+  //  Confirm Password Validations
+
+  const {
+    value: enteredConfirmPassword,
+    isValid: enteredConfirmPasswordIsValid,
+    hasError: confirmPasswordInputHasError,
+    valueChangeHandler: confirmPasswordChangeHandler,
+    inputBlurHandler: confirmPasswordBlurHandler,
+    reset: resetConfirmPasswordInput,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && value.trim() === enteredPassword.trim()
+  );
+  let confirmPasswordErrorMessage = "";
+  if (
+    enteredConfirmPassword !== enteredPassword ||
+    enteredConfirmPassword === ""
+  ) {
+    confirmPasswordErrorMessage = "Password and confirm password do not match.";
+  }
+
+  // Employee No Validations
+  const {
+    value: enteredEmployeeNo,
+    isValid: enteredEmployeeNoIsValid,
+    hasError: employeeNoInputHasError,
+    valueChangeHandler: employeeNoChangeHandler,
+    inputBlurHandler: employeeNoBlurHandler,
+    reset: resetEmployeeNoInput,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+  );
+  function onlyNumbers(str) {
+    return /^[0-9]+$/.test(str);
+  }
+  let employeeNoErrorMessage = "";
+  if (
+    enteredEmployeeNo.trim() === "" ||
+    !onlyNumbers(enteredEmployeeNo.trim())
+  ) {
+    employeeNoErrorMessage = "Please enter a valid employee number.";
+  }
+  // First Name Validations
+  const {
+    value: enteredFirstName,
+    isValid: enteredFirstNameIsValid,
+    hasError: firstNameInputHasError,
+    valueChangeHandler: firstNameChangeHandler,
+    inputBlurHandler: firstNameBlurHandler,
+    reset: resetFirstNameInput,
   } = useValidateInput((value) => value.trim() !== "");
 
+  // Middle Name Validations
+  const {
+    value: enteredMiddleName,
+    isValid: enteredMiddleNameIsValid,
+    hasError: middleNameInputHasError,
+    valueChangeHandler: middleNameChangeHandler,
+    inputBlurHandler: middleNameBlurHandler,
+    reset: resetMiddleNameInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Last Name Validations
+  const {
+    value: enteredLastName,
+    isValid: enteredLastNameIsValid,
+    hasError: lastNameInputHasError,
+    valueChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurHandler,
+    reset: resetLastNameInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Extension Name Validations
+  const {
+    value: enteredExtensionName,
+    isValid: enteredExtensionNameIsValid,
+    hasError: extensionNameInputHasError,
+    valueChangeHandler: extensionNameChangeHandler,
+    inputBlurHandler: extensionNameBlurHandler,
+    reset: resetExtensionNameInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Birthdate Validations
+  const {
+    value: enteredBirthdate,
+    isValid: enteredBirthdateIsValid,
+    hasError: birthdateInputHasError,
+    valueChangeHandler: birthdateChangeHandler,
+    inputBlurHandler: birthdateBlurHandler,
+    reset: resetBirthdateInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Civil Status Validations
+  const {
+    value: enteredCivilStatus,
+    isValid: enteredCivilStatusIsValid,
+    hasError: civilStatusInputHasError,
+    valueChangeHandler: civilStatusChangeHandler,
+    inputBlurHandler: civilStatusBlurHandler,
+    reset: resetCivilStatusInput,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Sex Validations
+  const {
+    value: enteredSex,
+    isValid: enteredSexIsValid,
+    hasError: sexInputHasError,
+    valueChangeHandler: sexChangeHandler,
+    inputBlurHandler: sexBlurHandler,
+    reset: resetSex,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // House No Validations
+  const {
+    value: enteredHouseNo,
+    isValid: enteredHouseNoIsValid,
+    hasError: houseNoInputHasError,
+    valueChangeHandler: houseNoChangeHandler,
+    inputBlurHandler: houseNoBlurHandler,
+    reset: resetHouseNo,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+  );
+
+  // Street Validations
+  const {
+    value: enteredStreet,
+    isValid: enteredStreetIsValid,
+    hasError: streetInputHasError,
+    valueChangeHandler: streetChangeHandler,
+    inputBlurHandler: streetBlurHandler,
+    reset: resetStreet,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Subdivision Validations
+  const {
+    value: enteredSubdivision,
+    isValid: enteredSubdivisionIsValid,
+    hasError: subdivisionInputHasError,
+    valueChangeHandler: subdivisionChangeHandler,
+    inputBlurHandler: subdivisionBlurHandler,
+    reset: resetSubdivision,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Barangay Validations
+  const {
+    value: enteredBarangay,
+    isValid: enteredBarangayIsValid,
+    hasError: barangayInputHasError,
+    valueChangeHandler: barangayChangeHandler,
+    inputBlurHandler: barangayBlurHandler,
+    reset: resetBarangay,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Municipality Validations
+  const {
+    value: enteredMunicipality,
+    isValid: enteredMunicipalityIsValid,
+    hasError: municipalityInputHasError,
+    valueChangeHandler: municipalityChangeHandler,
+    inputBlurHandler: municipalityBlurHandler,
+    reset: resetMunicipality,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Province Validations
+  const {
+    value: enteredProvince,
+    isValid: enteredProvinceIsValid,
+    hasError: provinceInputHasError,
+    valueChangeHandler: provinceChangeHandler,
+    inputBlurHandler: provinceBlurHandler,
+    reset: resetProvince,
+  } = useValidateInput((value) => value.trim() !== "");
+
+  // Zip Code Validations
+  const {
+    value: enteredZipCode,
+    isValid: enteredZipCodeIsValid,
+    hasError: zipCodeInputHasError,
+    valueChangeHandler: zipCodeChangeHandler,
+    inputBlurHandler: zipCodeBlurHandler,
+    reset: resetZipCode,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+  );
+
+  // House No Validations
+  const {
+    value: enteredContactNo,
+    isValid: enteredContactNoIsValid,
+    hasError: contactNoInputHasError,
+    valueChangeHandler: contactNoChangeHandler,
+    inputBlurHandler: contactNoBlurHandler,
+    reset: resetContactNo,
+  } = useValidateInput(
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+  );
   return (
     <Fragment>
       <div className={classes.container}>
         <form onSubmit={onRegisterHandler}>
           <h1 style={{ textAlign: "center" }}>Register Page</h1>
+          {error && error.map((err, index) => <p>{error[index]}</p>)}
+          {loading && <p>loading...</p>}
+          {success && <p>{success}</p>}
           <InputField
             type="text"
             id="username"
             name="username"
             labelName="Username"
             placeholder="Enter a username"
-            onChange={usernameChangedHandler}
+            onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
             value={enteredUsername}
-            error={
-              usernameInputHasError ? "Please enter a valid username" : null
-            }
+            error={usernameInputHasError ? usernameErrorMessage : null}
           />
 
           <InputField
@@ -155,28 +389,35 @@ const Register = () => {
             name="email"
             labelName="Email"
             placeholder="Enter an email"
-            onChange={setEmailValue}
-            value={email}
-            error={null}
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            value={enteredEmail}
+            error={emailInputHasError ? emailErrorMessage : null}
           />
           <InputField
+            type="password"
             id="password"
             name="password"
             labelName="Password"
             placeholder="Enter a password"
-            onChange={setPasswordValue}
-            value={password}
-            error={null}
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
+            value={enteredPassword}
+            error={passwordInputHasError ? passwordErrorMessage : null}
           />
 
           <InputField
+            type="password"
             id="confirmPassowrd"
             name="confirmPassword"
             labelName="Confirm Password"
             placeholder="Confirm password"
-            onChange={setConfirmPasswordValue}
-            value={confirmPassword}
-            error={null}
+            onChange={confirmPasswordChangeHandler}
+            onBlur={confirmPasswordBlurHandler}
+            value={enteredConfirmPassword}
+            error={
+              confirmPasswordInputHasError ? confirmPasswordErrorMessage : null
+            }
           />
           <InputField
             type="text"
@@ -184,9 +425,10 @@ const Register = () => {
             name="empNo"
             labelName="Employee No."
             placeholder="Enter a employee no."
-            onChange={setEmployeeNoValue}
-            value={employeeNo}
-            error={null}
+            onChange={employeeNoChangeHandler}
+            onBlur={employeeNoBlurHandler}
+            value={enteredEmployeeNo}
+            error={employeeNoInputHasError ? employeeNoErrorMessage : null}
           />
           <InputField
             type="text"
@@ -194,9 +436,12 @@ const Register = () => {
             name="firstName"
             labelName="First Name"
             placeholder="Enter a first name"
-            onChange={setFirstNameValue}
-            value={firstName}
-            error={null}
+            onChange={firstNameChangeHandler}
+            onBlur={firstNameBlurHandler}
+            value={enteredFirstName}
+            error={
+              firstNameInputHasError ? "Please enter a valid first name" : null
+            }
           />
 
           <InputField
@@ -205,9 +450,12 @@ const Register = () => {
             name="middleName"
             labelName="Middle Name"
             placeholder="Enter a middle name"
-            onChange={setMiddleNameValue}
-            value={middleName}
-            error={null}
+            onChange={middleNameChangeHandler}
+            onBlur={middleNameBlurHandler}
+            value={enteredMiddleName}
+            error={
+              middleNameInputHasError ? "Please enter a middle name" : null
+            }
           />
 
           <InputField
@@ -216,9 +464,10 @@ const Register = () => {
             name="lastName"
             labelName="Last Name"
             placeholder="Enter a last name"
-            onChange={setLastNameValue}
-            value={lastName}
-            error={null}
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurHandler}
+            value={enteredLastName}
+            error={lastNameInputHasError ? "Please enter a last name" : null}
           />
 
           <InputField
@@ -227,9 +476,14 @@ const Register = () => {
             name="extensionName"
             labelName="Extension Name"
             placeholder="Enter a extension name"
-            onChange={setExtensionnameValue}
-            value={extensionName}
-            error={null}
+            onChange={extensionNameChangeHandler}
+            onBlur={extensionNameBlurHandler}
+            value={enteredExtensionName}
+            error={
+              extensionNameInputHasError
+                ? "Please enter a extension name"
+                : null
+            }
           />
 
           <DateField
@@ -237,20 +491,24 @@ const Register = () => {
             name="birthdate"
             labelName="Birthdate"
             placeholder="Enter a birthdate"
-            onChange={setBirthdateValue}
-            value={birthdate}
-            error={null}
+            onChange={birthdateChangeHandler}
+            onBlur={birthdateBlurHandler}
+            value={enteredBirthdate}
+            error={birthdateInputHasError ? "Please select a date." : null}
           />
 
-          <InputField
-            type="text"
+          <DropdownField
             id="civilStatus"
             name="civilStatus"
+            options={CIVIL_STATUS}
             labelName="Civil Status"
-            placeholder="Enter a civil status"
-            onChange={setCivilStatusValue}
-            value={civilStatus}
-            error={null}
+            onChange={civilStatusChangeHandler}
+            onBlur={civilStatusBlurHandler}
+            value={enteredCivilStatus}
+            type="form"
+            error={
+              civilStatusInputHasError ? "Please select a civil status." : null
+            }
           />
 
           <DropdownField
@@ -258,9 +516,11 @@ const Register = () => {
             name="sex"
             labelName="Sex"
             options={GENDERS}
-            onChange={setSexValue}
-            value={sex}
-            type="filter"
+            onChange={sexChangeHandler}
+            onBlur={sexBlurHandler}
+            value={enteredSex}
+            type="form"
+            error={sexInputHasError ? "Please select a gender." : null}
           />
 
           <InputField
@@ -269,9 +529,12 @@ const Register = () => {
             name="houseNo"
             labelName="House No."
             placeholder="Enter a house no."
-            onChange={setHouseNoValue}
-            value={houseNo}
-            error={null}
+            onChange={houseNoChangeHandler}
+            onBlur={houseNoBlurHandler}
+            value={enteredHouseNo}
+            error={
+              houseNoInputHasError ? "Please enter a valid house no.." : null
+            }
           />
 
           <InputField
@@ -280,20 +543,26 @@ const Register = () => {
             name="street"
             labelName="Street"
             placeholder="Enter a street"
-            onChange={setStreetValue}
-            value={street}
-            error={null}
+            onChange={streetChangeHandler}
+            onBlur={streetBlurHandler}
+            value={enteredStreet}
+            error={streetInputHasError ? "Please enter a valid street." : null}
           />
 
           <InputField
             type="text"
             id="subdivision"
             name="subdivision"
-            labelName="Subdivistion"
+            labelName="Subdivision"
             placeholder="Enter a subdivision"
-            onChange={setSubdivisionValue}
-            value={subdivision}
-            error={null}
+            onChange={subdivisionChangeHandler}
+            onBlur={subdivisionBlurHandler}
+            value={enteredSubdivision}
+            error={
+              subdivisionInputHasError
+                ? "Please enter a valid subdivision."
+                : null
+            }
           />
 
           <InputField
@@ -302,9 +571,12 @@ const Register = () => {
             name="barangay"
             labelName="Barangay"
             placeholder="Enter a barangay"
-            onChange={setBarangayValue}
-            value={barangay}
-            error={null}
+            onChange={barangayChangeHandler}
+            onBlur={barangayBlurHandler}
+            value={enteredBarangay}
+            error={
+              barangayInputHasError ? "Please enter a valid barangay." : null
+            }
           />
 
           <InputField
@@ -313,9 +585,14 @@ const Register = () => {
             name="municipality"
             labelName="Municipality"
             placeholder="Enter a municipality"
-            onChange={setMunicipalityValue}
-            value={municipality}
-            error={null}
+            onChange={municipalityChangeHandler}
+            onBlur={municipalityBlurHandler}
+            value={enteredMunicipality}
+            error={
+              municipalityInputHasError
+                ? "Please enter a valid municipality."
+                : null
+            }
           />
 
           <InputField
@@ -324,9 +601,12 @@ const Register = () => {
             name="province"
             labelName="Province"
             placeholder="Enter a province"
-            onChange={setProvinceValue}
-            value={province}
-            error={null}
+            onChange={provinceChangeHandler}
+            onBlur={provinceBlurHandler}
+            value={enteredProvince}
+            error={
+              provinceInputHasError ? "Please enter a valid province." : null
+            }
           />
 
           <InputField
@@ -335,9 +615,12 @@ const Register = () => {
             name="zipCode"
             labelName="Zip Code"
             placeholder="Enter a zip code"
-            onChange={setZipCodeValue}
-            value={zipCode}
-            error={null}
+            onChange={zipCodeChangeHandler}
+            onBlur={zipCodeBlurHandler}
+            value={enteredZipCode}
+            error={
+              zipCodeInputHasError ? "Please enter a valid zip code." : null
+            }
           />
 
           <InputField
@@ -346,9 +629,12 @@ const Register = () => {
             name="contactNo"
             labelName="Contact No."
             placeholder="Enter a contact no."
-            onChange={setContactNoValue}
-            value={contactNo}
-            error={null}
+            onChange={contactNoChangeHandler}
+            onBlur={contactNoBlurHandler}
+            value={enteredContactNo}
+            error={
+              contactNoInputHasError ? "Please enter a contact no.." : null
+            }
           />
 
           <Button label="Sign Up" type="primary" />
