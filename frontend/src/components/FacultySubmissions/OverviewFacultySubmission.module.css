@@ -1,0 +1,16 @@
+.mainConainter{
+    float: left;
+    width: 100%;
+    border: 1px solid black;
+}
+.filterBtnContainer {
+    margin: 8px 0;
+    float: right;
+    display: flex;
+    width: fit-content;
+}
+.secondarycontainer{
+    border: 1px solid black;
+    width: 100px;
+    width: 100%;
+}

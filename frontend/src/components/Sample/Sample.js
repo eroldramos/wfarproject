@@ -285,6 +285,18 @@ function Sample() {
             <SmallButton
                 label="Check WFAR"
                 type="primary"></SmallButton>
+            <SmallButton
+                label="Regular"
+                type="primary"
+                size="r"></SmallButton>
+            <SmallButton
+                label="Small"
+                type="primary"
+                size="s"></SmallButton>
+            <SmallButton
+                label="Extra Small"
+                type="primary"
+                size="xs"></SmallButton>
             <PrintButton
                 label = "Print"
                 type = "primary"
