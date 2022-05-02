@@ -1,4 +1,4 @@
-import SemFilter from "../UI/FormControl/DropdownField/DropdownField";
+import SemFilter from "../../UI/FormControl/DropdownField/DropdownField";
 import styles from "./SemFilter.module.css";
 const semFilter = (props) => {
   const SAMPLE_ITEMS = [

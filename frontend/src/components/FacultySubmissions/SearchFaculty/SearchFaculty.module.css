@@ -1,0 +1,7 @@
+.searchFieldContainer{
+    margin: 15px 0;
+    margin-left: 200px;
+    display: flex;
+    width: fit-content;
+    flex: 1;
+}

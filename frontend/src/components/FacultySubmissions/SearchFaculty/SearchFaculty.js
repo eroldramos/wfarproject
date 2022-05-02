@@ -1,4 +1,4 @@
-import SearchField from "../UI/FormControl/SearchField/SearchField";
+import SearchField from "../../UI/FormControl/SearchField/SearchField";
 import styles from "./SearchFaculty.module.css";
 
 const searchFaculty = () => {
