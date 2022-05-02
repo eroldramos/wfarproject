@@ -13,7 +13,7 @@ const AddEntry = (props) => {
                 <div className={styles['add-entry-form-container']}>
                     <h1>Add WFAR Week 4 Entry</h1>
                     <p className={styles['subtitle']}>Fill up the form to submit an entry for Week 4 of S.Y. 2022 - 2021 1st semester.</p>
-                    <p className={styles['required-label']}><strong>Required<span>*</span></strong></p>
+                    <p className={styles['required-label']}><strong>Required</strong></p>
                     <form className={styles['add-entry-form']}>
                         {/* row 1 */}
                         <div>
@@ -86,6 +86,18 @@ const AddEntry = (props) => {
                                 size="lg"
                                 important={1}
                             />
+                        </div>
+
+                        {/* row 4 */}
+                        <div>
+                        </div>
+
+                        {/* row 5 */}
+                        <div>
+                        </div>
+
+                        {/* row 6 */}
+                        <div>
                         </div>
                     </form>
                 </div>

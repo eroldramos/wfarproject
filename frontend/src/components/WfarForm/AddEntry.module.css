@@ -13,3 +13,20 @@
     display: flex;
     justify-content: space-between;
 }
+
+.subtitle {
+    margin: 5px 0;
+}
+
+.required-label {
+    margin: 10px 0;
+}
+
+.required-label:after {
+    content: "*";
+    color: red;
+}
+
+.subtitle {
+    padding: 0;
+}
