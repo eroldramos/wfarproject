@@ -12,7 +12,7 @@ const ArchivedEntries = (props) => {
                 {items.map(item => {
                     return (<ArchivedEntry key={item.id} 
                                             id={item.id}
-                                            applicableDate={item.applicableDate}
+                                            applicableDate={item.start}
                                             CYS={item.CYS}
                                             subject={item.subject}
                                             semester={item.semester}

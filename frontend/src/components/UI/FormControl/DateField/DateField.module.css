@@ -1,7 +1,7 @@
 /* Pinag-iisipan ko pa if tama ba na i-module ko pa ito kasi almost same lang naman talaga design nya kay date field */
 
 .form-control {
-    margin: 5px 5px;
+    padding: 5px 5px;
 }
 
 .form-control.rg {
@@ -24,6 +24,12 @@
     margin: 15px 0;
 }
 
+.form-control.important label:after {
+    content: "*";
+    font-weight: 600;
+    color: red;
+}
+
 .form-control input {
     outline: none;
     border: 2px solid transparent;
@@ -39,6 +45,7 @@
     padding: 10px 20px;
     background: #F4F4F4;
     transition: .05s linear;
+    
 }
 
 .form-control input:focus {
