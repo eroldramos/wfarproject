@@ -88,6 +88,9 @@ const MyWFARCard = (props) => {
             break;
     }
 
+    const displayEntries = () => {
+
+    }
 
     return (
         <div className={styles['card']}>
@@ -116,7 +119,7 @@ const MyWFARCard = (props) => {
                         {buttonsJSX}
                     </div>
                     <div>
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg onClick={displayEntries} width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 1.41L10.59 -6.16331e-08L6 4.58L1.41 -4.62904e-07L-6.16331e-08 1.41L6 7.41L12 1.41Z" fill="#323232" />
                         </svg>
                     </div>
@@ -124,7 +127,7 @@ const MyWFARCard = (props) => {
 
             </div>
 
-            <div className={styles['entries-container']}>
+            <div id="entries-container" className={styles['entries-container']}>
                 <MyWfarEntry no={1} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
                 <MyWfarEntry no={2} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
             </div>

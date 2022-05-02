@@ -32,7 +32,9 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission" element={<MySubmission />}></Route>
+          <Route path="/mySubmission" element={<MySubmission />}>
+            
+          </Route>
         </Routes>
       </div>
     </div>

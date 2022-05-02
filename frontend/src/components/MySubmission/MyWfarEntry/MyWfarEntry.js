@@ -3,6 +3,7 @@ import styles from './MyWfarEntry.module.css';
 
 const MyWfarEntry = (props) => {
 
+    // let displayClass = props.display; // block or hide
 
     const ITEMS = [
         {
