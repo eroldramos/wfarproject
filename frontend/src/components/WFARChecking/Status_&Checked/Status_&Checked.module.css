@@ -1,0 +1,14 @@
+.status_CheckContainer{
+    margin-right: 15px;
+}
+.mainContainer{
+    display: flex;
+    margin-right: 20px;
+}
+.dataContainer svg{
+    margin-bottom: -2px;
+    margin-right: 10px;
+}
+.dataContainer h5{
+    font-weight: normal;
+}

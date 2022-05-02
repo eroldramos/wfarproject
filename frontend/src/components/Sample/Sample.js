@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import InputField from "../UI/FormControl/InputField/InputField";
+import CommentField from "../UI/FormControl/InputField/CommentField";
 import DateField from "../UI/FormControl/DateField/DateField";
 import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
@@ -58,7 +59,7 @@ function Sample() {
                 <legend>Sample TextField components</legend>
 
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex"}}>
                     <InputField
                         id="sampleText"
                         type="text"
@@ -83,6 +84,15 @@ function Sample() {
                         placeholder="Enter any sample text"
                         size="rg"
                     />
+                    <CommentField
+                        id="sampleText"
+                        type="number"
+                        labelName="Sample Text"
+                        inputName="sampleText"
+                        placeholder="Enter a comment..."
+                        size="rg"
+                    />
+                    
                 </div>
 
 

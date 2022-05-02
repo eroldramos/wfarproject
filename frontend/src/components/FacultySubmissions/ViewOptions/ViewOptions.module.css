@@ -1,0 +1,6 @@
+.viewOptionsContainer{
+    margin: 8px 0;
+    float: right;
+    display: flex;
+    width: fit-content;
+}
