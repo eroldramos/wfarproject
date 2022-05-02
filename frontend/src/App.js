@@ -12,6 +12,7 @@ import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScree
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView"
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 
+import AddEntry from "./components/WfarForm/AddEntry";
 function App() {
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
@@ -35,6 +36,7 @@ function App() {
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route path="/mySubmission" element={<MySubmission />}></Route>
+          <Route path="/addEntry" element={<AddEntry />}></Route>
         </Routes>
       </div>
     </div>

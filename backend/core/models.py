@@ -96,6 +96,7 @@ class WFAR(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     checked_at = models.DateTimeField(null=True)
+    submitted_at = models.DateTimeField(null=True)
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
     faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
     week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)

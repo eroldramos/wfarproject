@@ -1,15 +1,15 @@
 /* Pinag-iisipan ko pa if tama ba na i-module ko pa ito kasi almost same lang naman talaga design nya kay date field */
 
 .form-control {
-    margin: 5px 5px;
+    padding: 15px 10px 15px 0;
 }
 
 .form-control.rg {
-    width: 30%;
+    width: 32.5%;
 }
 
 .form-control.md {
-    width: 50%;
+    width: 49%;
 }
 
 .form-control.lg {
@@ -22,6 +22,12 @@
     font-size: 1em;
     display: block;
     margin: 15px 0;
+}
+
+.form-control.important label:after {
+    content: "*";
+    font-weight: 600;
+    color: red;
 }
 
 .form-control input {
@@ -39,6 +45,7 @@
     padding: 10px 20px;
     background: #F4F4F4;
     transition: .05s linear;
+    
 }
 
 .form-control input:focus {

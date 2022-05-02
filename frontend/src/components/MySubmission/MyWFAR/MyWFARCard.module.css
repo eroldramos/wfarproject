@@ -4,14 +4,20 @@
     padding: 20px 25px;
     margin: 15px 0;
     width: 100%;
+}
+
+.wfar-container {
     display: flex;
+    width: 100%;
     align-items: center;
 }
 
-.card > div {
+.entries-container {
+    width: 100%;
+    display: none;
 }
 
-.card > div:nth-child(1) {
+.wfar-container > div:nth-child(1) {
     width: 20%;
     border-right: 1px solid #E5E5E5;
     display: flex;
@@ -20,12 +26,12 @@
     padding-right: 5%;
 }
 
-.card > div:nth-child(2) {
+.wfar-container > div:nth-child(2) {
     width: 30%;
     padding: 0px 5%;
 }
 
-.card > div:nth-child(3) {
+.wfar-container > div:nth-child(3) {
     display: flex;
     align-items: center;
     justify-content:end;
@@ -33,10 +39,10 @@
     padding: 0px 2%;
 }
 
-.card .week-container {
+.wfar-container .week-container {
     width: fit-content;
 }
-.card .week-container .week-label {
+.wfar-container .week-container .week-label {
     font-weight: 700;
     font-size: 1em;
     padding: 5px 7.5px;
@@ -44,7 +50,7 @@
     text-align: center;
 }
 
-.card .week-container .week-date {
+.wfar-container .week-container .week-date {
     font-weight: 500;
     font-size: .875em;
     padding: 5px 7.5px 5px 7.5px;
@@ -52,7 +58,7 @@
     text-align: center;
 }
 
-.card .entry-label-container {
+.wfar-container .entry-label-container {
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -60,7 +66,7 @@
 }
 
 
-.card .entry-label-container .entry-no {
+.wfar-container .entry-label-container .entry-no {
     font-size: 1.5em;
     margin-right: 15px;
 }
@@ -69,3 +75,4 @@
     margin-right: 15px;
     align-items: center;
 }
+

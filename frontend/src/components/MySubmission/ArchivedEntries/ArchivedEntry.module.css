@@ -1,0 +1,55 @@
+.archived-entry {
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    margin: 12px 25px;
+    padding: 15px 30px;
+    color:#777777 !important;
+    display: flex;
+    align-items: center;
+    font-size: .875em;
+    font-weight: 500;
+}
+
+.archived-entry div {
+    color:#777777 !important;
+}
+
+.archived-entry > div {
+    display: flex;
+    align-items: center;
+}
+
+.column-1 {
+    width: 60%;
+}
+
+.column-2 {
+    width: 40%;
+    justify-content: right;
+}
+
+.accomplishment-date-label {
+    padding: 5px 7.5px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.cys-subject {
+    padding: 5px 7.5px;
+    text-align: center;
+}
+
+.semester {
+    padding: 5px 7.5px;
+    text-align: center;
+    font-style: italic;
+}
+
+.week {
+    padding: 5px 7.5px;
+    text-align: center;
+    font-style: italic;
+    margin-right: 25px;
+}
+
