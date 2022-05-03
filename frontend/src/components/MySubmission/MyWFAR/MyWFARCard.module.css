@@ -14,7 +14,7 @@
 
 .entries-container {
     width: 100%;
-    display: none;
+    /* display: none; */
 }
 
 .wfar-container > div:nth-child(1) {

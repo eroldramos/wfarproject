@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Public Sans', sans-serif;
+  }
+
+  .container{
+    padding-top: 1px;
+  }
+  .pic{
+   width: 250px;
+   height: 250px;
+   background-size: cover;
+   display: block;
+   border-radius: 125px;
+  }
+  .Profile-head{
+    position: relative;
+    bottom: 200px;
+    padding-left: 300px;
+    
+  }
+  .EditButton{
+    position: relative;
+    top: 80px;
+    padding-left: 1200px;
+    
+  }
+  .ChangeButton{
+    position: relative;
+    top: 90px;
+    padding-left: 1200px;
+    
+  }
+  h1{
+    font-style: bold;
+  }
+  h5{
+    padding-left: 60px;
+  }
+  .Editbtn {
+    font: inherit;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #BE5A40;
+    color: white;
+    border: 1px solid #BE5A40;
+    margin: 0 1rem;
+    
+    
+}
+.Editbtn:hover{
+    background-color: #D3D3D3;
+    border-color: #D3D3D3;
+}
+
+.Editbtn--alt{
+    background-color: transparent;
+    color: #BE5A40;
+}
+
+.Editbtn--alt:hover{
+    background-color: #f8dae9;
+}
+.Changebtn {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #BE5A40;
+  color: white;
+  border: 1px solid #BE5A40;
+  margin: 0 1rem;
+  
+  
+}
+.Changebtn:hover{
+  background-color: #D3D3D3;
+  border-color: #D3D3D3;
+}
+
+.Changebtn--alt{
+  background-color: transparent;
+  color: #BE5A40;
+}
+
+.Changebtn--alt:hover{
+  background-color: #f8dae9;
+}
+.HEADER{
+    color: #BE5A40;
+    padding-top: 15px;
+    padding-left: 50px;
+}
