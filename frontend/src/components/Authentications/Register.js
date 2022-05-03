@@ -440,7 +440,7 @@ const Register = () => {
             onBlur={firstNameBlurHandler}
             value={enteredFirstName}
             error={
-              firstNameInputHasError ? "Please enter a valid first name" : null
+              firstNameInputHasError ? "Please enter a valid first name." : null
             }
           />
 
@@ -454,7 +454,7 @@ const Register = () => {
             onBlur={middleNameBlurHandler}
             value={enteredMiddleName}
             error={
-              middleNameInputHasError ? "Please enter a middle name" : null
+              middleNameInputHasError ? "Please enter a middle name." : null
             }
           />
 
@@ -467,7 +467,7 @@ const Register = () => {
             onChange={lastNameChangeHandler}
             onBlur={lastNameBlurHandler}
             value={enteredLastName}
-            error={lastNameInputHasError ? "Please enter a last name" : null}
+            error={lastNameInputHasError ? "Please enter a last name." : null}
           />
 
           <InputField
@@ -481,7 +481,7 @@ const Register = () => {
             value={enteredExtensionName}
             error={
               extensionNameInputHasError
-                ? "Please enter a extension name"
+                ? "Please enter a extension name."
                 : null
             }
           />

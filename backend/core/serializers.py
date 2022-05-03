@@ -23,6 +23,25 @@ class FacultySerializer(serializers.ModelSerializer):
             name = obj.email
         return name
 
+class PendingFacultySerializer(serializers.ModelSerializer):
+ 
+    fullname = serializers.SerializerMethodField(read_only=True)
+    createdAt = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ['id', 'fullname', 'emp_no','username', 'email', 'contact_no', 'createdAt']
+
+    def get_fullname(self, obj):
+        name = f"{obj.last_name}, {obj.first_name} {obj.middle_name}"
+        if name == " " or name == "":
+            name = obj.email
+        return name
+    def get_createdAt(self, obj):
+        fmt = '%Y-%m-%d'
+        return datetime.strftime(obj.created_at, fmt)
+
+        
+
 class FacultySerializerWithToken(FacultySerializer):
     token =  serializers.SerializerMethodField(read_only=True)
     expirationDate =  serializers.SerializerMethodField(read_only=True)

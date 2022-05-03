@@ -6,6 +6,7 @@ import Sample from "./components/Sample/Sample";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import RegisterScreen from "./components/Screens/RegisterScreen";
 import LoginScreen from "./components/Screens/LoginScreen";
+import PendingAccountsScreen from "./components/Screens/PendingAccountsScreen";
 import AdminLoginScreen from "./components/Screens/AdminLoginScreen";
 import MySubmission from "./components/MySubmission/MySubmission";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
@@ -33,6 +34,11 @@ function App() {
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route path="/mySubmission" element={<MySubmission />}></Route>
+
+          <Route
+            path="/pending-accounts/"
+            element={<PendingAccountsScreen />}
+          ></Route>
         </Routes>
       </div>
     </div>
