@@ -1,0 +1,37 @@
+.firstContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.print_CheckContainer{
+    display: flex;
+}
+.secondContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.mainContainer{
+    margin-top: 20px;
+    display: flex;
+}
+.entriesContainer{
+    width: 64%;
+
+}
+.commentsContainer{
+    width: 36%;
+    border: 1px solid black;
+}
+.divider{
+    height: 400px;
+    margin: 0px 30px;
+    border: 1px solid #F8F8FA;
+}
+.Label{
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.entries{
+    border: 1px solid #F8F8FA;
+    height: 90px;
+    border-radius: 8px;
+}

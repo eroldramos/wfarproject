@@ -20,8 +20,8 @@ const SideNav = props => {
 
         document.getElementById("nav-open").style.display = "none";
         document.getElementById("nav-close").style.display = "block";
-        document.getElementById("side-nav").style.width = "260px";
-        document.getElementById("main").style.marginLeft = "260px";
+        document.getElementById("side-nav").style.width = "245px";
+        document.getElementById("main").style.marginLeft = "245px";
         document.getElementsByClassName("account-profile")[0].style.display = "flex";
     }
 

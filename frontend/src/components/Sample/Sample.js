@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import InputField from "../UI/FormControl/InputField/InputField";
+import CommentField from "../UI/FormControl/InputField/CommentField";
 import DateField from "../UI/FormControl/DateField/DateField";
 import SearchField from "../UI/FormControl/SearchField/SearchField";
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
@@ -11,6 +12,7 @@ import Tab from "../UI/Tab/Tab";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import FilterButton from "../UI/FormControl/Button/FilterButton";
 import PrintButton from "../UI/FormControl/Button/PrintButton";
+import IconButton from "../UI/FormControl/Button/IconButton";
 
 function Sample() {
 
@@ -46,6 +48,10 @@ function Sample() {
         alert("Configure this on the checkbox field component.");
     }
 
+    const icon = <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 17.3333H17.3334V24C17.3334 24.7333 16.7334 25.3333 16 25.3333C15.2667 25.3333 14.6667 24.7333 14.6667 24V17.3333H8.00002C7.26669 17.3333 6.66669 16.7333 6.66669 16C6.66669 15.2666 7.26669 14.6666 8.00002 14.6666H14.6667V7.99996C14.6667 7.26663 15.2667 6.66663 16 6.66663C16.7334 6.66663 17.3334 7.26663 17.3334 7.99996V14.6666H24C24.7334 14.6666 25.3334 15.2666 25.3334 16C25.3334 16.7333 24.7334 17.3333 24 17.3333Z" fill="#323232" />
+    </svg>;
+
     return (
         <Fragment>
 
@@ -53,7 +59,7 @@ function Sample() {
                 <legend>Sample TextField components</legend>
 
 
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex"}}>
                     <InputField
                         id="sampleText"
                         type="text"
@@ -78,6 +84,15 @@ function Sample() {
                         placeholder="Enter any sample text"
                         size="rg"
                     />
+                    <CommentField
+                        id="sampleText"
+                        type="number"
+                        labelName="Sample Text"
+                        inputName="sampleText"
+                        placeholder="Enter a comment..."
+                        size="rg"
+                    />
+                    
                 </div>
 
 
@@ -166,6 +181,12 @@ function Sample() {
                         label="Cancel"
                         type="cancel"
                         size="xs" />
+
+                    <IconButton
+                        label="Button"
+                        type="cancel"
+                        size="xs"
+                        svg={icon} />
                 </fieldset>
             </form>
 
@@ -274,6 +295,18 @@ function Sample() {
             <SmallButton
                 label="Check WFAR"
                 type="primary"></SmallButton>
+            <SmallButton
+                label="Regular"
+                type="primary"
+                size="r"></SmallButton>
+            <SmallButton
+                label="Small"
+                type="primary"
+                size="s"></SmallButton>
+            <SmallButton
+                label="Extra Small"
+                type="primary"
+                size="xs"></SmallButton>
             <PrintButton
                 label = "Print"
                 type = "primary"

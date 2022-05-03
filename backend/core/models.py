@@ -92,10 +92,11 @@ class Week(models.Model):
 
 # WFAR
 class WFAR(models.Model):
-    status = models.PositiveSmallIntegerField(default=1) # 1 - not checked, 2 - ok, 3 - with revisions
+    status = models.PositiveSmallIntegerField(default=1) # 1 - not submitted, 2 - to be checked, 3 - ok, 4 - with revisions
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     checked_at = models.DateTimeField(null=True)
+    submitted_at = models.DateTimeField(null=True)
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
     faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
     week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)

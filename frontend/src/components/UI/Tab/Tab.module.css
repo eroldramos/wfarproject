@@ -13,7 +13,7 @@
     font-style: normal;
     line-height: 150%;
     font-weight: 500;
-    font-size: 1.125em;
+    font-size: 1em;
     color: #777;
     padding: 1.15% 3%;
     transition: .12s linear;
@@ -21,7 +21,6 @@
 
 .tab li.active {
     font-weight: 700;
-    font-size: 1.125em;
     color: #BE5A40;
     border-bottom: 3px solid #BE5A40;
 }

@@ -10,6 +10,10 @@ import PendingAccountsScreen from "./components/Screens/PendingAccountsScreen";
 import AdminLoginScreen from "./components/Screens/AdminLoginScreen";
 import MySubmission from "./components/MySubmission/MySubmission";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
+import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
+import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
+
+import AddEntry from "./components/WfarForm/AddEntry";
 function App() {
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
@@ -24,10 +28,9 @@ function App() {
       <SideNav userLevel="1"></SideNav>
       <div id="main">
         <Routes>
-          <Route
-            path="/facultySubmission"
-            element={<FacultySubmissionScreen />}
-          ></Route>
+          <Route path="/OverView" element={<FacultySubmissionScreen />}></Route>
+          <Route path="/WeeklyView" element={<WeeklyView />}></Route>
+          <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
           <Route path="/sample" element={<Sample />}></Route>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           <Route path="/register" element={<RegisterScreen />}></Route>
@@ -39,6 +42,7 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
+          <Route path="/addEntry" element={<AddEntry />}></Route>
         </Routes>
       </div>
     </div>
