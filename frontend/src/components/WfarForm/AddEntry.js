@@ -2,8 +2,28 @@ import { Fragment, useState } from "react";
 import DateField from "../UI/FormControl/DateField/DateField";
 import InputField from "../UI/FormControl/InputField/InputField";
 import styles from "./AddEntry.module.css";
+import LearningActivities from "./LearningActivities/LearningActivities";
+import DynamicInputField from "./UI/DynamicInputField";
+import Button from "../UI/FormControl/Button/Button";
 
 const AddEntry = (props) => {
+
+    const [accomplishedDate, setAccomplishedDate] = useState('');
+    const [subject, setSubject] = useState('');
+    const [cys, setCys] = useState('');
+    const [noOfAttendees, setNoOfAttendees] = useState(0);
+    const [meetingLink, setMeetingLink] = useState('');
+
+    const accomplishedDateOnChange = (event) => {
+        setAccomplishedDate(event.target.value);
+    }
+    
+
+    const addEntry = (event) => {
+        event.preventDefault();
+        console.log("Entry added!");
+    }
+
     return (
         <Fragment>
             <div className={styles['container']}>
@@ -14,20 +34,21 @@ const AddEntry = (props) => {
                     <h1>Add WFAR Week 4 Entry</h1>
                     <p className={styles['subtitle']}>Fill up the form to submit an entry for Week 4 of S.Y. 2022 - 2021 1st semester.</p>
                     <p className={styles['required-label']}><strong>Required</strong></p>
-                    <form className={styles['add-entry-form']}>
+
+                    <form className={styles['add-entry-form']} onSubmit={addEntry}>
                         {/* row 1 */}
-                        <div>
+                        <div className={styles['row-1']}>
                             <DateField
                                 id="accomplishedDate"
                                 labelName="Date of Class / Accomplishment"
                                 important={1}
                                 onBlur={null}
-                                onChange={null}
-                                value={null}
+                                onChange={accomplishedDateOnChange}
+                                value={accomplishedDate}
                                 size="rg" />
                         </div>
                         {/* row 2 */}
-                        <div>
+                        <div className={styles['row-2']}>
                             <InputField
                                 id="subject"
                                 type="text"
@@ -72,7 +93,7 @@ const AddEntry = (props) => {
                         </div>
 
                         {/* row 3 */}
-                        <div>
+                        <div className={styles['row-3']}>
                             <InputField
                                 id="meetingLink"
                                 type="text"
@@ -89,15 +110,19 @@ const AddEntry = (props) => {
                         </div>
 
                         {/* row 4 */}
-                        <div>
+                        <div className={styles['row-4']}>
+                            <label className={styles['add-entry-label']}>Learning Activities</label>
+                            <LearningActivities></LearningActivities>
                         </div>
 
                         {/* row 5 */}
-                        <div>
+                        <div className={styles['row-5']}>
+                            <label className={styles['add-entry-label']}>Upload attachments</label>
                         </div>
 
-                        {/* row 6 */}
-                        <div>
+                        <div className={styles['button-container']}>
+                            <Button label="Cancel" type="cancel" onClick={null}></Button>
+                            <Button label="Save Entry" type="primary" onClick={null}></Button>
                         </div>
                     </form>
                 </div>
