@@ -12,7 +12,7 @@ import MySubmission from "./components/MySubmission/MySubmission";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
-
+import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
 import AddEntry from "./components/WfarForm/AddEntry";
 function App() {
   // sample use state for two-way binding
@@ -39,9 +39,15 @@ function App() {
           <Route path="/mySubmission" element={<MySubmission />}></Route>
 
           <Route
+            path="/manage-semesters"
+            element={<ManageSemestersScreen />}
+          ></Route>
+
+          <Route
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
+
           <Route path="/addEntry" element={<AddEntry />}></Route>
         </Routes>
       </div>
