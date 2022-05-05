@@ -76,13 +76,19 @@ export default class Profile extends React.Component{
   }
 
   civilStatusSwitch(){
-    if(this.state.data.sex == 1){
+    if(this.state.data.civil_status == 1){
      return <h5 style={{color: '#C0C0C0'}}> Single </h5>
-      } else if(this.state.data.sex == 2){
+      } else if(this.state.data.civil_status == 2){
        return  <h5 style={{color: '#C0C0C0'}}> Married </h5>
-      }else if(this.state.data.sex == 3){
+      }else if(this.state.data.civil_status == 3){
        return  <h5 style={{color: '#C0C0C0'}}> Widowed </h5>
       }
+  }
+
+  birthdayCalculator(){
+    let date = new Date(this.state.data.birthdate);
+    let month = date.toLocaleString('en-us', { month: 'long' });
+    return <h5 style={{color: '#C0C0C0'}}> {month +' '+ date.getDate() + ', ' + date.getFullYear()}</h5>
   }
 
   render(){
@@ -110,9 +116,13 @@ export default class Profile extends React.Component{
                   {this.userTypeSwitch()}
                   <h5 style={{color: '#C0C0C0'}}> {this.state.data.emp_no}</h5>
                   {this.sexSwitch()}
-                  <h5 style={{color: '#C0C0C0'}}>{this.state.data.birthdate} </h5>
+                  {this.birthdayCalculator()}
                   {this.civilStatusSwitch()}
-                  <h5 style={{color: '#C0C0C0'}}> {this.state.data.province} </h5>
+                  <h5 style={{color: '#C0C0C0'}}> {this.state.data.house_no + ' ' + this.state.data.street
+                   + ' St., ' + this.state.data.subdivision
+                   + ' ' + this.state.data.barangay
+                   + ' ' + this.state.data.municipality
+                   + ', ' + this.state.data.province} </h5>
                   <h1> Contact Information </h1>
                   <h5 style={{color: '#C0C0C0'}}>{this.state.data.contact_no} </h5>
                   <h5 style={{color: '#C0C0C0'}}> {this.state.data.email}</h5>
