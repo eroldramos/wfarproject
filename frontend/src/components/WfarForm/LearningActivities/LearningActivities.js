@@ -10,14 +10,16 @@ const LearningActivities = (props) => {
                 let isLast = index === props.inputFields.length - 1 ? "1" : "";
                 
                 return <DynamicInputField key={index}
-                        index={index}
-                        type="text"
-                        isLast={isLast}
-                        onChange={event => props.onChange(index, event)}
-                        onRemoveInput={props.onRemoveInput}
-                        onAddInput={props.onAddInput}
-                        placeholder={"Enter learning activity no. " + (index + 1)}
-                        value={input.value} />
+                            index={index}
+                            type="text"
+                            isLast={isLast}
+                            onChange={event => props.onChange(index, event)}
+                            onBlur={event => props.onBlur(index, event)}
+                            onRemoveInput={props.onRemoveInput}
+                            onAddInput={props.onAddInput}
+                            placeholder={"Enter learning activity no. " + (index + 1)}
+                            value={input.value}
+                            error={input.error} />
             })}
         </div>
     );

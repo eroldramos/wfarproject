@@ -11,6 +11,7 @@
 
 .add-entry-form > div:nth-child(2) {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -23,7 +24,7 @@
     margin: 15px 0 0 0;
 }
 
-.add-entry-form label:after {
+.add-entry-label.required:after {
     content: "*";
     color: red;
 }
@@ -51,6 +52,8 @@
 }
 
 .button-container {
+    margin-top: 50px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: right;
 }

@@ -1,11 +1,11 @@
-import styles from './TeamMeetScreenshots.module.css';
+import styles from './ProvidedActivities.module.css';
 import ImageCard from '../../UI/FormControl/ImageCard/ImageCard';
 
-const TeamMeetScreenshots = (props) => {
+const ProvidedActivities = (props) => {
 
     const getFileImage = () => {
         console.log("hello!");
-        document.getElementById("teamMeetScreenshotImageFileInput").click();
+        document.getElementById("providedScreenshotImageFileInput").click();
     }
 
     const removeImage = (index) => {
@@ -14,11 +14,11 @@ const TeamMeetScreenshots = (props) => {
     }
 
     return (
-        <div class={styles["team-meet-screenshots"]}>
-            <label>Teams Meet Screenshot</label>
+        <div className={styles['provided-activities-screenshots']}>
+            <label>Provided Activities</label>
 
             <div className={styles['imageContainer']}>
-                {props.teamMeetScreenshots.map((file, index) => {
+                {props.providedActivitiesScreenshots.map((file, index) => {
                     return (
                         <div key={index}>
                             <ImageCard imageSrc={file.imageSrc} removeImage={() => removeImage(index)} />
@@ -27,12 +27,12 @@ const TeamMeetScreenshots = (props) => {
                 })}
 
                 <ImageCard imageSrc="" getFileImage={getFileImage} onRemoveImage={null} />
-                <input type="file" id="teamMeetScreenshotImageFileInput" name="myfile" accept="image/*" onChange={props.getImage} style={{ display: "none" }}></input>
+                <input type="file" id="providedScreenshotImageFileInput" name="myfile" accept="image/*" onChange={props.getImage} style={{ display: "none" }}></input>
 
             </div>
-            
+
         </div>
     );
 }
 
-export default TeamMeetScreenshots;
+export default ProvidedActivities;
