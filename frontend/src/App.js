@@ -14,6 +14,8 @@ import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
 import AddEntry from "./components/WfarForm/AddEntry";
 import Dashboard from "./components/Dashboard/Dashboard";
+import AccountScreen from "./components/Screens/AccountScreen";
+
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route path="/mySubmission" element={<MySubmission />}></Route>
+          <Route path="/profile" element={<AccountScreen />}></Route>
 
           <Route
             path="/manage-semesters"

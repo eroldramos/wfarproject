@@ -12,6 +12,7 @@
    background-size: cover;
    display: block;
    border-radius: 125px;
+   cursor: pointer;
   }
   .Profile-head{
     position: relative;
