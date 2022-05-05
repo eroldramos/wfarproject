@@ -5,7 +5,6 @@ import styles from "./AddEntry.module.css";
 import LearningActivities from "./LearningActivities/LearningActivities";
 import DynamicInputField from "./UI/DynamicInputField";
 import Button from "../UI/FormControl/Button/Button";
-import TeamMeetScreenshots from "../WfarForm copy/Attachments/TeamMeetScreenshots";
 
 const AddEntry = (props) => {
 
@@ -14,20 +13,6 @@ const AddEntry = (props) => {
     const [cys, setCys] = useState('');
     const [noOfAttendees, setNoOfAttendees] = useState(0);
     const [meetingLink, setMeetingLink] = useState('');
-    const [learningActivities, setLearningActivities] = useState([ { value: '' } ]);
-
-    const addLearningActivityField = () => {
-        let inputField = { value: '' };
-        setLearningActivities((prevState) => {
-            return [...prevState, inputField];
-        })
-    }
-
-    const removeLearningActivityField = (index) => {
-        let data = [...learningActivities];
-        data.splice(index, 1);
-        setLearningActivities(data);
-    }
 
     const accomplishedDateOnChange = (event) => {
         setAccomplishedDate(event.target.value);
@@ -49,12 +34,6 @@ const AddEntry = (props) => {
         setNoOfAttendees(event.target.value);
     }
 
-    const learningActivityOnChange = (index, event) => {
-        let data = [...learningActivities];
-        data[index].value = event.target.value;
-        setLearningActivities(data);
-    }
-
     const addEntry = (event) => {
         event.preventDefault();
         console.log("Entry added!");
@@ -69,7 +48,6 @@ const AddEntry = (props) => {
         console.log(entry);
     }
 
-    console.log(learningActivities);
     return (
         <Fragment>
             <div className={styles['container']}>
@@ -158,17 +136,12 @@ const AddEntry = (props) => {
                         {/* row 4 */}
                         <div className={styles['row-4']}>
                             <label className={styles['add-entry-label']}>Learning Activities</label>
-                            <LearningActivities 
-                                inputFields={learningActivities} 
-                                onAddInput={addLearningActivityField} 
-                                onRemoveInput={removeLearningActivityField}
-                                onChange={learningActivityOnChange}></LearningActivities>
+                            <LearningActivities></LearningActivities>
                         </div>
 
                         {/* row 5 */}
                         <div className={styles['row-5']}>
                             <label className={styles['add-entry-label']}>Upload attachments</label>
-                            <TeamMeetScreenshots />
                         </div>
 
                         <div className={styles['button-container']}>
