@@ -55,6 +55,36 @@ export default class Profile extends React.Component{
     })
   };
 
+  userTypeSwitch(){
+    if(this.state.data.user_type == 1){
+     return <h5 style={{color: '#C0C0C0'}}> Faculty </h5>
+      } else if(this.state.data.user_type == 2){
+       return  <h5 style={{color: '#C0C0C0'}}> Area Chair </h5>
+      }else if(this.state.data.user_type == 3){
+       return  <h5 style={{color: '#C0C0C0'}}> Department Head </h5>
+      }
+  }
+
+  sexSwitch(){
+    if(this.state.data.sex == 1){
+     return <h5 style={{color: '#C0C0C0'}}> Male </h5>
+      } else if(this.state.data.sex == 2){
+       return  <h5 style={{color: '#C0C0C0'}}> Female </h5>
+      }else if(this.state.data.sex == 3){
+       return  <h5 style={{color: '#C0C0C0'}}> Others </h5>
+      }
+  }
+
+  civilStatusSwitch(){
+    if(this.state.data.sex == 1){
+     return <h5 style={{color: '#C0C0C0'}}> Single </h5>
+      } else if(this.state.data.sex == 2){
+       return  <h5 style={{color: '#C0C0C0'}}> Married </h5>
+      }else if(this.state.data.sex == 3){
+       return  <h5 style={{color: '#C0C0C0'}}> Widowed </h5>
+      }
+  }
+
   render(){
     return (
       <Fragment>
@@ -77,11 +107,11 @@ export default class Profile extends React.Component{
                   <div className='Profile-head'>
                   <h1> Personal Data </h1>
                   <h5 style={{color: '#C0C0C0'}}>{this.state.data.name} </h5>
-                  <h5 style={{color: '#C0C0C0'}}> {this.state.user_type} </h5>
+                  {this.userTypeSwitch()}
                   <h5 style={{color: '#C0C0C0'}}> {this.state.data.emp_no}</h5>
-                  <h5 style={{color: '#C0C0C0'}}> {this.state.data.sex} </h5>
+                  {this.sexSwitch()}
                   <h5 style={{color: '#C0C0C0'}}>{this.state.data.birthdate} </h5>
-                  <h5 style={{color: '#C0C0C0'}}> {this.state.data.civil_status} </h5>
+                  {this.civilStatusSwitch()}
                   <h5 style={{color: '#C0C0C0'}}> {this.state.data.province} </h5>
                   <h1> Contact Information </h1>
                   <h5 style={{color: '#C0C0C0'}}>{this.state.data.contact_no} </h5>
