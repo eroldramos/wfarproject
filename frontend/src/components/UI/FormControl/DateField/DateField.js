@@ -11,7 +11,7 @@ const DateField = (props) => {
         " " +
         styles[validationClass] +
         " " +
-        styles[props.size] + 
+        styles[props.size] +
         " " +
         styles[importantClass]
       }
@@ -40,7 +40,7 @@ const DateField = (props) => {
           value={props.value}
         />
       </div>
-      <p className>{props.error}</p>
+      <p className="">{props.error}</p>
     </div>
   );
 };
