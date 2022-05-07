@@ -17,6 +17,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
+import AccountScreen from "./components/Screens/AccountScreen";
+
 function App() {
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
@@ -42,6 +44,8 @@ function App() {
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route path="/mySubmission" element={<MySubmission />}></Route>
+          <Route path="/profile" element={<AccountScreen />}></Route>
+
           <Route
             path="/manage-semesters/"
             element={<ManageSemestersScreen />}

@@ -5,25 +5,226 @@ import styles from "./AddEntry.module.css";
 import LearningActivities from "./LearningActivities/LearningActivities";
 import DynamicInputField from "./UI/DynamicInputField";
 import Button from "../UI/FormControl/Button/Button";
+import TeamMeetScreenshots from "./Attachments/TeamMeetScreenshots";
+import ProvidedActivities from "./Attachments/ProvidedActivities";
+import Swal from 'sweetalert2';
+
 
 const AddEntry = (props) => {
 
-    const [accomplishedDate, setAccomplishedDate] = useState('');
-    const [subject, setSubject] = useState('');
-    const [cys, setCys] = useState('');
-    const [noOfAttendees, setNoOfAttendees] = useState(0);
-    const [meetingLink, setMeetingLink] = useState('');
+    const [accomplishedDate, setAccomplishedDate] = useState({ value: '', error: null });
+    const [subject, setSubject] = useState({ value: '', error: null });
+    const [cys, setCys] = useState({ value: '', error: null });
+    const [noOfAttendees, setNoOfAttendees] = useState({ value: '', error: null });
+    const [meetingLink, setMeetingLink] = useState({ value: '', error: null });
+    const [learningActivities, setLearningActivities] = useState([{ value: '', error: null }]);
+    const [teamMeetScreenshots, setTeamMeetScreenshots] = useState([]);
+    const [providedActivitiesScreenshots, setProvidedActivitiesScreenshots] = useState([]);
+
+    const addLearningActivityField = () => {
+        let inputField = { value: '' };
+        setLearningActivities((prevState) => {
+            return [...prevState, inputField];
+        })
+    }
+
+    const removeLearningActivityField = (index) => {
+        let data = [...learningActivities];
+        data.splice(index, 1);
+        setLearningActivities(data);
+    }
 
     const accomplishedDateOnChange = (event) => {
-        setAccomplishedDate(event.target.value);
+        setAccomplishedDate((prevState) => {
+            return {
+                ...prevState,
+                value: event.target.value, error: null
+            }
+        });
     }
-    
+
+    const accomplishedDateOnBlur = (event) => {
+        if (accomplishedDate.value === '') {
+            setAccomplishedDate((prevState) => {
+                return {
+                    ...prevState,
+                    value: event.target.value, error: "Please select the accomplishment date."
+                }
+            });
+        }
+    }
+
+    const subjectOnChange = (event) => {
+        setSubject((prevState) => {
+            return {
+                ...prevState,
+                value: event.target.value, error: null
+            }
+        });
+    }
+
+    const subjectOnBlur = (event) => {
+        if (event.target.value === '') {
+            setSubject((prevState) => {
+                return { ...prevState, error: "Please enter a subject." }
+            });
+        }
+    }
+
+    const cysOnChange = (event) => {
+        setCys((prevState) => {
+            return {
+                ...prevState,
+                value: event.target.value, error: null
+            }
+        });
+    }
+
+    const cysOnBlur = (event) => {
+        if (event.target.value === '') {
+            setCys((prevState) => {
+                return {
+                    ...prevState,
+                    value: event.target.value, error: "Please enter the course, year and section."
+                }
+            });
+        }
+    }
+
+    const meetingLinkOnChange = (event) => {
+        setMeetingLink((prevState) => {
+            return {
+                ...prevState,
+                value: event.target.value, error: null
+            }
+        });
+    }
+
+    const meetingLinkOnBlur = (event) => {
+        if (event.target.value === '') {
+            setMeetingLink((prevState) => {
+                return {
+                    ...prevState,
+                    value: event.target.value, error: "Please enter the recording of the meeting link."
+                }
+            });
+        }
+
+    }
+
+    const noOfAttendeesOnChange = (event) => {
+        setNoOfAttendees((prevState) => {
+            return {
+                ...prevState,
+                value: event.target.value, error: null
+            }
+        });
+    }
+
+    const noOfAttendeesOnBlur = (event) => {
+        if (event.target.value === '') {
+            setNoOfAttendees((prevState) => {
+                return {
+                    ...prevState,
+                    value: event.target.value, error: "Please enter the number of attendees."
+                }
+            });
+        }
+
+    }
+
+    const learningActivityOnChange = (index, event) => {
+        // let data = [...learningActivities];
+        // data[index].value = event.target.value;
+        // setLearningActivities(data);
+
+        setLearningActivities((prevState) => {
+            prevState[index].value = event.target.value;
+            prevState[index].error = null;
+            return [...prevState];
+        });
+
+        console.log(learningActivities);
+    }
+
+    const learningActivityOnBlur = (index, event) => {
+        if (event.target.value === '') {
+            setLearningActivities((prevState) => {
+                prevState[index].value = event.target.value;
+                prevState[index].error = "Please enter the learning activity.";
+                return [...prevState];
+            });
+        }
+    }
+
+    const getImageTeamMeetScreenshot = (event) => {
+        let file = event.target.files[0];
+        let url = URL.createObjectURL(event.target.files[0]);
+
+        setTeamMeetScreenshots((prevState) => {
+            return [...prevState, { file: file, imageSrc: url }];
+        })
+    }
+
+    const removeImageTeamMeetScreenshot = (index) => {
+        setTeamMeetScreenshots((prevState) => {
+            prevState.splice(index, 1);
+            return [...prevState];
+        })
+    }
+
+    const getProvidedActivitiesScreenshot = (event) => {
+        let file = event.target.files[0];
+        let url = URL.createObjectURL(event.target.files[0]);
+
+        setProvidedActivitiesScreenshots((prevState) => {
+            return [...prevState, { file: file, imageSrc: url }];
+        })
+    }
+
+    const removeProvidedActivitiesScreenshot = (index) => {
+        setProvidedActivitiesScreenshots((prevState) => {
+            prevState.splice(index, 1);
+            return [...prevState];
+        })
+
+
+        console.log(teamMeetScreenshots);
+    }
 
     const addEntry = (event) => {
         event.preventDefault();
+        let validate_first = false, validate_second = false;
+
+        if (accomplishedDate.error === null && 
+            subject.error === null &&
+            cys.error === null &&
+            noOfAttendees === null &&
+            meetingLink === null) {
+                validate_first = true;
+        }
+
+        for (let x of learningActivities) {
+            if (x.error !== null) {
+                validate_second = false;
+            }
+        }
+
         console.log("Entry added!");
+        let entry = {
+            accomplishedDate: accomplishedDate,
+            subject: subject,
+            cys: cys,
+            meetingLink: meetingLink,
+            noOfAttendees: noOfAttendees,
+            teamMeetScreenshots: teamMeetScreenshots,
+            providedActivitiesScreenshots: providedActivitiesScreenshots
+        }
+
+        console.log(entry);
     }
 
+    console.log(learningActivities);
     return (
         <Fragment>
             <div className={styles['container']}>
@@ -42,9 +243,10 @@ const AddEntry = (props) => {
                                 id="accomplishedDate"
                                 labelName="Date of Class / Accomplishment"
                                 important={1}
-                                onBlur={null}
+                                onBlur={accomplishedDateOnBlur}
                                 onChange={accomplishedDateOnChange}
-                                value={accomplishedDate}
+                                value={accomplishedDate.value}
+                                error={accomplishedDate.error}
                                 size="rg" />
                         </div>
                         {/* row 2 */}
@@ -52,13 +254,13 @@ const AddEntry = (props) => {
                             <InputField
                                 id="subject"
                                 type="text"
-                                onBlur={null}
-                                onChange={null}
-                                value={null}
+                                onBlur={subjectOnBlur}
+                                onChange={subjectOnChange}
+                                value={subject.value}
                                 labelName="Subject"
                                 inputName="subject"
                                 placeholder="Ex. CAP 301 - Capstone Project 1"
-                                error={null}
+                                error={subject.error}
                                 size="rg"
                                 important={1}
                             />
@@ -66,13 +268,13 @@ const AddEntry = (props) => {
                             <InputField
                                 id="cys"
                                 type="text"
-                                onBlur={null}
-                                onChange={null}
-                                value={null}
+                                onBlur={cysOnBlur}
+                                onChange={cysOnChange}
+                                value={cys.value}
                                 labelName="Course, Year and Section"
                                 inputName="cys"
                                 placeholder="Ex. BSIT 3K"
-                                error={null}
+                                error={cys.error}
                                 size="rg"
                                 important={1}
                             />
@@ -80,13 +282,13 @@ const AddEntry = (props) => {
                             <InputField
                                 id="noOfAttendees"
                                 type="number"
-                                onBlur={null}
-                                onChange={null}
-                                value={null}
+                                onBlur={noOfAttendeesOnBlur}
+                                onChange={noOfAttendeesOnChange}
+                                value={noOfAttendees.noOfAttendees}
                                 labelName="No of Attendees"
                                 inputName="noOfAttendees"
                                 placeholder="Enter # of attendees"
-                                error={null}
+                                error={noOfAttendees.error}
                                 size="rg"
                                 important={1}
                             />
@@ -97,13 +299,13 @@ const AddEntry = (props) => {
                             <InputField
                                 id="meetingLink"
                                 type="text"
-                                onBlur={null}
-                                onChange={null}
-                                value={null}
+                                onBlur={meetingLinkOnBlur}
+                                onChange={meetingLinkOnChange}
+                                value={meetingLink.value}
                                 labelName="Link of Team Meeting Recording"
                                 inputName="meetingLink"
                                 placeholder="Paste your meet link here"
-                                error={null}
+                                error={meetingLink.error}
                                 size="lg"
                                 important={1}
                             />
@@ -111,13 +313,20 @@ const AddEntry = (props) => {
 
                         {/* row 4 */}
                         <div className={styles['row-4']}>
-                            <label className={styles['add-entry-label']}>Learning Activities</label>
-                            <LearningActivities></LearningActivities>
+                            <label className={styles['add-entry-label'] + " " + styles['required']}>Learning Activities</label>
+                            <LearningActivities
+                                inputFields={learningActivities}
+                                onAddInput={addLearningActivityField}
+                                onRemoveInput={removeLearningActivityField}
+                                onChange={learningActivityOnChange}
+                                onBlur={learningActivityOnBlur}></LearningActivities>
                         </div>
 
                         {/* row 5 */}
                         <div className={styles['row-5']}>
                             <label className={styles['add-entry-label']}>Upload attachments</label>
+                            <TeamMeetScreenshots teamMeetScreenshots={teamMeetScreenshots} getImage={getImageTeamMeetScreenshot} removeImage={removeImageTeamMeetScreenshot} />
+                            <ProvidedActivities providedActivitiesScreenshots={providedActivitiesScreenshots} getImage={getProvidedActivitiesScreenshot} removeImage={removeProvidedActivitiesScreenshot} />
                         </div>
 
                         <div className={styles['button-container']}>

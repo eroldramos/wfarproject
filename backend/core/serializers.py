@@ -96,3 +96,15 @@ class WeeksInASemesterSerializer(serializers.ModelSerializer):
         serializer =    WeekSerializer(weeks, many=True)
         return serializer.data
 
+class ProfileSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Faculty
+        fields = '__all__'        
+   
+    def get_name(self, obj):
+        name = f"{obj.first_name} {obj.last_name}"
+        if name == " ":
+            name = obj.email
+        return name
