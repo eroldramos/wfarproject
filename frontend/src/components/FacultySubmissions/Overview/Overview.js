@@ -19,24 +19,22 @@ const facultySubmission = () => {
         <ViewOptions/>
       </div>
       <div className={styles.secondarycontainer}>
-        <SemFilter
-          id="semester"
-          name="semester"
-          label="Semesters"
-          labelName={"Semester"}
-          size="rg"
-          type="filter"
-        />
-        <TableDisplay />
-        <SearchFaculty
-          id="link"
-          onChange={null}
-          labelName="search"
-          inputName="search"
-          placeholder="Search faculty"
-          size="rg"
-          type="filter"
-        />
+        <div className={styles.semFilterContainer}>
+          <SemFilter
+            id="semester"
+            name="semester"
+            label="Semesters"
+            labelName={"Semester"}
+            size="rg"
+            type="filter"
+          />
+        </div>
+        <div className={styles.tableDisplayContainer}>
+          <TableDisplay/>
+        </div>
+        <div className={styles.searchFacultyContainer}>
+          <SearchFaculty/>
+        </div>
       </div>
       <div className={styles.tableContainer}>
         <Table></Table>

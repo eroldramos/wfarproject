@@ -10,18 +10,23 @@ const CommentInput = () =>{
                     <div style={{ backgroundImage: 'url(' + ProfileImage + ')' }}></div>
                 </div>
                 <div className={styles.inputContainer}>
-                <CommentField
-                        id="comment"
-                        type="text"
-                        inputName="sampleText"
-                        placeholder="Enter a comment..."
-                        size="lg"
-                    />
-                    {/* <Button
-                        label="POST"
-                        type="primary"
-                        size="r"
-                    /> */}
+                    <div className={styles.commentField}>
+                        <CommentField
+                            id="comment"
+                            type="text"
+                            inputName="sampleText"
+                            placeholder="Enter a comment..."
+                            size="lg"
+                        />
+                    </div>
+                    
+                    <div className={styles.postBtnContainer}>
+                        <Button
+                            label="POST"
+                            type="primary"
+                            size="r"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
