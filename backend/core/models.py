@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -31,10 +32,10 @@ class Faculty(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)
     assignee_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True) #foreign key, area chair or dept head id
+    profile_picture = models.ImageField(default='')
     # added null=True for assignee_id to avoid can't be null error
     class Meta:
         ordering = ['last_name'] #para saan pala 'to?
-
 
     def __str__(self):
         return f"{self.email}"
@@ -99,7 +100,7 @@ class WFAR(models.Model):
     submitted_at = models.DateTimeField(null=True)
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
     faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
-    week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
+    week_id = models.ForeignKey(Week, on_delete=models.SET_NULL, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
 # WFAR Entry
 class WFAR_Entry(models.Model):
     accomplishment_date = models.DateTimeField(default=datetime.now)

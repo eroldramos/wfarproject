@@ -9,7 +9,7 @@ const DropdownField = (props) => {
         " " +
         styles[validationClass] +
         " " +
-        styles[props.size] + 
+        styles[props.size] +
         " " +
         styles[props.type]
       }
@@ -28,7 +28,7 @@ const DropdownField = (props) => {
           );
         })}
       </select>
-      <p className>{props.error}</p>
+      <p className="">{props.error}</p>
     </div>
   );
 };

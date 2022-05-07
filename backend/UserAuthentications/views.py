@@ -139,7 +139,7 @@ class FacultyRegister(APIView):
             formErrors += 1
         if Faculty.objects.filter(emp_no=request.data['emp_no']).exists():
             # errors.append({"empNoErr": f"{request.data['emp_no']} already exists"})
-            errors.append( f"Employe No. {request.data['emp_no']} already exists.")
+            errors.append( f"Employee No. {request.data['emp_no']} already exists.")
             formErrors += 1
         if Faculty.objects.filter(contact_no=request.data['contact_no']).exists():
             # errors.append({"contactNoErr": f"{request.data['contact_no']} already exists"})
@@ -150,10 +150,10 @@ class FacultyRegister(APIView):
             try:
                 data = request.data
                 user = Faculty.objects.create(
-                first_name = data['first_name'],
-                last_name = data['last_name'],
-                middle_name = data['middle_name'],
-                extension_name = data['extension_name'],
+                first_name = data['first_name'].capitalize(),
+                last_name = data['last_name'].capitalize(),
+                middle_name = data['middle_name'].capitalize(),
+                extension_name = data['extension_name'].capitalize(),
                 username = data['username'],
                 email = data['email'],
                 password = make_password(data['password']),
@@ -163,10 +163,10 @@ class FacultyRegister(APIView):
                 sex = data['sex'],
                 house_no = data['house_no'],
                 street = data['street'],
-                subdivision = data['subdivision'],
-                barangay = data['barangay'],
-                municipality = data['municipality'],
-                province = data['province'],
+                subdivision = data['subdivision'].capitalize(),
+                barangay = data['barangay'].capitalize(),
+                municipality = data['municipality'].capitalize(),
+                province = data['province'].capitalize(),
                 zip_code = data['zip_code'],
                 contact_no = data['contact_no'],
                 )

@@ -24,7 +24,7 @@ const InputField = (props) => {
         placeholder={props.placeholder}
         value={props.value}
       />
-      <p className>{props.error}</p>
+      <p className="">{props.error}</p>
     </div>
   );
 };

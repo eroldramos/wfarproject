@@ -1,0 +1,8 @@
+.provided-activities-screenshots {
+    margin: 20px 0;
+}
+
+.imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
