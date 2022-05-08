@@ -16,7 +16,7 @@ class RetrieveAccountDetails(APIView):
 
         try:
             #faculty = Faculty.objects.filter(pk=self.request.session.session_key)
-            faculty = Faculty.objects.filter(pk=7)
+            faculty = Faculty.objects.filter(pk=3)
             serializer = ProfileSerializer(faculty, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
