@@ -190,7 +190,7 @@ function Sample() {
                 </fieldset>
             </form>
 
-            <div>
+            <div style={{width: "500px", border: "1px solid black"}}>
 
                 <SearchField
                     id="link"
@@ -198,7 +198,7 @@ function Sample() {
                     labelName="search"
                     inputName="search"
                     placeholder="Search faculty"
-                    size="rg"
+                    size="md"
                     type="filter"
                 />
 

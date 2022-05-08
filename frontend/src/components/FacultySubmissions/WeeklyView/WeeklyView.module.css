@@ -10,3 +10,6 @@
 .tableContainer{
     border: 1px solid black;
 }
+.searchFilterContainer{
+    width: 100%;
+}
