@@ -1,8 +1,10 @@
 .attachmentsContainer{
 }
 .attachmentsContainer h5{
+    border: 1px solid black;
     margin: 0;
     margin-top: 15px;
+    padding-left: 0;
 }
 .imagesContainer{
     display: flex;
