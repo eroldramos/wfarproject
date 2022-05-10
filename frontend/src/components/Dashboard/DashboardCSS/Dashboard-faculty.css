@@ -1,0 +1,254 @@
+.dashboard-faculty{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Public Sans', sans-serif;
+}
+
+.dashboard-faculty h1,
+.dashboard-faculty h2,
+.dashboard-faculty h3,
+.dashboard-faculty h4,
+.dashboard-faculty h5,
+.dashboard-faculty p{
+    margin: 0;
+}
+
+.dashboard-faculty span{
+    margin-left: 0;
+}
+
+.dashboard-faculty .greetings,
+.dashboard-faculty .total-submission-container>div,
+.dashboard-faculty .wfar-status-container,
+.dashboard-faculty .management-container .revision-container {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+}
+
+.dashboard-faculty .main-container {
+    display: grid;
+    margin-right: 2px;
+    height: 85vh;
+    grid-template-columns: 1.35fr .65fr .87fr;
+    grid-template-rows: .66fr .70fr 2.5fr;
+    grid-gap: 1em;
+    grid-template-areas:
+        "header header notifications"
+        "current-week-main-container total-submission-container management-container"
+        "my-wfar my-wfar management-container"
+}
+
+/* SECTION 1 */
+
+.dashboard-faculty .header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-faculty .notifications {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    align-items: center;
+    grid-area: notifications;
+    margin-left: 21px;
+}
+
+.dashboard-faculty .notification-container {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    background: #BE5A40;
+}
+
+.dashboard-faculty .notification-container img {
+    margin: auto;
+    margin-top: 8.5px;
+    display: block;
+    width: 60%;
+    height: 60%;
+}
+
+.dashboard-faculty .greetings {
+    display: flex;
+    margin-left: 20px;
+    padding-left: 30px;
+    justify-content: center;
+    flex-direction: column;
+    height: 55px;
+}
+
+/* SECTION 2 */
+
+.dashboard-faculty .total-submission-container {
+    display: grid;
+    grid-area: total-submission-container;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1em;
+}
+
+.dashboard-faculty .total-submission-container>div {
+    padding: 20px;
+}
+
+.dashboard-faculty .total-submission-container .vertical-design {
+    width: 5px;
+    height: 39px;
+    background: #D38F7E;
+    border-radius: 3px;
+}
+
+.dashboard-faculty .number-completed-container,
+.dashboard-faculty .number-inprogress-container {
+    position: relative;
+    display: flex;
+    margin-top: 10%;
+    align-items: center;
+}
+
+.dashboard-faculty .number-completed,
+.dashboard-faculty .number-inprogress {
+    position: absolute;
+    right: 0;
+    font-weight: 700;
+    font-size: 48px;
+    color: #BE5A40;
+}
+
+/* SECTION 3 */
+
+.dashboard-faculty .current-week-main-container {
+    padding: 20px;
+    grid-area: current-week-main-container;
+    background-image: url("../../../assets/DashboardDummyImg/current-week.png");
+    background-size: cover;
+    position: relative;
+}
+
+.dashboard-faculty .current-week-main-container .current-semester {
+    background-color: #ffffff;
+    width: fit-content;
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #BB7360;
+}
+
+.dashboard-faculty .current-week-main-container .current-week-container {
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    width: fit-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dashboard-faculty .current-week-main-container .current-week-container p:nth-child(1) {
+    font-weight: 700;
+    font-size: 50px;
+    letter-spacing: 0.245em;
+}
+
+.dashboard-faculty .current-week-main-container .current-week-container p:nth-child(2) {
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.245em;
+}
+
+
+
+/* SECTION 4 */
+
+.dashboard-faculty .my-wfar {
+    grid-area: my-wfar;
+}
+
+.dashboard-faculty .my-wfar .my-wfar-info {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dashboard-faculty .my-wfar-info p {
+    position: absolute;
+    color: #BE5A40;
+    right: 0;
+}
+
+/* SECTION 5 */
+
+.dashboard-faculty .management-container {
+    grid-area: management-container;
+    display: grid;
+    grid-template-rows: .2fr 7fr;
+    grid-gap: 1em;
+    margin-left: 21px;
+}
+
+.dashboard-faculty .revision-container {
+    padding: 15px 18px;
+}
+
+.dashboard-faculty .revision-instance {
+    display: grid;
+    grid-template-columns: 1fr 2.3fr .7fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "revision-date revision-date revision-date"
+        "revision-comment revision-comment edit-button";
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.dashboard-faculty .revision-date {
+    display: flex;
+    align-items: center;
+    grid-area: revision-date;
+    /* border: #2dbbde solid; */
+}
+
+.dashboard-faculty .revision-week {
+    grid-area: revision-week;
+    background-color: #F8DFD8;
+    color: #BE5A40;
+    font-weight: 600;
+    height: 35px;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.dashboard-faculty .revision-day {
+    font-size: 14px;
+    color: #999999;
+}
+
+.dashboard-faculty .revision-comment {
+    grid-area: revision-comment;
+    padding-left: 10px;
+    padding-top: 7px;
+    /* border: #c7de2d solid; */
+}
+
+.dashboard-faculty .edit-button {
+    grid-area: edit-button;
+    color: #BE5A40;
+    /* border: #972dde solid; */
+    position: relative;
+}
+
+.dashboard-faculty .edit-button p {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.dashboard-faculty .footer {
+    grid-area: footer;
+}
