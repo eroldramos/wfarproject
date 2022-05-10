@@ -10,6 +10,9 @@ import {
   getSemDetailsReducer,
   updateSemReducer,
 } from "./manageSemReducers";
+//for demo
+import { getAllSemsReducer, addSemReducer } from "./sampleReducers";
+
 console.log("HelloWorld");
 
 const store = configureStore({
@@ -22,6 +25,12 @@ const store = configureStore({
     getSems: getSemsReducer.reducer,
     getSemDetails: getSemDetailsReducer.reducer,
     updateSem: updateSemReducer.reducer,
+
+    // For Demo purpose only
+
+    getAllSems: getAllSemsReducer.reducer,
+
+    addSem: addSemReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
