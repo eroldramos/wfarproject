@@ -28,6 +28,7 @@ function DummyDashBoard() {
     <Fragment>
       DummyDashBoard
       <button onClick={onLogoutHandler}>Logout</button>
+      <img src="/images/avatar.svg"></img>
     </Fragment>
   );
 }

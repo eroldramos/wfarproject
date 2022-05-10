@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.serializers import ProfileSerializer
 
+
 class RetrieveAccountDetails(APIView):
 
     def get(self, request):
@@ -16,7 +17,20 @@ class RetrieveAccountDetails(APIView):
 
         try:
             #faculty = Faculty.objects.filter(pk=self.request.session.session_key)
-            faculty = Faculty.objects.filter(pk=7)
+            faculty = Faculty.objects.filter(pk=6)
+            serializer = ProfileSerializer(faculty, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class EditAccountDetails(APIView):
+
+    def get(self, request):
+        pass
+        try:
+            #faculty = Faculty.objects.filter(pk=self.request.session.session_key)
+            faculty = Faculty.objects.filter(pk=6)
             serializer = ProfileSerializer(faculty, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
