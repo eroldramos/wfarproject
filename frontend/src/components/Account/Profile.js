@@ -28,9 +28,7 @@ export default class Profile extends React.Component {
       title: 'Error!',
       text: 'Do you want to continue',
       icon: 'success',
-      confirmButtonText: 'Cool', showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
+      confirmButtonText: 'Cool', 
     });
   }
 
@@ -54,33 +52,33 @@ export default class Profile extends React.Component {
 
   userTypeSwitch() {
     if (this.state.data.user_type === 1) {
-      return <h4 style={{ color: '#000000' }}> Faculty </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Faculty </p>
     } else if (this.state.data.user_type === 2) {
-      return <h4 style={{ color: '#000000' }}> Area Chair </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Area Chair </p>
     } else if (this.state.data.user_type === 3) {
-      return <h4 style={{ color: '#000000' }}> Department Head </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Department Head </p>
     } else {
-      return <h4 style={{ color: '#000000' }}> None </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> None </p>
     }
   }
 
   sexSwitch() {
     if (this.state.data.sex === 1) {
-      return <h4 style={{ color: '#000000' }}> Male </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Male </p>
     } else if (this.state.data.sex === 2) {
-      return <h4 style={{ color: '#000000' }}> Female </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Female </p>
     } else if (this.state.data.sex === 3) {
-      return <h4 style={{ color: '#000000' }}> Others </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Others </p>
     }
   }
 
   civilStatusSwitch() {
     if (this.state.data.civil_status === 1) {
-      return <h4 style={{ color: '#000000' }}> Single </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Single </p>
     } else if (this.state.data.civil_status === 2) {
-      return <h4 style={{ color: '#000000' }}> Married </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Married </p>
     } else if (this.state.data.civil_status === 3) {
-      return <h4 style={{ color: '#000000' }}> Widowed </h4>
+      return <p className="userinput" style={{ color: '#000000' }}> Widowed </p>
     }
   }
 
@@ -95,7 +93,7 @@ export default class Profile extends React.Component {
   birthdayCalculator() {
     let date = new Date(this.state.data.birthdate);
     let month = date.toLocaleString('en-us', { month: 'long' });
-    return <h4 style={{ color: '#000000' }}> {month + ' ' + date.getDate() + ', ' + date.getFullYear()}</h4>
+    return <p className="userinput" style={{ color: '#000000' }}> {month + ' ' + date.getDate() + ', ' + date.getFullYear()}</p>
   }
 
   render() {
@@ -123,54 +121,54 @@ export default class Profile extends React.Component {
                       <td colSpan="2"><h1> Personal Data </h1></td>
                     </tr>
                     <tr>
-                      <td><h5 style={{ color: '#C0C0C0' }}>Name </h5></td>
-                      <td><h4 style={{ color: '#000000' }}>{this.state.data.name} </h4></td>
+                      <td><p className="Pdata" style={{ color: '#C0C0C0' }}>Name </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}>{this.state.data.name} </p></td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Position </h5></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Position </p></td>
                       <td>{this.userTypeSwitch()}</td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Employee Number     </h5></td>
-                      <td><h4 style={{ color: '#000000' }}> {this.state.data.emp_no}</h4></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Employee Number     </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}> {this.state.data.emp_no}</p></td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Sex </h5></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Sex </p></td>
                       <td> {this.sexSwitch()}</td>
                     </tr>
                     <tr>
-                      <td><h5 style={{ color: '#C0C0C0' }}>Date of Birth </h5></td>
+                      <td><p className="Pdata" style={{ color: '#C0C0C0' }}>Date of Birth </p></td>
                       <td> {this.birthdayCalculator()}</td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Civil Status </h5></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Civil Status </p></td>
                       <td> {this.civilStatusSwitch()}</td>
                     </tr>
                     <tr>
-                      <td><h5 style={{ color: '#C0C0C0' }}>Address </h5></td>
-                      <td><h4 style={{ color: '#000000' }}> {this.state.data.house_no + ' ' + this.state.data.street
+                      <td><p className="Pdata" style={{ color: '#C0C0C0' }}>Address </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}> {this.state.data.house_no + ' ' + this.state.data.street
                         + ' St., ' + this.state.data.subdivision
                         + ' ' + this.state.data.barangay
                         + ' ' + this.state.data.municipality
-                        + ', ' + this.state.data.province} </h4></td>
+                        + ', ' + this.state.data.province} </p></td>
                     </tr>
                     <tr>
                       <td colSpan="2"> <h1> Contact Information </h1></td>
                     </tr>
                     <tr>
-                      <td><h5 style={{ color: '#C0C0C0' }}>Phone Number </h5></td>
-                      <td><h4 style={{ color: '#000000' }}>{this.state.data.contact_no} </h4></td>
+                      <td><p className="Pdata" style={{ color: '#C0C0C0' }}>Phone Number </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}>{this.state.data.contact_no} </p></td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Email Address </h5></td>
-                      <td><h4 style={{ color: '#000000' }}> {this.state.data.email}</h4></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Email Address </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}> {this.state.data.email}</p></td>
                     </tr>
                     <tr>
                       <td colSpan="2">  <h1> Specialization </h1></td>
                     </tr>
                     <tr>
-                      <td> <h5 style={{ color: '#C0C0C0' }}>Program </h5></td>
-                      <td><h4 style={{ color: '#000000' }}> {this.state.data.specialization} </h4></td>
+                      <td> <p className="Pdata" style={{ color: '#C0C0C0' }}>Program </p></td>
+                      <td><p className="userinput" style={{ color: '#000000' }}> {this.state.data.specialization} </p></td>
                     </tr>
                   </table>
                 </div>

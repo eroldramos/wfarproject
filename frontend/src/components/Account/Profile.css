@@ -35,8 +35,11 @@
   h1{
     font-style: bold;
   }
-  h5{
+  .Pdata{
     padding-left: 60px;
+  }
+  .userinput{
+    font-style: bold;
   }
   .Editbtn {
     font: inherit;
@@ -94,7 +97,7 @@
     padding-left: 50px;
 }
 
-table {
+.adjustMarginsOfTable {
   font-family: arial, sans-serif; 
   width: 70% !important;
 }
