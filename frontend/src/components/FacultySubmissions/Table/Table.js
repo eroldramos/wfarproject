@@ -5,11 +5,11 @@ import styles from "./Table.module.css"
 const genericTable = props =>{
     
     return (
-        <Fragment>
-            <table>
-                
-            </table>
-        </Fragment>
+        <table className={styles.table}>
+            <tr>
+                <th>Faculty</th>
+            </tr> 
+        </table>
     )
 
 
