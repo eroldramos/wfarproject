@@ -102,7 +102,7 @@
   width: 70% !important;
 }
 
-td,
+.adjustMarginsOfTable td,
 th {
   border: none !important; 
   text-align: left;
