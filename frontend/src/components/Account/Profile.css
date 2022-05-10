@@ -95,17 +95,17 @@
 }
 
 table {
-  font-family: arial, sans-serif;
-  width: 100%;
+  font-family: arial, sans-serif; 
+  width: 70% !important;
 }
 
 td,
 th {
-  border: 0px solid #dddddd;
+  border: none !important; 
   text-align: left;
-  padding: 8px;
+  padding: 1px !important;
 }
 
 tr:nth-child(even) {
-  background-color: #000000;
+  background-color: #FFFFFF !important;
 }
