@@ -1,0 +1,38 @@
+.container {
+  padding: 5px 20px;
+}
+.modal-btn-container {
+  float: right;
+}
+
+.roles {
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.roles.selected:hover,
+.roles.unselected:hover {
+  background: #ccc;
+}
+.roles.selected {
+  background: #fff9f9;
+  padding: 30px 20px;
+}
+.roles.selected h1 {
+  color: #be5a40;
+}
+
+.roles.unselected {
+  background: #fff;
+  padding: 30px 20px;
+}
+.roles.unselected h1 {
+  color: #000;
+}
+
+.clearfix {
+  clear: both;
+}
+.cancel-btn-container {
+  float: right;
+  width: fix-content;
+}
