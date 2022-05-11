@@ -1,0 +1,18 @@
+.footerComponent{
+    border: 1px solid black;
+}
+.exportContainer{
+    display: flex;
+    width: fit-content;
+    padding: 0 30px;
+}
+.exportContainer svg{
+    margin: 16px 15px;
+}
+.exportContainer svg:nth-child(3){
+    margin: 20px 15px;
+}
+.exportContainer h6{
+    margin: 17px 0;
+    font-weight: 600;
+}

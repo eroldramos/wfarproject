@@ -3,11 +3,11 @@ import styles from "./WeeklyView.module.css";
 import SemFilter from "../SemFilter/SemFilter";
 import TableDisplay from "../TableDisplayCheckbox/TableDisplay";
 import SearchFaculty from "../SearchFaculty/SearchFaculty";
-import Table from "../Table/Table";
+import WeeklyTable from "../Table/WeeklyViewTable";
 import ViewOptions from "../ViewOptions/ViewOptions";
 import WeekFilter from "./WeekFilter/WeekFilter";
 import StatusFilter from "./StatusFilter/StatusFilter";
-
+import Footer from "../Footer/Footer";
 const facultySubmission = () => {
   return (
     <Fragment>
@@ -54,7 +54,10 @@ const facultySubmission = () => {
         </div>
       </div>
       <div className={styles.tableContainer}>
-        <Table></Table>
+        <WeeklyTable></WeeklyTable>
+      </div>
+      <div className={styles.footerContainer}>
+        <Footer></Footer>
       </div>
     </Fragment>
   );

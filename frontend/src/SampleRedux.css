@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.tableContainer td,
+.table-container td,
 th {
   border: 1px solid #EAEBED;
   text-align: left;
