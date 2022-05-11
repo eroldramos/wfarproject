@@ -35,8 +35,11 @@
   h1{
     font-style: bold;
   }
-  h5{
+  .Pdata{
     padding-left: 60px;
+  }
+  .userinput{
+    font-style: bold;
   }
   .Editbtn {
     font: inherit;
@@ -92,4 +95,20 @@
     color: #BE5A40;
     padding-top: 15px;
     padding-left: 50px;
+}
+
+.adjustMarginsOfTable {
+  font-family: arial, sans-serif; 
+  width: 70% !important;
+}
+
+.adjustMarginsOfTable td,
+th {
+  border: none !important; 
+  text-align: left;
+  padding: 1px !important;
+}
+
+tr:nth-child(even) {
+  background-color: #FFFFFF !important;
 }

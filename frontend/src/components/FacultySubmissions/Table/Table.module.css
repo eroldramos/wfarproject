@@ -1,0 +1,7 @@
+.table td, th{
+    background: #FFFFFF;
+    border: 1px solid #EAEBED;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    
+}

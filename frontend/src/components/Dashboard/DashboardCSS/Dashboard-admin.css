@@ -1,32 +1,32 @@
-.dashboard-container{
+.dashboard-admin{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Public Sans', sans-serif;
 }
 
-.dashboard-container h1,
-.dashboard-container h2,
-.dashboard-container h3,
-.dashboard-container h4,
-.dashboard-container h5,
-.dashboard-container p{
+.dashboard-admin h1,
+.dashboard-admin h2,
+.dashboard-admin h3,
+.dashboard-admin h4,
+.dashboard-admin h5,
+.dashboard-admin p{
     margin: 0;
 }
 
-.dashboard-container span{
+.dashboard-admin span{
     margin-left: 0;
 }
 
-.greetings,
-.total-submission-container>div,
-.wfar-status-container,
-.management-container>div {
+.dashboard-admin .greetings,
+.dashboard-admin .total-submission-container>div,
+.dashboard-admin .wfar-status-container,
+.dashboard-admin .management-container>div {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
 
-.main-container {
+.dashboard-admin .main-container {
     display: grid;
     margin-right: 2px;
     height: 85vh;
@@ -41,13 +41,13 @@
 
 /* SECTION 1 */
 
-.header {
+.dashboard-admin .header {
     grid-area: header;
     display: flex;
     align-items: center;
 }
 
-.notifications {
+.dashboard-admin .notifications {
     display: grid;
     grid-template-columns: 1fr 6fr;
     align-items: center;
@@ -55,14 +55,14 @@
     margin-left: 21px;
 }
 
-.notification-container {
+.dashboard-admin .notification-container {
     border-radius: 50%;
     height: 45px;
     width: 45px;
     background: #BE5A40;
 }
 
-.notification-container img {
+.dashboard-admin .notification-container img {
     margin: auto;
     margin-top: 8.5px;
     display: block;
@@ -70,48 +70,48 @@
     height: 60%;
 }
 
-.greetings {
+.dashboard-admin .greetings {
     margin-left: 20px;
     padding: 5px 30px;
     vertical-align: middle;
     height: 62%;
 }
 
-.greetings h3, .greetings p{
+.dashboard-admin .greetings h3, .dashboard-admin .greetings p{
     margin: 3px;
 }
 
 /* SECTION 2 */
 
-.total-submission-container {
+.dashboard-admin .total-submission-container {
     display: grid;
     grid-area: total-submission-container;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em;
 }
 
-.total-submission-container>div,
-.management-container>div:nth-child(-n+3) {
+.dashboard-admin .total-submission-container>div,
+.dashboard-admin .management-container>div:nth-child(-n+3) {
     padding: 20px;
 }
 
-.per-role-submission {
+.dashboard-admin .per-role-submission {
     display: grid;
     grid-template-columns: 4fr 2fr;
 }
 
-.info .phrase {
+.dashboard-admin .info .phrase {
     margin-top: 5px;
     font-size: 11px;
 }
 
-.graph-container {
+.dashboard-admin .graph-container {
     height: 85px;
     width: 85px;
     place-items: center;
 }
 
-.circular-progress {
+.dashboard-admin .circular-progress {
     position: relative;
     height: 100%;
     width: same-as-height;
@@ -121,7 +121,7 @@
     place-items: center;
 }
 
-.circular-progress::before {
+.dashboard-admin .circular-progress::before {
     content: "";
     position: absolute;
     height: 78%;
@@ -130,7 +130,7 @@
     border-radius: 50%;
 }
 
-.value-container {
+.dashboard-admin .value-container {
     position: relative;
     color: #BE5A40;
     font-size: 14px;
@@ -192,20 +192,20 @@
     font-size: 14px;
 } */
 
-.total-submission-container h5 {
+.dashboard-admin .total-submission-container h5 {
     color: #cccccc;
 }
 
-.total-submission-status {
+.dashboard-admin .total-submission-status {
     margin-top: 10px;
 }
 
-.total-submitted {
+.dashboard-admin .total-submitted {
     font-size: 32px;
     font-weight: 700;
 }
 
-.total-employees {
+.dashboard-admin .total-employees {
     /* kapag hindi ginawang span, tanggalin sa pag comment */
     /* padding-bottom: 4px;
     align-self: flex-end; */
@@ -216,7 +216,7 @@
 
 /* SECTION 3 */
 
-.wfar-status-container {
+.dashboard-admin .wfar-status-container {
     padding: 20px;
     grid-area: wfar-status-container;
 }
@@ -229,11 +229,11 @@
     box-sizing: border-box;
 }
 
-.status-graph>div {
+.dashboard-admin .status-graph>div {
     padding-top: 50px;
 }
 
-.donut-chart {
+.dashboard-admin .donut-chart {
     position: relative;
     width: 200px;
     height: 200px;
@@ -241,7 +241,7 @@
     border-radius: 100%
 }
 
-p.center {
+.dashboard-admin p.center {
     background: #ffffff;
     position: absolute;
     text-align: center;
@@ -259,7 +259,7 @@ p.center {
 }
 
 
-.portion-block {
+.dashboard-admin .portion-block {
     border-radius: 50%;
     clip: rect(0px, 200px, 200px, 100px);
     height: 100%;
@@ -267,7 +267,7 @@ p.center {
     width: 100%;
 }
 
-.circle {
+.dashboard-admin .circle {
     border-radius: 50%;
     clip: rect(0px, 100px, 200px, 0px);
     height: 100%;
@@ -278,31 +278,31 @@ p.center {
 }
 
 
-#part1 {
+.dashboard-admin #part1 {
     transform: rotate(0deg);
 }
 
-#part1 .circle {
+.dashboard-admin #part1 .circle {
     background-color: #BA6124;
     /*transform: rotate(76deg);*/
     animation: first 1s 1 forwards;
 }
 
 
-#part2 {
+.dashboard-admin #part2 {
     transform: rotate(100deg);
 }
 
-#part2 .circle {
+.dashboard-admin #part2 .circle {
     background-color: #DE752D;
     animation: second 1s 1 forwards 1s;
 }
 
-#part3 {
+.dashboard-admin #part3 {
     transform: rotate(250deg);
 }
 
-#part3 .circle {
+.dashboard-admin #part3 .circle {
     background-color: #F09971;
     animation: third 0.5s 1 forwards 2s;
 }
@@ -340,18 +340,18 @@ p.center {
 
 /* END OF KOPYA */
 
-.status-graph-container {
+.dashboard-admin .status-graph-container {
     display: flex;
     justify-content: center;
     height: 80%;
 }
 
-.status-graph-container>div {
+.dashboard-admin .status-graph-container>div {
     height: 100%;
     width: 35%;
 }
 
-.status-graph-container .status-container {
+.dashboard-admin .status-graph-container .status-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -359,33 +359,33 @@ p.center {
     padding-left: 5%;
 }
 
-.status-container .per-status-container {
+.dashboard-admin .status-container .per-status-container {
     padding: 15px;
     display: flex;
 }
 
-.status-container .per-status-container .square {
+.dashboard-admin .status-container .per-status-container .square {
     border-radius: 0;
     height: 20px;
     width: 20px;
     margin-right: 10px;
 }
 
-.status-container .per-status-container:nth-child(1) .square {
+.dashboard-admin .status-container .per-status-container:nth-child(1) .square {
     background-color: #BA6124;
 }
 
-.status-container .per-status-container:nth-child(2) .square {
+.dashboard-admin .status-container .per-status-container:nth-child(2) .square {
     background-color: #DE752D;
 }
 
-.status-container .per-status-container:nth-child(3) .square {
+.dashboard-admin .status-container .per-status-container:nth-child(3) .square {
     background-color: #F09971;
 }
 
 /* SECTION 4 */
 
-.management-container {
+.dashboard-admin .management-container {
     grid-area: management-container;
     display: grid;
     grid-template-rows: 2fr 2fr 2fr 1fr;
@@ -393,13 +393,13 @@ p.center {
     margin-left: 21px;
 }
 
-.users {
+.dashboard-admin .users {
     display: flex;
     align-items: center;
     padding-top: 15px;
 }
 
-.users>div {
+.dashboard-admin .users>div {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -408,24 +408,24 @@ p.center {
     box-sizing: border-box;
 }
 
-.users .user-container:nth-child(2) {
+.dashboard-admin .users .user-container:nth-child(2) {
     position: relative;
     left: -14px;
 }
 
-.users .user-container:nth-child(3) {
+.dashboard-admin .users .user-container:nth-child(3) {
     position: relative;
     left: -28px;
 }
 
-.users .user-container img {
+.dashboard-admin .users .user-container img {
     height: 100%;
     width: 100%;
     border-radius: 50%;
     /* object-fit: cover; */
 }
 
-.users .more-users-container {
+.dashboard-admin .users .more-users-container {
     height: 35px;
     width: 35px;
     position: relative;
@@ -434,13 +434,13 @@ p.center {
     background-color: #fff;
 }
 
-.manage-pending-accounts {
+.dashboard-admin .manage-pending-accounts {
     display: flex;
     align-items: center;
     padding: 0;
 }
 
-.pending-accounts-icon {
+.dashboard-admin .pending-accounts-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -452,6 +452,6 @@ p.center {
     border-radius: 8px;
 }
 
-.footer {
+.dashboard-admin .footer {
     grid-area: footer;
 }

@@ -1,6 +1,6 @@
 import React,{Fragment} from "react";
 import styles from "./WFARChecking.module.css"
-import PrintWFARButton from "./PrintWFARButton/PrintWFAR"
+import PrintWFARButton from "./Buttons/PrintWFARButton/PrintWFAR"
 import CheckWFARButton from "./Buttons/ChechWFARButton/CheckWFARButton";
 import ReCheckWFARButton from "./Buttons/Re-CheckWFARButton/Re-CheckWFARButton";
 import SubmitWFARButton from "./Buttons/SubmitWFARButton/SubmitButton";
