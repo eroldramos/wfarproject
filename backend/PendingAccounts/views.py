@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from core.serializers import FacultySerializer, PendingFacultySerializer
 from core.permissions import IsAdminUser, IsAdminAreaChairAndDeptHead
 from core.models import Faculty
-from django.db.models import Q
 from datetime import datetime
+from django.db.models import Q
 from django.core.paginator import Paginator
 class RetrievePendingFaculties(APIView):
     permission_classes = [IsAdminAreaChairAndDeptHead]

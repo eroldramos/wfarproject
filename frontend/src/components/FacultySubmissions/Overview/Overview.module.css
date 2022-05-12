@@ -7,6 +7,11 @@
     width: 100%;
     display: flex;
 }
-.tableContainer{
-    border: 1px solid black;
+.searchFacultyContainer{
+    width: 100%;
+}
+.footerContainer{
+    background-color: #F1F2F3;
+    height: 50px;
+    margin-top: 10px;
 }

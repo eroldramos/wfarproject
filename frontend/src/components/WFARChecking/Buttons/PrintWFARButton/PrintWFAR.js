@@ -1,4 +1,4 @@
-import PrintButton from "../../UI/FormControl/Button/PrintButton"
+import PrintButton from "../../../UI/FormControl/Button/PrintButton"
 import styles from "./PrintWFAR.module.css";
 
 const printButton = () =>{

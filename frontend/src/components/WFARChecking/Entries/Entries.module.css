@@ -1,6 +1,6 @@
 .entries{
     display: flex;
-    height: 90px;
+    flex-flow: row wrap;
     left: 153px;
     top: 279px;
     background: #FFFFFF;
@@ -10,8 +10,13 @@
     border-radius: 8px;
 }
 .detailsContainer{
+    width: 100%;
+    margin: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.entryTextContainer{
     width: 50%;
-    margin: 15px 30px;
 }
 .detailsContainer h4:nth-child(2){
     font-weight: 600;
@@ -21,16 +26,33 @@
     margin-top: 7px;
 }
 .attachmentContainer{
-    margin: 10px 0px;
-    margin-left: 125px;
     display: flex;
+    width: fit-content;
+    float: right;
 }
 .attachmentContainer h5{
     color: #777777;
     font-weight: 600;
-    margin: 22px 0;
 }
-.iconContainer{
+.chevronDown{
     height: fit-content;
-    margin: 22px 30px;
+    margin: 20px 0;
+    margin-left: 30px;
+    cursor: pointer;
 }
+.chevronUp{
+    height: fit-content;
+    margin: 20px 0;
+    margin-left: 30px;
+    cursor: pointer;
+    display: none;
+}
+.expandedEntry{
+    margin: 0px 20px;
+    margin-bottom: 20px;
+    width: 93%;
+}
+/* .lineBreak{
+    width: 100%;
+    border: 5px solid black;
+} */

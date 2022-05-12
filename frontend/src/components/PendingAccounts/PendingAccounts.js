@@ -68,22 +68,20 @@ const PendingAccounts = () => {
       setSelectedUser([]);
       dispatch(acceptAccountResetValue());
     }
-    if (!success) {
-      dispatch(getPendingAccounts(search));
-    }
+    dispatch(getPendingAccounts(search));
   }, [dispatch, search, success, navigate]);
 
   useEffect(() => {
     if (faculties && !success) {
       setListPendingAccounts(faculties);
     }
-  }, [faculties]);
+  }, [faculties, success]);
 
   useEffect(() => {
     if (listPendingAccounts.length > 0 && !success) {
       setCheckedState(new Array(listPendingAccounts.length).fill(false));
     }
-  }, [listPendingAccounts]);
+  }, [listPendingAccounts, success]);
 
   const [checkedState, setCheckedState] = useState(
     new Array(listPendingAccounts.length).fill(false)

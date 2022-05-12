@@ -3,11 +3,11 @@ import styles from "./WeeklyView.module.css";
 import SemFilter from "../SemFilter/SemFilter";
 import TableDisplay from "../TableDisplayCheckbox/TableDisplay";
 import SearchFaculty from "../SearchFaculty/SearchFaculty";
-import Table from "../Table/Table";
+import WeeklyTable from "../Table/WeeklyViewTable";
 import ViewOptions from "../ViewOptions/ViewOptions";
 import WeekFilter from "./WeekFilter/WeekFilter";
 import StatusFilter from "./StatusFilter/StatusFilter";
-
+import Footer from "../Footer/Footer";
 const facultySubmission = () => {
   return (
     <Fragment>
@@ -19,42 +19,45 @@ const facultySubmission = () => {
         <ViewOptions />
       </div>
       <div className={styles.secondarycontainer}>
-        <SemFilter
-          id="semFilter"
-          name="semester"
-          label="Semesters"
-          labelName={"Semester"}
-          size="rg"
-          type="filter"
-        />
-        <WeekFilter
-          id="weekFilter"
-          name="weekFilter"
-          label="Week"
-          labelName={"Week"}
-          size="rg"
-          type="filter"
-        />
-        <StatusFilter
-          id="statusFilter"
-          name="statusFilter"
-          label="Status"
-          labelName={"Status"}
-          size="rg"
-          type="filter"
-        />
-        <SearchFaculty
-          id="link"
-          onChange={null}
-          labelName="search"
-          inputName="search"
-          placeholder="Search faculty"
-          size="rg"
-          type="filter"
-        />
+        <div className={styles.semFilterContainer}>
+          <SemFilter
+            id="semFilter"
+            name="semester"
+            label="Semesters"
+            labelName={"Semester"}
+            size="rg"
+            type="filter"
+          />
+        </div>
+        <div className={styles.weekFilterContainer}>
+          <WeekFilter
+            id="weekFilter"
+            name="weekFilter"
+            label="Week"
+            labelName={"Week"}
+            size="rg"
+            type="filter"
+          />
+        </div>
+        <div className={styles.statusFilterContainer}>
+          <StatusFilter
+            id="statusFilter"
+            name="statusFilter"
+            label="Status"
+            labelName={"Status"}
+            size="rg"
+            type="filter"
+          />
+        </div>
+        <div className={styles.searchFilterContainer}>
+          <SearchFaculty/>
+        </div>
       </div>
       <div className={styles.tableContainer}>
-        <Table></Table>
+        <WeeklyTable></WeeklyTable>
+      </div>
+      <div className={styles.footerContainer}>
+        <Footer></Footer>
       </div>
     </Fragment>
   );

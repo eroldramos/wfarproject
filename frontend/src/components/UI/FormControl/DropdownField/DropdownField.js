@@ -28,7 +28,7 @@ const DropdownField = (props) => {
           );
         })}
       </select>
-      <p className>{props.error}</p>
+      <p className="">{props.error}</p>
     </div>
   );
 };

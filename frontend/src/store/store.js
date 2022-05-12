@@ -4,6 +4,15 @@ import {
   getPendingAccountsReducer,
   acceptAccountsReducer,
 } from "./pendingAccountsReducers";
+import {
+  createSemReducer,
+  getSemsReducer,
+  getSemDetailsReducer,
+  updateSemReducer,
+} from "./manageSemReducers";
+//for demo
+import { getAllSemsReducer, addSemReducer } from "./sampleReducers";
+
 console.log("HelloWorld");
 
 const store = configureStore({
@@ -12,6 +21,16 @@ const store = configureStore({
     register: authRegisterReducer.reducer,
     getPendingAccounts: getPendingAccountsReducer.reducer,
     acceptAccounts: acceptAccountsReducer.reducer,
+    createSem: createSemReducer.reducer,
+    getSems: getSemsReducer.reducer,
+    getSemDetails: getSemDetailsReducer.reducer,
+    updateSem: updateSemReducer.reducer,
+
+    // For Demo purpose only
+
+    getAllSems: getAllSemsReducer.reducer,
+
+    addSem: addSemReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

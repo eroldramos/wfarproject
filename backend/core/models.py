@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -31,10 +32,10 @@ class Faculty(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)
     assignee_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True) #foreign key, area chair or dept head id
+    profile_picture = models.ImageField(null=True, default='/avatar.svg')
     # added null=True for assignee_id to avoid can't be null error
     class Meta:
         ordering = ['last_name'] #para saan pala 'to?
-
 
     def __str__(self):
         return f"{self.email}"

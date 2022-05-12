@@ -1,7 +1,6 @@
 /* Pinag-iisipan ko pa if tama ba na i-module ko pa ito kasi almost same lang naman talaga design nya kay date field */
 
 .form-control {
-    margin: 5px 5px;
 }
 
 .form-control.rg {
@@ -13,7 +12,7 @@
 }
 
 .form-control.lg {
-    width: 95%;
+    width:100%;
 }
 
 .form-control label {
@@ -21,7 +20,6 @@
     font-weight: 600;
     font-size: 1em;
     display: block;
-    margin: 15px 0;
 }
 
 .form-control textarea {
@@ -30,16 +28,16 @@
     border: 2px solid transparent;
     border-radius: 5px;
     width: 100%;
-    height: 100px;
+    height: 85px;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 19px;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0px 15px;
+    padding-right: 0;
     transition: .05s linear;
-    border: 1px solid black;
 }
 
 .form-control input:focus {
@@ -77,7 +75,6 @@
 }
 
 .form-control.invalid p {
-    margin: 3px 0 0 0;
     color: red;
     font-weight: 600;
     font-size: .875em;

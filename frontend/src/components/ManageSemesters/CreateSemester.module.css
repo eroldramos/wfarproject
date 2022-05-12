@@ -1,0 +1,29 @@
+.upper-form-container {
+  display: flex;
+}
+.bottom-form-container,
+.upper-form-container {
+  margin: 25px 0;
+}
+.bottom-form-container label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1em;
+
+  width: 100%;
+  display: block;
+  margin: 15px 0;
+}
+.week-rows-container {
+  display: flex;
+}
+.delete-icon-container {
+  display: flex;
+  align-items: center;
+}
+.button-container {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

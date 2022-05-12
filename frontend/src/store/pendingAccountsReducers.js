@@ -27,7 +27,7 @@ export const getPendingAccountsReducer = createSlice({
 export const getPendingAccountsActions = getPendingAccountsReducer.actions;
 
 export const acceptAccountsReducer = createSlice({
-  name: "getPendingAccount",
+  name: "acceptAccounts",
   initialState: {
     isLoading: false,
     error: null,

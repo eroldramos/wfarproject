@@ -1,8 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styles from "./ManageSemesters.module.css";
 import IconButton from "../UI/FormControl/Button/IconButton";
-import PopupMenu from "../UI/Menu/PopupMenu";
+import SemesterRows from "./SemesterRows";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getSems } from "../../store/manageSemActions";
+import Paginator from "./Paginator/Paginator";
 const ManageSemesters = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const search = useLocation().search;
   const icon = (
     <svg
       width="32"
@@ -17,27 +24,56 @@ const ManageSemesters = () => {
       />
     </svg>
   );
+
+  const SEMESTERS = [
+    { label: "1st Semester", schoolYear: "2021-2022" },
+    { label: "1st Semester", schoolYear: "2021-2022" },
+    { label: "1st Semester", schoolYear: "2021-2022" },
+  ];
+
+  const onNavigateCreateSemester = () => {
+    navigate("/create-semester");
+  };
+  const getSemsReducerValues = useSelector((state) => state.getSems);
+  const [allSemesters, setAllSemesters] = useState([]);
+  const {
+    isLoading,
+    error,
+    semesters: { semList, page, pages },
+  } = getSemsReducerValues;
+  useEffect(() => {
+    dispatch(getSems(search));
+  }, [dispatch, search]);
+  useEffect(() => {
+    if (semList) {
+      setAllSemesters(semList);
+    }
+  }, [semList]);
+  console.log(allSemesters);
   return (
     <Fragment>
       <h1>Manage Semesters</h1>
       <div className={styles["add-sem-btn-container"]}>
-        <IconButton label="Add Semester" type="primary" size="xs" svg={icon} />
+        <IconButton
+          label="Add Semester"
+          type="primary"
+          size="xs"
+          svg={icon}
+          onClick={onNavigateCreateSemester}
+        />
       </div>
       <div className={styles["clearfix"]}></div>
-      <div className={styles["sem-container"]}>
-        <strong>2021-2022 1st Semester</strong>
-        <div className={styles["popup-menu-container"]}>
-          <PopupMenu
-            items={[
-              { id: 1, label: "daslfa" },
-              { id: 1, label: "daslfa" },
-              { id: 1, label: "daslfa" },
-            ]}
-          />
-        </div>
-      </div>
-      <div className={styles["sem-container"]}>
-        <strong>2021-2022 1st Semester</strong>
+
+      {allSemesters.map((sem, index) => (
+        <SemesterRows
+          key={index}
+          semId={sem.id}
+          label={sem.label}
+          schoolYear={sem.school_year}
+        />
+      ))}
+      <div className={styles["paginator-container"]}>
+        <Paginator page={page} pages={pages} />
       </div>
     </Fragment>
   );
