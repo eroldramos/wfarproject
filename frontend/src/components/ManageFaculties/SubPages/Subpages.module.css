@@ -1,0 +1,21 @@
+.popup-menu-container {
+  float: right;
+}
+.filter-button-container {
+  float: left;
+  width: fit-content;
+  block-size: fit-content;
+}
+.popup-icon {
+  display: flex;
+  align-items: center;
+  height: 44.5px;
+}
+.cleafix {
+  clear: both;
+}
+.search-field-container {
+  position: absolute;
+  right: 55px;
+  top: 120px;
+}

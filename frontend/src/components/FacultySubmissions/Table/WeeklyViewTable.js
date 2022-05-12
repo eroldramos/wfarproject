@@ -1,10 +1,12 @@
-import React, { Fragment } from "react";
-import styles from "./Table.module.css";
 
-const genericTable = (props) => {
+import React, { Fragment } from "react";
+import styles from "./WeeklyViewTable.module.css";
+import ViewButton from "../../UI/FormControl/Button/TableCellButton"
+
+const WeeklyTable = (props) => {
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
+    <div className={styles.weeklyTableContainer}>
+      <table className={styles.weeklyTable}>
         <tr>
           <th>
             Faculty{" "}
@@ -21,35 +23,21 @@ const genericTable = (props) => {
               />
             </svg>
           </th>
-          <th>Week 1</th>
-          <th>Week 2</th>
-          <th>Week 3</th>
-          <th>Week 4</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
-          <th>Week 5</th>
+          <th># Entries</th>
+          <th>Status</th>
+          <th>Date Submitted</th>
+          <th></th>
         </tr>
         <tr>
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td>sample</td>
-          <td>sample</td>
-        </tr>
-        <tr>
-          <td>sample</td>
-        </tr>
-        <tr>
-          <td>sample</td>
-        </tr>
-        <tr>
-          <td>sample</td>
+          <td><ViewButton 
+            id="viewSubmission"
+            label="View Submission"
+            type="primary"
+            onClick={null}/></td>
         </tr>
         <tr>
           <td>sample</td>
@@ -71,4 +59,4 @@ const genericTable = (props) => {
   );
 };
 
-export default genericTable;
+export default WeeklyTable;

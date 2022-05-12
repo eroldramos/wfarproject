@@ -18,6 +18,7 @@ import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
+import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
 function App() {
   // sample use state for two-way binding
@@ -45,6 +46,10 @@ function App() {
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route path="/mySubmission" element={<MySubmission />}></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
+          <Route
+            path="/manage-faculty/*"
+            element={<ManageFacultiesScreen />}
+          ></Route>
 
           <Route
             path="/manage-semesters/"
