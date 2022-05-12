@@ -106,7 +106,7 @@ function SampleRedux() {
       </form>
       {addSemSuccess && <p>{addSemSuccess}</p>}
       {addSemError && <p>{addSemError}</p>}
-      <table className="tableContainer">
+      <table className="table-container">
         <tr>
           <th>Label</th>
           <th>School Year</th>

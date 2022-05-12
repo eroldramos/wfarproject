@@ -5,7 +5,7 @@ import TableDisplay from "../TableDisplayCheckbox/TableDisplay";
 import SearchFaculty from "../SearchFaculty/SearchFaculty";
 import Table from "../Table/Table";
 import ViewOptions from "../ViewOptions/ViewOptions"
-
+import Footer from "../Footer/Footer";
 
 const facultySubmission = () => {
   
@@ -38,6 +38,9 @@ const facultySubmission = () => {
       </div>
       <div className={styles.tableContainer}>
         <Table></Table>
+      </div>
+      <div className={styles.footerContainer}>
+        <Footer></Footer>
       </div>
     </Fragment>
   );

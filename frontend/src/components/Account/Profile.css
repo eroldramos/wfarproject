@@ -104,9 +104,9 @@
 
 .adjustMarginsOfTable td,
 th {
-  border: none !important; 
+  border: none ; 
   text-align: left;
-  padding: 1px !important;
+  padding: 1px ;
 }
 
 tr:nth-child(even) {
