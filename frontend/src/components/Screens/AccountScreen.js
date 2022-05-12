@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import Account from "../Account/Profile";
+import Profile from "../Account/Profile2ComponentBase";
 const AccountScreen = () => {
   return (
     <Fragment>
-      <Account />
+      <Profile />
     </Fragment>
   );
 };
