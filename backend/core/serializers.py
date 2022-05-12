@@ -1,6 +1,6 @@
 from re import T
 from rest_framework import serializers
-from core.models import Faculty, Semester, Week
+from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from datetime import datetime
 
@@ -108,3 +108,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         if name == " ":
             name = obj.email
         return name
+
+class MyWfarSerializer(serializers.ModelSerializer):
+    pass

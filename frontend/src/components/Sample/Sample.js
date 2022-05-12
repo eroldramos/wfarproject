@@ -24,7 +24,7 @@ function Sample() {
     setCurrentPage(page);
 
     if (page == 1) {
-      navigate("/sample/p1/");
+      navigate("/sample/");
     }
     if (page == 2) {
       navigate("/sample/p2/");
@@ -318,7 +318,7 @@ function Sample() {
 
       <Routes>
         {/* in element properties we insert any element to render even exported elemt */}
-        <Route path="p1/" element={<p>p1</p>} />
+        <Route path="/" element={<p>p1</p>} />
         <Route path="p2/" element={<p2>p2</p2>} />
         <Route path="p3" element={<p2>p3</p2>} />
       </Routes>

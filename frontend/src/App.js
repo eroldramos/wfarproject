@@ -46,7 +46,7 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission" element={<MySubmission />}></Route>
+          <Route path="/mySubmission/*" element={<MySubmission />}></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"
