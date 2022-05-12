@@ -21,6 +21,13 @@ const AddEntry = (props) => {
     const [teamMeetScreenshots, setTeamMeetScreenshots] = useState([]);
     const [providedActivitiesScreenshots, setProvidedActivitiesScreenshots] = useState([]);
 
+    const accomplishedDateRequiredError = 'Please select the accomplishment date.';
+    const subjectRequiredError = 'Please enter a subject.';
+    const cysRequiredError = 'Please enter the course, year and section.';
+    const meetingLinkRequiredError = 'Please enter the recording of the meeting link.';
+    const noOfAttendeesRequiredError = 'Please enter the number of attendees.';
+    const learningActivityRequiredError = 'Please enter the learning activity.';
+
     const addLearningActivityField = () => {
         let inputField = { value: '' };
         setLearningActivities((prevState) => {
@@ -48,7 +55,7 @@ const AddEntry = (props) => {
             setAccomplishedDate((prevState) => {
                 return {
                     ...prevState,
-                    value: event.target.value, error: "Please select the accomplishment date."
+                    value: event.target.value, error: accomplishedDateRequiredError
                 }
             });
         }
@@ -66,7 +73,7 @@ const AddEntry = (props) => {
     const subjectOnBlur = (event) => {
         if (event.target.value === '') {
             setSubject((prevState) => {
-                return { ...prevState, error: "Please enter a subject." }
+                return { ...prevState, error: subjectRequiredError }
             });
         }
     }
@@ -85,7 +92,7 @@ const AddEntry = (props) => {
             setCys((prevState) => {
                 return {
                     ...prevState,
-                    value: event.target.value, error: "Please enter the course, year and section."
+                    value: event.target.value, error: cysRequiredError
                 }
             });
         }
@@ -105,7 +112,7 @@ const AddEntry = (props) => {
             setMeetingLink((prevState) => {
                 return {
                     ...prevState,
-                    value: event.target.value, error: "Please enter the recording of the meeting link."
+                    value: event.target.value, error: meetingLinkRequiredError
                 }
             });
         }
@@ -126,7 +133,7 @@ const AddEntry = (props) => {
             setNoOfAttendees((prevState) => {
                 return {
                     ...prevState,
-                    value: event.target.value, error: "Please enter the number of attendees."
+                    value: event.target.value, error: noOfAttendeesRequiredError
                 }
             });
         }
@@ -134,10 +141,6 @@ const AddEntry = (props) => {
     }
 
     const learningActivityOnChange = (index, event) => {
-        // let data = [...learningActivities];
-        // data[index].value = event.target.value;
-        // setLearningActivities(data);
-
         setLearningActivities((prevState) => {
             prevState[index].value = event.target.value;
             prevState[index].error = null;
@@ -151,7 +154,7 @@ const AddEntry = (props) => {
         if (event.target.value === '') {
             setLearningActivities((prevState) => {
                 prevState[index].value = event.target.value;
-                prevState[index].error = "Please enter the learning activity.";
+                prevState[index].error = learningActivityRequiredError;
                 return [...prevState];
             });
         }
@@ -194,19 +197,26 @@ const AddEntry = (props) => {
 
     const addEntry = (event) => {
         event.preventDefault();
-        let validate_first = false, validate_second = false;
+
+        if (accomplishedDate.value === '') 
+            setAccomplishedDate((prevState) => {
+                return {...prevState, error: accomplishedDateRequiredError}
+            })
+
+        if (subject.value === '')
+            setSubject((prevState) => {
+                return {...prevState, error: subjectRequiredError}
+            })
 
         if (accomplishedDate.error === null && 
             subject.error === null &&
             cys.error === null &&
             noOfAttendees === null &&
             meetingLink === null) {
-                validate_first = true;
         }
 
         for (let x of learningActivities) {
             if (x.error !== null) {
-                validate_second = false;
             }
         }
 
