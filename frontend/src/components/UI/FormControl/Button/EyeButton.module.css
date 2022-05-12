@@ -1,0 +1,62 @@
+.button {
+  font-size: 1em;
+  font-weight: 500;
+
+  padding: 15px 25px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  transition: 0.2s linear;
+  cursor: pointer;
+  margin: 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button.rg {
+  font-size: 1em;
+  padding: 15px 25px;
+  min-width: 100px;
+}
+
+.button.s {
+  font-size: 0.875em;
+  padding: 11.5px 25px;
+}
+
+.button.xs {
+  font-size: 0.875em;
+  padding: 8px 15px;
+  border: 1.75px solid transparent;
+}
+
+.button.primary {
+  background: #fff;
+  border: 2px solid #be5a40;
+  color: #be5a40;
+}
+
+.button.primary:hover {
+  background: #a83b1f;
+  transition: 0.2s linear;
+  color: #fff;
+}
+
+.button.cancel {
+  background: #fff;
+  border: 2px solid #a1a1a1;
+  color: #a1a1a1;
+}
+
+.button.cancel:hover {
+  background: #777777;
+  transition: 0.2s linear;
+  color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  .button {
+    width: 100% !important;
+  }
+}

@@ -39,7 +39,9 @@ function App() {
           <Route path="/OverView" element={<FacultySubmissionScreen />}></Route>
           <Route path="/WeeklyView" element={<WeeklyView />}></Route>
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
-          <Route path="/sample" element={<Sample />}></Route>
+          <Route path="/sample/*" element={<Sample />}></Route>
+          {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
+
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>

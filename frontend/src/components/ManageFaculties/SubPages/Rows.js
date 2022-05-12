@@ -5,6 +5,7 @@ import styles from "./Subpages.module.css";
 import FilterButton from "../../UI/FormControl/Button/FilterButton";
 import PromoteModal from "./Modals/PromoteModal";
 import DemoteModal from "./Modals/DemoteModal";
+import ViewFacultyModal from "./Modals/ViewFacultyModal";
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -85,7 +86,19 @@ const Rows = (props) => {
           data-label="Actions"
         >
           <div className={styles["filter-button-container"]}>
-            <FilterButton label="View Status" type="primary"></FilterButton>
+            <FilterButton
+              label={
+                props.user_type === 2 || props.user_type === 3
+                  ? "View Faculties"
+                  : "View Status"
+              }
+              type="primary"
+            ></FilterButton>
+            <ViewFacultyModal
+              id={props.id}
+              fullname={props.fullname}
+              user_type={props.user_type}
+            />
           </div>
           <div className={styles["popup-menu-container"]}>
             <div className={styles["popup-icon"]} onClick={openPopMenuHandler}>
