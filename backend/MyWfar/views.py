@@ -22,6 +22,9 @@ class FetchMyWfar(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        wfar = WFAR.objects.all()
+
+        faculty_id = request.GET.get('faculty_id')
+
+        wfar = WFAR.objects.filter(faculty_id=faculty_id)
         wfar_serializer = WfarSerializer(wfar, many=True)
         return Response(wfar_serializer.data)

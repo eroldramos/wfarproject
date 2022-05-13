@@ -127,7 +127,7 @@ class SemesterSerializer(serializers.ModelSerializer):
         fields = ('id', 'start_date', 'end_date', 'no_of_weeks')
 
 class WfarEntrySerializer(serializers.ModelSerializer):
-    accomplishment_date = serializers.DateField(format="%B %d")
+    # accomplishment_date = serializers.DateField(format="%B %d")
     class Meta:
         model = WFAR_Entry
         fields = ('id', 'accomplishment_date', 'subject', 'course_year_section')
