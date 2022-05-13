@@ -7,7 +7,7 @@ const MyWFAR = (props) => {
     let items = props.items;
 
     return (
-        <div className={styles["my-wfar"]}>
+        <div className={styles.myWfar}>
 
             {items.map(item => {
                 return (

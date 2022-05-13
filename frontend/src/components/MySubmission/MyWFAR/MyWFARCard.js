@@ -93,28 +93,28 @@ const MyWFARCard = (props) => {
     }
 
     return (
-        <div className={styles['card']}>
+        <div className={styles.card}>
 
-            <div className={styles['wfar-container']}>
+            <div className={styles.wfarContainer}>
 
                 <div>
-                    <div className={styles['week-container']}>
-                        <div className={styles['week-label']}> {weekTitle} </div>
-                        <div className={styles['week-date']}> {weekDate} </div>
+                    <div className={styles.weekContainer}>
+                        <div className={styles.weekLabel}> {weekTitle} </div>
+                        <div className={styles.weekDate}> {weekDate} </div>
                     </div>
                 </div>
 
 
                 <div>
-                    <div className={styles['entry-label-container']}>
-                        <div className={styles['entry-no']}> {entryNo} </div>
-                        <div className={styles['entry-word']}> {entryLabel} </div>
+                    <div className={styles.entryLabelContainer}>
+                        <div className={styles.entryNo}> {entryNo} </div>
+                        <div className={styles.entryWord}> {entryLabel} </div>
                     </div>
                 </div>
 
 
                 <div>
-                    <div className={styles['button-status-container']} style={{ display: "flex" }}>
+                    <div className={styles.buttonStatusContainer} style={{ display: "flex" }}>
                         {wfarStatus != 1 && <WFARStatus status={wfarStatus}></WFARStatus>}
                         {buttonsJSX}
                     </div>
@@ -127,7 +127,7 @@ const MyWFARCard = (props) => {
 
             </div>
 
-            <div id="entries-container" className={styles['entries-container']}>
+            <div id="entries-container" className={styles.entriesContainer}>
                 <MyWfarEntry no={1} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
                 <MyWfarEntry no={2} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
             </div>

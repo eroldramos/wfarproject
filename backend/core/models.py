@@ -82,9 +82,12 @@ class Semester(models.Model):
     school_year = models.CharField(max_length=200) # naulit lang
     created_at = models.DateTimeField(auto_now_add=True) # datefield lang
     updated_at = models.DateTimeField(auto_now=True) #datefield lang
+    no_of_weeks = models.PositiveIntegerField() # ADDED
+    start_date = models.DateField() # ADDED
+    end_date = models.DateField() # ADDED
     deleted_at = models.DateTimeField(null=True)
 
-# Week
+# Week - Ireremove na natin haha
 class Week(models.Model):
     label = models.CharField(max_length=200)
     start_date = models.DateField(null=True)
@@ -98,12 +101,16 @@ class WFAR(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     checked_at = models.DateTimeField(null=True)
     submitted_at = models.DateTimeField(null=True)
+    week_no = models.PositiveIntegerField()
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
-    faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checker_id') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
-    week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
+    faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checkers') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
+    semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE)
+        # week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
+
+
 # WFAR Entry
 class WFAR_Entry(models.Model):
-    accomplishment_date = models.DateTimeField(default=datetime.now)
+    accomplishment_date = models.DateField()
     subject = models.CharField(max_length=200)
     course_year_section = models.CharField(max_length=200)
     no_of_attendees = models.PositiveIntegerField()
@@ -111,7 +118,7 @@ class WFAR_Entry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)
-    wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE)
+    wfar_id = models.ForeignKey(WFAR, related_name='wfar_entries', on_delete=models.CASCADE)
 
 # WFAR Entry Attachment
 class WFAR_Entry_Attachment(models.Model):

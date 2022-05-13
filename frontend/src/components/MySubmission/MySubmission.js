@@ -37,7 +37,7 @@ const MySubmission = (props) => {
     const WFAR_ITEMS = [
         {
             id: 1,
-            weekTitle: "Week 3",
+            weekTitle: "Week 4",
             startDate: "2022-04-08",
             endDate: "2022-04-14",
             status: 3,
@@ -50,14 +50,6 @@ const MySubmission = (props) => {
             endDate: "2022-04-14",
             status: 1,
             entryNo: 2
-        },
-        {
-            id: 3,
-            weekTitle: "Week 3",
-            startDate: "2022-04-08",
-            endDate: "2022-04-14",
-            status: 1,
-            entryNo: 6
         },
         {
             id: 3,
