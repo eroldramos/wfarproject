@@ -18,7 +18,7 @@ from core.models import WFAR
 from core.models import WFAR_Entry
 from django.core.paginator import Paginator
 
-class FetchMyWfar(APIView):
+class RetrieveMyWfar(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):

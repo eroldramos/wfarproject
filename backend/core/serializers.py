@@ -130,30 +130,13 @@ class WfarEntrySerializer(serializers.ModelSerializer):
     # accomplishment_date = serializers.DateField(format="%B %d")
     class Meta:
         model = WFAR_Entry
-        fields = ('id', 'accomplishment_date', 'subject', 'course_year_section')
-
-# class WfarSerializer(serializers.ModelSerializer):
-#     wfar_entries = WfarEntrySerializer(many=True, read_only=True)
-#     # semester = SemesterSerializer(required=True)
-#     week_bracket = serializers.SerializerMethodField(read_only=True)
-#     # start_date = serializers.DateField(source='semester_id.start_date') # this is your related_name
-#     class Meta:
-#         model = WFAR
-#         fields = ('id', 'status', 'week_no', 'week_bracket', 'wfar_entries')
-
-#     def get_week_bracket(self, obj):
-#         return (SemesterSerializer(obj.semester_id).data);
-
-#     # def get_semester_obj(self, obj):
-#     #     return Semester.objects.first(pk=obj.semester_id)
-#     # def get_week_date(self):
-#     #     # week_bracket = 
-
+        fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at')
 
 class WfarSerializer(serializers.ModelSerializer):
     wfar_entries = WfarEntrySerializer(many=True, read_only=True)
     semester = serializers.SerializerMethodField(read_only=True)
     week_bracket = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = WFAR
         fields = ('id', 'status', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
@@ -193,23 +176,3 @@ class WfarSerializer(serializers.ModelSerializer):
 
         week_bracket[0] = week_bracket[1] - timedelta(6)
         return week_bracket; 
-
-
-        # # step 2
-        # succeeding_date = start_date + timedelta(days=7)
-        # succeeding_date_day = succeeding_date.isoweekday()
-
-        # # step 3
-        # if succeeding_date > end_date:
-        #     succeeding_date = end_date
-
-        # # step 4
-        # if succeeding_date_day != 7:
-        #     succeeding_date-=timedelta(days=succeeding_date_day)
-        
-        # # step 5 - I-loop na10n 'to!
-
-    # def get_semester_obj(self, obj):
-    #     return Semester.objects.first(pk=obj.semester_id)
-    # def get_week_date(self):
-    #     # week_bracket = 
