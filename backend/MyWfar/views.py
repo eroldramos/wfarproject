@@ -24,7 +24,8 @@ class RetrieveMyWfar(APIView):
     def get(self, request):
 
         faculty_id = request.GET.get('faculty_id')
+        semester_id = request.GET.get('semester_id')
 
-        wfar = WFAR.objects.filter(faculty_id=faculty_id)
+        wfar = WFAR.objects.filter(faculty_id=faculty_id, semester_id=semester_id)
         wfar_serializer = WfarSerializer(wfar, many=True)
         return Response(wfar_serializer.data)
