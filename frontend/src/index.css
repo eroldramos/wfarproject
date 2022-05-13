@@ -4,6 +4,7 @@
   /* box-sizing: border-box; */
   font-family: 'Public Sans', sans-serif;
   color: #323232;
+  user-select: none;
 }
 
 html {
