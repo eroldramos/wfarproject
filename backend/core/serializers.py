@@ -213,34 +213,3 @@ class WfarSerializer(serializers.ModelSerializer):
     #     return Semester.objects.first(pk=obj.semester_id)
     # def get_week_date(self):
     #     # week_bracket = 
-
-
-# class EmployeeSerializer(serializers.ModelSerializer):
-#     # PrimaryKeyRelatedField
-#     tasks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-  
-#     class Meta:
-#         model = Employee
-#         fields = (
-#             'pk',
-#             'emp_id',
-#             'name',
-#             'gender',
-#             'designation',
-#             'tasks')
-  
-  
-# class EmployeeTaskSerializer(serializers.ModelSerializer):
-#     # PrimaryKeyRelatedField
-#     employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all(),
-#                                                   many=False)     
-  
-#     class Meta:
-#         model = EmployeeTask
-#         fields = (
-#             'pk',
-#             'task_name',
-#             'employee',
-#             'task_desc',
-#             'created_date',
-#             'deadline')
