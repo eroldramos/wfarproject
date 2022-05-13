@@ -1,4 +1,4 @@
-.pop-up {
+.popUp {
   position: absolute;
   right: 25px;
   bottom: -40px;
@@ -7,20 +7,30 @@
   border-radius: 5px;
   padding: 4px;
   font-size: 0.75em;
+  display: none;
+  user-select: none;
 }
 
-.pop-up ul {
+.popUp.open {
+  display: block;
+}
+
+.popUp.close {
+  display: none;
+}
+
+.popUp ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.pop-up ul li {
+.popUp ul li {
   padding: 5px 25px 6px 6px;
   cursor: pointer;
 }
 
-.pop-up ul li:hover {
+.popUp ul li:hover {
   background: #f1f1f1;
   border-radius: 5px;
 }
