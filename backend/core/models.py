@@ -85,6 +85,7 @@ class Semester(models.Model):
     no_of_weeks = models.PositiveIntegerField() # ADDED
     start_date = models.DateField() # ADDED
     end_date = models.DateField() # ADDED
+    is_active = models.BooleanField(default=False) # NEWLY ADDED! 0 - FALSE 1 - TRUE
     deleted_at = models.DateTimeField(null=True)
 
 # Week - Ireremove na natin haha
