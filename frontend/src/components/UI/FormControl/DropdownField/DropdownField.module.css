@@ -28,6 +28,11 @@
   font-size: 0.75em;
   margin: 5px 0;
 }
+.form-control.select label {
+  font-weight: 500;
+  font-size: 0.75em;
+  margin: 5px 0;
+}
 
 .form-control.filter.rg,
 .form-control.filter.md,

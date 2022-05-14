@@ -16,11 +16,31 @@
 }
 .table{
     border-collapse: collapse;
-    width: 2000px;
+    width: 100%;
 }
-.table tr th{
-    text-align: center;
-    font-weight: normal;
+.table tr:nth-child(1) th{
+    padding: 0;
+}
+.table tr:nth-child(1) th h4{
+    font-weight: 600;
+    margin: 8px 0px;
+    color: #777777;
+    border: 1px solid green;
+}
+.weekTextContainer{
+    margin: 8px 0px;
+    color: #777777;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 10px;
+    width: 70px;
+    height: 20px;
+    padding-top: 1.2px;
+    border: 1px solid black;
+}
+.presentWeek{
+    color: #FFFFFF;
+    background: #0F8B57;
 }
 .table tr th:nth-child(1){
     text-align: left;

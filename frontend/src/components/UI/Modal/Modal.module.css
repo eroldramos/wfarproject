@@ -7,7 +7,6 @@
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.75);
 }
-
 .modal {
   position: fixed;
   top: 20vh;
@@ -19,12 +18,17 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
+  width: 100px;
 }
 
 @media (min-width: 768px) {
   .modal {
     width: 50rem;
     left: calc(50% - 25rem);
+  }
+  .modal.m {
+    width: 20rem;
+    left: calc(69% - 25rem);
   }
 }
 
