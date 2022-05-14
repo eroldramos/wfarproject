@@ -1,10 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Modal from "../../../UI/Modal/Modal";
 import styles from "./ViewFacultyStatus.module.css";
 import ModalButton from "../../../UI/FormControl/Button/ModalButton";
 import EyeButton from "../../../UI/FormControl/Button/EyeButton";
 import Button from "../../../UI/FormControl/Button/Button";
 import Tab from "../../../UI/Tab/Tab";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import AssignedFaculty from "./SubPages/AssignedFaculty";
+import UnassignedFaculty from "./SubPages/UnassignedFaculty";
 const ViewFacultyModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
@@ -30,26 +33,41 @@ const ViewFacultyModal = (props) => {
 
   const SAMPLE_ITEMS = [
     {
-      label: "Department Head",
+      label: "Assigned Faculties",
       id: 1,
       side: false,
-      onClick: () => null,
+      onClick: () => onChangePageHandler(1),
     },
     {
-      label: "Area Chair",
+      label: "Unassigned Faculties",
       id: 2,
       side: false,
-      onClick: () => null,
-    },
-    {
-      label: "Faculty",
-      id: 3,
-      side: false,
-      onClick: () => null,
+      onClick: () => onChangePageHandler(2),
     },
   ];
+  let navigate = useNavigate();
+  const onChangePageHandler = (page) => {
+    setCurrentPage(page);
+    let urlArray = window.location.href.split("/");
+    let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
+    if (page == 1) {
+      navigate(newUrl + "assigned-faculty/");
+    }
+    if (page == 2) {
+      navigate(newUrl + "unassigned-faculty/");
+    }
+    // if (page == 3) {
+    //   navigate("/manage-faculty/faculty/");
+    // }
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    let urlArray = window.location.href.split("/");
+    let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
+    navigate(newUrl + "assigned-faculty/");
+  }, []);
+  console.log(currentPage, "VIEWFACULTYMODAL");
   return (
     <Fragment>
       <Modal onClose={props.onClose}>
@@ -67,6 +85,28 @@ const ViewFacultyModal = (props) => {
           <p>{user_type}</p>
           <div className={styles["clearfix"]}></div>
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
+          <Routes>
+            <Route
+              path={"/assigned-faculty/"}
+              element={
+                <AssignedFaculty
+                  id={props.id}
+                  fullname={props.fullname}
+                  user_type={props.user_type}
+                />
+              }
+            />
+            <Route
+              path={"/unassigned-faculty/"}
+              element={
+                <UnassignedFaculty
+                  id={props.id}
+                  fullname={props.fullname}
+                  user_type={props.user_type}
+                />
+              }
+            />
+          </Routes>
           <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button

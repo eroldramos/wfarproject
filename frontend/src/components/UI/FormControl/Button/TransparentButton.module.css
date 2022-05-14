@@ -50,7 +50,8 @@
 
 .button.transparent {
   background: none;
-  color: black;
+  color: #be5a40;
+  font-weight: bold;
 }
 
 .button.transparent:hover {

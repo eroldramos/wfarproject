@@ -6,18 +6,34 @@
     width: 100%;
 }
 
-.wfar-container {
+.wfarContainer {
     display: flex;
     width: 100%;
     align-items: center;
 }
 
-.entries-container {
+.entriesContainer {
     width: 100%;
-    /* display: none; */
+    display: none;
 }
 
-.wfar-container > div:nth-child(1) {
+.openClose {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.openClose svg {
+}
+
+.entriesContainer.close {
+    display: none;
+}
+
+.entriesContainer.open {
+    display: block;
+}
+
+.wfarContainer > div:nth-child(1) {
     width: 20%;
     border-right: 1px solid #E5E5E5;
     display: flex;
@@ -26,23 +42,23 @@
     padding-right: 5%;
 }
 
-.wfar-container > div:nth-child(2) {
+.wfarContainer > div:nth-child(2) {
     width: 30%;
     padding: 0px 5%;
 }
 
-.wfar-container > div:nth-child(3) {
+.wfarContainer > div:nth-child(3) {
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content:flex-end;
     width: 50%;
     padding: 0px 2%;
 }
 
-.wfar-container .week-container {
+.wfarContainer .weekContainer {
     width: fit-content;
 }
-.wfar-container .week-container .week-label {
+.wfarContainer .weekContainer .weekLabel {
     font-weight: 700;
     font-size: 1em;
     padding: 5px 7.5px;
@@ -50,7 +66,7 @@
     text-align: center;
 }
 
-.wfar-container .week-container .week-date {
+.wfarContainer .weekContainer .weekDate {
     font-weight: 500;
     font-size: .875em;
     padding: 5px 7.5px 5px 7.5px;
@@ -58,7 +74,7 @@
     text-align: center;
 }
 
-.wfar-container .entry-label-container {
+.wfarContainer .entryLabelContainer {
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -66,12 +82,12 @@
 }
 
 
-.wfar-container .entry-label-container .entry-no {
+.wfarContainer .entryLabelContainer .entryNo {
     font-size: 1.5em;
     margin-right: 15px;
 }
 
-.button-status-container {
+.buttonStatusContainer {
     margin-right: 15px;
     align-items: center;
 }

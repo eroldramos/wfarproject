@@ -19,6 +19,8 @@
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
   width: 100px;
+  overflow-y: scroll;
+  height: 60%;
 }
 
 @media (min-width: 768px) {

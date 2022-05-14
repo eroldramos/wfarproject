@@ -1,8 +1,8 @@
-from re import T
+from dataclasses import field, fields
 from rest_framework import serializers
 from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class FacultySerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -109,5 +109,75 @@ class ProfileSerializer(serializers.ModelSerializer):
             name = obj.email
         return name
 
-class MyWfarSerializer(serializers.ModelSerializer):
-    pass
+
+# ERIKA
+class SemesterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Semester
+        fields = ('id', 'start_date', 'end_date', 'no_of_weeks')
+
+class WfarEntrySerializer(serializers.ModelSerializer):
+    # accomplishment_date = serializers.DateField(format="%B %d")
+    class Meta:
+        model = WFAR_Entry
+        fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at')
+
+class WfarArchivedEntrySerializer(serializers.ModelSerializer):
+    # accomplishment_date = serializers.DateField(format="%B %d")
+    semester = serializers.SerializerMethodField()
+    week_no = serializers.SerializerMethodField()
+    class Meta:
+        model = WFAR_Entry
+        fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at', 'semester', 'week_no')
+
+    def get_semester(self, obj):
+        return obj.wfar_id.semester_id.school_year + " - " + obj.wfar_id.semester_id.label;
+
+    def get_week_no(self, obj):
+        return obj.wfar_id.week_no;
+
+        
+class WfarSerializer(serializers.ModelSerializer):
+    wfar_entries = WfarEntrySerializer(many=True, read_only=True)
+    semester = serializers.SerializerMethodField(read_only=True)
+    week_bracket = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = WFAR
+        fields = ('id', 'status', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
+
+    def get_semester(self, obj):
+        return (SemesterSerializer(obj.semester_id).data);
+
+    def get_week_bracket(self, obj):
+        # step 1
+        start_date = obj.semester_id.start_date
+        end_date = obj.semester_id.end_date
+        no_of_weeks = obj.semester_id.no_of_weeks
+        week_no = obj.week_no
+        
+        week_bracket = [start_date, end_date]
+        
+        #step 2
+        week_bracket[1] = start_date
+
+        # step 3
+        for i in range(no_of_weeks + 1):
+            week_bracket[1] += timedelta(days=7)
+            succeeding_date_day = week_bracket[1].isoweekday()
+
+            # step 3
+            if week_bracket[1] > end_date:
+                week_bracket[1] = end_date
+                break
+
+            # step 4
+            if succeeding_date_day != 7:
+                week_bracket[1]-=timedelta(days=succeeding_date_day)
+
+            if (i + 1 == week_no):
+                break;
+
+
+        week_bracket[0] = week_bracket[1] - timedelta(6)
+        return week_bracket; 

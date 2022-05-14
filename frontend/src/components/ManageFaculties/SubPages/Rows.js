@@ -23,6 +23,7 @@ const Rows = (props) => {
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
   const [promoteModalIsShown, setPromoteModalIsShown] = useState(false);
   const [demoteModalIsShown, setDemoteModalIsShown] = useState(false);
+  const [viewFacultyModal, setViewFacultyModal] = useState(false);
 
   const openPopMenuHandler = () => {
     setPopupMenuIsShown(true);
@@ -44,6 +45,12 @@ const Rows = (props) => {
   };
   const closeDemoteModal = () => {
     setDemoteModalIsShown(false);
+  };
+  const openViewFacultyModal = () => {
+    setViewFacultyModal(true);
+  };
+  const closeViewFacultyModal = () => {
+    setViewFacultyModal(false);
   };
   return (
     <Fragment>
@@ -87,6 +94,7 @@ const Rows = (props) => {
         >
           <div className={styles["filter-button-container"]}>
             <FilterButton
+              onClick={openViewFacultyModal}
               label={
                 props.user_type === 2 || props.user_type === 3
                   ? "View Faculties"
@@ -94,11 +102,18 @@ const Rows = (props) => {
               }
               type="primary"
             ></FilterButton>
-            <ViewFacultyModal
-              id={props.id}
-              fullname={props.fullname}
-              user_type={props.user_type}
-            />
+            {props.user_type === 2 || props.user_type === 3 ? (
+              viewFacultyModal && (
+                <ViewFacultyModal
+                  onClose={closeViewFacultyModal}
+                  id={props.id}
+                  fullname={props.fullname}
+                  user_type={props.user_type}
+                />
+              )
+            ) : (
+              <p>View Status</p>
+            )}
           </div>
           <div className={styles["popup-menu-container"]}>
             <div className={styles["popup-icon"]} onClick={openPopMenuHandler}>

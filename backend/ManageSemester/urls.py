@@ -6,6 +6,8 @@ urlpatterns =[
    
 
    path('retrieve-all-sem/',views.RetrieveAllSemesters.as_view(), name='retrieve-all-sem'),
+
+   path('retrieve-all-sem-list/',views.RetrieveSemestersList.as_view(), name='retrieve-all-sem-list'), # ERIKA
   
    path('retrieve-sem-details/<str:sem_id>/',views.RetrieveSemesterDetails.as_view(), name='retrieve-all-week-in-sem'),
 

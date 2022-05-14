@@ -1,22 +1,31 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Tab from "../UI/Tab/Tab";
 import ArchivedEntries from "./ArchivedEntries/ArchivedEntries";
 import SemesterDropdownField from "./Filter/SemesterDropdownField";
 import styles from "./MySubmission.module.css";
 import MyWFAR from "./MyWFAR/MyWFAR";
-import MyWFARCard from "./MyWFAR/MyWFARCard";
-import MyWfarEntry from "./MyWfarEntry/MyWfarEntry";
+import { useSelector, useDispatch } from "react-redux";
+import { retrieveWfars, retrieveArchivedWfars, retrieveWfarsSemestersList } from "../../store/myWfarsActions";
 
 const MySubmission = (props) => {
 
+    const wfars = useSelector((state) => state.myWfars.wfars);
+    const archivedWfarEntries = useSelector((state) => state.myWfarsArchived.archivedEntries);
+    const semesters = useSelector((state) => state.wfarSemesters.semesters);
+    const dispatch = useDispatch();
+    const [filterSemester, setFilterSemester] = useState(1);
 
-    const SAMPLE_ITEMS = [
-        { label: "2021 - 2022 1st Semester", id: 1 },
-        { label: "2021 - 2022 2st Semester", id: 2 },
-        { label: "2022 - 2023 1st Semester", id: 3 }
-    ];
+    useEffect(() => {
+        dispatch(retrieveWfars(filterSemester));
+        dispatch(retrieveArchivedWfars(filterSemester));
+        dispatch(retrieveWfarsSemestersList(filterSemester));
 
+    }, [filterSemester]);
+
+    const onChangeSemesterHandler = (id) => {
+        setFilterSemester(id);
+    }
 
     const TABS = [
         {
@@ -32,50 +41,6 @@ const MySubmission = (props) => {
             onClick: () => onChangePageHandler(2)
         }
     ];
-
-
-    const WFAR_ITEMS = [
-        {
-            id: 1,
-            weekTitle: "Week 3",
-            startDate: "2022-04-08",
-            endDate: "2022-04-14",
-            status: 3,
-            entryNo: 5
-        },
-        {
-            id: 2,
-            weekTitle: "Week 3",
-            startDate: "2022-04-08",
-            endDate: "2022-04-14",
-            status: 1,
-            entryNo: 2
-        },
-        {
-            id: 3,
-            weekTitle: "Week 3",
-            startDate: "2022-04-08",
-            endDate: "2022-04-14",
-            status: 1,
-            entryNo: 6
-        },
-        {
-            id: 3,
-            weekTitle: "Week 2",
-            startDate: "2022-04-01",
-            endDate: "2022-04-17",
-            status: 2,
-            entryNo: 5
-        },
-        {
-            id: 4,
-            weekTitle: "Week 1",
-            startDate: "2022-03-23",
-            endDate: "2022-03-30",
-            status: 4,
-            entryNo: 1
-        },
-    ]
 
     const WFAR_ARCHIVED_ENTRIES = [
         {
@@ -98,6 +63,8 @@ const MySubmission = (props) => {
 
         switch (page) {
             case 1:
+                console.log("navigate");
+                console.log(wfars);
                 navigate("");
                 break;
 
@@ -118,16 +85,17 @@ const MySubmission = (props) => {
                 id="semester"
                 name="semester"
                 labelName={"Semester"}
-                onChange={null}
-                options={SAMPLE_ITEMS}
+                onChange={onChangeSemesterHandler}
+                options={semesters}
                 size="rg"
                 type="filter" />
 
             <div className={styles["tab-container"]}>
                 <Tab items={TABS} currentPage={currentPage}/>
+                
                 <Routes>
-                    <Route path="" element={<MyWFAR items={WFAR_ITEMS} />}></Route>
-                    <Route path="archived" element={<ArchivedEntries items={WFAR_ARCHIVED_ENTRIES} />}></Route>
+                    <Route path="" element={<MyWFAR items={wfars} />}></Route>
+                    <Route path="archived" element={<ArchivedEntries items={archivedWfarEntries} />}></Route>
                 </Routes>
             </div>
         </Fragment>

@@ -151,6 +151,17 @@ class DeleteSemester(APIView):
             
 # ----------------------------------------------------------------
 
+# Erika
+class RetrieveSemestersList(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        try:
+            semester = Semester.objects.filter(deleted_at=None).order_by('created_at')   
+            serializer = SemesterSerializerYearAndSem(semester, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 # class RetrieveSemesterDetail(APIView):

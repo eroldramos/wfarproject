@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import MyWFARCard from "./MyWFARCard";
 import styles from "./MyWFAR.module.css";
 
@@ -7,13 +6,13 @@ const MyWFAR = (props) => {
     let items = props.items;
 
     return (
-        <div className={styles["my-wfar"]}>
+        <div className={styles.myWfar}>
 
-            {items.map(item => {
+            {/* <h1>agagaga{items}</h1> */}
+            {items.length > 0 && items.map(item => {
                 return (
-                    <MyWFARCard weekTitle={item.weekTitle} weekDate="April 8 - April 14" wfarStatus={item.status} entryNo={item.entryNo} />);
+                    <MyWFARCard key={item.id} id={item.id} weekNo={item.week_no} weekBracket={item.week_bracket} status={item.status} entries={item.wfar_entries} />);
             })}
-
             
         </div>
     )

@@ -12,11 +12,11 @@ const ArchivedEntries = (props) => {
                 {items.map(item => {
                     return (<ArchivedEntry key={item.id} 
                                             id={item.id}
-                                            applicableDate={item.start}
-                                            CYS={item.CYS}
+                                            accomplishmentDate={item.accomplishment_date}
+                                            courseYearSection={item.course_year_section}
                                             subject={item.subject}
                                             semester={item.semester}
-                                            week={item.weekTitle} />);
+                                            weekNo={item.week_no} />);
                 })}
             </div>
         </Fragment>
