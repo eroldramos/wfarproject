@@ -56,9 +56,9 @@ const ManageFaculties = () => {
         <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
 
         <Routes>
-          <Route path="department-head/" element={<DepartmentHead />} />
-          <Route path="area-chair/" element={<AreaChair />} />
-          <Route path="faculty/" element={<Faculty />} />
+          <Route path="department-head/*" element={<DepartmentHead />} />
+          <Route path="area-chair/*" element={<AreaChair />} />
+          <Route path="faculty/*" element={<Faculty />} />
         </Routes>
       </div>
     </Fragment>
