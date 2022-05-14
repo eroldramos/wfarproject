@@ -1,6 +1,14 @@
 import styles from "./DropdownField.module.css";
 
 const DropdownField = (props) => {
+
+  console.log("dropdown field: ");
+  console.log(props.options);
+
+  const onChangeHandler = (event) => {
+    props.onChange(event.target.value);
+  }
+
   let validationClass = props.error != null ? "invalid" : "";
   return (
     <div
@@ -17,7 +25,7 @@ const DropdownField = (props) => {
       <label htmlFor={props.id}>{props.labelName}</label>
       <select
         className={styles["form-control"]}
-        onChange={props.onChange}
+        onChange={onChangeHandler}
         onBlur={props.onBlur}
       >
         {props.options.map((option) => {

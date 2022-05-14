@@ -109,18 +109,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             name = obj.email
         return name
 
-# class WfarSerializer(serializers.ModelSerializer):
-#     wfar_entries = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-#     class Meta:
-#         model = WFAR
-#         fields = ('id', 'status', 'week_no', 'wfar_entries')
 
-# class WfarEntrySerializer(serializers.ModelSerializer):
-#     wfar = serializers.PrimaryKeyRelatedField(queryset=WFAR.objects.all(), many=False)
-#     class Meta:
-#         model = WFAR_Entry
-#         fields = ('wfar_id', 'id', 'accomplishment_date', 'subject', 'course_year_section')
-    
+# ERIKA
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
@@ -132,6 +122,21 @@ class WfarEntrySerializer(serializers.ModelSerializer):
         model = WFAR_Entry
         fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at')
 
+class WfarArchivedEntrySerializer(serializers.ModelSerializer):
+    # accomplishment_date = serializers.DateField(format="%B %d")
+    semester = serializers.SerializerMethodField()
+    week_no = serializers.SerializerMethodField()
+    class Meta:
+        model = WFAR_Entry
+        fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at', 'semester', 'week_no')
+
+    def get_semester(self, obj):
+        return obj.wfar_id.semester_id.school_year + " - " + obj.wfar_id.semester_id.label;
+
+    def get_week_no(self, obj):
+        return obj.wfar_id.week_no;
+
+        
 class WfarSerializer(serializers.ModelSerializer):
     wfar_entries = WfarEntrySerializer(many=True, read_only=True)
     semester = serializers.SerializerMethodField(read_only=True)
