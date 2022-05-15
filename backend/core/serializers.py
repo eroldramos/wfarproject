@@ -144,7 +144,7 @@ class WfarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WFAR
-        fields = ('id', 'status', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
+        fields = ('id', 'status', 'submitted_at', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
 
     def get_semester(self, obj):
         return (SemesterSerializer(obj.semester_id).data);

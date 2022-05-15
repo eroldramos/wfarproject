@@ -5,21 +5,41 @@ import IconButton from '../../UI/FormControl/Button/IconButton';
 import styles from './MyWFARCard.module.css';
 import MyWfarEntry from '../MyWfarEntry/MyWfarEntry';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
+import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 
 const MyWFARCard = (props) => {
 
+    // hooks
+    const dispatch = useDispatch();
+
+    // simple states
     const [displayEntries, setDisplayEntries] = useState("close");
-    console.log("erika: " + displayEntries);
-    const displayEntriesHandler = () => {
-        let display = displayEntries === "open" ? "close" : "open";
-        setDisplayEntries(display);
-    }
-
-    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    
-    let entries = props.entries;
     const [activeEntries, setActiveEntries] = useState([]);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isUnsubmitted, setIsUnsubmitted] = useState(false);
 
+    // redux states
+    const semester_id = useSelector(state => state.myWfarSemesterFilter.semester_id);
+
+    // constants
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // props
+    let entries = props.entries;
+    let entryLabel = "";
+    let id = props.id;
+    let status = props.status;
+    let weekNo = props.weekNo;
+    let noOfEntries = activeEntries.length;
+    let startDate = new Date(props.weekBracket[0]);
+    let endDate = new Date(props.weekBracket[1]);
+    let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
+    let endDateLbl = month[endDate.getMonth()] + " " + endDate.getDate();
+    let buttonsJSX;
+
+    // use effect
     useEffect(() => {
         let activeDraftEntries = [];
         entries.map(entry => {
@@ -31,17 +51,38 @@ const MyWFARCard = (props) => {
         setActiveEntries(activeDraftEntries);
     }, []);
 
-    let entryLabel = "";
-    let status = props.status;
-    let weekNo = props.weekNo;
-    let noOfEntries = entries.length;
-    let startDate = new Date(props.weekBracket[0]);
-    let endDate = new Date(props.weekBracket[1]);
-    let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
-    let endDateLbl = month[endDate.getMonth()] + " " + endDate.getDate();
+    useEffect(() => {
+        if (isSubmitted) {
+            dispatch(myWfarRefreshActions.alertNewChange());
+            dispatch(submitWfar(id));
+            setIsSubmitted(false);
+        }
+    }, [isSubmitted])
 
-    let buttonsJSX;
+    useEffect(() => {
+        if (isUnsubmitted) {
+            dispatch(myWfarRefreshActions.alertNewChange());
+            dispatch(unsubmitWfar(id));
+            setIsUnsubmitted(false);
+        }
+    }, [isUnsubmitted])
 
+    // handlers
+    const displayEntriesHandler = () => {
+        let display = displayEntries === "open" ? "close" : "open";
+        setDisplayEntries(display);
+    }
+
+    const submitHandler = () => {
+        setIsSubmitted(true);
+    }
+
+    const unsubmitHandler = () => {
+        setIsUnsubmitted(true);
+    }
+
+
+    // jsx
     if (noOfEntries > 1) {
         entryLabel = "WFAR entries";
     } else if (noOfEntries === 1) {
@@ -50,64 +91,44 @@ const MyWFARCard = (props) => {
         entryLabel = "No entries yet.";
     }
 
-    // let entryLabel 
+    // svg
     const icAddEntry = <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z" fill="white" />
     </svg>;
 
+    // button jsx
     switch (status) {
         case 1: // not submitted
-            if (noOfEntries < 5) {
-
+            if (noOfEntries <= 0) {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton
-                        label="Entry"
-                        type="primary"
-                        size="xs"
-                        svg={icAddEntry} />
-                        <Button
-                        label="Submit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
                     </Fragment>);
             } else {
                 buttonsJSX =
                     (<Fragment>
-                        <Button
-                            label="Submit"
-                            type="primary"
-                            size="xs"
-                            onClick={props.onClick} />
+                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Button label="Submit" type="primary" size="xs" onClick={submitHandler} />
                     </Fragment>);
             }
             break;
 
         case 2: // to be checked
-            buttonsJSX = 
+            buttonsJSX =
                 (<Fragment>
-                    <Button
-                        label="Unsubmit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                    <Button label="Unsubmit" type="primary" size="xs" onClick={unsubmitHandler} />
                 </Fragment>);
             break;
 
         case 3: //Ok
-            
+
             break;
 
 
         case 4: //With Revisions
             buttonsJSX =
                 (<Fragment>
-                    <Button
-                        label="Unsubmit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                    <Button label="Unsubmit" type="primary" size="xs" onClick={unsubmitHandler} />
                 </Fragment>);
             break;
 
