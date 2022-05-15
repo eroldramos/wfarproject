@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
 import { myWfarRefreshActions } from "../../../store/myWfarReducers";
+import Swal from 'sweetalert2';
 
 const MyWFARCard = (props) => {
 
@@ -52,18 +53,18 @@ const MyWFARCard = (props) => {
     }, []);
 
     useEffect(() => {
-        if (isSubmitted) {
-            dispatch(myWfarRefreshActions.alertNewChange());
+        if (isSubmitted === true) {
             dispatch(submitWfar(id));
             setIsSubmitted(false);
+            // dispatch(myWfarRefreshActions.alertNewChange());
         }
     }, [isSubmitted])
 
     useEffect(() => {
-        if (isUnsubmitted) {
-            dispatch(myWfarRefreshActions.alertNewChange());
+        if (isUnsubmitted === true) {
             dispatch(unsubmitWfar(id));
             setIsUnsubmitted(false);
+            // dispatch(myWfarRefreshActions.alertNewChange());
         }
     }, [isUnsubmitted])
 
@@ -74,10 +75,41 @@ const MyWFARCard = (props) => {
     }
 
     const submitHandler = () => {
-        setIsSubmitted(true);
+
+        Swal.fire({
+            html:
+                '<h4>Submit WFAR</h4>' +
+                '<h5>Are you sure you want to submit WFAR for Week ' + weekNo + '?</h5>',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            iconColor: '#D1D1D1',
+            confirmButtonColor: '#BE5A40',
+            cancelButtonColor: '#A1A1A1'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Submitted!', '', 'success')
+                setIsSubmitted(true);
+            }
+        })
+
     }
 
     const unsubmitHandler = () => {
+        Swal.fire({
+            title: 'Are you sure you want to unsubmit your WFAR week '+weekNo+' submission?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Unsubmit',
+            confirmButtonColor: '#BE5A40'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Unsubmitted!', '', 'success')
+                setIsSubmitted(true);
+            }
+        })
         setIsUnsubmitted(true);
     }
 

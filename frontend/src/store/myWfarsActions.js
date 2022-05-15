@@ -3,7 +3,8 @@ import {
     myWfarsArchivedActions,
     wfarSemestersActions,
     myWfarSubmissionActions,
-    myWfarUnsubmissionActions
+    myWfarUnsubmissionActions,
+    myWfarRefreshActions
 } from './myWfarReducers';
 
 export const retrieveWfars = (filterSemester) => {
@@ -141,6 +142,7 @@ export const submitWfar = (id) => {
 
             const data = await response.json();
             dispatch(myWfarSubmissionActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
             console.log(data)
         } catch (error) {
             console.log(error.message)
@@ -177,6 +179,7 @@ export const unsubmitWfar = (id) => {
 
             const data = await response.json();
             dispatch(myWfarUnsubmissionActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
             console.log(data)
         } catch (error) {
             console.log(error.message)
