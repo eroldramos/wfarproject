@@ -250,7 +250,7 @@ function Sample() {
           onChange={myFunction}
           options={SAMPLE_OPTIONS}
           size="lg"
-          type="filter"
+          type="select"
         />
       </fieldset>
 

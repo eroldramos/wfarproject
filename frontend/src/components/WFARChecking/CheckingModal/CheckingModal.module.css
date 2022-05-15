@@ -1,0 +1,11 @@
+.innerModal{
+    margin: 5px;
+}
+.buttonsContainer{
+    display: flex;
+    width: fit-content;
+    float: right;
+}
+.innerModal h3{
+    margin: 10px 5px;
+}
