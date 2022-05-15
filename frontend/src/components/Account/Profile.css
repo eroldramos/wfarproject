@@ -20,8 +20,9 @@
     padding-left: 300px;
     
   }
-  h1{
+  .DATADETAILS{
     font-style: bold;
+    color: black;
   }
   .Pdata{
     padding-left: 60px;
@@ -56,5 +57,11 @@ th {
 
 tr:nth-child(even) {
   background-color: #FFFFFF !important;
+}
+
+.upploadpic{
+  
+    margin: 200px;
+    padding: 2.8rem;
 }
 
