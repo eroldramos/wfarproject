@@ -3,6 +3,9 @@ import Modal from "../../../UI/Modal/Modal";
 import styles from "./PromoteDemoteModal.module.css";
 import ModalButton from "../../../UI/FormControl/Button/ModalButton";
 import Button from "../../../UI/FormControl/Button/Button";
+import { changeUserType } from "../../../../store/manageFacultiesActions";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 const DemoteModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
@@ -18,6 +21,8 @@ const DemoteModal = (props) => {
     useState(false);
 
   const [selectedRole, setSelectedRole] = useState(0);
+
+  const dispatch = useDispatch();
 
   const selectFaculty = (user_type) => {
     setFacultyIsSelected(true);
@@ -45,6 +50,7 @@ const DemoteModal = (props) => {
       new_user_type: selectedRole,
     };
     console.log(data);
+    dispatch(changeUserType(data));
   };
   console.log(selectedRole);
   return (

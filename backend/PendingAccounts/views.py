@@ -24,7 +24,7 @@ class RetrievePendingFaculties(APIView):
                 Q(contact_no__icontains = search)
 
             )
-            p = Paginator(faculties, 1)
+            p = Paginator(faculties, 6)
             page = request.GET.get('page')
             if page == None or str(page) == "null":
                 page = 1

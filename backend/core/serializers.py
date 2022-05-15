@@ -56,6 +56,41 @@ class FacultySerializerWithToken(FacultySerializer):
         expirationDate = AccessToken.for_user(obj)
         return str(datetime.now() + expirationDate.lifetime)
 
+class FacultySerializerWithAcceptedField(FacultySerializer):
+    status =  serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'status']
+    def get_status(self, obj):
+        status = obj.accepted_at
+        message = str(status) 
+        if status == None:
+            message = 'Pending'
+        return message
+        
+class ManageFacultiesSerializer(FacultySerializerWithAcceptedField):
+    
+    class Meta:
+        model = Faculty
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type', 'profile_picture']
+
+class ManageFacultiesUnassignmentSerializer(ManageFacultiesSerializer):
+    assignee_id= ManageFacultiesSerializer(read_only=True)
+    class Meta:
+        model = Faculty
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type', 'assignee_id']
+
+
+class ManageFacultiesAssignmentSerializer(ManageFacultiesSerializer):
+    assigned_faculties = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type', 'assigned_faculties']
+    def get_assigned_faculties(self, obj):
+        faculties = obj.faculty_set.all()
+        serializer = ManageFacultiesSerializer(faculties, many=True)
+        return(serializer.data)
+
 class SemesterSerializerYearAndSem(serializers.ModelSerializer):
     class Meta:
         model = Semester
@@ -146,7 +181,7 @@ class WfarSerializer(serializers.ModelSerializer):
         fields = ('id', 'status', 'submitted_at', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
 
     def get_semester(self, obj):
-        return (SemesterSerializer(obj.semester_id).data);
+        return (SemesterSerializer(obj.semester_id).data)
 
     def get_week_bracket(self, obj):
         # step 1

@@ -6,9 +6,9 @@ import EyeButton from "../../../UI/FormControl/Button/EyeButton";
 import Button from "../../../UI/FormControl/Button/Button";
 import Tab from "../../../UI/Tab/Tab";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import AssignedFaculty from "./SubPages/AssignedFaculty";
-import UnassignedFaculty from "./SubPages/UnassignedFaculty";
-const ViewFacultyModal = (props) => {
+import AreaChair from "./SubPages/AreaChair";
+import DepartmentHead from "./SubPages/DepartmentHead";
+const FacultyAssignModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
     user_type = "Area Chair";
@@ -33,13 +33,13 @@ const ViewFacultyModal = (props) => {
 
   const SAMPLE_ITEMS = [
     {
-      label: "Assigned Faculties",
+      label: "Department Head",
       id: 1,
       side: false,
       onClick: () => onChangePageHandler(1),
     },
     {
-      label: "Unassigned Faculties",
+      label: "Area Chair",
       id: 2,
       side: false,
       onClick: () => onChangePageHandler(2),
@@ -51,10 +51,10 @@ const ViewFacultyModal = (props) => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
     if (page == 1) {
-      navigate(newUrl + "assigned-faculty/");
+      navigate(newUrl + "department-head/");
     }
     if (page == 2) {
-      navigate(newUrl + "unassigned-faculty/");
+      navigate(newUrl + "area-chair/");
     }
     // if (page == 3) {
     //   navigate("/manage-faculty/faculty/");
@@ -65,12 +65,12 @@ const ViewFacultyModal = (props) => {
   useEffect(() => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
-    navigate(newUrl + "assigned-faculty/");
+    navigate(newUrl + "department-head/");
   }, []);
-  console.log(currentPage, "VIEWFACULTYMODAL");
+  console.log(currentPage, "FacultyAssignModal");
   return (
     <Fragment>
-      <Modal onClose={props.onClose}>
+      <Modal onClose={props.onCloseAssignModal}>
         <div className={styles["container"]}>
           <div className={styles["modal-btn-container"]}>
             <EyeButton
@@ -87,10 +87,10 @@ const ViewFacultyModal = (props) => {
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
           <Routes>
             <Route
-              path={"/assigned-faculty/"}
+              path={"/department-head/"}
               element={
-                <AssignedFaculty
-                  onClose={props.onClose}
+                <DepartmentHead
+                  onCloseAssignModal={props.onCloseAssignModal}
                   id={props.id}
                   fullname={props.fullname}
                   user_type={props.user_type}
@@ -98,10 +98,10 @@ const ViewFacultyModal = (props) => {
               }
             />
             <Route
-              path={"/unassigned-faculty/"}
+              path={"/area-chair/"}
               element={
-                <UnassignedFaculty
-                  onClose={props.onClose}
+                <AreaChair
+                  onCloseAssignModal={props.onCloseAssignModal}
                   id={props.id}
                   fullname={props.fullname}
                   user_type={props.user_type}
@@ -112,7 +112,7 @@ const ViewFacultyModal = (props) => {
           <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button
-                onClick={props.onClose}
+                onClick={props.onCloseAssignModal}
                 label="Cancel"
                 type="cancel"
                 size="rg"
@@ -126,4 +126,4 @@ const ViewFacultyModal = (props) => {
   );
 };
 
-export default ViewFacultyModal;
+export default FacultyAssignModal;
