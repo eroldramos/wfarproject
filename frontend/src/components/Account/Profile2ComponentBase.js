@@ -9,7 +9,7 @@ import InputField from "../UI/FormControl/InputField/InputField";
 import useValidateInput from "../../hooks/useValidateInput";
 import styled from 'styled-components';
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
-
+import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 
 
 const EDITBUTTON_WRAPPER_STYLES = {
@@ -626,6 +626,18 @@ const Profile = () => {
               {pictureisOpen && <Modal onClose={pictureonClose} size="s">
 
             <h1 className="MODAL_HEADER">Change Profile Picture</h1>
+
+            <div className="uploadpic">
+
+         <ImageCard
+          imageUrl={null}
+          onClickAddImage={null}
+          onRemoveImage={null}>
+            
+          </ImageCard>
+
+            </div>
+
 
             <ButtonGroup> 
 
