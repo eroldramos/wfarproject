@@ -633,7 +633,7 @@ const Profile = () => {
           imageUrl={null}
           onClickAddImage={null}
           onRemoveImage={null}>
-            
+
           </ImageCard>
 
             </div>
@@ -667,7 +667,7 @@ const Profile = () => {
                 <table className="adjustMarginsOfTable">
                   <tr>
                     <td colSpan="2">
-                      <h1> Personal Data </h1>
+                      <h1 className="DATADETAILS"> Personal Data </h1>
                     </td>
                   </tr>
                   <tr>
@@ -734,7 +734,7 @@ const Profile = () => {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <h1> Contact Information </h1>
+                      <h1 className="DATADETAILS"> Contact Information </h1>
                     </td>
                   </tr>
                   <tr>
@@ -759,7 +759,7 @@ const Profile = () => {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <h1> Specialization </h1>
+                      <h1 className="DATADETAILS"> Specialization </h1>
                     </td>
                   </tr>
                   <tr>

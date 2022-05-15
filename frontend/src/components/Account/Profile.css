@@ -20,8 +20,9 @@
     padding-left: 300px;
     
   }
-  h1{
+  .DATADETAILS{
     font-style: bold;
+    color: black;
   }
   .Pdata{
     padding-left: 60px;
