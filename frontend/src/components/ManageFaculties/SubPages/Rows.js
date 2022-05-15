@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import table from "./Table.module.css";
 import PopupMenu from "../SubComponents/PopupMenu";
 import styles from "./Subpages.module.css";
@@ -6,6 +6,10 @@ import FilterButton from "../../UI/FormControl/Button/FilterButton";
 import PromoteModal from "./Modals/PromoteModal";
 import DemoteModal from "./Modals/DemoteModal";
 import ViewFacultyModal from "./Modals/ViewFacultyModal";
+import ViewStatusModal from "./Modals/ViewStatusModal";
+import FacultyAssignModal from "./Modals/FacultyAssignModal";
+import { useSelector } from "react-redux";
+
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -24,6 +28,26 @@ const Rows = (props) => {
   const [promoteModalIsShown, setPromoteModalIsShown] = useState(false);
   const [demoteModalIsShown, setDemoteModalIsShown] = useState(false);
   const [viewFacultyModal, setViewFacultyModal] = useState(false);
+  const [facultyAssignModal, setFacultyAssignModal] = useState(false);
+
+  const changeUserTypeReducerValues = useSelector(
+    (state) => state.changeUserType
+  );
+  const {
+    isLoading: userTypeIsLoading,
+    error: userTypeError,
+    success: userTypeSuccess,
+  } = changeUserTypeReducerValues;
+
+  useEffect(() => {
+    if (userTypeSuccess && !userTypeIsLoading) {
+      closePopMenuHandler();
+      closePromoteModal();
+      closeDemoteModal();
+      closeViewFacultyModal();
+      closeFacultyAssignModal();
+    }
+  }, [userTypeSuccess, userTypeIsLoading]);
 
   const openPopMenuHandler = () => {
     setPopupMenuIsShown(true);
@@ -51,6 +75,13 @@ const Rows = (props) => {
   };
   const closeViewFacultyModal = () => {
     setViewFacultyModal(false);
+  };
+
+  const openFacultyAssignModal = () => {
+    setFacultyAssignModal(true);
+  };
+  const closeFacultyAssignModal = () => {
+    setFacultyAssignModal(false);
   };
   return (
     <Fragment>
@@ -102,19 +133,37 @@ const Rows = (props) => {
               }
               type="primary"
             ></FilterButton>
-            {props.user_type === 2 || props.user_type === 3 ? (
-              viewFacultyModal && (
-                <ViewFacultyModal
-                  onClose={closeViewFacultyModal}
-                  id={props.id}
-                  fullname={props.fullname}
-                  user_type={props.user_type}
-                />
-              )
-            ) : (
-              <p>View Status</p>
+            {props.user_type === 2 || props.user_type === 3
+              ? viewFacultyModal && (
+                  <ViewFacultyModal
+                    onClose={closeViewFacultyModal}
+                    id={props.id}
+                    fullname={props.fullname}
+                    user_type={props.user_type}
+                  />
+                )
+              : viewFacultyModal && (
+                  <ViewStatusModal
+                    onClose={closeViewFacultyModal}
+                    onOpenAssign={openFacultyAssignModal}
+                    id={props.id}
+                    fullname={props.fullname}
+                    user_type={props.user_type}
+                    assignee_id={props.assignee_id}
+                  />
+                )}
+
+            {facultyAssignModal && (
+              <FacultyAssignModal
+                onClose={closeViewFacultyModal}
+                onCloseAssignModal={closeFacultyAssignModal}
+                id={props.id}
+                fullname={props.fullname}
+                user_type={props.user_type}
+              />
             )}
           </div>
+
           <div className={styles["popup-menu-container"]}>
             <div className={styles["popup-icon"]} onClick={openPopMenuHandler}>
               <svg

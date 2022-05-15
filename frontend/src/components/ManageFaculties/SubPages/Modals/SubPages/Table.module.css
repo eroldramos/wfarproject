@@ -77,7 +77,13 @@
 .icon-container {
   position: absolute;
   right: 30px;
-  top: 230px;
+  top: 210px;
+}
+
+.icon-container2 {
+  position: absolute;
+  right: 30px;
+  top: 210px;
 }
 /* .label-container {
 }

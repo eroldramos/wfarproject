@@ -9,9 +9,9 @@ const Rows = (props) => {
           data-label="Full Name"
         >
           <input
-            type="checkbox"
-            name={props.id}
-            value={props.id}
+            type="radio"
+            name="id"
+            value={props.value}
             checked={props.checked}
             onChange={props.onChange}
           />
