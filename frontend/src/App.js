@@ -69,7 +69,7 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/addEntry" element={<AddEntry />}></Route>
+          <Route path="/mySubmission/wfar/add-entry" element={<AddEntry />}></Route>
         </Routes>
       </div>
     </div>

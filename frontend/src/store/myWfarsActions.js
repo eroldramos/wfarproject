@@ -4,8 +4,12 @@ import {
     wfarSemestersActions,
     myWfarSubmissionActions,
     myWfarUnsubmissionActions,
-    myWfarRefreshActions
+    myWfarRefreshActions,
+    myWfarEntryArchiveActions,
+    myWfarEntryUnarchiveActions
 } from './myWfarReducers';
+
+import Swal from 'sweetalert2';
 
 export const retrieveWfars = (filterSemester) => {
     return async (dispatch, getState) => {
@@ -112,7 +116,7 @@ export const retrieveWfarsSemestersList = () => {
     }
 }
 
-export const submitWfar = (id) => {
+export const submitWfar = (id, weekNo) => {
     console.log("hello");
 
     return async (dispatch, getState) => {
@@ -142,16 +146,27 @@ export const submitWfar = (id) => {
 
             const data = await response.json();
             dispatch(myWfarSubmissionActions.requestSuccessfullyCompleted());
+            Swal.fire({
+                html:
+                    '<h4>WFAR Submitted!</h4>',
+                icon: 'success',
+                confirmButtonColor: '#BE5A40'
+            })
+
             dispatch(myWfarRefreshActions.alertNewChange());
-            console.log(data)
         } catch (error) {
-            console.log(error.message)
             dispatch(myWfarSubmissionActions.requestFailed({ error: error.message }));
+            Swal.fire({
+                html:
+                    '<h4>' + error.message+'</h4>',
+                icon: 'error',
+                confirmButtonColor: '#BE5A40'
+            })
         }
     }
 }
 
-export const unsubmitWfar = (id) => {
+export const unsubmitWfar = (id, weekNo) => {
 
     return async (dispatch, getState) => {
         let url = `/api/myWfar/unsubmit/${id}/`;
@@ -179,11 +194,119 @@ export const unsubmitWfar = (id) => {
 
             const data = await response.json();
             dispatch(myWfarUnsubmissionActions.requestSuccessfullyCompleted());
+
+            Swal.fire({
+                html:
+                    '<h4>Your WFAR for week ' + weekNo + ' has been unsubmitted.</h4>',
+                icon: 'success',
+                confirmButtonColor: '#BE5A40'
+            })
+
             dispatch(myWfarRefreshActions.alertNewChange());
-            console.log(data)
         } catch (error) {
-            console.log(error.message)
             dispatch(myWfarUnsubmissionActions.requestFailed({ error: error.message }));
+            Swal.fire({
+                html:
+                    '<h4>' + error.message + '</h4>',
+                icon: 'success',
+                confirmButtonColor: '#BE5A40'
+            })
+        }
+    }
+}
+
+export const archiveWfarEntry = (id) => {
+
+    return async (dispatch, getState) => {
+        let url = `/api/myWfar/entry/archive/${id}/`;
+
+        try {
+            dispatch(myWfarEntryArchiveActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(myWfarEntryArchiveActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
+
+            Swal.fire({
+                html:
+                    '<h4>The WFAR entry has been archived!</h4>',
+                icon: 'success',
+                confirmButtonColor: '#BE5A40'
+            })
+        } catch (error) {
+            dispatch(myWfarEntryArchiveActions.requestFailed({ error: error.message }));
+
+            Swal.fire({
+                html:
+                    '<h4>' + error.message + '</h4>',
+                icon: 'error',
+                confirmButtonColor: '#BE5A40'
+            })
+        }
+    }
+}
+export const restoreWfarEntry = (id) => {
+
+    return async (dispatch, getState) => {
+        let url = `/api/myWfar/entry/unarchive/${id}/`;
+
+        try {
+            dispatch(myWfarEntryUnarchiveActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(myWfarEntryUnarchiveActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
+            Swal.fire({
+                html:
+                    '<h4>The WFAR entry has been restored!</h4>',
+                icon: 'success',
+                confirmButtonColor: '#BE5A40'
+            })
+        } catch (error) {
+            dispatch(myWfarEntryUnarchiveActions.requestFailed({ error: error.message }));
+
+            Swal.fire({
+                html:
+                    '<h4>' + error.message + '</h4>',
+                icon: 'error',
+                confirmButtonColor: '#BE5A40'
+            })
         }
     }
 }

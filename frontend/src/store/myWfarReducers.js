@@ -150,8 +150,30 @@ export const myWfarUnsubmissionReducer = createSlice({
 });
 
 
-export const myWfarArchiveReducer = createSlice({
-    name: "myWfarArchiveReducer",
+export const myWfarEntryArchiveReducer = createSlice({
+    name: "myWfarEntryArchiveReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarEntryUnarchiveReducer = createSlice({
+    name: "myWfarEntryUnarchiveReducer",
     initialState: {
         isLoading: false,
         error: null
@@ -179,3 +201,5 @@ export const myWfarSubmissionActions = myWfarSubmissionReducer.actions;
 export const myWfarUnsubmissionActions = myWfarUnsubmissionReducer.actions;
 export const myWfarSemesterFilterActions = myWfarSemesterFilterReducer.actions;
 export const myWfarRefreshActions = myWfarRefreshReducer.actions;
+export const myWfarEntryArchiveActions = myWfarEntryArchiveReducer.actions;
+export const myWfarEntryUnarchiveActions = myWfarEntryUnarchiveReducer.actions;

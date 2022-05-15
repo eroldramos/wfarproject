@@ -226,7 +226,7 @@ class ArchiveWfarEntry(APIView):
             entry = WFAR_Entry.objects.get(pk=pk)
             entry.deleted_at = datetime.now()
             entry.save()
-            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been archived successfully."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been archived successfully."}, status = status.HTTP_200_OK);
         except:
             return Response({"detail": "The WFAR entry cannot be archived, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
 
@@ -238,6 +238,6 @@ class UnarchiveWfarEntry(APIView):
             entry = WFAR_Entry.objects.get(pk=pk)
             entry.deleted_at = None
             entry.save()
-            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been restored successfully."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been restored successfully."}, status = status.HTTP_200_OK);
         except:
             return Response({"detail": "The WFAR entry cannot be restored, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);

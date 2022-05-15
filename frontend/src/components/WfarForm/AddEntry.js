@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 
 const AddEntry = (props) => {
-
+    
     const [accomplishedDate, setAccomplishedDate] = useState({ value: '', error: null });
     const [subject, setSubject] = useState({ value: '', error: null });
     const [cys, setCys] = useState({ value: '', error: null });
@@ -197,44 +197,75 @@ const AddEntry = (props) => {
 
     const addEntry = (event) => {
         event.preventDefault();
+        let hasNoError = true;
 
-        if (accomplishedDate.value === '') 
+        if (accomplishedDate.value === '') {
+            hasNoError = false;
             setAccomplishedDate((prevState) => {
-                return {...prevState, error: accomplishedDateRequiredError}
+                return { ...prevState, error: accomplishedDateRequiredError }
             })
+        }
+            
 
-        if (subject.value === '')
+        if (subject.value === '') {
+            hasNoError = false;
             setSubject((prevState) => {
-                return {...prevState, error: subjectRequiredError}
+                return { ...prevState, error: subjectRequiredError }
             })
-
-        if (accomplishedDate.error === null && 
-            subject.error === null &&
-            cys.error === null &&
-            noOfAttendees === null &&
-            meetingLink === null) {
+        }
+            
+        if (cys.value === '') {
+            hasNoError = false;
+            setCys((prevState) => {
+                return { ...prevState, error: cysRequiredError }
+            })
+        }
+            
+        if (noOfAttendees.value === '') {
+            hasNoError = false;
+            setNoOfAttendees((prevState) => {
+                return { ...prevState, error: noOfAttendeesRequiredError }
+            })
+        }
+            
+        if (meetingLink.value === '') {
+            hasNoError = false;
+            setMeetingLink((prevState) => {
+                return { ...prevState, error: meetingLinkRequiredError }
+            })
         }
 
-        for (let x of learningActivities) {
-            if (x.error !== null) {
+        for (let index in learningActivities) {
+            if (learningActivities[index].value === '') {
+                hasNoError = false;
+                setLearningActivities((prevState) => {
+                    prevState[index].value = event.target.value;
+                    prevState[index].error = learningActivityRequiredError;
+                    return [...prevState];
+                });
             }
         }
 
-        console.log("Entry added!");
-        let entry = {
-            accomplishedDate: accomplishedDate,
-            subject: subject,
-            cys: cys,
-            meetingLink: meetingLink,
-            noOfAttendees: noOfAttendees,
-            teamMeetScreenshots: teamMeetScreenshots,
-            providedActivitiesScreenshots: providedActivitiesScreenshots
-        }
+        if (hasNoError) {
+            console.log("Entry added!");
+            let entry = {
+                accomplishedDate: accomplishedDate,
+                subject: subject,
+                cys: cys,
+                meetingLink: meetingLink,
+                noOfAttendees: noOfAttendees,
+                teamMeetScreenshots: teamMeetScreenshots,
+                providedActivitiesScreenshots: providedActivitiesScreenshots
+            }
 
-        console.log(entry);
+            console.log(entry);
+        } else {
+            console.log("Entry not added. Resolved issues first.");
+        }
+        
+
     }
 
-    console.log(learningActivities);
     return (
         <Fragment>
             <div className={styles['container']}>

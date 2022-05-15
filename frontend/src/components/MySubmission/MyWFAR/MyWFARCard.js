@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
 import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 import Swal from 'sweetalert2';
+import { NavLink, Link } from 'react-router-dom';
 
 const MyWFARCard = (props) => {
 
@@ -33,38 +34,27 @@ const MyWFARCard = (props) => {
     let id = props.id;
     let status = props.status;
     let weekNo = props.weekNo;
-    let noOfEntries = activeEntries.length;
+    let noOfEntries = entries.filter(function (x) {
+        return x.deleted_at === null;
+    }).length;
     let startDate = new Date(props.weekBracket[0]);
     let endDate = new Date(props.weekBracket[1]);
     let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
     let endDateLbl = month[endDate.getMonth()] + " " + endDate.getDate();
     let buttonsJSX;
-
-    // use effect
-    useEffect(() => {
-        let activeDraftEntries = [];
-        entries.map(entry => {
-            if (entry.deleted_at === null) {
-                activeDraftEntries.push(entry);
-            }
-        })
-
-        setActiveEntries(activeDraftEntries);
-    }, []);
+    let counter = 0;
 
     useEffect(() => {
         if (isSubmitted === true) {
-            dispatch(submitWfar(id));
+            dispatch(submitWfar(id, weekNo));
             setIsSubmitted(false);
-            // dispatch(myWfarRefreshActions.alertNewChange());
         }
     }, [isSubmitted])
 
     useEffect(() => {
         if (isUnsubmitted === true) {
-            dispatch(unsubmitWfar(id));
+            dispatch(unsubmitWfar(id, weekNo));
             setIsUnsubmitted(false);
-            // dispatch(myWfarRefreshActions.alertNewChange());
         }
     }, [isUnsubmitted])
 
@@ -87,18 +77,17 @@ const MyWFARCard = (props) => {
             confirmButtonColor: '#BE5A40',
             cancelButtonColor: '#A1A1A1'
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire('Submitted!', '', 'success')
                 setIsSubmitted(true);
             }
         })
-
     }
 
     const unsubmitHandler = () => {
         Swal.fire({
-            title: 'Are you sure you want to unsubmit your WFAR week '+weekNo+' submission?',
+            html:
+                '<h4>Unsubmit WFAR</h4>' +
+                '<h5>Are you sure you want to unsubmit your WFAR for Week ' + weekNo + '?</h5>',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Unsubmit',
@@ -106,11 +95,9 @@ const MyWFARCard = (props) => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire('Unsubmitted!', '', 'success')
-                setIsSubmitted(true);
+                setIsUnsubmitted(true);
             }
         })
-        setIsUnsubmitted(true);
     }
 
 
@@ -134,12 +121,12 @@ const MyWFARCard = (props) => {
             if (noOfEntries <= 0) {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Link to="/mySubmission/wfar/add-entry"><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                     </Fragment>);
             } else {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Link to="/mySubmission/wfar/add-entry"><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                         <Button label="Submit" type="primary" size="xs" onClick={submitHandler} />
                     </Fragment>);
             }
@@ -204,8 +191,20 @@ const MyWFARCard = (props) => {
             </div>
 
             <div id="entries-container" className={styles.entriesContainer + " " + styles[displayEntries]}>
-                {activeEntries.map((entry, index) => {
-                    return (<MyWfarEntry key={entry.id} no={index + 1} accomplishmentDate={entry.accomplishment_date} courseYearSection={entry.course_year_section} subject={entry.subject}></MyWfarEntry>);
+                {entries.map((entry, index) => {
+                    if (entry.deleted_at !== null) {
+                        return ""
+                    }
+                    counter++;
+                    return (<MyWfarEntry 
+                        key={entry.id} 
+                        id={entry.id} 
+                        no={counter} 
+                        accomplishmentDate={entry.accomplishment_date} 
+                        courseYearSection={entry.course_year_section} 
+                        subject={entry.subject} 
+                        wfarWeekNo={weekNo}
+                        wfarStatus={status}></MyWfarEntry>);
                 })}
             </div>
 
