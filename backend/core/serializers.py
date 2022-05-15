@@ -136,7 +136,6 @@ class WfarArchivedEntrySerializer(serializers.ModelSerializer):
     def get_week_no(self, obj):
         return obj.wfar_id.week_no;
 
-        
 class WfarSerializer(serializers.ModelSerializer):
     wfar_entries = WfarEntrySerializer(many=True, read_only=True)
     semester = serializers.SerializerMethodField(read_only=True)

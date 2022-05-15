@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { addListener, createSlice } from "@reduxjs/toolkit";
 
 // export const 
 
@@ -133,6 +133,29 @@ const initialUnsubmissionState = {
 export const myWfarUnsubmissionReducer = createSlice({
     name: "myWfarUnsubmissionReducer",
     initialState: initialUnsubmissionState,
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+
+export const myWfarArchiveReducer = createSlice({
+    name: "myWfarArchiveReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
     reducers: {
         sendRequest(state, action) {
             state.isLoading = true;
