@@ -14,7 +14,23 @@
 
 .entriesContainer {
     width: 100%;
-    /* display: none; */
+    display: none;
+}
+
+.openClose {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.openClose svg {
+}
+
+.entriesContainer.close {
+    display: none;
+}
+
+.entriesContainer.open {
+    display: block;
 }
 
 .wfarContainer > div:nth-child(1) {
@@ -34,7 +50,7 @@
 .wfarContainer > div:nth-child(3) {
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content:flex-end;
     width: 50%;
     padding: 0px 2%;
 }

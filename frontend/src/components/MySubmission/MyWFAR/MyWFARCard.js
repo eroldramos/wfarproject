@@ -4,92 +4,136 @@ import WFARStatus from '../../UI/WFAR/WFARStatus/WFARStatus';
 import IconButton from '../../UI/FormControl/Button/IconButton';
 import styles from './MyWFARCard.module.css';
 import MyWfarEntry from '../MyWfarEntry/MyWfarEntry';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
+import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 
 const MyWFARCard = (props) => {
 
-    const weekTitle = props.weekTitle;
-    const weekDate = props.weekDate;
-    const wfarStatus = props.wfarStatus;
-    let entryNo = props.entryNo;
-    let entryLabel = "";
+    // hooks
+    const dispatch = useDispatch();
 
+    // simple states
+    const [displayEntries, setDisplayEntries] = useState("close");
+    const [activeEntries, setActiveEntries] = useState([]);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isUnsubmitted, setIsUnsubmitted] = useState(false);
+
+    // redux states
+    const semester_id = useSelector(state => state.myWfarSemesterFilter.semester_id);
+
+    // constants
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // props
+    let entries = props.entries;
+    let entryLabel = "";
+    let id = props.id;
+    let status = props.status;
+    let weekNo = props.weekNo;
+    let noOfEntries = activeEntries.length;
+    let startDate = new Date(props.weekBracket[0]);
+    let endDate = new Date(props.weekBracket[1]);
+    let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
+    let endDateLbl = month[endDate.getMonth()] + " " + endDate.getDate();
     let buttonsJSX;
 
-    if (entryNo > 1) {
+    // use effect
+    useEffect(() => {
+        let activeDraftEntries = [];
+        entries.map(entry => {
+            if (entry.deleted_at === null) {
+                activeDraftEntries.push(entry);
+            }
+        })
+
+        setActiveEntries(activeDraftEntries);
+    }, []);
+
+    useEffect(() => {
+        if (isSubmitted) {
+            dispatch(myWfarRefreshActions.alertNewChange());
+            dispatch(submitWfar(id));
+            setIsSubmitted(false);
+        }
+    }, [isSubmitted])
+
+    useEffect(() => {
+        if (isUnsubmitted) {
+            dispatch(myWfarRefreshActions.alertNewChange());
+            dispatch(unsubmitWfar(id));
+            setIsUnsubmitted(false);
+        }
+    }, [isUnsubmitted])
+
+    // handlers
+    const displayEntriesHandler = () => {
+        let display = displayEntries === "open" ? "close" : "open";
+        setDisplayEntries(display);
+    }
+
+    const submitHandler = () => {
+        setIsSubmitted(true);
+    }
+
+    const unsubmitHandler = () => {
+        setIsUnsubmitted(true);
+    }
+
+
+    // jsx
+    if (noOfEntries > 1) {
         entryLabel = "WFAR entries";
-    } else if (entryNo == 1) {
+    } else if (noOfEntries === 1) {
         entryLabel = "WFAR entry";
     } else {
         entryLabel = "No entries yet.";
     }
 
-    // let entryLabel 
+    // svg
     const icAddEntry = <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z" fill="white" />
     </svg>;
 
-    switch (wfarStatus) {
+    // button jsx
+    switch (status) {
         case 1: // not submitted
-            if (entryNo < 5) {
-
+            if (noOfEntries <= 0) {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton
-                        label="Entry"
-                        type="primary"
-                        size="xs"
-                        svg={icAddEntry} />
-                        <Button
-                        label="Submit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
                     </Fragment>);
             } else {
                 buttonsJSX =
                     (<Fragment>
-                        <Button
-                            label="Submit"
-                            type="primary"
-                            size="xs"
-                            onClick={props.onClick} />
+                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Button label="Submit" type="primary" size="xs" onClick={submitHandler} />
                     </Fragment>);
             }
             break;
 
         case 2: // to be checked
-            buttonsJSX = 
+            buttonsJSX =
                 (<Fragment>
-                    <Button
-                        label="Unsubmit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                    <Button label="Unsubmit" type="primary" size="xs" onClick={unsubmitHandler} />
                 </Fragment>);
             break;
 
         case 3: //Ok
-            
+
             break;
 
 
         case 4: //With Revisions
             buttonsJSX =
                 (<Fragment>
-                    <Button
-                        label="Unsubmit"
-                        type="primary"
-                        size="xs"
-                        onClick={props.onClick} />
+                    <Button label="Unsubmit" type="primary" size="xs" onClick={unsubmitHandler} />
                 </Fragment>);
             break;
 
         default:
             break;
-    }
-
-    const displayEntries = () => {
-
     }
 
     return (
@@ -99,15 +143,15 @@ const MyWFARCard = (props) => {
 
                 <div>
                     <div className={styles.weekContainer}>
-                        <div className={styles.weekLabel}> {weekTitle} </div>
-                        <div className={styles.weekDate}> {weekDate} </div>
+                        <div className={styles.weekLabel}> Week {weekNo} </div>
+                        <div className={styles.weekDate}> {startDateLbl} - {endDateLbl} </div>
                     </div>
                 </div>
 
 
                 <div>
                     <div className={styles.entryLabelContainer}>
-                        <div className={styles.entryNo}> {entryNo} </div>
+                        <div className={styles.entryNo}> {noOfEntries} </div>
                         <div className={styles.entryWord}> {entryLabel} </div>
                     </div>
                 </div>
@@ -115,11 +159,11 @@ const MyWFARCard = (props) => {
 
                 <div>
                     <div className={styles.buttonStatusContainer} style={{ display: "flex" }}>
-                        {wfarStatus != 1 && <WFARStatus status={wfarStatus}></WFARStatus>}
+                        {status !== 1 && <WFARStatus status={status}></WFARStatus>}
                         {buttonsJSX}
                     </div>
-                    <div>
-                        <svg onClick={displayEntries} width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div className={styles.openClose} onClick={displayEntriesHandler}>
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 1.41L10.59 -6.16331e-08L6 4.58L1.41 -4.62904e-07L-6.16331e-08 1.41L6 7.41L12 1.41Z" fill="#323232" />
                         </svg>
                     </div>
@@ -127,9 +171,10 @@ const MyWFARCard = (props) => {
 
             </div>
 
-            <div id="entries-container" className={styles.entriesContainer}>
-                <MyWfarEntry no={1} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
-                <MyWfarEntry no={2} accomplishmentDate={"April 8"} CYS="BSIT 4M" subject="Cap 301 - Capstone Research and Project 1"></MyWfarEntry>
+            <div id="entries-container" className={styles.entriesContainer + " " + styles[displayEntries]}>
+                {activeEntries.map((entry, index) => {
+                    return (<MyWfarEntry key={entry.id} no={index + 1} accomplishmentDate={entry.accomplishment_date} courseYearSection={entry.course_year_section} subject={entry.subject}></MyWfarEntry>);
+                })}
             </div>
 
         </div>

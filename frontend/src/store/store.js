@@ -25,6 +25,17 @@ import {
 //for demo
 import { getAllSemsReducer, addSemReducer } from "./sampleReducers";
 
+// erika
+import {
+  myWfarFetchReducer,
+  myWfarsArchivedReducer,
+  wfarSemestersReducer,
+  myWfarSubmissionReducer,
+  myWfarUnsubmissionReducer,
+  myWfarSemesterFilterReducer,
+  myWfarRefreshReducer
+} from './myWfarReducers';
+
 console.log("HelloWorld");
 
 const store = configureStore({
@@ -50,6 +61,13 @@ const store = configureStore({
     getAllSems: getAllSemsReducer.reducer,
 
     addSem: addSemReducer.reducer,
+    myWfars: myWfarFetchReducer.reducer,
+    myWfarsArchived: myWfarsArchivedReducer.reducer,
+    wfarSemesters: wfarSemestersReducer.reducer,
+    myWfarSubmission: myWfarSubmissionReducer.reducer,
+    myWfarUnsubmission: myWfarUnsubmissionReducer.reducer,
+    myWfarSemesterFilter: myWfarSemesterFilterReducer.reducer,
+    myWfarRefresh: myWfarRefreshReducer.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

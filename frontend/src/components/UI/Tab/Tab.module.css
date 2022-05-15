@@ -17,6 +17,7 @@
     color: #777;
     padding: 1.15% 3%;
     transition: .12s linear;
+    border-bottom: 3px solid transparent;
 }
 
 .tab li.active {
@@ -27,7 +28,7 @@
 
 .tab li.side {
     position: absolute;
-    right: 3%;
+    right: 0%;
 }
 
 .tab li:hover {
