@@ -10,11 +10,31 @@ import {
   getSemDetailsReducer,
   updateSemReducer,
 } from "./manageSemReducers";
+
+import {
+  getFacultiesReducer,
+  changeUserTypeReducer,
+  getAreaChairsReducer,
+  getDepartmentHeadsReducer,
+  getUnassignedFacultiesReducer,
+  getAssignedFacultiesReducer,
+  unassignedFacultyReducer,
+  assignedFacultyReducer,
+} from "./manageFacultiesReducers";
+
 //for demo
 import { getAllSemsReducer, addSemReducer } from "./sampleReducers";
 
 // erika
-import { myWfarsReducer, myWfarsArchivedReducer, wfarSemestersReducer } from './myWfarReducers';
+import {
+  myWfarFetchReducer,
+  myWfarsArchivedReducer,
+  wfarSemestersReducer,
+  myWfarSubmissionReducer,
+  myWfarUnsubmissionReducer,
+  myWfarSemesterFilterReducer,
+  myWfarRefreshReducer
+} from './myWfarReducers';
 
 console.log("HelloWorld");
 
@@ -28,15 +48,26 @@ const store = configureStore({
     getSems: getSemsReducer.reducer,
     getSemDetails: getSemDetailsReducer.reducer,
     updateSem: updateSemReducer.reducer,
-
+    getFaculties: getFacultiesReducer.reducer,
+    getAreaChairs: getAreaChairsReducer.reducer,
+    getDepartmentHeads: getDepartmentHeadsReducer.reducer,
+    getUnassignedFaculties: getUnassignedFacultiesReducer.reducer,
+    getAssignedFaculties: getAssignedFacultiesReducer.reducer,
+    changeUserType: changeUserTypeReducer.reducer,
+    unassignedFaculty: unassignedFacultyReducer.reducer,
+    assignedFaculty: assignedFacultyReducer.reducer,
     // For Demo purpose only
 
     getAllSems: getAllSemsReducer.reducer,
 
     addSem: addSemReducer.reducer,
-    myWfars: myWfarsReducer.reducer,
+    myWfars: myWfarFetchReducer.reducer,
     myWfarsArchived: myWfarsArchivedReducer.reducer,
-    wfarSemesters: wfarSemestersReducer.reducer
+    wfarSemesters: wfarSemestersReducer.reducer,
+    myWfarSubmission: myWfarSubmissionReducer.reducer,
+    myWfarUnsubmission: myWfarUnsubmissionReducer.reducer,
+    myWfarSemesterFilter: myWfarSemesterFilterReducer.reducer,
+    myWfarRefresh: myWfarRefreshReducer.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

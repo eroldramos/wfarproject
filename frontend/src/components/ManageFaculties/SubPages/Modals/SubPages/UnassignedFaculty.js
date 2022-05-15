@@ -2,9 +2,39 @@ import SearchField from "../../../../UI/FormControl/SearchField/SearchField";
 import styles from "../ViewFacultyStatus.module.css";
 import Rows from "./Rows";
 import table from "./Table.module.css";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  getUnassignedFaculties,
+  assignedFaculty,
+} from "../../../../../store/manageFacultiesActions";
+
 const UnassignedFaculty = (props) => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getUnassignedFacultiesReducerValues = useSelector(
+    (state) => state.getUnassignedFaculties
+  );
+
+  const {
+    isLoading: unassignedIsLoading,
+    error: unassignedError,
+    unassignedFaculties,
+  } = getUnassignedFacultiesReducerValues;
+
+  useEffect(() => {
+    dispatch(getUnassignedFaculties());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (unassignedFaculties) {
+      setListFaculties(unassignedFaculties);
+      setCheckedState(new Array(unassignedFaculties.length).fill(false));
+    }
+  }, [unassignedFaculties]);
+
   const icon = (
     <svg
       width="19"
@@ -19,7 +49,7 @@ const UnassignedFaculty = (props) => {
       />
     </svg>
   );
-  const [listPendingAccounts, setListPendingAccounts] = useState([
+  const [listFaculties, setListFaculties] = useState([
     {
       id: 1,
       fullname: "Erold Ramos",
@@ -35,7 +65,7 @@ const UnassignedFaculty = (props) => {
   const [searchFaculty, setSearchFaculty] = useState("");
 
   const [checkedState, setCheckedState] = useState(
-    new Array(listPendingAccounts.length).fill(false)
+    new Array(listFaculties.length).fill(false)
   );
   const selectAllUsers = () => {
     if (isChecked) {
@@ -51,8 +81,8 @@ const UnassignedFaculty = (props) => {
         (sum, currentState, index) => {
           if (currentState === true) {
             arrayId.push({
-              id: listPendingAccounts[index].id,
-              fullname: listPendingAccounts[index].fullname,
+              id: listFaculties[index].id,
+              fullname: listFaculties[index].fullname,
             });
             return arrayId;
           }
@@ -76,8 +106,8 @@ const UnassignedFaculty = (props) => {
         (sum, currentState, index) => {
           if (currentState === true) {
             arrayId.push({
-              id: listPendingAccounts[index].id,
-              fullname: listPendingAccounts[index].fullname,
+              id: listFaculties[index].id,
+              fullname: listFaculties[index].fullname,
             });
             return arrayId;
           }
@@ -103,8 +133,8 @@ const UnassignedFaculty = (props) => {
       (sum, currentState, index) => {
         if (currentState === true) {
           arrayId.push({
-            id: listPendingAccounts[index].id,
-            fullname: listPendingAccounts[index].fullname,
+            id: listFaculties[index].id,
+            fullname: listFaculties[index].fullname,
           });
           return arrayId;
         }
@@ -121,15 +151,27 @@ const UnassignedFaculty = (props) => {
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
   };
+  const onAssignedFacultyHandler = () => {
+    let selectedId = [];
+    for (let user of selectedUser) {
+      selectedId.push(user.id);
+    }
+    console.log(selectedId);
+    let data = {
+      assignee_id: props.id,
+      assigned_faculties: selectedId,
+    };
 
+    dispatch(assignedFaculty(data));
+    alert("Assigned Successfully");
+    props.onClose();
+  };
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
   console.log(checkedState[0]);
   return (
     <Fragment>
-      UnassignedFaculty,{" "}
-      {props.fullname + "/" + props.id + "/" + props.user_type}
       <div className={styles["search-field-container"]}>
         <form onSubmit={onSubmitHandler}>
           <SearchField
@@ -164,7 +206,7 @@ const UnassignedFaculty = (props) => {
             <div className={table["icon-container"]}>
               {selectedUser.length > 0 && (
                 <TransparentButton
-                  onClick={null}
+                  onClick={onAssignedFacultyHandler}
                   label="Assign "
                   type="transparent"
                   size="xs"
@@ -174,12 +216,13 @@ const UnassignedFaculty = (props) => {
             </div>
           </div>
         </li>
-        {listPendingAccounts.length === 0 && <p>Not Found</p>}
-        {listPendingAccounts &&
-          listPendingAccounts.map((data, index) => (
+        {listFaculties.length === 0 && <p>Not Found</p>}
+        {listFaculties &&
+          listFaculties.map((data, index) => (
             <Rows
               id={data.id}
-              fullname={data.fullname}
+              first_name_and_middle_name={`${data.first_name} ${data.middle_name}`}
+              last_name={data.last_name}
               key={index}
               checked={checkedState[index] ? checkedState[index] : false}
               onChange={() => handleOnChange(index)}

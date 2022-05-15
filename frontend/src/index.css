@@ -18,11 +18,12 @@ body {
 
 h1 {
   font-size: 1.5em;
-  margin: 2.5px 0 10px 0;
+  margin: 0px 0 25px 0;
+  color: #BE5A40;
 }
 
 #main {
   margin-left: 85px;
   transition: .3s margin-left ease-in-out;
-  padding: 50px 60px 45px 45px;
+  padding: 45px 70px 45px 55px;
 }

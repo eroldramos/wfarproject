@@ -1,8 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Modal from "../../../UI/Modal/Modal";
 import styles from "./PromoteDemoteModal.module.css";
 import ModalButton from "../../../UI/FormControl/Button/ModalButton";
 import Button from "../../../UI/FormControl/Button/Button";
+import { changeUserType } from "../../../../store/manageFacultiesActions";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 const PromoteModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
@@ -18,6 +21,17 @@ const PromoteModal = (props) => {
     useState(false);
 
   const [selectedRole, setSelectedRole] = useState(0);
+
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const changeUserTypeReducerValues = useSelector(
+  //   (state) => state.changeUserType
+  // );
+  // const {
+  //   isLoading: userTypeIsLoading,
+  //   error: userTypeError,
+  //   success: userTypeSuccess,
+  // } = changeUserTypeReducerValues;
 
   const selectFaculty = (user_type) => {
     setFacultyIsSelected(true);
@@ -45,6 +59,7 @@ const PromoteModal = (props) => {
       new_user_type: selectedRole,
     };
     console.log(data);
+    dispatch(changeUserType(data));
   };
   console.log(selectedRole);
   return (

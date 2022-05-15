@@ -7,7 +7,7 @@ import RegisterScreen from "./components/Screens/RegisterScreen";
 import LoginScreen from "./components/Screens/LoginScreen";
 import PendingAccountsScreen from "./components/Screens/PendingAccountsScreen";
 import AdminLoginScreen from "./components/Screens/AdminLoginScreen";
-import MySubmission from "./components/MySubmission/MySubmission";
+import MySubmissionScreen from "./components/Screens/MySubmissionScreen";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
@@ -46,7 +46,7 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission/*" element={<MySubmission />}></Route>
+          <Route path="/mySubmission/*" element={<MySubmissionScreen />}></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"

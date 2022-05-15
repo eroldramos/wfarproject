@@ -9,10 +9,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from yaml import serialize
-from core.serializers import WfarSerializer
-from core.serializers import WfarArchivedEntrySerializer
+from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer
 from core.permissions import IsAuthenticated
-from core.models import Semester,  WFAR, WFAR_Entry, Faculty
+from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
@@ -56,7 +55,6 @@ class CreateWfar(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-
 
         try:
             # step 1 - get the faculty id
@@ -109,7 +107,7 @@ class CreateWfar(APIView):
     
                         week_bracket[0] = week_bracket[1] - timedelta(days=6)
                         previous_date_day = week_bracket[0].isoweekday() # friday - 8 - 5
-                        # return Response({"details": "vvvvvvvv"})
+                        # return Response({"detail": "vvvvvvvv"})
                         if previous_date_day != 1:
                             week_bracket[0]+=timedelta(days=8-previous_date_day)
                         
@@ -121,11 +119,8 @@ class CreateWfar(APIView):
                         sample_list.append("date_today: " + str(date_today))
                         current_week_no = (i + 1) + last_week_no
                         
-                        # return Response({"date_today": date_today, "week_bracket[0]": week_bracket[0], "week_bracket[1]": week_bracket[1]})
 
                         if date_today >= week_bracket[0] and date_today <= week_bracket[1]:
-                            
-                            
                             wfar = WFAR.objects.create(
                                         faculty_id = Faculty.objects.get(pk=faculty_id), 
                                         semester_id = Semester.objects.get(pk=semester[0].id),
@@ -134,8 +129,6 @@ class CreateWfar(APIView):
                             wfars.append(wfar)
                             break
                         elif (last_week_no < semester_weeks) and (week_bracket[0] <= date_today):
-                            
-                            # return Response({"details": "vvvvvvvvvvvvvvvvvvvvvv"})
                             wfar = WFAR.objects.create(
                                         faculty_id = Faculty.objects.get(pk=faculty_id), 
                                         semester_id = Semester.objects.get(pk=semester[0].id),
@@ -144,20 +137,107 @@ class CreateWfar(APIView):
                             wfars.append(wfar)
                         
 
-                    return Response({"sample_list": sample_list, "wfars: ": WfarSerializer(wfars, many=True).data, "details": "Successfully created"}, status=status.HTTP_200_OK)
+                    return Response({"sample_list": sample_list, "wfars: ": WfarSerializer(wfars, many=True).data, "detail": "Successfully created"}, status=status.HTTP_200_OK)
                 else:
-                    return Response({"details": "No WFARs to create for this semester."}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({"detail": "No WFARs to create for this semester."}, status=status.HTTP_404_NOT_FOUND)
             else:
-                return Response({"details": "Unable to create a WFAR, no semester yet."}, status=status.HTTP_404_NOT_FOUND)
+                return Response({"detail": "Unable to create a WFAR, no semester yet."}, status=status.HTTP_404_NOT_FOUND)
         except:
-            return Response({"details": "An error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"detail": "An error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SubmitWfar(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
         try:
+            wfar = WFAR.objects.get(pk=pk)
+            wfar.submitted_at = datetime.now()
+            wfar.status = 2
+            wfar.save()
+            return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been submitted."}, status = status.HTTP_200_OK);
+        except:
+            return Response({"detail": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+
+class UnsubmitWfar(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        try:
+            wfar = WFAR.objects.get(pk=pk)
+            wfar.submitted_at = None
+            wfar.status = 1
+            wfar.save()
+            return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been unsubmitted."}, status = status.HTTP_200_OK);
+        except:
+            return Response({"detail": "The WFAR cannot be unsubmitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+class CreateWfarEntry(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, wfar_pk):
+        try:
+            data = request.data
+            
+            entry = WFAR_Entry.objects.create(
+                wfar_id = WFAR.objects.get(pk=wfar_pk),
+                accomplishment_date = data['accomplishment_date'],
+                subject = data['subject'],
+                course_year_section = data['course_year_section'], 
+                no_of_attendees = data['no_of_attendees'],
+                recording_url = data['recording_url']
+            )
+
+            sc_meetings = data['sc_meetings']
+            sc_activities = data['sc_activities']
+            activities = data['activities']
+
+            for file in sc_meetings:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 1,
+                    wfar_entry_id = entry
+                )
+
+            for file in sc_activities:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 2,
+                    wfar_entry_id = entry
+                )
+
+            for activity in activities:
+                WFAR_Entry_Activity.objects.create(
+                    description = activity,
+                    wfar_entry_id = entry
+                )
+
+            return Response({"detail": "The WFAR entry has been added successfully."});
             pass
         except:
-            return Response({"details": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+            return Response({"detail": "The WFAR entry has not been added successfully."});
             pass
+
+class ArchiveWfarEntry(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        try:
+            entry = WFAR_Entry.objects.get(pk=pk)
+            entry.deleted_at = datetime.now()
+            entry.save()
+            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been archived successfully."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+        except:
+            return Response({"detail": "The WFAR entry cannot be archived, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+class UnarchiveWfarEntry(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        try:
+            entry = WFAR_Entry.objects.get(pk=pk)
+            entry.deleted_at = None
+            entry.save()
+            return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been restored successfully."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+        except:
+            return Response({"detail": "The WFAR entry cannot be restored, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);

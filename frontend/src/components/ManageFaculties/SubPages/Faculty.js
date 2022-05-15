@@ -1,32 +1,73 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import table from "./Table.module.css";
 import SearchField from "../../UI/FormControl/SearchField/SearchField";
 import Rows from "./Rows";
 import styles from "./Subpages.module.css";
+import { getFaculties } from "../../../store/manageFacultiesActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 const Faculty = () => {
-  const faculties = [
-    {
-      id: 1,
-      fullname: "Ramos Erold 1",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-  ];
+  const search = useLocation().search;
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getFacultiesReducerValues = useSelector((state) => state.getFaculties);
+  const {
+    isLoading: getFacultiesIsLoading,
+    error: getFacultiesError,
+    faculties,
+  } = getFacultiesReducerValues;
+
+  const changeUserTypeReducerValues = useSelector(
+    (state) => state.changeUserType
+  );
+  const {
+    isLoading: userTypeIsLoading,
+    error: userTypeError,
+    success: userTypeSuccess,
+  } = changeUserTypeReducerValues;
+
+  const assignedFacultyReducerValues = useSelector(
+    (state) => state.assignedFaculty
+  );
+  const { isLoading: assignIsLoading } = assignedFacultyReducerValues;
+
   const [searchFaculty, setSearchFaculty] = useState("");
+  const [listFaculty, setListFaculty] = useState([
+    // {
+    //   id: 1,
+    //   fullname: "Ramos Erold 1",
+    //   emp_no: "2018-101188",
+    //   username: "eroldramos",
+    //   birthdate: "2015-02-03",
+    //   email: "eroldramos@gmail.com",
+    //   contact_no: "09563435355",
+    //   user_type: 1,
+    // },
+    // {
+    //   id: 2,
+    //   fullname: "Erold Ramos",
+    //   emp_no: "2018-101188",
+    //   username: "eroldramos",
+    //   birthdate: "2015-02-03",
+    //   email: "eroldramos@gmail.com",
+    //   contact_no: "09563435355",
+    //   user_type: 1,
+    // },
+  ]);
+  useEffect(() => {
+    if (userTypeSuccess && !userTypeIsLoading) {
+      console.log("ufkckkkkcakdsakfk");
+      navigate("/manage-faculty/faculty/");
+    }
+    dispatch(getFaculties());
+  }, [dispatch, userTypeSuccess, userTypeIsLoading, assignIsLoading]);
+
+  useEffect(() => {
+    if (faculties && !userTypeIsLoading) {
+      setListFaculty(faculties);
+    }
+  }, [faculties, userTypeIsLoading]);
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
   };
@@ -88,17 +129,18 @@ const Faculty = () => {
           </div>
         </li>
 
-        {faculties &&
-          faculties.map((data, index) => (
+        {listFaculty &&
+          listFaculty.map((data, index) => (
             <Rows
               id={data.id}
-              fullname={data.fullname}
+              fullname={`${data.last_name}, ${data.first_name} ${data.middle_name}`}
               emp_no={data.emp_no}
               username={data.username}
               email={data.email}
               contact_no={data.contact_no}
               birthdate={data.birthdate}
               user_type={data.user_type}
+              assignee_id={data.assignee_id}
               key={index}
             />
           ))}

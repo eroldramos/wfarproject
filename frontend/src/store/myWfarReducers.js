@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { addListener, createSlice } from "@reduxjs/toolkit";
 
 // export const 
 
@@ -8,8 +8,8 @@ const initialWfarsState = {
     error: false
 }
 
-export const myWfarsReducer = createSlice({
-    name: "myWfarsReducer",
+export const myWfarFetchReducer = createSlice({
+    name: "myWfarFetchReducer",
     initialState: initialWfarsState,
     reducers: {
         retrieveRequest(state, action) {
@@ -78,7 +78,104 @@ export const wfarSemestersReducer = createSlice({
     }
 });
 
+export const myWfarSemesterFilterReducer = createSlice({
+    name: "myWfarSemesterFilterReducer",
+    initialState: { semester_id: 1 },
+    reducers: {
+        changeSemesterFilter(state, action) {
+            state.semester_id = action.payload.id;
+        }
+    }
+})
 
-export const myWfarsActions = myWfarsReducer.actions;
+export const myWfarRefreshReducer = createSlice({
+    name: "myWfarRefreshReducer",
+    initialState: {newChange: false},
+    reducers: {
+        alertNewChange(state) {
+            state.newChange = true;
+        },
+        resetNewChange(state) {
+            state.newChange = false;
+        }
+    }
+})
+
+const initialSubmissionState = {
+    "isLoading": false,
+    error: false
+}
+
+export const myWfarSubmissionReducer = createSlice({
+    name: "myWfarSubmissionReducer",
+    initialState: initialSubmissionState,
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+const initialUnsubmissionState = {
+    "isLoading": false,
+    error: false
+}
+
+export const myWfarUnsubmissionReducer = createSlice({
+    name: "myWfarUnsubmissionReducer",
+    initialState: initialUnsubmissionState,
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+
+export const myWfarArchiveReducer = createSlice({
+    name: "myWfarArchiveReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarFetchActions = myWfarFetchReducer.actions;
 export const myWfarsArchivedActions = myWfarsArchivedReducer.actions;
 export const wfarSemestersActions = wfarSemestersReducer.actions;
+export const myWfarSubmissionActions = myWfarSubmissionReducer.actions;
+export const myWfarUnsubmissionActions = myWfarUnsubmissionReducer.actions;
+export const myWfarSemesterFilterActions = myWfarSemesterFilterReducer.actions;
+export const myWfarRefreshActions = myWfarRefreshReducer.actions;
