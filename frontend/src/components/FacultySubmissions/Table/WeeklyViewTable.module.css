@@ -18,35 +18,49 @@
     padding-left: 40px;
 }
 .weeklyTable tr td:nth-child(1){
-    border-left: none;
     text-align: left;
     padding-left: 40px;
 }
-.weeklyTable tr th:nth-child(1) svg:hover{
+.weeklyTable tr td:nth-child(5){
+    padding: 5px;
+    width: 230px;
+}
+.sortFacultyName:hover{
     cursor: pointer;
 }
-.weeklyTable tr th:nth-child(1) svg{
-    margin-left: 10px;
-}
-.weeklyTable tr th:nth-child(1) svg:hover{
+.sortFacultyName{
+    margin-left: 15px;
     cursor: pointer;
 }
 .weeklyTable tr th, td{
     font-size: 14px;
+    background: transparent;
     padding: 14px;
     border: 1px solid #EAEBED;
     text-align: center;
 }
 .weeklyTable tr th{
     margin: 0;
-    border-top: none;
-    border-left: none;
-}
-.weeklyTable tr:nth-child(7) td{
-    border-bottom: none;
-
 }
 .weeklyTable tr td:nth-child(5){
     padding: 5px;
     width: 230px;
+}
+.weeklyTable tr:nth-child(1) th{
+    border-top: none;
+}
+.weeklyTable tr:nth-child(7) td{
+    border-bottom: none;
+}
+.weeklyTable tr th:nth-child(1){
+    border-left: none;
+}
+.weeklyTable tr td{
+    border-left: none;
+}
+.weeklyTable tr:nth-child(1) th{
+    border-right: none;
+}
+.weeklyTable tr td:nth-child(5){
+    border-right: none;
 }
