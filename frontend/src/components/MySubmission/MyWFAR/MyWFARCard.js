@@ -204,6 +204,7 @@ const   MyWFARCard = (props) => {
                         accomplishmentDate={entry.accomplishment_date} 
                         courseYearSection={entry.course_year_section} 
                         subject={entry.subject} 
+                        wfarId={id}
                         wfarWeekNo={weekNo}
                         wfarStatus={status}></MyWfarEntry>);
                 })}

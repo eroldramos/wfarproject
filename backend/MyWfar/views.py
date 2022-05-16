@@ -288,5 +288,5 @@ class UploadWfarEntryAttachments(APIView):
 
             return Response({"detail": "The WFAR entry has been added successfully."}, status=status.HTTP_200_OK);
         except:
-            return Response({"detail": "The WFAR entry has not been added successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+            return Response({"detail": "The WFAR entry has been added however attached images were not successfully uploaded."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
 

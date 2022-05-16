@@ -159,7 +159,7 @@ export const submitWfar = (id, weekNo) => {
             dispatch(myWfarSubmissionActions.requestFailed({ error: error.message }));
             Swal.fire({
                 html:
-                    '<h4>' + error.message+'</h4>',
+                    '<h4>' + error.message + '</h4>',
                 icon: 'error',
                 confirmButtonColor: '#BE5A40'
             })
@@ -312,7 +312,7 @@ export const restoreWfarEntry = (id) => {
     }
 }
 
-export const createWfarEntry = (wfarId, weekNo, entry, formData) => {
+export const createWfarEntry = (wfarId, weekNo, entry, formDataImages) => {
 
     return async (dispatch, getState) => {
         let url = `/api/myWfar/entry/wfar=${wfarId}/create/`;
@@ -323,9 +323,6 @@ export const createWfarEntry = (wfarId, weekNo, entry, formData) => {
             const {
                 login: { userInfo },
             } = getState();
-
-            console.log("entry: ");
-            console.log(entry);
 
             const response = await fetch(url, {
                 method: "POST",
@@ -346,21 +343,15 @@ export const createWfarEntry = (wfarId, weekNo, entry, formData) => {
             dispatch(myWfarEntryCreateActions.requestSuccessfullyCompleted());
             dispatch(myWfarRefreshActions.alertNewChange());
 
-
-            var myHeaders = new Headers();
-            myHeaders.append("Authorization", "Bearer " + userInfo.token);
-
-
-            let url2 = `/api/myWfar/entry/upload_attachments/`;
-            const response2 = await fetch(url2, {
+            let uploadUrl = `/api/myWfar/entry/upload_attachments/`;
+            const response2 = await fetch(uploadUrl, {
                 method: "POST",
-                body: formData,
-                headers: myHeaders
+                body: formDataImages,
+                headers: { "Authorization": "Bearer " + userInfo.token}
             });
 
-
-            const data2 = await response2.json();
-            console.log(data2);
+            const uploadData = await response2.json();
+            console.log(uploadData);
 
             if (!response2.ok) {
                 const data = await response2.json();
@@ -368,23 +359,9 @@ export const createWfarEntry = (wfarId, weekNo, entry, formData) => {
                 throw new Error(errorMessage);
             }
 
-            Swal.fire({
-                html:
-                    '<h4>Your entry for WFAR week ' + weekNo + ' has been recorded!</h4>',
-                icon: 'success',
-                confirmButtonColor: '#BE5A40'
-            })
-
             console.log(data);
         } catch (error) {
             dispatch(myWfarEntryCreateActions.requestFailed({ error: error.message }));
-
-            Swal.fire({
-                html:
-                    '<h4>' + error.message + '</h4>',
-                icon: 'error',
-                confirmButtonColor: '#BE5A40'
-            })
         }
     }
 }
