@@ -11,7 +11,7 @@ import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 import Swal from 'sweetalert2';
 import { NavLink, Link } from 'react-router-dom';
 
-const MyWFARCard = (props) => {
+const   MyWFARCard = (props) => {
 
     // hooks
     const dispatch = useDispatch();
@@ -115,18 +115,19 @@ const MyWFARCard = (props) => {
         <path d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z" fill="white" />
     </svg>;
 
+    const addEntryLink = "/mySubmission/wfar/"+id+"/add-entry";
     // button jsx
     switch (status) {
         case 1: // not submitted
             if (noOfEntries <= 0) {
                 buttonsJSX =
                     (<Fragment>
-                        <Link to="/mySubmission/wfar/add-entry"><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
+                        <Link to={addEntryLink}><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                     </Fragment>);
             } else {
                 buttonsJSX =
                     (<Fragment>
-                        <Link to="/mySubmission/wfar/add-entry"><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
+                        <Link to={addEntryLink}><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                         <Button label="Submit" type="primary" size="xs" onClick={submitHandler} />
                     </Fragment>);
             }

@@ -149,6 +149,7 @@ export const myWfarUnsubmissionReducer = createSlice({
     }
 });
 
+/** ENTRY CRUD */
 
 export const myWfarEntryArchiveReducer = createSlice({
     name: "myWfarEntryArchiveReducer",
@@ -194,6 +195,28 @@ export const myWfarEntryUnarchiveReducer = createSlice({
     }
 });
 
+export const myWfarEntryCreateReducer = createSlice({
+    name: "myWfarEntryCreateReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
 export const myWfarFetchActions = myWfarFetchReducer.actions;
 export const myWfarsArchivedActions = myWfarsArchivedReducer.actions;
 export const wfarSemestersActions = wfarSemestersReducer.actions;
@@ -203,3 +226,4 @@ export const myWfarSemesterFilterActions = myWfarSemesterFilterReducer.actions;
 export const myWfarRefreshActions = myWfarRefreshReducer.actions;
 export const myWfarEntryArchiveActions = myWfarEntryArchiveReducer.actions;
 export const myWfarEntryUnarchiveActions = myWfarEntryUnarchiveReducer.actions;
+export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;

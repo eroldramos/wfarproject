@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import DateField from "../UI/FormControl/DateField/DateField";
 import InputField from "../UI/FormControl/InputField/InputField";
 import styles from "./AddEntry.module.css";
@@ -8,10 +8,22 @@ import Button from "../UI/FormControl/Button/Button";
 import TeamMeetScreenshots from "./Attachments/TeamMeetScreenshots";
 import ProvidedActivities from "./Attachments/ProvidedActivities";
 import Swal from 'sweetalert2';
+import { createWfarEntry } from '../../store/myWfarsActions';
+import { useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
 
 
 const AddEntry = (props) => {
-    
+
+    // hooks
+    const dispatch = useDispatch();
+    const params = useParams();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    // props
+    const wfarId = params.id;
+    const weekNo = 2;
+
     const [accomplishedDate, setAccomplishedDate] = useState({ value: '', error: null });
     const [subject, setSubject] = useState({ value: '', error: null });
     const [cys, setCys] = useState({ value: '', error: null });
@@ -20,6 +32,8 @@ const AddEntry = (props) => {
     const [learningActivities, setLearningActivities] = useState([{ value: '', error: null }]);
     const [teamMeetScreenshots, setTeamMeetScreenshots] = useState([]);
     const [providedActivitiesScreenshots, setProvidedActivitiesScreenshots] = useState([]);
+    const [entry, setEntry] = useState([]);
+    const [attachmentFormData, setAttachmentFormData] = useState();
 
     const accomplishedDateRequiredError = 'Please select the accomplishment date.';
     const subjectRequiredError = 'Please enter a subject.';
@@ -28,6 +42,16 @@ const AddEntry = (props) => {
     const noOfAttendeesRequiredError = 'Please enter the number of attendees.';
     const learningActivityRequiredError = 'Please enter the learning activity.';
 
+    // effects
+    useEffect(() => {
+        if (isSubmitted) {
+            console.log("for submission na...");
+            dispatch(createWfarEntry(wfarId, weekNo, entry, attachmentFormData))
+            setIsSubmitted(false);
+        }
+    }, [isSubmitted]);
+
+    // handlers
     const addLearningActivityField = () => {
         let inputField = { value: '' };
         setLearningActivities((prevState) => {
@@ -249,16 +273,38 @@ const AddEntry = (props) => {
         if (hasNoError) {
             console.log("Entry added!");
             let entry = {
-                accomplishedDate: accomplishedDate,
-                subject: subject,
-                cys: cys,
-                meetingLink: meetingLink,
-                noOfAttendees: noOfAttendees,
-                teamMeetScreenshots: teamMeetScreenshots,
-                providedActivitiesScreenshots: providedActivitiesScreenshots
+                accomplishment_date: accomplishedDate.value,
+                subject: subject.value,
+                course_year_section: cys.value,
+                recording_url: meetingLink.value,
+                no_of_attendees: noOfAttendees.value,
+                activities: learningActivities.map(x => { return x.value})
             }
 
-            console.log(entry);
+            let formData = new FormData();
+
+            console.log(document.querySelector("#sampleFile").files[0]);
+            formData.append("sample", document.querySelector("#sampleFile").files[0]);
+
+            console.log("length: ");
+            console.log("length: " + teamMeetScreenshots.length);
+
+            let counter = 0;
+            for (let x of teamMeetScreenshots) {
+                counter++;
+                console.log("hello" + counter);
+                formData.append("sc_meetings", x.file, x.file.name);
+            }
+
+
+            for (let x of providedActivitiesScreenshots) {
+                console.log("hello");
+                formData.append("sc_activities", x.file, x.file.name);
+            }
+
+            setAttachmentFormData(formData);
+            setEntry(entry);
+            setIsSubmitted(true);
         } else {
             console.log("Entry not added. Resolved issues first.");
         }
@@ -269,6 +315,10 @@ const AddEntry = (props) => {
     return (
         <Fragment>
             <div className={styles['container']}>
+
+
+                <input type="file" id="sampleFile"></input>
+
                 <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.75 22.6667H21.25V14.1667H26.9167L17 4.25L7.08333 14.1667H12.75V22.6667ZM7.08333 25.5H26.9167V28.3333H7.08333V25.5Z" fill="#323232" />
                 </svg>
