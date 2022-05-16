@@ -252,14 +252,14 @@ class UpdateWfarEntryAttachments(APIView):
                 WFAR_Entry_Attachment.objects.create(
                     image_uri = file,
                     type = 1,
-                    wfar_entry_id = WFAR_Entry.objects.get(pk=1)
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
                 )
 
             for file in sc_activities:
                 WFAR_Entry_Attachment.objects.create(
                     image_uri = file,
                     type = 2,
-                    wfar_entry_id = WFAR_Entry.objects.get(pk=1)
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
                 )
 
             return Response({"detail": "The WFAR entry has been updated successfully."}, status=status.HTTP_200_OK);

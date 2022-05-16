@@ -57,7 +57,7 @@ const EditEntry = (props) => {
 
         console.log("-entry to be edited");
 
-        if (entryToBeEdited !== null && !areImagesRendered) {
+        if (entryToBeEdited !== null) {
             console.log("+entry to be edited");
             console.log(entryToBeEdited);
             setAccomplishedDate({ value: entryToBeEdited.accomplishment_date, error: null });
@@ -84,59 +84,72 @@ const EditEntry = (props) => {
             let fileArr = [];
             let images = entryToBeEdited.wfar_entry_attachments;
 
-            for (let i in entryToBeEdited.wfar_entry_attachments) {
-                console.log(images[i].image_uri);
-                // *** Here is the code for converting "image source"(url) to "Base64".***
+            console.log("anuba");
 
-                let url = images[i].image_uri;
-                const toDataURL = url => fetch(url)
-                    .then(response => response.blob())
-                    .then(blob => new Promise((resolve, reject) => {
-                        const reader = new FileReader()
-                        reader.onloadend = () => resolve(reader.result)
-                        reader.onerror = reject
-                        reader.readAsDataURL(blob)
-                    }))
+            setTeamMeetScreenshots(() => {
+                return [];
+            });
+            setProvidedActivitiesScreenshots(() => {
+                return [];
+            });
+
+            let timer1 = setTimeout(() => {
+                for (let i in entryToBeEdited.wfar_entry_attachments) {
+                    console.log(i);
+                    console.log(images[i].image_uri);
+                    // *** Here is the code for converting "image source"(url) to "Base64".***
+
+                    let url = images[i].image_uri;
+                    const toDataURL = url => fetch(url)
+                        .then(response => response.blob())
+                        .then(blob => new Promise((resolve, reject) => {
+                            const reader = new FileReader()
+                            reader.onloadend = () => resolve(reader.result)
+                            reader.onerror = reject
+                            reader.readAsDataURL(blob)
+                        }))
 
 
-                // *** Here is code for converting "Base64" to javascript "File Object".***
+                    // *** Here is code for converting "Base64" to javascript "File Object".***
 
-                function dataURLtoFile(dataurl, filename) {
-                    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-                    while (n--) {
-                        u8arr[n] = bstr.charCodeAt(n);
-                    }
-                    return new File([u8arr], filename, { type: mime });
-                }
-
-
-                // *** Calling both function ***
-
-                toDataURL(url)
-                    .then(dataUrl => {
-                        var fileData = dataURLtoFile(dataUrl, url.slice(37, url.length));
-                        fileArr.push(fileData)
-
-                        let file = fileData;
-                        let imageSrc = URL.createObjectURL(file);
-
-                        if (images[i].type === 1) {
-                            setTeamMeetScreenshots((prevState) => {
-                                return [...prevState, { file: file, imageSrc: imageSrc }];
-                            })
-                        } else {
-                            setProvidedActivitiesScreenshots((prevState) => {
-                                return [...prevState, { file: file, imageSrc: imageSrc }];
-                            })
+                    function dataURLtoFile(dataurl, filename) {
+                        var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                        while (n--) {
+                            u8arr[n] = bstr.charCodeAt(n);
                         }
-                        
-                    })
+                        return new File([u8arr], filename, { type: mime });
+                    }
 
-                
-            }
 
-            setAreImagesRendendered(true);
+                    // *** Calling both function ***
+
+                    toDataURL(url)
+                        .then(dataUrl => {
+                            var fileData = dataURLtoFile(dataUrl, url.slice(37, url.length));
+                            fileArr.push(fileData)
+
+                            let file = fileData;
+                            let imageSrc = URL.createObjectURL(file);
+
+                            if (images[i].type === 1) {
+                                setTeamMeetScreenshots((prevState) => {
+                                    return [...prevState, { file: file, imageSrc: imageSrc }];
+                                })
+                            } else {
+                                setProvidedActivitiesScreenshots((prevState) => {
+                                    return [...prevState, { file: file, imageSrc: imageSrc }];
+                                })
+                            }
+
+                        })
+                }
+            }, 2000);
+
+            // setAreImagesRendendered(true);
+            return () => {
+                clearTimeout(timer1);
+            };
         }
     }, [entryToBeEdited]);
 
