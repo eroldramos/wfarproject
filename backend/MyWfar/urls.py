@@ -11,4 +11,6 @@ urlpatterns =[
     path('myWfar/entry/upload_attachments/', views.UploadWfarEntryAttachments.as_view(), name='myWfar_upload_attachments'),
     path('myWfar/entry/archive/<str:pk>/', views.ArchiveWfarEntry.as_view(), name='myWfar_archive'),
     path('myWfar/entry/unarchive/<str:pk>/', views.UnarchiveWfarEntry.as_view(), name='myWfar_unarchive'),
+    path('myWfar/entry/<str:pk>/', views.RetrieveWfarEntry.as_view(), name='myWfar_entry_view'),
+    path('myWfar/getImage/<str:pk>/', views.GetImage.as_view(), name='myWfar_image'),
 ]

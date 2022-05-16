@@ -9,13 +9,14 @@ import TeamMeetScreenshots from "./Attachments/TeamMeetScreenshots";
 import ProvidedActivities from "./Attachments/ProvidedActivities";
 import Swal from 'sweetalert2';
 import { createWfarEntry } from '../../store/myWfarsActions';
-import { useDispatch } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const AddEntry = (props) => {
 
     // hooks
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,6 +24,9 @@ const AddEntry = (props) => {
     // props
     const wfarId = params.id;
     const weekNo = 2;
+
+    // state redux
+    const error = useSelector(state => state.myWfarEntryCreate.error);
 
     const [accomplishedDate, setAccomplishedDate] = useState({ value: '', error: null });
     const [subject, setSubject] = useState({ value: '', error: null });
@@ -48,8 +52,26 @@ const AddEntry = (props) => {
             console.log("for submission na...");
             dispatch(createWfarEntry(wfarId, weekNo, entry, attachmentFormData))
             setIsSubmitted(false);
+
+            if (error == null) {
+                Swal.fire({
+                    html:
+                        '<h4>An entry for WFAR week ' + weekNo + ' has been recorded!</h4>',
+                    icon: 'success',
+                    confirmButtonColor: '#BE5A40'
+                }).then(() => {
+                    navigate(-1);
+                })
+            } else {
+                Swal.fire({
+                    html:
+                        '<h4>' + error + '</h4>',
+                    icon: 'error',
+                    confirmButtonColor: '#BE5A40'
+                })
+            }
         }
-    }, [isSubmitted]);
+    }, [isSubmitted, error]);
 
     // handlers
     const addLearningActivityField = () => {
@@ -229,7 +251,7 @@ const AddEntry = (props) => {
                 return { ...prevState, error: accomplishedDateRequiredError }
             })
         }
-            
+
 
         if (subject.value === '') {
             hasNoError = false;
@@ -237,21 +259,21 @@ const AddEntry = (props) => {
                 return { ...prevState, error: subjectRequiredError }
             })
         }
-            
+
         if (cys.value === '') {
             hasNoError = false;
             setCys((prevState) => {
                 return { ...prevState, error: cysRequiredError }
             })
         }
-            
+
         if (noOfAttendees.value === '') {
             hasNoError = false;
             setNoOfAttendees((prevState) => {
                 return { ...prevState, error: noOfAttendeesRequiredError }
             })
         }
-            
+
         if (meetingLink.value === '') {
             hasNoError = false;
             setMeetingLink((prevState) => {
@@ -278,27 +300,16 @@ const AddEntry = (props) => {
                 course_year_section: cys.value,
                 recording_url: meetingLink.value,
                 no_of_attendees: noOfAttendees.value,
-                activities: learningActivities.map(x => { return x.value})
+                activities: learningActivities.map(x => { return x.value })
             }
 
             let formData = new FormData();
 
-            console.log(document.querySelector("#sampleFile").files[0]);
-            formData.append("sample", document.querySelector("#sampleFile").files[0]);
-
-            console.log("length: ");
-            console.log("length: " + teamMeetScreenshots.length);
-
-            let counter = 0;
             for (let x of teamMeetScreenshots) {
-                counter++;
-                console.log("hello" + counter);
                 formData.append("sc_meetings", x.file, x.file.name);
             }
 
-
             for (let x of providedActivitiesScreenshots) {
-                console.log("hello");
                 formData.append("sc_activities", x.file, x.file.name);
             }
 
@@ -308,16 +319,13 @@ const AddEntry = (props) => {
         } else {
             console.log("Entry not added. Resolved issues first.");
         }
-        
+
 
     }
 
     return (
         <Fragment>
             <div className={styles['container']}>
-
-
-                <input type="file" id="sampleFile"></input>
 
                 <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.75 22.6667H21.25V14.1667H26.9167L17 4.25L7.08333 14.1667H12.75V22.6667ZM7.08333 25.5H26.9167V28.3333H7.08333V25.5Z" fill="#323232" />
