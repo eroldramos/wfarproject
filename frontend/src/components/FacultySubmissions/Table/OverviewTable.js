@@ -1,8 +1,11 @@
 import React from "react";
-import styles from "./Table.module.css";
+import styles from "./OverviewTable.module.css";
 
 const genericTable = (props) => {
 
+
+  const date = new Date();
+  console.log(date.getDate());
   const weekTextClass = styles["weekTextContainer"]+ " " + styles["presentWeek"]
   return (
     <div className={styles.tableContainer}>
@@ -21,7 +24,7 @@ const genericTable = (props) => {
                 fill="#666B73"/>
             </svg>
           </th>
-          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
+          <th><h3 className={weekTextClass}>Week 1</h3><h4>Hello</h4></th>
           <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
           <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
           <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
