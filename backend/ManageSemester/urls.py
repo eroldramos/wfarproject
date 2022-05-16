@@ -9,10 +9,11 @@ urlpatterns =[
 
    path('retrieve-all-sem-list/',views.RetrieveSemestersList.as_view(), name='retrieve-all-sem-list'), # ERIKA
   
-   path('retrieve-sem-details/<str:sem_id>/',views.RetrieveSemesterDetails.as_view(), name='retrieve-all-week-in-sem'),
+   path('retrieve-sem-details/<str:sem_id>/',views.RetrieveSemesterDetails.as_view(), name='retrieve-sem-details'),
 
    path('update-sem/<str:pk>/',views.UpdateSemester.as_view(), name='update-sem'),
-   path('delete-sem/<str:pk>/',views.DeleteSemester.as_view(), name='delete-sem'),
+   
+   # path('delete-sem/<str:pk>/',views.DeleteSemester.as_view(), name='delete-sem'),
 
 
    # Urls with dynamic values must be below static urls to avoid bugs

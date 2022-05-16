@@ -119,17 +119,13 @@ class WeekSerializer(serializers.ModelSerializer):
     def get_endDateTouch(self, obj):
         return False if obj.end_date != "" else True 
 
-class WeeksInASemesterSerializer(serializers.ModelSerializer):
-    weeks = serializers.SerializerMethodField(read_only=True)
+class SemesterAllFieldsSerializer(serializers.ModelSerializer):
   
     class Meta:
         model = Semester
-        fields = ('id', 'label', 'school_year', 'weeks', )
+        fields = ('id', 'label', 'school_year', 'start_date', 'end_date')
 
-    def get_weeks(self, obj):
-        weeks = obj.week_set.all().order_by('start_date', 'end_date')
-        serializer =    WeekSerializer(weeks, many=True)
-        return serializer.data
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
