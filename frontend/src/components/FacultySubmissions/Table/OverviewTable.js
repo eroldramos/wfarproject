@@ -24,11 +24,11 @@ const genericTable = (props) => {
                 fill="#666B73"/>
             </svg>
           </th>
-          <th><h3 className={weekTextClass}>Week 1</h3><h4>Hello</h4></th>
-          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
-          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
-          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
-          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h4>Hello</h4></th>
+          <th><h3 className={weekTextClass}>Week 1</h3><h5>Hello</h5></th>
+          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h5>Hello</h5></th>
+          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h5>Hello</h5></th>
+          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h5>Hello</h5></th>
+          <th><h3 className={styles.weekTextContainer}>Week 1</h3><h5>Hello</h5></th>
         </tr>
       </table>
     </div>

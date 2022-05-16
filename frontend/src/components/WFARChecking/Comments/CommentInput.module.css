@@ -36,9 +36,8 @@
     margin: 5%;
 }
 .postBtnContainer{
-    width:fit-content;
-    margin-left: 67%;
+    float: right;
 }
 .commentField{
-    width: fit-content;
+    width: 100%;
 }
