@@ -2,7 +2,15 @@ import styles from "./CommentInput.module.css";
 import ProfileImage from "../../../assets/profile.png"
 import CommentField from "../../UI/FormControl/InputField/CommentField";
 import Button from "../../UI/FormControl/Button/SmallButton";
+import React, {useState} from "react";
+
 const CommentInput = () =>{
+
+    const [comment, setComment] = useState("");
+
+    const postComment = () =>{
+        console.log(comment);
+    }
     return (
         <div className={styles.commentInputContainer}>
             <div className={styles.innerContainer}>
@@ -12,11 +20,12 @@ const CommentInput = () =>{
                 <div className={styles.inputContainer}>
                     <div className={styles.commentField}>
                         <CommentField
-                            id="comment"
+                            id="entryComment"
                             type="text"
-                            inputName="sampleText"
+                            inputName="entryComment"
                             placeholder="Enter a comment..."
                             size="lg"
+                            onChange = {(event) => setComment(event.target.value)}
                         />
                     </div>
                     
@@ -25,6 +34,7 @@ const CommentInput = () =>{
                             label="POST"
                             type="primary"
                             size="r"
+                            onClick = {postComment}
                         />
                     </div>
                 </div>

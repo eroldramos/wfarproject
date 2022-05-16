@@ -3,7 +3,7 @@ import styles from "./Overview.module.css";
 import SemFilter from "../SemFilter/SemFilter";
 import TableDisplay from "../TableDisplayCheckbox/TableDisplay";
 import SearchFaculty from "../SearchFaculty/SearchFaculty";
-import Table from "../Table/Table";
+import Table from "../Table/OverviewTable";
 import ViewOptions from "../ViewOptions/ViewOptions"
 import Footer from "../Footer/Footer";
 
