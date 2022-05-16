@@ -1,6 +1,6 @@
 from dataclasses import field, fields
 from rest_framework import serializers
-from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry
+from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from datetime import datetime, timedelta
 
@@ -215,3 +215,33 @@ class WfarSerializer(serializers.ModelSerializer):
 
         week_bracket[0] = week_bracket[1] - timedelta(6)
         return week_bracket; 
+
+class WfarEntryActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WFAR_Entry_Activity
+        fields = ('id', 'description')
+
+class WfarEntryAttachmentSerializer(serializers.ModelSerializer):
+    image_uri = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR_Entry_Attachment
+        fields = ('id', 'image_uri', 'type')
+
+    def get_image_uri(self, obj):
+        return obj.image_uri.url
+
+
+    # def get_image_uri(self, obj):
+    #     # request = self.context.get('request')
+    #     image_uri = obj.image_uri.url
+    #     return image_uri;
+
+
+class WfarEntryViewSerializer(serializers.ModelSerializer):
+    wfar_entry_activities = WfarEntryActivitySerializer(many=True, read_only=True)
+    wfar_entry_attachments = WfarEntryAttachmentSerializer(many=True, read_only=True)
+    class Meta: 
+        model = WFAR_Entry
+        fields = ('id', 'accomplishment_date', 'subject', 
+                    'course_year_section', 'no_of_attendees', 'recording_url',
+                    'wfar_entry_activities', 'wfar_entry_attachments');

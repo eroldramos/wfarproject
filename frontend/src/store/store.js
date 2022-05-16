@@ -27,6 +27,7 @@ import { getAllSemsReducer, addSemReducer } from "./sampleReducers";
 
 // erika
 import {
+  myWfarCreateReducer,
   myWfarFetchReducer,
   myWfarsArchivedReducer,
   wfarSemestersReducer,
@@ -65,6 +66,7 @@ const store = configureStore({
 
     addSem: addSemReducer.reducer,
     myWfars: myWfarFetchReducer.reducer,
+    myWfarCreate: myWfarCreateReducer.reducer,
     myWfarsArchived: myWfarsArchivedReducer.reducer,
     wfarSemesters: wfarSemestersReducer.reducer,
     myWfarSubmission: myWfarSubmissionReducer.reducer,

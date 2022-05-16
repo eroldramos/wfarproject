@@ -1,4 +1,5 @@
 import {
+    myWfarCreateActions,
     myWfarFetchActions,
     myWfarsArchivedActions,
     wfarSemestersActions,
@@ -7,10 +8,52 @@ import {
     myWfarRefreshActions,
     myWfarEntryArchiveActions,
     myWfarEntryUnarchiveActions,
-    myWfarEntryCreateActions
+    myWfarEntryCreateActions,
+    myWfarFetchEntryActions
 } from './myWfarReducers';
 
 import Swal from 'sweetalert2';
+
+
+export const createWfar = () => {
+    return async (dispatch, getState) => {
+        let url = `api/myWfar/create/`;
+
+        try {
+
+
+            dispatch(myWfarCreateActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({"faculty_id": userInfo.id}),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            console.log(">>>>>>>> success")
+            const data = await response.json();
+            dispatch(myWfarCreateActions.requestSuccessfullyCompleted());
+            console.log(data)
+        } catch (error) {
+            console.log(">>>>>>>> may error")
+            console.log(error.message)
+            dispatch(myWfarCreateActions.requestFailed({ error: error.message }));
+        }
+    }
+}
 
 export const retrieveWfars = (filterSemester) => {
     return async (dispatch, getState) => {

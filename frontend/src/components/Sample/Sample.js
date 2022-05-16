@@ -13,6 +13,7 @@ import SmallButton from "../UI/FormControl/Button/SmallButton";
 import FilterButton from "../UI/FormControl/Button/FilterButton";
 import PrintButton from "../UI/FormControl/Button/PrintButton";
 import IconButton from "../UI/FormControl/Button/IconButton";
+import Swal from 'sweetalert2';
 
 import { Routes, Route, useNavigate } from "react-router-dom"; //for routing
 
@@ -85,6 +86,34 @@ function Sample() {
     alert("Configure this on the checkbox field component.");
   };
 
+
+  const sampleSweetAlert = () => {
+    Swal.fire({
+      html:
+        '<h4>Sample Title</h4>' +
+        '<h5>Sample description</h5>',
+      icon: 'error',
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: 'Click mo ok',
+      iconColor: '#D1D1D1', // question icon color
+      confirmButtonColor: '#BE5A40',
+      cancelButtonColor: '#A1A1A1'
+    }).then((result) => {
+      if(result.isConfirmed) {
+        alert("confirmed!");
+      }
+
+      else if (result.isDenied) {
+        alert("denied!");
+      }
+
+      else if (result.isDismissed) {
+        alert("dismissed!");
+      }
+    })
+  }
+
   const icon = (
     <svg
       width="32"
@@ -104,6 +133,8 @@ function Sample() {
     <Fragment>
       <fieldset>
         <legend>Sample TextField components</legend>
+
+
 
         <div style={{ display: "flex" }}>
           <InputField
@@ -204,7 +235,7 @@ function Sample() {
           <legend>Sample Button components</legend>
 
           {/* How to use the button component */}
-          <Button label="Save" type="primary" size="rg" />
+          <Button label="Save" type="cancel" size="rg" onClick={sampleSweetAlert}/>
 
           <hr />
 
