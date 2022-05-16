@@ -44,7 +44,7 @@
 }
 
 
-span {
+.side-nav-ul span {
     margin-left: 19px;
     color: #FFFFFF;
     font-size: .875em;
@@ -71,6 +71,11 @@ span {
 .nav-footer-menu-item {
     display: flex;
     align-items: center;
+}
+
+.nav-footer-menu-item span{
+    margin-left: 19px;
+    color: #FFFFFF;
 }
 
 .account-profile {
@@ -106,12 +111,14 @@ span {
     font-size: .875em;
     display: block;
     margin-left: 12px;
+    color: #FFFFFF;
 }
 
 .account-label-type {
     font-size: .75em;
     display: block;
     margin-left: 12px;
+    color: #FFFFFF;
 }
 
 /* open */

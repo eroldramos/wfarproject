@@ -8,8 +8,10 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
 import { myWfarRefreshActions } from "../../../store/myWfarReducers";
+import Swal from 'sweetalert2';
+import { NavLink, Link } from 'react-router-dom';
 
-const MyWFARCard = (props) => {
+const   MyWFARCard = (props) => {
 
     // hooks
     const dispatch = useDispatch();
@@ -32,37 +34,26 @@ const MyWFARCard = (props) => {
     let id = props.id;
     let status = props.status;
     let weekNo = props.weekNo;
-    let noOfEntries = activeEntries.length;
+    let noOfEntries = entries.filter(function (x) {
+        return x.deleted_at === null;
+    }).length;
     let startDate = new Date(props.weekBracket[0]);
     let endDate = new Date(props.weekBracket[1]);
     let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
     let endDateLbl = month[endDate.getMonth()] + " " + endDate.getDate();
     let buttonsJSX;
-
-    // use effect
-    useEffect(() => {
-        let activeDraftEntries = [];
-        entries.map(entry => {
-            if (entry.deleted_at === null) {
-                activeDraftEntries.push(entry);
-            }
-        })
-
-        setActiveEntries(activeDraftEntries);
-    }, []);
+    let counter = 0;
 
     useEffect(() => {
-        if (isSubmitted) {
-            dispatch(myWfarRefreshActions.alertNewChange());
-            dispatch(submitWfar(id));
+        if (isSubmitted === true) {
+            dispatch(submitWfar(id, weekNo));
             setIsSubmitted(false);
         }
     }, [isSubmitted])
 
     useEffect(() => {
-        if (isUnsubmitted) {
-            dispatch(myWfarRefreshActions.alertNewChange());
-            dispatch(unsubmitWfar(id));
+        if (isUnsubmitted === true) {
+            dispatch(unsubmitWfar(id, weekNo));
             setIsUnsubmitted(false);
         }
     }, [isUnsubmitted])
@@ -74,11 +65,39 @@ const MyWFARCard = (props) => {
     }
 
     const submitHandler = () => {
-        setIsSubmitted(true);
+
+        Swal.fire({
+            html:
+                '<h4>Submit WFAR</h4>' +
+                '<h5>Are you sure you want to submit WFAR for Week ' + weekNo + '?</h5>',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            iconColor: '#D1D1D1',
+            confirmButtonColor: '#BE5A40',
+            cancelButtonColor: '#A1A1A1'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setIsSubmitted(true);
+            }
+        })
     }
 
     const unsubmitHandler = () => {
-        setIsUnsubmitted(true);
+        Swal.fire({
+            html:
+                '<h4>Unsubmit WFAR</h4>' +
+                '<h5>Are you sure you want to unsubmit your WFAR for Week ' + weekNo + '?</h5>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Unsubmit',
+            confirmButtonColor: '#BE5A40'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                setIsUnsubmitted(true);
+            }
+        })
     }
 
 
@@ -96,18 +115,19 @@ const MyWFARCard = (props) => {
         <path d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z" fill="white" />
     </svg>;
 
+    const addEntryLink = "/mySubmission/wfar/"+id+"/add-entry";
     // button jsx
     switch (status) {
         case 1: // not submitted
             if (noOfEntries <= 0) {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Link to={addEntryLink}><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                     </Fragment>);
             } else {
                 buttonsJSX =
                     (<Fragment>
-                        <IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} />
+                        <Link to={addEntryLink}><IconButton label="Entry" type="primary" size="xs" svg={icAddEntry} /></Link>
                         <Button label="Submit" type="primary" size="xs" onClick={submitHandler} />
                     </Fragment>);
             }
@@ -172,8 +192,21 @@ const MyWFARCard = (props) => {
             </div>
 
             <div id="entries-container" className={styles.entriesContainer + " " + styles[displayEntries]}>
-                {activeEntries.map((entry, index) => {
-                    return (<MyWfarEntry key={entry.id} no={index + 1} accomplishmentDate={entry.accomplishment_date} courseYearSection={entry.course_year_section} subject={entry.subject}></MyWfarEntry>);
+                {entries.map((entry, index) => {
+                    if (entry.deleted_at !== null) {
+                        return ""
+                    }
+                    counter++;
+                    return (<MyWfarEntry 
+                        key={entry.id} 
+                        id={entry.id} 
+                        no={counter} 
+                        accomplishmentDate={entry.accomplishment_date} 
+                        courseYearSection={entry.course_year_section} 
+                        subject={entry.subject} 
+                        wfarId={id}
+                        wfarWeekNo={weekNo}
+                        wfarStatus={status}></MyWfarEntry>);
                 })}
             </div>
 

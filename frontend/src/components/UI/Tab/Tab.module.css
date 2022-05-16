@@ -12,12 +12,13 @@
 .tab li {
     font-style: normal;
     line-height: 150%;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1em;
     color: #777;
     padding: 1.15% 3%;
-    transition: .12s linear;
+    transition: .15s linear;
     border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
 }
 
 .tab li.active {
@@ -33,7 +34,7 @@
 
 .tab li:hover {
     color: #BE5A40;
-    transition: .12s linear;
+    transition: .15s linear;
 }
 
 @media only screen and (max-width: 768px) {

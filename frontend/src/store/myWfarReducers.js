@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { addListener, createSlice } from "@reduxjs/toolkit";
 
 // export const 
 
@@ -149,6 +149,74 @@ export const myWfarUnsubmissionReducer = createSlice({
     }
 });
 
+/** ENTRY CRUD */
+
+export const myWfarEntryArchiveReducer = createSlice({
+    name: "myWfarEntryArchiveReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarEntryUnarchiveReducer = createSlice({
+    name: "myWfarEntryUnarchiveReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarEntryCreateReducer = createSlice({
+    name: "myWfarEntryCreateReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
 export const myWfarFetchActions = myWfarFetchReducer.actions;
 export const myWfarsArchivedActions = myWfarsArchivedReducer.actions;
 export const wfarSemestersActions = wfarSemestersReducer.actions;
@@ -156,3 +224,6 @@ export const myWfarSubmissionActions = myWfarSubmissionReducer.actions;
 export const myWfarUnsubmissionActions = myWfarUnsubmissionReducer.actions;
 export const myWfarSemesterFilterActions = myWfarSemesterFilterReducer.actions;
 export const myWfarRefreshActions = myWfarRefreshReducer.actions;
+export const myWfarEntryArchiveActions = myWfarEntryArchiveReducer.actions;
+export const myWfarEntryUnarchiveActions = myWfarEntryUnarchiveReducer.actions;
+export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;

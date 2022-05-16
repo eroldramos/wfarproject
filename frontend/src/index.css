@@ -3,7 +3,6 @@
 * {
   /* box-sizing: border-box; */
   font-family: 'Public Sans', sans-serif;
-  color: #323232;
   user-select: none;
 }
 
@@ -18,11 +17,38 @@ body {
 
 h1 {
   font-size: 1.5em;
-  margin: 2.5px 0 10px 0;
+  margin: 0px 0 25px 0;
+  color: #BE5A40;
 }
 
 #main {
   margin-left: 85px;
   transition: .3s margin-left ease-in-out;
-  padding: 50px 60px 45px 45px;
+  padding: 45px 70px 45px 55px;
+}
+
+button:focus {
+  border: none!important;
+  outline: none!important;
+  outline: none;
+  box-shadow: none!important;
+}
+
+/* .sweet-alert button {
+  background-color: #BE5A40;
+} */
+
+/* sweet alert */
+h4 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+h5 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
 }

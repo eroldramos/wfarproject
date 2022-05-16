@@ -23,20 +23,21 @@
 }
 .table tr:nth-child(1) th h4{
     font-weight: 600;
-    margin: 8px 0px;
+    margin: 0px 0 8px 0;
     color: #777777;
-    border: 1px solid green;
 }
 .weekTextContainer{
-    margin: 8px 0px;
+    position: relative; 
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 8px 0px 3px 0;
     color: #777777;
     font-weight: 600;
     font-size: 14px;
     border-radius: 10px;
     width: 70px;
     height: 20px;
-    padding-top: 1.2px;
-    border: 1px solid black;
+    padding-top: 1.5px;
 }
 .presentWeek{
     color: #FFFFFF;

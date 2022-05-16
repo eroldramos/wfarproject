@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import DateField from "../UI/FormControl/DateField/DateField";
 import InputField from "../UI/FormControl/InputField/InputField";
 import styles from "./AddEntry.module.css";
@@ -8,9 +8,25 @@ import Button from "../UI/FormControl/Button/Button";
 import TeamMeetScreenshots from "./Attachments/TeamMeetScreenshots";
 import ProvidedActivities from "./Attachments/ProvidedActivities";
 import Swal from 'sweetalert2';
+import { createWfarEntry } from '../../store/myWfarsActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from "react-router-dom";
 
 
 const AddEntry = (props) => {
+
+    // hooks
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const params = useParams();
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    // props
+    const wfarId = params.id;
+    const weekNo = 2;
+
+    // state redux
+    const error = useSelector(state => state.myWfarEntryCreate.error);
 
     const [accomplishedDate, setAccomplishedDate] = useState({ value: '', error: null });
     const [subject, setSubject] = useState({ value: '', error: null });
@@ -20,6 +36,8 @@ const AddEntry = (props) => {
     const [learningActivities, setLearningActivities] = useState([{ value: '', error: null }]);
     const [teamMeetScreenshots, setTeamMeetScreenshots] = useState([]);
     const [providedActivitiesScreenshots, setProvidedActivitiesScreenshots] = useState([]);
+    const [entry, setEntry] = useState([]);
+    const [attachmentFormData, setAttachmentFormData] = useState();
 
     const accomplishedDateRequiredError = 'Please select the accomplishment date.';
     const subjectRequiredError = 'Please enter a subject.';
@@ -28,6 +46,34 @@ const AddEntry = (props) => {
     const noOfAttendeesRequiredError = 'Please enter the number of attendees.';
     const learningActivityRequiredError = 'Please enter the learning activity.';
 
+    // effects
+    useEffect(() => {
+        if (isSubmitted) {
+            console.log("for submission na...");
+            dispatch(createWfarEntry(wfarId, weekNo, entry, attachmentFormData))
+            setIsSubmitted(false);
+
+            if (error == null) {
+                Swal.fire({
+                    html:
+                        '<h4>An entry for WFAR week ' + weekNo + ' has been recorded!</h4>',
+                    icon: 'success',
+                    confirmButtonColor: '#BE5A40'
+                }).then(() => {
+                    navigate(-1);
+                })
+            } else {
+                Swal.fire({
+                    html:
+                        '<h4>' + error + '</h4>',
+                    icon: 'error',
+                    confirmButtonColor: '#BE5A40'
+                })
+            }
+        }
+    }, [isSubmitted, error]);
+
+    // handlers
     const addLearningActivityField = () => {
         let inputField = { value: '' };
         setLearningActivities((prevState) => {
@@ -197,47 +243,90 @@ const AddEntry = (props) => {
 
     const addEntry = (event) => {
         event.preventDefault();
+        let hasNoError = true;
 
-        if (accomplishedDate.value === '') 
+        if (accomplishedDate.value === '') {
+            hasNoError = false;
             setAccomplishedDate((prevState) => {
-                return {...prevState, error: accomplishedDateRequiredError}
+                return { ...prevState, error: accomplishedDateRequiredError }
             })
-
-        if (subject.value === '')
-            setSubject((prevState) => {
-                return {...prevState, error: subjectRequiredError}
-            })
-
-        if (accomplishedDate.error === null && 
-            subject.error === null &&
-            cys.error === null &&
-            noOfAttendees === null &&
-            meetingLink === null) {
         }
 
-        for (let x of learningActivities) {
-            if (x.error !== null) {
+
+        if (subject.value === '') {
+            hasNoError = false;
+            setSubject((prevState) => {
+                return { ...prevState, error: subjectRequiredError }
+            })
+        }
+
+        if (cys.value === '') {
+            hasNoError = false;
+            setCys((prevState) => {
+                return { ...prevState, error: cysRequiredError }
+            })
+        }
+
+        if (noOfAttendees.value === '') {
+            hasNoError = false;
+            setNoOfAttendees((prevState) => {
+                return { ...prevState, error: noOfAttendeesRequiredError }
+            })
+        }
+
+        if (meetingLink.value === '') {
+            hasNoError = false;
+            setMeetingLink((prevState) => {
+                return { ...prevState, error: meetingLinkRequiredError }
+            })
+        }
+
+        for (let index in learningActivities) {
+            if (learningActivities[index].value === '') {
+                hasNoError = false;
+                setLearningActivities((prevState) => {
+                    prevState[index].value = event.target.value;
+                    prevState[index].error = learningActivityRequiredError;
+                    return [...prevState];
+                });
             }
         }
 
-        console.log("Entry added!");
-        let entry = {
-            accomplishedDate: accomplishedDate,
-            subject: subject,
-            cys: cys,
-            meetingLink: meetingLink,
-            noOfAttendees: noOfAttendees,
-            teamMeetScreenshots: teamMeetScreenshots,
-            providedActivitiesScreenshots: providedActivitiesScreenshots
+        if (hasNoError) {
+            console.log("Entry added!");
+            let entry = {
+                accomplishment_date: accomplishedDate.value,
+                subject: subject.value,
+                course_year_section: cys.value,
+                recording_url: meetingLink.value,
+                no_of_attendees: noOfAttendees.value,
+                activities: learningActivities.map(x => { return x.value })
+            }
+
+            let formData = new FormData();
+
+            for (let x of teamMeetScreenshots) {
+                formData.append("sc_meetings", x.file, x.file.name);
+            }
+
+            for (let x of providedActivitiesScreenshots) {
+                formData.append("sc_activities", x.file, x.file.name);
+            }
+
+            setAttachmentFormData(formData);
+            setEntry(entry);
+            setIsSubmitted(true);
+        } else {
+            console.log("Entry not added. Resolved issues first.");
         }
 
-        console.log(entry);
+
     }
 
-    console.log(learningActivities);
     return (
         <Fragment>
             <div className={styles['container']}>
+
                 <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.75 22.6667H21.25V14.1667H26.9167L17 4.25L7.08333 14.1667H12.75V22.6667ZM7.08333 25.5H26.9167V28.3333H7.08333V25.5Z" fill="#323232" />
                 </svg>

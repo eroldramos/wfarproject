@@ -26,7 +26,7 @@
 
 .add-entry-label.required:after {
     content: "*";
-    color: red;
+    color: #FF6A6A;
 }
 
 .subtitle {
@@ -39,7 +39,7 @@
 
 .required-label:after {
     content: "*";
-    color: red;
+    color: #FF6A6A;
 }
 
 .subtitle {

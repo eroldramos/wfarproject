@@ -1,4 +1,4 @@
-import React,{Fragment} from "react";
+import React,{Fragment, useState} from "react";
 import styles from "./WFARChecking.module.css"
 import PrintWFARButton from "./Buttons/PrintWFARButton/PrintWFAR"
 import CheckWFARButton from "./Buttons/ChechWFARButton/CheckWFARButton";
@@ -12,7 +12,7 @@ import PostedComments from "./Comments/PostedComments";
 
 const WFARChecking = () =>{
 
-    //const Entries = 
+    const isNotFaculty = true;
     return (
         <Fragment>
             <div className={styles.firstContainer}>
@@ -36,7 +36,7 @@ const WFARChecking = () =>{
                 {/* <span className={styles.divider}/> */}
                 <div className={styles.commentsContainer}>
                     <h4 className={styles.Label}> Comments/Remarks</h4>
-                    <CommentInputs></CommentInputs>{/* Pag faculty mag sasubmit wala to  */}
+                    {isNotFaculty && <CommentInputs/>}{/* Pag faculty mag sasubmit wala to  */}
                     <PostedComments></PostedComments>
                 </div>
             </div>

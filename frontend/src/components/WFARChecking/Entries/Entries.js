@@ -9,6 +9,9 @@ const Entries = () =>{
     const expandAttachments = () => {
         setIcon("iconDisplay");
     }
+    const [isFacultyView, setIsFacultyView] = useState(false);
+
+    const facultyEditButton = <MoreSettings/>
     return (
         <div className={styles.entries}>
             <div className={styles.detailsContainer}>
@@ -28,7 +31,7 @@ const Entries = () =>{
                         <path d="M15.8793 15.0261L11.9993 11.1461L8.1193 15.0261C7.7293 15.4161 7.0993 15.4161 6.7093 15.0261C6.3193 14.6361 6.3193 14.0061 6.7093 13.6161L11.2993 9.0261C11.6893 8.6361 12.3193 8.6361 12.7093 9.0261L17.2993 13.6161C17.6893 14.0061 17.6893 14.6361 17.2993 15.0261C16.9093 15.4061 16.2693 15.4161 15.8793 15.0261Z" fill="#323232"/>
                         </svg>
                     </div>
-                    <MoreSettings/> {/* Faculty edit settings */}
+                    {isFacultyView && facultyEditButton} {/* Faculty edit settings */}
                 </div>
             </div>
             {/* <div className={styles.lineBreak}></div> */}
