@@ -113,7 +113,7 @@ export const myWfarSemesterFilterReducer = createSlice({
 
 export const myWfarRefreshReducer = createSlice({
     name: "myWfarRefreshReducer",
-    initialState: {newChange: false},
+    initialState: { newChange: false },
     reducers: {
         alertNewChange(state) {
             state.newChange = true;
@@ -240,9 +240,34 @@ export const myWfarEntryCreateReducer = createSlice({
     }
 });
 
+export const myWfarEntryUpdateReducer = createSlice({
+    name: "myWfarEntryUpdateReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
 export const myWfarFetchEntryReducer = createSlice({
-    name: "myWfarViewEntryReducer",
-    initialState: {isLoading: true, entry: null, error: null},
+    name: "myWfarFetchEntryReducer",
+    initialState: { 
+        isLoading: true,
+        entry: null,
+        error: null },
     reducers: {
         retrieveRequest(state, action) {
             state.isLoading = true;
@@ -271,5 +296,6 @@ export const myWfarRefreshActions = myWfarRefreshReducer.actions;
 export const myWfarEntryArchiveActions = myWfarEntryArchiveReducer.actions;
 export const myWfarEntryUnarchiveActions = myWfarEntryUnarchiveReducer.actions;
 export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;
+export const myWfarEntryUpdateActions = myWfarEntryUpdateReducer.actions;
 export const myWfarFetchEntryActions = myWfarFetchEntryReducer.actions;
 // export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;

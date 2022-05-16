@@ -37,7 +37,9 @@ import {
   myWfarRefreshReducer,
   myWfarEntryArchiveReducer,
   myWfarEntryUnarchiveReducer,
-  myWfarEntryCreateReducer
+  myWfarEntryCreateReducer,
+  myWfarEntryUpdateReducer,
+  myWfarFetchEntryReducer
 } from './myWfarReducers';
 
 console.log("HelloWorld");
@@ -75,7 +77,9 @@ const store = configureStore({
     myWfarRefresh: myWfarRefreshReducer.reducer,
     myWfarEntryArchive: myWfarEntryArchiveReducer.reducer,
     myWfarEntryUnarchive: myWfarEntryUnarchiveReducer.reducer,
-    myWfarEntryCreate: myWfarEntryCreateReducer.reducer
+    myWfarEntryCreate: myWfarEntryCreateReducer.reducer,
+    myWfarEntryUpdate: myWfarEntryUpdateReducer.reducer,
+    myWfarFetchEntry: myWfarFetchEntryReducer.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

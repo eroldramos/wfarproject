@@ -11,7 +11,7 @@ import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 import Swal from 'sweetalert2';
 import { NavLink, Link } from 'react-router-dom';
 
-const   MyWFARCard = (props) => {
+const MyWFARCard = (props) => {
 
     // hooks
     const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const   MyWFARCard = (props) => {
         <path d="M14.25 9.75H9.75V14.25H8.25V9.75H3.75V8.25H8.25V3.75H9.75V8.25H14.25V9.75Z" fill="white" />
     </svg>;
 
-    const addEntryLink = "/mySubmission/wfar/"+id+"/add-entry";
+    const addEntryLink = "/mySubmission/wfar/" + id + "/week/" + weekNo + "/add-entry";
     // button jsx
     switch (status) {
         case 1: // not submitted
@@ -182,10 +182,11 @@ const   MyWFARCard = (props) => {
                         {status !== 1 && <WFARStatus status={status}></WFARStatus>}
                         {buttonsJSX}
                     </div>
-                    <div className={styles.openClose} onClick={displayEntriesHandler}>
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                    <div className={styles.openClose}>
+                        {noOfEntries > 0 && <svg onClick={displayEntriesHandler} width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 1.41L10.59 -6.16331e-08L6 4.58L1.41 -4.62904e-07L-6.16331e-08 1.41L6 7.41L12 1.41Z" fill="#323232" />
-                        </svg>
+                        </svg>}
                     </div>
                 </div>
 
@@ -197,13 +198,13 @@ const   MyWFARCard = (props) => {
                         return ""
                     }
                     counter++;
-                    return (<MyWfarEntry 
-                        key={entry.id} 
-                        id={entry.id} 
-                        no={counter} 
-                        accomplishmentDate={entry.accomplishment_date} 
-                        courseYearSection={entry.course_year_section} 
-                        subject={entry.subject} 
+                    return (<MyWfarEntry
+                        key={entry.id}
+                        id={entry.id}
+                        no={counter}
+                        accomplishmentDate={entry.accomplishment_date}
+                        courseYearSection={entry.course_year_section}
+                        subject={entry.subject}
                         wfarId={id}
                         wfarWeekNo={weekNo}
                         wfarStatus={status}></MyWfarEntry>);

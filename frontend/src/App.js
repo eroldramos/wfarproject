@@ -12,7 +12,8 @@ import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScree
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
-import AddEntry from "./components/WfarForm/AddEntry";
+import AddEntry from "./components/WfarForm/AddEntry/AddEntry";
+import EditEntry from "./components/WfarForm/EditEntry/EditEntry";
 import Dashboard from "./components/Dashboard/Dashboard";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
@@ -80,7 +81,8 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/mySubmission/wfar/:id/add-entry" element={<AddEntry />}></Route>
+          <Route path="/mySubmission/wfar/:id/week/:weekNo/add-entry" element={<AddEntry />}></Route>
+          <Route path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id" element={<EditEntry />}></Route>
         </Routes>
       </div>
     </div>

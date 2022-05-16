@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.add-entry-form-container {
+    /* border: 1px solid gray; */
+    margin-left: 25px;
+    width: 100%;
+}
+
+.add-entry-form > div:nth-child(2) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.add-entry-label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1em;
+    width: 100%;
+    display: block;
+    margin: 15px 0 0 0;
+}
+
+.add-entry-label.required:after {
+    content: "*";
+    color: #FF6A6A;
+}
+
+.subtitle {
+    margin: 5px 0;
+}
+
+.required-label {
+    margin: 10px 0;
+}
+
+.required-label:after {
+    content: "*";
+    color: #FF6A6A;
+}
+
+.subtitle {
+    padding: 0;
+}
+
+
+.row-1, .row-2, .row-3, .row-5 {
+    /* margin-right: 60px; */
+}
+
+.button-container {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+}
