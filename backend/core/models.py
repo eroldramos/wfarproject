@@ -31,7 +31,7 @@ class Faculty(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)
-    assignee_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True) #foreign key, area chair or dept head id
+    assignee_id = models.ForeignKey('self', on_delete=models.SET_NULL, null=True) #foreign key, area chair or dept head id
     profile_picture = models.ImageField(null=True, default='/avatar.svg')
     # added null=True for assignee_id to avoid can't be null error
     class Meta:

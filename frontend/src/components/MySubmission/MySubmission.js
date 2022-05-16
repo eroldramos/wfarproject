@@ -7,27 +7,48 @@ import styles from "./MySubmission.module.css";
 import MyWFAR from "./MyWFAR/MyWFAR";
 import { useSelector, useDispatch } from "react-redux";
 import { retrieveWfars, retrieveArchivedWfars, retrieveWfarsSemestersList } from "../../store/myWfarsActions";
+import { myWfarSemesterFilterActions, myWfarRefreshActions } from "../../store/myWfarReducers";
 
 const MySubmission = (props) => {
 
+    // hooks
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // redux states, objects
     const wfars = useSelector((state) => state.myWfars.wfars);
     const archivedWfarEntries = useSelector((state) => state.myWfarsArchived.archivedEntries);
     const semesters = useSelector((state) => state.wfarSemesters.semesters);
-    const dispatch = useDispatch();
-    const [filterSemester, setFilterSemester] = useState(1);
-
+    const newChange = useSelector((state) => state.myWfarRefresh.newChange);
+    
+    // redux states, filter
+    const filterSemester = useSelector((state) => state.myWfarSemesterFilter.semester_id);
+    
+    // retrieving wfars and archived wfars
     useEffect(() => {
+        console.log("FILTER SEMESTER RETRIEVE");
         dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveArchivedWfars(filterSemester));
         dispatch(retrieveWfarsSemestersList(filterSemester));
 
     }, [filterSemester]);
 
+    useEffect(() => {
+        if (newChange === true) {
+            console.log("NEW CHANGE RETRIEVE");
+            dispatch(retrieveWfars(filterSemester));
+            dispatch(retrieveArchivedWfars(filterSemester));
+            dispatch(myWfarRefreshActions.resetNewChange());
+        }
+    }, [newChange])
+
+    // handlers
     const onChangeSemesterHandler = (id) => {
-        setFilterSemester(id);
+        dispatch(myWfarSemesterFilterActions.changeSemesterFilter({ id: id }))
     }
 
-    const TABS = [
+    // tab
+    const tab_items = [
         {
             label: "My WFARs",
             id: 1,
@@ -41,21 +62,6 @@ const MySubmission = (props) => {
             onClick: () => onChangePageHandler(2)
         }
     ];
-
-    const WFAR_ARCHIVED_ENTRIES = [
-        {
-            id: 1,
-            applicableDate: "April 28, 2022",
-            CYS: "BSIT 3M",
-            subject: "Cap 301 - Capstone Research and Project 1",
-            semester: "2021-2022 1st Semester",
-            weekTitle: "Week 7",
-            wfarID: 1
-        }
-    ]
-
-
-    let navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(1);
     const onChangePageHandler = (page) => {
@@ -80,7 +86,7 @@ const MySubmission = (props) => {
 
     return (
         <Fragment>
-            <h1>My Weekly Faculty Accomplishment Reports</h1>
+            <h1>My Weekly gagagasFaculty Accomplishment Reports</h1>
             <SemesterDropdownField
                 id="semester"
                 name="semester"
@@ -91,8 +97,7 @@ const MySubmission = (props) => {
                 type="filter" />
 
             <div className={styles["tab-container"]}>
-                <Tab items={TABS} currentPage={currentPage}/>
-                
+                <Tab items={tab_items} currentPage={currentPage} />
                 <Routes>
                     <Route path="" element={<MyWFAR items={wfars} />}></Route>
                     <Route path="archived" element={<ArchivedEntries items={archivedWfarEntries} />}></Route>

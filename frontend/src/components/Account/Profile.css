@@ -20,8 +20,9 @@
     padding-left: 300px;
     
   }
-  h1{
+  .DATADETAILS{
     font-style: bold;
+    color: black;
   }
   .Pdata{
     padding-left: 60px;
@@ -34,11 +35,12 @@
     color: #BE5A40;
     padding-top: 15px;
     padding-left: 50px;
+    font-size: 30px;
 }
 .MODAL_HEADER{
     color: #BE5A40;
     font-style: bold;
-    text-align: center;
+    text-align: left;
 }
 
 .adjustMarginsOfTable {
@@ -55,5 +57,11 @@ th {
 
 tr:nth-child(even) {
   background-color: #FFFFFF !important;
+}
+
+.upploadpic{
+  
+    margin: 200px;
+    padding: 2.8rem;
 }
 

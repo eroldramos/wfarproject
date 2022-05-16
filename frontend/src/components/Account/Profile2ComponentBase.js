@@ -9,6 +9,7 @@ import InputField from "../UI/FormControl/InputField/InputField";
 import useValidateInput from "../../hooks/useValidateInput";
 import styled from 'styled-components';
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
+import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 
 
 const EDITBUTTON_WRAPPER_STYLES = {
@@ -35,6 +36,7 @@ const PICTUREBUTTON_WRAPPER_STYLES = {
 }
 const ButtonGroup = styled.div`
   display: flex;
+  float: right;
 `
 const CIVIL_STATUS = [
   { label: "--Please Select Civil Status--", value: "" },
@@ -341,7 +343,7 @@ const Profile = () => {
                type="primary"
                size="xs"></SmallButton>
                
-               {isOpen && <Modal onClose={onClose}>
+               {isOpen && <Modal onClose={onClose} size = "r">
                <h1 className="MODAL_HEADER">Edit Details</h1>
                 <InputField
             type="text"
@@ -355,7 +357,7 @@ const Profile = () => {
             error={
               firstNameInputHasError ? "Please enter a valid first name." : null
             }
-            size = "lg"
+            
           />
           <InputField
             type="text"
@@ -369,7 +371,6 @@ const Profile = () => {
             error={
               middleNameInputHasError ? "Please enter a middle name." : null
             }
-            size = "lg"
           />
 
           <InputField
@@ -382,7 +383,6 @@ const Profile = () => {
             onBlur={lastNameBlurHandler}
             value={enteredLastName}
             error={lastNameInputHasError ? "Please enter a last name." : null}
-            size = "lg"
           />
 
           <InputField
@@ -539,17 +539,18 @@ const Profile = () => {
 
           <ButtonGroup> 
 
-          <SmallButton
-                onClick={onSubmit}
-                label="Save"
-                type="primary"
-                size="xs"></SmallButton>
-
           <Button
                 onClick={onClose}
                         label="Cancel"
                         type="cancel"
-                        size="xs" />
+                        size="rg" />
+                        
+            <SmallButton
+                onClick={onSubmit}
+                label="Save"
+                type="primary"
+                size="rg"></SmallButton>
+
           </ButtonGroup>
             
                        
@@ -564,7 +565,7 @@ const Profile = () => {
                type="primary"
                size="xs"></SmallButton>
           
-          {passisOpen && <Modal onClose={passonClose}>
+          {passisOpen && <Modal onClose={passonClose} size = "s">
                <h1 className="MODAL_HEADER">Change Password</h1>
 
                <InputField
@@ -595,17 +596,18 @@ const Profile = () => {
           
           <ButtonGroup> 
 
-          <SmallButton
-                onClick={passonSubmit}
-                label="Save"
-                type="primary"
-                size="xs"></SmallButton>
-
           <Button
                 onClick={passonClose}
                         label="Cancel"
                         type="cancel"
-                        size="xs" />
+                        size="rg" />
+                        
+            <SmallButton
+                onClick={onSubmit}
+                label="Save"
+                type="primary"
+                size="rg"></SmallButton>
+
           </ButtonGroup>
             
                </Modal>}
@@ -621,23 +623,36 @@ const Profile = () => {
                type="primary"
                size="xs"></SmallButton>
 
-              {pictureisOpen && <Modal onClose={pictureonClose}>
+              {pictureisOpen && <Modal onClose={pictureonClose} size="s">
 
             <h1 className="MODAL_HEADER">Change Profile Picture</h1>
 
+            <div className="uploadpic">
+
+         <ImageCard
+          imageUrl={null}
+          onClickAddImage={null}
+          onRemoveImage={null}>
+
+          </ImageCard>
+
+            </div>
+
+
             <ButtonGroup> 
 
-          <SmallButton
-                onClick={onSubmit}
-                label="Save"
-                type="primary"
-                size="xs"></SmallButton>
-
-          <Button
+            <Button
                 onClick={pictureonClose}
                         label="Cancel"
                         type="cancel"
-                        size="xs" />
+                        size="rg" />
+
+            <SmallButton
+                onClick={onSubmit}
+                label="Save"
+                type="primary"
+                size="rg"></SmallButton>
+
           </ButtonGroup>
         </Modal>}
 
@@ -652,7 +667,7 @@ const Profile = () => {
                 <table className="adjustMarginsOfTable">
                   <tr>
                     <td colSpan="2">
-                      <h1> Personal Data </h1>
+                      <h1 className="DATADETAILS"> Personal Data </h1>
                     </td>
                   </tr>
                   <tr>
@@ -719,7 +734,7 @@ const Profile = () => {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <h1> Contact Information </h1>
+                      <h1 className="DATADETAILS"> Contact Information </h1>
                     </td>
                   </tr>
                   <tr>
@@ -744,7 +759,7 @@ const Profile = () => {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <h1> Specialization </h1>
+                      <h1 className="DATADETAILS"> Specialization </h1>
                     </td>
                   </tr>
                   <tr>

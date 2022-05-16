@@ -7,20 +7,22 @@
   z-index: 20;
   background-color: rgba(0, 0, 0, 0.75);
 }
+
 .modal {
   position: fixed;
   top: 20vh;
-  left: 5%;
-  width: 90%;
+  bottom: 10vh;
+  left: 25%;
+  width: 50%;
   background-color: white;
-  padding: 1rem;
+  padding: 2.8rem;
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
   
+  overflow-y: scroll;
 }
-
 @media (min-width: 768px) {
   .modal {
     width: 50rem;
@@ -29,6 +31,16 @@
   .modal.m {
     width: 20rem;
     left: calc(69% - 25rem);
+  }
+
+  .modal.s {
+    width: 30rem;
+    left: calc(60% - 25rem);
+    height: 57%;
+  }
+
+  .modal.r {
+    height: 60%;
   }
 }
 
