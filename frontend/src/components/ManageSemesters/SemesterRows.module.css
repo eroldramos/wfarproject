@@ -5,4 +5,20 @@
 }
 .popup-menu-container {
   float: right;
+  height: 20px;
+  width: 20px;
+}
+.active-status.active {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: green;
+  float: right;
+}
+.active-status.inactive {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: red;
+  float: right;
 }

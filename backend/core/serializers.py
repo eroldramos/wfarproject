@@ -94,7 +94,7 @@ class ManageFacultiesAssignmentSerializer(ManageFacultiesSerializer):
 class SemesterSerializerYearAndSem(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fields = ('id', 'label','school_year')
+        fields = ('id', 'label','school_year', 'is_active')
    
 class WeekSerializer(serializers.ModelSerializer):
     labelTouch = serializers.SerializerMethodField(read_only=True)
@@ -224,7 +224,10 @@ class WfarEntryAttachmentSerializer(serializers.ModelSerializer):
         fields = ('id', 'image_uri', 'type')
 
     def get_image_uri(self, obj):
-        return obj.image_uri.url
+        # return obj.image_uri.url
+        request = self.context.get('request')
+        imgage_uri = obj.image_uri.url
+        return request.build_absolute_uri(imgage_uri)
 
 
     # def get_image_uri(self, obj):

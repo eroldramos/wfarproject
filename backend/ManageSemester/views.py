@@ -68,6 +68,30 @@ class RetrieveAllSemesters(APIView):
         except:
             return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
 
+class RetrieveAllArchivedSemesters(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        try:
+            semester = Semester.objects.all().exclude(deleted_at__isnull=True).order_by('created_at')   
+            p = Paginator(semester, 6)
+            page = request.GET.get('page')
+            if page == None or str(page) == "null":
+                page = 1
+
+            semester = p.get_page(page)
+            serializer = SemesterSerializerYearAndSem(semester, many=True)
+
+            data={
+            "semList": serializer.data,
+            "page": int(page),
+            "pages": p.num_pages,
+            "first_page":1,
+            "last_page": p.num_pages
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class RetrieveSemesterDetails(APIView):
     permission_classes = [IsAdminUser]
@@ -82,7 +106,7 @@ class RetrieveSemesterDetails(APIView):
 class UpdateSemester(APIView):
     permission_classes = [IsAdminUser]
     def put(self, request, pk):
-        # try:
+        try:
             data =  request.data
 
             start_date = datetime.strptime(data['start_date'], "%Y-%m-%d")
@@ -105,17 +129,47 @@ class UpdateSemester(APIView):
             return Response({"detail": "Semester updated!"}, status=status.HTTP_200_OK)
          
   
-        # except:
-        #     return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class DeleteSemester(APIView):
+class ArchiveRestoreSemester(APIView):
     permission_classes = [IsAdminUser]
     def delete(self, request, pk):
         try:
+            print(pk)
             semester = Semester.objects.get(id=pk)
-            semester.delete_at = datetime.now()
+            semester.deleted_at = datetime.now()
             semester.save()
             return Response({"detail": "Semester archived!"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def put(self, request, pk):
+        try:
+            semester = Semester.objects.get(id=pk)
+            semester.deleted_at = None
+            semester.save()
+            return Response({"detail": "Semester restored!"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ActivateSemester(APIView):
+    permission_classes = [IsAdminUser]
+    def put(self, request, pk):
+        try:
+
+            semsToDeactivate = Semester.objects.filter(is_active=True)
+
+            for sems in semsToDeactivate:
+                print(sems.is_active)
+                sem = Semester.objects.get(id=sems.id)
+                sem.is_active = False
+                sem.save()
+
+
+            semester = Semester.objects.get(id=pk)
+            semester.is_active = True
+            semester.save()
+            return Response({"detail": "Semester activated!"}, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             

@@ -9,6 +9,10 @@ import {
   getSemsReducer,
   getSemDetailsReducer,
   updateSemReducer,
+  getArchivedSemsReducer,
+  archiveSemReducer,
+  restoreSemReducer,
+  activateSemReducer,
 } from "./manageSemReducers";
 
 import {
@@ -37,8 +41,10 @@ import {
   myWfarRefreshReducer,
   myWfarEntryArchiveReducer,
   myWfarEntryUnarchiveReducer,
-  myWfarEntryCreateReducer
-} from './myWfarReducers';
+  myWfarEntryCreateReducer,
+  myWfarEntryUpdateReducer,
+  myWfarFetchEntryReducer,
+} from "./myWfarReducers";
 
 console.log("HelloWorld");
 
@@ -50,6 +56,7 @@ const store = configureStore({
     acceptAccounts: acceptAccountsReducer.reducer,
     createSem: createSemReducer.reducer,
     getSems: getSemsReducer.reducer,
+    getArchivedSems: getArchivedSemsReducer.reducer,
     getSemDetails: getSemDetailsReducer.reducer,
     updateSem: updateSemReducer.reducer,
     getFaculties: getFacultiesReducer.reducer,
@@ -60,6 +67,10 @@ const store = configureStore({
     changeUserType: changeUserTypeReducer.reducer,
     unassignedFaculty: unassignedFacultyReducer.reducer,
     assignedFaculty: assignedFacultyReducer.reducer,
+    archiveSem: archiveSemReducer.reducer,
+    restoreSem: restoreSemReducer.reducer,
+    activateSem: activateSemReducer.reducer,
+
     // For Demo purpose only
 
     getAllSems: getAllSemsReducer.reducer,
@@ -75,7 +86,9 @@ const store = configureStore({
     myWfarRefresh: myWfarRefreshReducer.reducer,
     myWfarEntryArchive: myWfarEntryArchiveReducer.reducer,
     myWfarEntryUnarchive: myWfarEntryUnarchiveReducer.reducer,
-    myWfarEntryCreate: myWfarEntryCreateReducer.reducer
+    myWfarEntryCreate: myWfarEntryCreateReducer.reducer,
+    myWfarEntryUpdate: myWfarEntryUpdateReducer.reducer,
+    myWfarFetchEntry: myWfarFetchEntryReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

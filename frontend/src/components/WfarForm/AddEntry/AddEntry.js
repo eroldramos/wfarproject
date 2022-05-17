@@ -1,14 +1,13 @@
 import { Fragment, useState, useEffect } from "react";
-import DateField from "../UI/FormControl/DateField/DateField";
-import InputField from "../UI/FormControl/InputField/InputField";
+import DateField from "../../UI/FormControl/DateField/DateField";
+import InputField from "../../UI/FormControl/InputField/InputField";
 import styles from "./AddEntry.module.css";
-import LearningActivities from "./LearningActivities/LearningActivities";
-import DynamicInputField from "./UI/DynamicInputField";
-import Button from "../UI/FormControl/Button/Button";
-import TeamMeetScreenshots from "./Attachments/TeamMeetScreenshots";
-import ProvidedActivities from "./Attachments/ProvidedActivities";
+import LearningActivities from "../LearningActivities/LearningActivities";
+import Button from "../../UI/FormControl/Button/Button";
+import TeamMeetScreenshots from "../Attachments/TeamMeetScreenshots";
+import ProvidedActivities from "../Attachments/ProvidedActivities";
 import Swal from 'sweetalert2';
-import { createWfarEntry } from '../../store/myWfarsActions';
+import { createWfarEntry } from "../../../store/myWfarsActions";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -23,7 +22,7 @@ const AddEntry = (props) => {
 
     // props
     const wfarId = params.id;
-    const weekNo = 2;
+    const weekNo = params.weekNo;
 
     // state redux
     const error = useSelector(state => state.myWfarEntryCreate.error);
@@ -331,8 +330,8 @@ const AddEntry = (props) => {
                     <path d="M12.75 22.6667H21.25V14.1667H26.9167L17 4.25L7.08333 14.1667H12.75V22.6667ZM7.08333 25.5H26.9167V28.3333H7.08333V25.5Z" fill="#323232" />
                 </svg>
                 <div className={styles['add-entry-form-container']}>
-                    <h1>Add WFAR Week 4 Entry</h1>
-                    <p className={styles['subtitle']}>Fill up the form to submit an entry for Week 4 of S.Y. 2022 - 2021 1st semester.</p>
+                    <h1>Add an Entry for Week {weekNo}</h1>
+                    <p className={styles['subtitle']}>Fill up the form to submit an entry for Week {weekNo} of the current semester.</p>
                     <p className={styles['required-label']}><strong>Required</strong></p>
 
                     <form className={styles['add-entry-form']} onSubmit={addEntry}>

@@ -454,7 +454,9 @@ const Register = () => {
             onBlur={middleNameBlurHandler}
             value={enteredMiddleName}
             error={
-              middleNameInputHasError ? "Please enter a middle name." : null
+              middleNameInputHasError
+                ? "Please enter a middle name. Enter N/A if not available"
+                : null
             }
           />
 
@@ -481,7 +483,7 @@ const Register = () => {
             value={enteredExtensionName}
             error={
               extensionNameInputHasError
-                ? "Please enter a extension name."
+                ? "Please enter a extension name. Enter N/A if not available."
                 : null
             }
           />

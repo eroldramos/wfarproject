@@ -12,7 +12,8 @@ import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScree
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
-import AddEntry from "./components/WfarForm/AddEntry";
+import AddEntry from "./components/WfarForm/AddEntry/AddEntry";
+import EditEntry from "./components/WfarForm/EditEntry/EditEntry";
 import Dashboard from "./components/Dashboard/Dashboard";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
@@ -20,11 +21,10 @@ import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
-import { useDispatch } from 'react-redux'
-import { createWfar } from './store/myWfarsActions';
+import { useDispatch } from "react-redux";
+import { createWfar } from "./store/myWfarsActions";
 
 function App() {
-
   const dispatch = useDispatch();
 
   // sample use state for two-way binding
@@ -57,7 +57,10 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission/*" element={<MySubmissionScreen />}></Route>
+          <Route
+            path="/mySubmission/*"
+            element={<MySubmissionScreen />}
+          ></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"
@@ -65,7 +68,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/manage-semesters/"
+            path="/manage-semesters/*"
             element={<ManageSemestersScreen />}
           ></Route>
           <Route
@@ -80,7 +83,18 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/mySubmission/wfar/:id/add-entry" element={<AddEntry />}></Route>
+          <Route
+            path="/mySubmission/wfar/:id/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:id/week/:weekNo/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
+            element={<EditEntry />}
+          ></Route>
         </Routes>
       </div>
     </div>
