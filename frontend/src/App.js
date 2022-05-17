@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
@@ -12,7 +12,8 @@ import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScree
 import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
-import AddEntry from "./components/WfarForm/AddEntry";
+import AddEntry from "./components/WfarForm/AddEntry/AddEntry";
+import EditEntry from "./components/WfarForm/EditEntry/EditEntry";
 import Dashboard from "./components/Dashboard/Dashboard";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
@@ -20,7 +21,12 @@ import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
+import { useDispatch } from "react-redux";
+import { createWfar } from "./store/myWfarsActions";
+
 function App() {
+  const dispatch = useDispatch();
+
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
 
@@ -28,6 +34,11 @@ function App() {
     console.log(event.target.value); // outputs the value on console
     setSampleValue(event.target.value);
   };
+
+  // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
+  useEffect(() => {
+    dispatch(createWfar());
+  }, []);
 
   return (
     <div>
@@ -75,6 +86,14 @@ function App() {
           <Route
             path="/mySubmission/wfar/:id/add-entry"
             element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:id/week/:weekNo/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
+            element={<EditEntry />}
           ></Route>
         </Routes>
       </div>

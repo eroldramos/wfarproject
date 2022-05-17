@@ -3,7 +3,7 @@ import WeekOptions from "../../../UI/FormControl/DropdownField/DropdownField";
 import styles from "./WeekFilter.module.css";
 
 const weekOptions = (props) => {
-  const SAMPLE_ITEMS = [
+  const WEEK_FILTER = [
     { label: "Week 1", id: 1 },
     { label: "Week 2", id: 2 },
     { label: "Week 3", id: 3 },
@@ -16,7 +16,7 @@ const weekOptions = (props) => {
         name={props.name}
         labelName={props.labelName}
         onChange={null}
-        options={SAMPLE_ITEMS}
+        options={WEEK_FILTER}
         size={props.size}
         type={props.type}
       />

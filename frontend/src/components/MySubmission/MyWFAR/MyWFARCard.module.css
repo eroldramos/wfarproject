@@ -20,10 +20,10 @@
 
 .openClose {
     padding: 15px;
-    cursor: pointer;
 }
 
 .openClose svg {
+    cursor: pointer;
 }
 
 .entriesContainer.close {

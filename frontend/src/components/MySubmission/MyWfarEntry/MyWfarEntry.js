@@ -31,7 +31,7 @@ const MyWfarEntry = (props) => {
     let subject = props.subject;
 
     const onEditClickHandler = () => {
-        navigate('/mySubmission/wfar/' + wfarId +'/edit-entry/' + id);
+        navigate('/mySubmission/wfar/' + wfarId +'/week/' + wfarWeekNo + '/edit-entry/' + id);
     }
 
     // handlers

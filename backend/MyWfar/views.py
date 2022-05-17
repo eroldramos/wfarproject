@@ -9,7 +9,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from yaml import serialize
-from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer
+from core.serializers import WfarEntryAttachmentSerializer
+from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer
 from core.permissions import IsAuthenticated
 from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
@@ -55,6 +56,7 @@ class CreateWfar(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+
 
         try:
             # step 1 - get the faculty id
@@ -198,46 +200,78 @@ class CreateWfarEntry(APIView):
                     wfar_entry_id = entry
                 )
 
-            return Response({"detail": "The WFAR entry has been added successfully."}, status=status.HTTP_200_OK);
+            return Response({"detail": "The WFAR entry has been added successfully.", "id": entry.id}, status=status.HTTP_200_OK);
             pass
         except:
             return Response({"detail": "The WFAR entry has not been added successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
             pass
 
-# class UploadWfarEntryAttachments(APIView):
-#     # permission_classes = [IsAuthenticated]
+class UpdateWfarEntry(APIView):
+    permission_classes = [IsAuthenticated]
 
-#     def post(self, request):
+    def put(self, request, pk):
         
-#         return Response({"test": "test"});
-#         pass
-        # try:
-        #     return Response({"test": "test"});
+        try:
+            data = request.data
 
-        #     data = request.data
+            entry = WFAR_Entry.objects.get(pk=pk);
+            entry.accomplishment_date = data['accomplishment_date'];
+            entry.subject = data['subject'];
+            entry.course_year_section = data['course_year_section'];
+            entry.no_of_attendees = data['no_of_attendees'];
+            entry.recording_url = data['recording_url'];
+            entry.save();
             
-        #     sc_meetings = data['sc_meetings']
-        #     sc_activities = data['sc_activities']
-            
-        #     for file in sc_meetings:
-        #         WFAR_Entry_Attachment.objects.create(
-        #             image_uri = file,
-        #             type = 1,
-        #             wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
-        #         )
+            activitiesToBeReplaced = WFAR_Entry_Activity.objects.filter(wfar_entry_id=pk);
+            activitiesToBeReplaced.delete();
 
-        #     for file in sc_activities:
-        #         WFAR_Entry_Attachment.objects.create(
-        #             image_uri = file,
-        #             type = 2,
-        #             wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
-        #         )
+            activities = data['activities']
+            for activity in activities:
+                WFAR_Entry_Activity.objects.create(
+                    description = activity,
+                    wfar_entry_id = entry
+                )
 
-        #     return Response({"detail": "The WFAR entry has been added successfully."}, status=status.HTTP_200_OK);
-        #     pass
-        # except:
-        #     return Response({"detail": "The WFAR entry has not been added successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
-        #     pass
+            return Response({"detail": "The WFAR entry has been updated successfully."}, status=status.HTTP_200_OK);
+            pass
+        except:
+            return Response({"detail": "The WFAR entry has not been updated successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+            pass
+class UpdateWfarEntryAttachments(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, wfar_entry_id):
+        try:
+            sc_meetings = request.FILES.getlist('sc_meetings')
+            sc_activities = request.FILES.getlist('sc_activities')
+
+            attachmentsToBeReplaced = WFAR_Entry_Attachment.objects.filter(wfar_entry_id=wfar_entry_id);
+            attachmentsToBeReplaced.delete();
+
+            for file in sc_meetings:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 1,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            for file in sc_activities:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 2,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            return Response({"detail": "The WFAR entry has been updated successfully."}, status=status.HTTP_200_OK);
+        except:
+            return Response({"detail": "The WFAR entry has been updated however attached images were not successfully uploaded."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+
+
+
+
+
+
 
 class ArchiveWfarEntry(APIView):
     permission_classes = [IsAuthenticated]
@@ -267,7 +301,7 @@ class UnarchiveWfarEntry(APIView):
 class UploadWfarEntryAttachments(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def post(self, request, wfar_entry_id):
         try:
             sc_meetings = request.FILES.getlist('sc_meetings')
             sc_activities = request.FILES.getlist('sc_activities')
@@ -276,17 +310,41 @@ class UploadWfarEntryAttachments(APIView):
                 WFAR_Entry_Attachment.objects.create(
                     image_uri = file,
                     type = 1,
-                    wfar_entry_id = WFAR_Entry.objects.get(pk=1)
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
                 )
 
             for file in sc_activities:
                 WFAR_Entry_Attachment.objects.create(
                     image_uri = file,
                     type = 2,
-                    wfar_entry_id = WFAR_Entry.objects.get(pk=1)
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
                 )
 
             return Response({"detail": "The WFAR entry has been added successfully."}, status=status.HTTP_200_OK);
         except:
             return Response({"detail": "The WFAR entry has been added however attached images were not successfully uploaded."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
 
+class RetrieveWfarEntry(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            wfar_entry = WFAR_Entry.objects.get(pk=pk)
+            serializer = WfarEntryViewSerializer(wfar_entry, context={"request": request})
+            return Response(serializer.data)
+        except:
+            pass
+
+class GetImage(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        # try:
+            wfar_entry_attachment = WFAR_Entry_Attachment.objects.get(pk=pk)
+            serializer = WfarEntryAttachmentSerializer(wfar_entry_attachment, many=False)
+            return Response(serializer.data)
+        # except:
+        #     pass
+            # return Response({"test": "test"})

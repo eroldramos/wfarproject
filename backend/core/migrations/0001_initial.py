@@ -115,7 +115,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image_uri', models.ImageField(upload_to='uploads/')),
                 ('type', models.PositiveSmallIntegerField(default=1)),
-                ('wfar_entry_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.wfar_entry')),
+                ('wfar_entry_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='wfar_entry_attachments', to='core.wfar_entry')),
             ],
         ),
         migrations.CreateModel(
@@ -123,7 +123,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('description', models.TextField(max_length=500)),
-                ('wfar_entry_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core.wfar_entry')),
+                ('wfar_entry_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='wfar_entry_activities', to='core.wfar_entry')),
             ],
         ),
         migrations.CreateModel(

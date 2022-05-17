@@ -2,6 +2,29 @@ import { addListener, createSlice } from "@reduxjs/toolkit";
 
 // export const 
 
+export const myWfarCreateReducer = createSlice({
+    name: "myWfarCreateReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+
 const initialWfarsState = {
     isLoading: false,
     wfars: [],
@@ -90,7 +113,7 @@ export const myWfarSemesterFilterReducer = createSlice({
 
 export const myWfarRefreshReducer = createSlice({
     name: "myWfarRefreshReducer",
-    initialState: {newChange: false},
+    initialState: { newChange: false },
     reducers: {
         alertNewChange(state) {
             state.newChange = true;
@@ -217,6 +240,52 @@ export const myWfarEntryCreateReducer = createSlice({
     }
 });
 
+export const myWfarEntryUpdateReducer = createSlice({
+    name: "myWfarEntryUpdateReducer",
+    initialState: {
+        isLoading: false,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        requestSuccessfullyCompleted(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFailed(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarFetchEntryReducer = createSlice({
+    name: "myWfarFetchEntryReducer",
+    initialState: { 
+        isLoading: true,
+        entry: null,
+        error: null },
+    reducers: {
+        retrieveRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        retrieveSuccessfully(state, action) {
+            state.isLoading = false;
+            state.error = null;
+            state.entry = action.payload.entry;
+        },
+        retrieveFail(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+export const myWfarCreateActions = myWfarCreateReducer.actions;
 export const myWfarFetchActions = myWfarFetchReducer.actions;
 export const myWfarsArchivedActions = myWfarsArchivedReducer.actions;
 export const wfarSemestersActions = wfarSemestersReducer.actions;
@@ -227,3 +296,6 @@ export const myWfarRefreshActions = myWfarRefreshReducer.actions;
 export const myWfarEntryArchiveActions = myWfarEntryArchiveReducer.actions;
 export const myWfarEntryUnarchiveActions = myWfarEntryUnarchiveReducer.actions;
 export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;
+export const myWfarEntryUpdateActions = myWfarEntryUpdateReducer.actions;
+export const myWfarFetchEntryActions = myWfarFetchEntryReducer.actions;
+// export const myWfarEntryCreateActions = myWfarEntryCreateReducer.actions;
