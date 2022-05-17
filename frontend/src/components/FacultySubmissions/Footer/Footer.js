@@ -13,7 +13,10 @@ const Footer = () =>{
 
             </div>
             <div className={styles.paginationContainer}>
-
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                </ul>
             </div>
         </div>
     );

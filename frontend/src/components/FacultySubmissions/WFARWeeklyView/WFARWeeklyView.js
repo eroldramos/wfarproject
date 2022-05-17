@@ -1,35 +1,30 @@
 import React, { Fragment } from "react";
-import styles from "./WeeklyView.module.css";
-import SemFilter from "../SemFilter/SemFilter";
-import TableDisplay from "../TableDisplayCheckbox/TableDisplay";
+import styles from "./WFARWeeklyView.module.css";
+import SemesterFilter from "../SemesterFilter/SemesterFilter";
 import SearchFaculty from "../SearchFaculty/SearchFaculty";
-import WeeklyTable from "../Table/WeeklyViewTable";
-import ViewOptions from "../ViewOptions/ViewOptions";
+import WeeklyTable from "../Table/WFARWeeklyTable/WeeklyViewTable";
 import WeekFilter from "./WeekFilter/WeekFilter";
 import StatusFilter from "./StatusFilter/StatusFilter";
 import Footer from "../Footer/Footer";
+import { useSelector } from "react-redux";
+
+const WFARWeeklyView = () => {
 
 
-const facultySubmission = () => {
+  const semesters = useSelector((state) => state.wfarSemesters.semesters);
+
   return (
     <Fragment>
-      <div className={styles.mainConainter}>
-        <h1>Weekly Faculty Accomplishment Reports</h1>
-        <div style={{ width: "fit-content", float: "left" }}>
-          <h3>Faculty Submissions</h3>
-        </div>
-        <ViewOptions />
-      </div>
       <div className={styles.secondarycontainer}>
         <div className={styles.semFilterContainer}>
-          <SemFilter
-            id="semFilter"
+          <SemesterFilter
+            id="semester"
             name="semester"
-            label="Semesters"
             labelName={"Semester"}
+            onChange={null}
+            options={semesters}
             size="rg"
-            type="filter"
-          />
+            type="filter" />
         </div>
         <div className={styles.weekFilterContainer}>
           <WeekFilter
@@ -65,4 +60,4 @@ const facultySubmission = () => {
   );
 };
 
-export default facultySubmission;
+export default WFARWeeklyView;
