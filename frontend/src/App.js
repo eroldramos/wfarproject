@@ -25,7 +25,6 @@ import { createWfar } from './store/myWfarsActions';
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
 
 function App() {
-
   const dispatch = useDispatch();
 
   // sample use state for two-way binding
@@ -43,6 +42,7 @@ function App() {
 
   return (
     <div>
+      {/* {haveSession && } */}
       <SideNav userLevel="1"></SideNav>
       <div id="main">
         <Routes>
@@ -57,7 +57,10 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission/*" element={<MySubmissionScreen />}></Route>
+          <Route
+            path="/mySubmission/*"
+            element={<MySubmissionScreen />}
+          ></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"
@@ -65,7 +68,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/manage-semesters/"
+            path="/manage-semesters/*"
             element={<ManageSemestersScreen />}
           ></Route>
           <Route
@@ -80,8 +83,18 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/mySubmission/wfar/:id/week/:weekNo/add-entry" element={<AddEntry />}></Route>
-          <Route path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id" element={<EditEntry />}></Route>
+          <Route
+            path="/mySubmission/wfar/:id/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:id/week/:weekNo/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
+            element={<EditEntry />}
+          ></Route>
         </Routes>
       </div>
     </div>

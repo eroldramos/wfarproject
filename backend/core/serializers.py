@@ -94,7 +94,7 @@ class ManageFacultiesAssignmentSerializer(ManageFacultiesSerializer):
 class SemesterSerializerYearAndSem(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fields = ('id', 'label','school_year')
+        fields = ('id', 'label','school_year', 'is_active')
    
 class WeekSerializer(serializers.ModelSerializer):
     labelTouch = serializers.SerializerMethodField(read_only=True)

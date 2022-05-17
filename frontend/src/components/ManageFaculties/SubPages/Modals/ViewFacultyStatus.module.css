@@ -1,10 +1,29 @@
 .container {
-  padding: 5px 20px;
 }
 .modal-btn-container {
+  width: fit-content;
   float: right;
+  margin: 5px 0;
+  border: 1px solid black;
 }
-
+.header-container{
+  justify-content: space-between;
+  display: flex;
+  border: 1px solid red;
+  margin-bottom: 20px;
+}
+.header-container h2{
+  font-size: 18px;
+  margin: 8px 0;
+  width: fit-content;
+}
+.header-container h5{ 
+  font-size: 14px;
+  width: fit-content;
+}
+.header-text-container{
+  width: fit-content;
+}
 .roles {
   margin-bottom: 15px;
   cursor: pointer;
@@ -71,4 +90,10 @@
 }
 .assign-btn:hover {
   opacity: 0.5;
+}
+.search-field-container{
+  margin: 5px 0;
+  width: 100%;
+}
+.search-field-container form{
 }

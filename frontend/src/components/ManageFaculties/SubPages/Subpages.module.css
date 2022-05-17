@@ -1,5 +1,5 @@
 .popup-menu-container {
-  float: right;
+  
 }
 .filter-button-container {
   float: left;
@@ -11,11 +11,31 @@
   align-items: center;
   height: 44.5px;
 }
-.cleafix {
+.clearfix {
   clear: both;
 }
 .search-field-container {
+  width: fit-content;
   position: absolute;
-  right: 55px;
-  top: 120px;
+  right: 5%;
 }
+.pop-out-container{
+  background-color: red;
+  position: absolute;
+  height: 150px;
+}
+/* .sample{
+  background-color: green;
+  border: 1px solid black;
+  height: 150px;
+} */
+.button-action{
+  display: flex;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  /* position: relative; 
+  left: 50%;
+  transform: translateX(-50%); */
+}
+
