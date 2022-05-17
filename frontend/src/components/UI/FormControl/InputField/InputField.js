@@ -4,7 +4,7 @@ import styles from "./InputField.module.css";
 const InputField = (props) => {
   let validationClass = props.error != null ? "invalid" : "";
   const importantClass = props.important === 1 ? "important" : "";
-
+  const label_control = styles["label-control"] + " " + styles[props.noLabel]; // pass no-label-input if ayaw ng label
   return (
     <div
       className={
@@ -14,10 +14,12 @@ const InputField = (props) => {
         " " +
         styles[props.size] +
         " " +
+        styles[props.custom] +
+        " " +
         styles[importantClass]
       }
     >
-      <label htmlFor={props.id}>{props.labelName}</label>
+      <label htmlFor={props.id} className={label_control}>{props.labelName}</label>
       <input
         type={props.type}
         id={props.id}

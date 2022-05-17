@@ -3,7 +3,7 @@ import styles from "./SmallButton.module.css";
 
 const SmallButton = (props) => {
     const buttonType = props.type == "primary" ? "submit" : "button";
-    const classes = styles["button"] + " " + styles[props.type]; // r = regular, s = small, xs = extra small
+    const classes = styles["button"] + " " + styles[props.type] + " " + styles[props.size]; // s-l = small length, m-l = medium lenght, xs = large length
 
     return (
         <Fragment>

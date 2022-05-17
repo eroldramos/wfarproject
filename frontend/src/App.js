@@ -20,6 +20,7 @@ import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
+import Login from "./components/Login_Register/Login";
 import SampleRedux from "./SampleRedux";
 import { useDispatch } from "react-redux";
 import { createWfar } from "./store/myWfarsActions";
@@ -37,14 +38,15 @@ function App() {
 
   // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    dispatch(createWfar());
+    dispatch(createWfar()); 
   }, []);
 
+  const haveSession = false;
   return (
-    <div>
-      {/* {haveSession && } */}
-      <SideNav userLevel="1"></SideNav>
-      <div id="main">
+    <div className="for-login-container">
+      {!haveSession && <Login/>}
+      {haveSession && <SideNav userLevel="1"></SideNav>}
+      <div id="main" >
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* dont remove, for testing of logout only. */}

@@ -1,0 +1,345 @@
+
+.background-image {
+    /* background-image: url("img/cict_bg1.png"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    /* border-radius: 0; */
+    overflow-y: hidden;
+    /* Added */
+}
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    border-radius: 0;
+    animation: bg-color 2s forwards;
+    animation-delay: 4.5s;
+
+}
+.form-container{
+    /* border: 1px solid black; */
+    margin-top: 10px;
+}
+.login-form-container {
+    animation: fade-in ease 2s both;
+    animation-delay: 7s;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 6;
+    /* border: 1px solid black; */
+}
+
+.login-form {
+    position: fixed;
+    width: 527px;
+    height: 494px;
+    background-color: #fff;
+    color: #323232;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 30px 50px;
+    /* border: 1px solid black; */
+}
+
+.cict-wfar-logo {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid black; */
+}
+.cict-wfar-logo div:nth-child(2) p{
+    /* border: 1px solid black; */
+    margin: 0;
+}
+
+.cict-wfar-logo .image-container {
+    height: 40px;
+    width: 40px;
+    margin-right: 11px;
+}
+
+.cict-wfar-logo .image-container img {
+    height: 100%;
+    width: 100%;
+}
+
+.cict-wfar-logo .cict-wfar {
+    font-weight: 700;
+    font-size: 20px;
+    color: #BE5A40;
+}
+
+.cict-wfar-logo .management-system {
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: -2px;
+    color: #000;
+}
+
+.form-greetings {
+    /* margin-top: 35px; */
+    text-align: center;
+    /* border: 1px solid black; */
+    margin-top: 30px;
+}
+.form-greetings p{
+    /* border: 1px solid black; */
+    margin: 0;
+    margin-top: 5px;
+}
+.form-greetings p:nth-child(1) {
+    font-weight: 700;
+    font-size: 20px;
+    color: #323232;
+}
+
+.form-greetings p:nth-child(2) {
+    font-weight: 400;
+    font-size: 16px;
+    color: #666666;
+}
+
+.login-form form {
+    padding: 10px 15px;
+}
+.form-field{
+    padding-left: 10px;
+    /* border: 1px solid black; */
+}
+.form-fields{
+    /* border: 1px solid black; */
+    width: fit-content;
+}
+/* .form-field input {
+    width: 100%;
+    height: 55px;
+    padding: 20px;
+    border: 2px #DDDEDF solid;
+    margin-bottom: 10px;
+
+} */
+
+.form-field ::placeholder {
+    color: #9D9D9D;
+}
+
+.login-form form div:nth-child(3) {
+    display: flex;
+    position: relative;
+    margin: 0px 0;
+    color: #9D9D9D;
+    /* border: 1px solid black; */
+}
+
+/* .login-form form div:nth-child(3) #remember-me {
+    border: #BE5A40;
+} */
+
+.login-form form div:nth-child(3) .forgot-password {
+    position: absolute;
+    right: 0;
+}
+
+.login-form form div:nth-child(3) .forgot-password h5 {
+    font-size: 16px;
+    /* border: 1px solid black; */
+    margin-top: 5px;
+    margin-right: 10px;
+    color: #BE5A40;
+}
+.forgot-password h5:hover{
+    cursor: pointer;
+}
+.signin-button-container{
+    width: 100%;
+    /* border: 1px solid black; */
+    padding: 0 10px;
+    margin-top: 20px;
+}
+.signup-link{
+    margin-top: 25px;
+    /* border: 1px solid black; */
+}
+.signup-link p {
+    /* border: 1px solid black; */
+    margin-top: 10px;
+    text-align: center;
+    color: #323232;
+}
+
+.signup-link h5 {
+    display: inline;
+    /* border: 1px solid black; */
+    font-size: 16px;
+    color: #BE5A40;
+}
+.signup-link h5:hover {
+    cursor: pointer;
+}
+
+
+@keyframes rotate-scale-slide {
+    from {
+        transform: scale(0) rotate(0deg);
+    }
+
+    70% {
+        transform: scale(1.2) rotate(360deg);
+    }
+
+    71% {
+        transform: scale(1.2) translate(0, 0);
+    }
+
+    to {
+        transform: scale(1) translate(-100px, 0);
+    }
+}
+
+@keyframes slide {
+    from {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+
+    76% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(100px, 0);
+    }
+}
+
+@keyframes text-color {
+    from {
+        color: #BE5A40;
+    }
+
+    to {
+        color: #fff;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes bg-color {
+    from {
+        background-color: rgba(139, 30, 0, 0);
+        ;
+    }
+
+    to {
+        background-color: rgba(139, 29, 0, 0.65);
+        ;
+    }
+}
+
+
+
+
+.logo-splashscreen1 {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.logo-splashscreen2 {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+}
+
+.logo-splashscreen1 .image-container {
+    height: 120px;
+    width: 120px;
+    animation: rotate-scale-slide 4s forwards;
+}
+
+.logo-splashscreen1 .image-container img {
+    height: 100%;
+    width: 100%;
+}
+
+.logo-splashscreen2 p {
+    animation: text-color 2s forwards;
+    animation-delay: 4.5s;
+}
+
+.logo-splashscreen2 .logo-text {
+    /* animation-delay: 0.72s; */
+    animation: slide 4s forwards;
+    /* border: 1px solid black; */ 
+}
+
+.logo-splashscreen2 .cict-wfar {
+    font-weight: 700;
+    font-size: 40px;
+    color: #BE5A40;
+    /* border: 1px solid black; */
+    margin: 0;
+}
+
+.logo-splashscreen2 .management-system {
+    font-weight: 400;
+    font-size: 24px;
+    color: #000;
+    /* border: 1px solid black; */
+    margin: 0;
+}
+
+.logo-splashscreen {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    animation: fade-out ease 1s forwards;
+    animation-delay: 6s;
+}

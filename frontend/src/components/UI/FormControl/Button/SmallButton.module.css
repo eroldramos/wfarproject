@@ -9,7 +9,7 @@
     border-radius: 5px;
     transition: .2s linear;
     cursor: pointer;
-    margin: 5px 15px;
+    margin: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,4 +36,14 @@
     .button {
         width: 100% !important;
     }
+}
+.s-l{
+    width: 100px;
+}
+.m-l{
+    width: 150px;
+}
+.l-l{
+    margin: 5px 0;
+    width: 100%;
 }
