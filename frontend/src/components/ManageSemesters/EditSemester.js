@@ -137,7 +137,7 @@ const EditSemester = () => {
     dispatch(updateSem(params.semId, obj));
   };
   const onCancelHandler = () => {
-    navigate("/manage-semesters");
+    navigate("/manage-semesters/");
   };
   console.log(semDetails);
   console.log(latestWeekId, "latest");

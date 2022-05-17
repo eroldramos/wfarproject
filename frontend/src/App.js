@@ -46,7 +46,10 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission/*" element={<MySubmissionScreen />}></Route>
+          <Route
+            path="/mySubmission/*"
+            element={<MySubmissionScreen />}
+          ></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"
@@ -54,7 +57,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/manage-semesters/"
+            path="/manage-semesters/*"
             element={<ManageSemestersScreen />}
           ></Route>
           <Route
@@ -69,7 +72,10 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/mySubmission/wfar/:id/add-entry" element={<AddEntry />}></Route>
+          <Route
+            path="/mySubmission/wfar/:id/add-entry"
+            element={<AddEntry />}
+          ></Route>
         </Routes>
       </div>
     </div>

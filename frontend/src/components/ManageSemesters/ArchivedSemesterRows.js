@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import styles from "./SemesterRows.module.css";
 import PopupMenu from "./PopupMenu";
 import { useNavigate } from "react-router-dom";
-import { archiveSem, activateSem } from "../../store/manageSemActions";
+import { restoreSem } from "../../store/manageSemActions";
 import { useDispatch, useSelector } from "react-redux";
-
-const SemesterRows = (props) => {
+const ArchivedSemesterRows = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const ITEMS = [
@@ -16,13 +15,8 @@ const SemesterRows = (props) => {
     },
     {
       id: 2,
-      label: "Archive",
-      onClick: () => onArchiveSemester(props.semId),
-    },
-    {
-      id: 3,
-      label: "Activate",
-      onClick: () => onActivateSemester(props.semId),
+      label: "Restore",
+      onClick: () => onRestoreSemester(props.semId),
     },
   ];
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
@@ -37,13 +31,9 @@ const SemesterRows = (props) => {
   const onNavigateEditSemester = (semId) => {
     navigate(`/edit-semester/${semId}/`);
   };
-  const onArchiveSemester = (semId) => {
-    dispatch(archiveSem(semId));
-    navigate(`/manage-semesters/`);
-  };
-  const onActivateSemester = (semId) => {
-    dispatch(activateSem(semId));
-    navigate(`/manage-semesters/`);
+  const onRestoreSemester = (semId) => {
+    dispatch(restoreSem(semId));
+    navigate(`/manage-semesters/archives/`);
   };
   return (
     <Fragment>
@@ -54,7 +44,6 @@ const SemesterRows = (props) => {
         <strong>
           {props.schoolYear} {props.label}
         </strong>
-
         <div className={styles["popup-menu-container"]}>
           <span style={{ cursor: "pointer" }} onClick={openPopMenuHandler}>
             <svg
@@ -75,7 +64,6 @@ const SemesterRows = (props) => {
             <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
           )}
         </div>
-
         <div
           className={
             props.isActive
@@ -89,4 +77,4 @@ const SemesterRows = (props) => {
   );
 };
 
-export default SemesterRows;
+export default ArchivedSemesterRows;

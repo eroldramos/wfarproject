@@ -95,12 +95,12 @@ const CreateSemester = () => {
     console.log(obj);
   };
   const onCancelHandler = () => {
-    navigate("/manage-semesters");
+    navigate("/manage-semesters/");
   };
 
   useEffect(() => {
     if (success) {
-      navigate("/manage-semesters");
+      navigate("/manage-semesters/");
       dispatch(createSemReset());
     }
   }, [success]);
