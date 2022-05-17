@@ -38,7 +38,7 @@ const DepartmentHead = () => {
       birthdate: "2015-02-03",
       email: "eroldramos@gmail.com",
       contact_no: "09563435355",
-      user_type: 1,
+      user_type: 3,
     },
     {
       id: 2,
@@ -232,6 +232,7 @@ const DepartmentHead = () => {
                 email={listFaculty.email}
                 contact_no={listFaculty.contact_no}
                 birthdate={listFaculty.birthdate}
+                user_type={listFaculty.user_type}
               />
             ))}
         </div>

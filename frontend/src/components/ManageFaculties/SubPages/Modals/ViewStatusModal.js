@@ -34,20 +34,26 @@ const ViewStatusModal = (props) => {
 
   return (
     <Fragment>
-      <Modal onClose={props.onClose}>
-        <h1>User type : {props.user_type}</h1>
+      <Modal onClose={props.onClose} size = "m">
+        {/* <h1>User type : {props.user_type}</h1> */}
         <div className={styles["container"]}>
-          <div className={styles["modal-btn-container"]}>
-            <ModalButton
-              label={props.assignee_id ? "Assigned" : "Not assigned"}
-              type={null === 0 ? "cancel" : "primary"}
-              size="rg"
-              disabled={true}
-              onClick={null}
-            />
+          <div className={styles["header-container"]}>
+            <div className={styles["header-text-container"]}>
+              <h2>{props.fullname}</h2>
+              <h5>{user_type}</h5>
+            </div>
+            <div className={styles["modal-btn-container"]}>
+              <ModalButton
+                label={props.assignee_id ? "Assigned" : "Not assigned"}
+                type={null === 0 ? "cancel" : "primary"}
+                size="s"
+                disabled={true}
+                onClick={null}
+              />
+            </div>
           </div>
-          <h1>{props.fullname}</h1>
-          <p>{user_type}</p>
+
+
           <div className={styles["clearfix"]}></div>
 
           {props.assignee_id ? (

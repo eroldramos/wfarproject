@@ -254,7 +254,7 @@ function Sample() {
           labelName="search"
           inputName="search"
           placeholder="Search faculty"
-          size="md"
+          size="lg"
           type="filter"
         />
       </div>

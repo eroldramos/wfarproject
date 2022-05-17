@@ -42,6 +42,7 @@ function App() {
 
   return (
     <div>
+      {/* {haveSession && } */}
       <SideNav userLevel="1"></SideNav>
       <div id="main">
         <Routes>

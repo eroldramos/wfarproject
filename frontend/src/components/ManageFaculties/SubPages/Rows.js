@@ -41,7 +41,7 @@ const Rows = (props) => {
 
   useEffect(() => {
     if (userTypeSuccess && !userTypeIsLoading) {
-      //closePopMenuHandler();
+      closePopMenuHandler();
       closePromoteModal();
       closeDemoteModal();
       closeViewFacultyModal();
@@ -54,7 +54,7 @@ const Rows = (props) => {
   };
 
   const closePopMenuHandler = () => {
-    //setPopupMenuIsShown(false);
+    setPopupMenuIsShown(false);
   };
 
   const openPromoteModal = () => {
@@ -121,8 +121,9 @@ const Rows = (props) => {
         </div>
         <div
           className={`${table["col"]} ${table["col-7"]}`}
-          data-label="Actions">
-          <div className={table["button-action"]}>
+          data-label="Actions"
+        >
+          <div className={styles["button-action"]}>
             <div className={styles["filter-button-container"]}>
               <FilterButton
                 onClick={openViewFacultyModal}
@@ -131,8 +132,8 @@ const Rows = (props) => {
                     ? "View Faculties"
                     : "View Status"
                 }
-                type="primary">
-              </FilterButton>
+                type="primary"
+              ></FilterButton>
               {props.user_type === 2 || props.user_type === 3
                 ? viewFacultyModal && (
                     <ViewFacultyModal
@@ -140,7 +141,8 @@ const Rows = (props) => {
                       id={props.id}
                       fullname={props.fullname}
                       user_type={props.user_type}
-                    />)
+                    />
+                  )
                 : viewFacultyModal && (
                     <ViewStatusModal
                       onClose={closeViewFacultyModal}
@@ -164,7 +166,10 @@ const Rows = (props) => {
             </div>
 
             <div className={styles["popup-menu-container"]}>
-              <div className={styles["popup-icon"]} onClick={openPopMenuHandler}>
+              <div
+                className={styles["popup-icon"]}
+                onClick={openPopMenuHandler}
+              >
                 <svg
                   style={{ cursor: "pointer" }}
                   width="24"
@@ -200,9 +205,9 @@ const Rows = (props) => {
             {popupMenuIsShown && (
               <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
             )}
+            
             <div className={styles["clearfix"]}></div>
           </div>
-          
         </div>
       </li>
     </Fragment>
