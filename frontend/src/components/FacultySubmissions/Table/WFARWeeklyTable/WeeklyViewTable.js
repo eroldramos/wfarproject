@@ -1,7 +1,7 @@
 
 import React, { Fragment, useState, useEffect } from "react";
 import styles from "./WeeklyViewTable.module.css";
-import ViewButton from "../../UI/FormControl/Button/TableCellButton"
+import TableCellButton from '../../../UI/FormControl/Button/TableCellButton';
 
 const WeeklyTable = (props) => {
 
@@ -51,7 +51,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id= {buttonId}
             label = {buttonLabel}
             type = "primary"
@@ -62,7 +62,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id={buttonId}
             label={buttonLabel}
             type="primary"
@@ -73,7 +73,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id={buttonId}
             label={buttonLabel}
             type="primary"
@@ -84,7 +84,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id={buttonId}
             label={buttonLabel}
             type="primary"
@@ -95,7 +95,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id={buttonId}
             label={buttonLabel}
             type="primary"
@@ -106,7 +106,7 @@ const WeeklyTable = (props) => {
           <td>sample</td>
           <td>sample</td>
           <td>sample</td>
-          <td><ViewButton 
+          <td><TableCellButton 
             id={buttonId}
             label={buttonLabel}
             type="primary"
