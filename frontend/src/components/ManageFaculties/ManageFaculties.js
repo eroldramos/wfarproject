@@ -53,7 +53,9 @@ const ManageFaculties = () => {
     <Fragment>
       <h1>Manage Faculties</h1>
       <div className={styles["main-container"]}>
-        <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
+        <div className={styles["tab-container"]}>
+          <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
+        </div>
 
         <Routes>
           <Route path="department-head/*" element={<DepartmentHead />} />

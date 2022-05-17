@@ -11,16 +11,18 @@
 .modal {
   position: fixed;
   top: 20vh;
-  bottom: 10vh;
+  
   left: 25%;
   width: 50%;
   background-color: white;
-  padding: 2.8rem;
+  padding: 1.5rem;
+  /* James eto changes mo */
+  /* padding: 2.8rem; */ 
+  /* bottom: 10vh; */
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
-  border: 5px solid blue;
 }
 @media (min-width: 768px) {
   .modal {
@@ -31,7 +33,6 @@
     width: 20rem;
     left: calc(69% - 25rem);
   }
-
   .modal.s {
     width: 30rem;
     left: calc(60% - 25rem);
