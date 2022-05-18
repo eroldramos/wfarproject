@@ -40,7 +40,7 @@ function App() {
     dispatch(createWfar());
   }, []);
 
-  const haveSession = false;
+  const haveSession = true;
   return (
     <div className="for-login-container">
       {!haveSession && <LoginScreen />}
