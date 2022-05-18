@@ -44,13 +44,9 @@ import {
   myWfarEntryCreateReducer,
   myWfarEntryUpdateReducer,
   myWfarFetchEntryReducer,
+  wfarRetrieveOverviewReducer
 } from "./myWfarReducers";
 
-import {
-  wfarRetrieveOverviewReducer
-} from "./wfarReducers";
-
-console.log("HelloWorld");
 // sheen
 import{
   getAllWFARinThisWeekReducer,
