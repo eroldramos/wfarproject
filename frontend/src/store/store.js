@@ -46,6 +46,10 @@ import {
   myWfarFetchEntryReducer,
 } from "./myWfarReducers";
 
+import {
+  wfarRetrieveOverviewReducer
+} from "./wfarReducers";
+
 console.log("HelloWorld");
 
 const store = configureStore({
@@ -89,6 +93,9 @@ const store = configureStore({
     myWfarEntryCreate: myWfarEntryCreateReducer.reducer,
     myWfarEntryUpdate: myWfarEntryUpdateReducer.reducer,
     myWfarFetchEntry: myWfarFetchEntryReducer.reducer,
+
+    // wfars
+    wfarRetrieveOverview: wfarRetrieveOverviewReducer.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
