@@ -4,7 +4,7 @@
     padding: 15px 10px 15px 0;
 }
 .form-control-custom{
-    padding: 8px 10px 8px 0;
+    padding: 8px 0;
 }
 .form-control.rg {
     width: 32.5%;
@@ -26,6 +26,9 @@
     width: 100%;
     display: block;
     margin: 15px 0;
+}
+.nm{ /* no margin for label*/
+    margin: 0;
 }
 .no-label-input{
     display: none;
