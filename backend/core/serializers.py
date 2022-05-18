@@ -149,7 +149,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fields = ('id', 'start_date', 'end_date', 'no_of_weeks')
+        fields = ('id', 'start_date', 'end_date', 'no_of_weeks','label','school_year')
 
 class WfarEntrySerializer(serializers.ModelSerializer):
     # accomplishment_date = serializers.DateField(format="%B %d")
@@ -215,3 +215,40 @@ class WfarSerializer(serializers.ModelSerializer):
 
         week_bracket[0] = week_bracket[1] - timedelta(6)
         return week_bracket; 
+
+
+# SHEEN
+#-------DASHBOARD
+class GetAllWFAR(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField(read_only=True)
+    checker = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR
+        fields = ('id','status','created_at','updated_at','checked_at','submitted_at','submitted_at','owner','checker','semester_id')
+
+    def get_owner(self, obj):
+        return (ProfileSerializer(obj.faculty_id).data)
+    def get_checker(self, obj):
+        return (ProfileSerializer(obj.faculty_checker_id).data)
+
+class GetAllUser(serializers.ModelSerializer):
+    isAdmin = serializers.SerializerMethodField(read_only=True)
+    userType = serializers.SerializerMethodField(read_only=True)
+    name = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ('id', 'username', 'email', 'name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
+
+    def get_isAdmin(self, obj):   
+        return obj.is_staff
+    def get_userType(self, obj):
+        return obj.user_type
+    def get_name(self, obj):
+        name = f"{obj.first_name} {obj.last_name}"
+        if name == " ":
+            name = obj.email
+        return name
+
+
+    
+    

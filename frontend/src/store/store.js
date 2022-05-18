@@ -38,7 +38,12 @@ import {
   myWfarEntryUnarchiveReducer
 } from './myWfarReducers';
 
-console.log("HelloWorld");
+// sheen
+import{
+  getAllWFARinThisWeekReducer,
+  getAllUsersReducer,
+  getActiveSemReducer,
+} from './dashboardReducer';
 
 const store = configureStore({
   reducer: {
@@ -71,7 +76,11 @@ const store = configureStore({
     myWfarSemesterFilter: myWfarSemesterFilterReducer.reducer,
     myWfarRefresh: myWfarRefreshReducer.reducer,
     myWfarEntryArchive: myWfarEntryArchiveReducer.reducer,
-    myWfarEntryUnarchive: myWfarEntryUnarchiveReducer.reducer
+    myWfarEntryUnarchive: myWfarEntryUnarchiveReducer.reducer,
+
+    allWFARthisWeek: getAllWFARinThisWeekReducer.reducer,
+    activeSem: getActiveSemReducer.reducer,
+    allUsers: getAllUsersReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
