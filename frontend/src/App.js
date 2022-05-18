@@ -20,9 +20,13 @@ import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import WFARSubmissionsOverview from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
-import { useDispatch } from 'react-redux'
-import { createWfar } from './store/myWfarsActions';
+import { useDispatch } from "react-redux";
+import { createWfar } from "./store/myWfarsActions";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
+import Login from "./components/Login_Register/UserLogin";
+import Register from "./components/Login_Register/UserRegister";
+import LandingPage from "./components/Login_Register/LandingPage";
+import { useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,28 +39,38 @@ function App() {
     setSampleValue(event.target.value);
   };
 
+  const loggedUser = useSelector((state) => state.login);
+  const { error, isLoading, userInfo } = loggedUser;
+
   // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    dispatch(createWfar());
-  }, []);
+    if (userInfo) {
+      dispatch(createWfar());
+    }
+  }, [userInfo, dispatch]);
 
   return (
-    <div>
-      {/* {haveSession && } */}
-      <SideNav userLevel="1"></SideNav>
+    <div className="for-login-container">
+      {userInfo && <SideNav userLevel="1"></SideNav>}
+
       <div id="main">
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
+          {/* <Route path="/" element={<LandingPage />}></Route> */}
           {/* dont remove, for testing of logout only. */}
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
-          <Route path="/FacultySubmission/*" element={<FacultySubmissionScreen />}></Route>
+          <Route
+            path="/FacultySubmission/*"
+            element={<FacultySubmissionScreen />}
+          ></Route>
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/register" element={<RegisterScreen />}></Route>
-          <Route path="/" element={<SampleRedux />}></Route>
-          <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
+          <Route path="/LoginScreen" element={<LoginScreen />}></Route>
+          {/* <Route path="/register" element={<RegisterScreen />}></Route> */}
+          {/* <Route path="/" element={<SampleRedux />}></Route> */}
+          {/* <Route path="/admin-login" element={<AdminLoginScreen />}></Route> */}
           <Route
             path="/mySubmission/*"
             element={<MySubmissionScreen />}
@@ -95,6 +109,9 @@ function App() {
             path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
             element={<EditEntry />}
           ></Route>
+
+          {/* AUTHENTICATION ROUTES */}
+          <Route path="/*" element={<LandingPage />} />
         </Routes>
       </div>
     </div>

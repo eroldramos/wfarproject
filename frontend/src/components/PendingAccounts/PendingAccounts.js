@@ -33,27 +33,27 @@ const PendingAccounts = () => {
     error: acceptIsError,
   } = acceptPendings;
 
-  // const [listPendingAccounts, setListPendingAccounts] = useState(
-  //   faculties ? faculties : []
+  // CONST [LISTPENDINGACCOUNTS, SETLISTPENDINGACCOUNTS] = USESTATE(
+  //   FACULTIES ? FACULTIES : []
   // );
-  // const PENDING_ACCOUNTS = [
+  // CONST PENDING_ACCOUNTS = [
   //   {
-  //     id: 1,
-  //     fullname: "Erold Ramos",
-  //     empNo: "2018-101188",
-  //     username: "eroldramos",
-  //     email: "eroldramos@gmail.com",
-  //     contact: "09563435355",
-  //     createdAt: "2015-02-03",
+  //     ID: 1,
+  //     FULLNAME: "EROLD RAMOS",
+  //     EMPNO: "2018-101188",
+  //     USERNAME: "EROLDRAMOS",
+  //     EMAIL: "EROLDRAMOS@GMAIL.COM",
+  //     CONTACT: "09563435355",
+  //     CREATEDAT: "2015-02-03",
   //   },
   //   {
-  //     id: 2,
-  //     fullname: "Erold Ramos",
-  //     empNo: "2018-101188",
-  //     username: "eroldramos",
-  //     email: "eroldramos@gmail.com",
-  //     contact: "09563435355",
-  //     createdAt: "2015-02-03",
+  //     ID: 2,
+  //     FULLNAME: "EROLD RAMOS",
+  //     EMPNO: "2018-101188",
+  //     USERNAME: "EROLDRAMOS",
+  //     EMAIL: "EROLDRAMOS@GMAIL.COM",
+  //     CONTACT: "09563435355",
+  //     CREATEDAT: "2015-02-03",
   //   },
   // ];
   const [listPendingAccounts, setListPendingAccounts] = useState([]);
@@ -61,6 +61,14 @@ const PendingAccounts = () => {
   const [selectedUser, setSelectedUser] = useState([]);
   const [modalIsShown, setModalIsShown] = useState(false);
   const [searchFaculty, setSearchFaculty] = useState("");
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     if (success) {
@@ -304,6 +312,11 @@ const PendingAccounts = () => {
             className={`${table["col"]} ${table["col-7"]} ${table["col-header"]}`}
           >
             Created At
+          </div>
+          <div
+            className={`${table["col"]} ${table["col-8"]} ${table["col-header"]}`}
+          >
+            Action
           </div>
         </li>
         {acceptIsLoading && <p>Accepting...</p>}

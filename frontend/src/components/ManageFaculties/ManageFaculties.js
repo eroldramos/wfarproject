@@ -4,7 +4,7 @@ import Tab from "../UI/Tab/Tab";
 import DepartmentHead from "./SubPages/DepartmentHead";
 import AreaChair from "./SubPages/AreaChair";
 import Faculty from "./SubPages/Faculty";
-
+import { useSelector } from "react-redux";
 import { Routes, Route, useNavigate } from "react-router-dom";
 const ManageFaculties = () => {
   const SAMPLE_ITEMS = [
@@ -30,6 +30,14 @@ const ManageFaculties = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   let navigate = useNavigate();
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     navigate("/manage-faculty/department-head/");

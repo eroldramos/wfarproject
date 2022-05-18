@@ -46,11 +46,20 @@ import {
   myWfarFetchEntryReducer,
 } from "./myWfarReducers";
 
+<<<<<<< HEAD
 import {
   wfarRetrieveOverviewReducer
 } from "./wfarReducers";
 
 console.log("HelloWorld");
+=======
+// sheen
+import{
+  getAllWFARinThisWeekReducer,
+  getAllUsersReducer,
+  getActiveSemReducer,
+} from './dashboardReducer';
+>>>>>>> 0e0bb18a20876cfd8107afabf50e2a45ee5122ef
 
 const store = configureStore({
   reducer: {
@@ -93,9 +102,10 @@ const store = configureStore({
     myWfarEntryCreate: myWfarEntryCreateReducer.reducer,
     myWfarEntryUpdate: myWfarEntryUpdateReducer.reducer,
     myWfarFetchEntry: myWfarFetchEntryReducer.reducer,
-
-    // wfars
-    wfarRetrieveOverview: wfarRetrieveOverviewReducer.reducer
+    wfarRetrieveOverview: wfarRetrieveOverviewReducer.reducer,
+    allWFARthisWeek: getAllWFARinThisWeekReducer.reducer,
+    activeSem: getActiveSemReducer.reducer,
+    allUsers: getAllUsersReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

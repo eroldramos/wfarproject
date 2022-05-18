@@ -1,6 +1,10 @@
 import notificationIcon from "../../../assets/DashboardDummyImg/notifications.svg"
+import { useSelector } from "react-redux";
 
 const NotificationInDashboard = (props) => {
+
+    const loggedUser = useSelector((state) => state.login);
+    const { userInfo, loading, error} = loggedUser;
 
     return (
         <div className="notifications">
@@ -8,7 +12,7 @@ const NotificationInDashboard = (props) => {
                 <img src={notificationIcon} alt="" />
             </div>
             <div className="greetings">
-                <h3>Hi User,</h3>
+                <h3>Hi {userInfo.name},</h3>
                 <p>Good Evening!</p>
             </div>
         </div>

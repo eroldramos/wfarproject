@@ -29,12 +29,12 @@ const ViewStatusModal = (props) => {
 
   const onOpenAssign = () => {
     props.onOpenAssign();
-    props.onClose();
+    props.closeViewFacultyModalTransition();
   };
 
   return (
     <Fragment>
-      <Modal onClose={props.onClose} size = "m">
+      <Modal onClose={props.closeViewFacultyModal} size="m">
         {/* <h1>User type : {props.user_type}</h1> */}
         <div className={styles["container"]}>
           <div className={styles["header-container"]}>
@@ -52,7 +52,6 @@ const ViewStatusModal = (props) => {
               />
             </div>
           </div>
-
 
           <div className={styles["clearfix"]}></div>
 
@@ -97,7 +96,7 @@ const ViewStatusModal = (props) => {
           <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button
-                onClick={props.onClose}
+                onClick={props.closeViewFacultyModal}
                 label="Close"
                 type="cancel"
                 size="rg"

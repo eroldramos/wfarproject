@@ -49,6 +49,15 @@ const EditSemester = () => {
 
   const params = useParams();
   const [latestWeekId, setLatestWeekId] = useState(0);
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
+
   useEffect(() => {
     if (updateSemSuccess) {
       console.log(updateSemSuccess);

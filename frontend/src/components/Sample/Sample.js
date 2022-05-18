@@ -339,9 +339,9 @@ function Sample() {
       <FilterButton label="Overview" type="primary"></FilterButton>
 
       <SmallButton label="Check WFAR" type="primary"></SmallButton>
-      <SmallButton label="Regular" type="primary" size="r"></SmallButton>
-      <SmallButton label="Small" type="primary" size="s"></SmallButton>
-      <SmallButton label="Extra Small" type="primary" size="xs"></SmallButton>
+      <SmallButton label="Small" type="primary" size="s-l"></SmallButton>
+      <SmallButton label="Medium" type="primary" size="m-l"></SmallButton>
+      <SmallButton label="Large" type="primary" size="l-l"></SmallButton>
       <PrintButton label="Print" type="primary"></PrintButton>
 
       {/* NESTED ROUTING */}

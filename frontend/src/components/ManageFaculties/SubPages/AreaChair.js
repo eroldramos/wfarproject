@@ -6,6 +6,7 @@ import styles from "./Subpages.module.css";
 import { getAreaChairs } from "../../../store/manageFacultiesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import Paginator from "../SubComponents/Paginator";
 const AreaChair = () => {
   const search = useLocation().search;
   let navigate = useNavigate();
@@ -16,7 +17,7 @@ const AreaChair = () => {
   const {
     isLoading: getAreaChairsIsLoading,
     error: getAreaChairsError,
-    areachairs,
+    areachairs: { faculties: areachairs, pages, page },
   } = getAreaChairsReducerValues;
 
   const changeUserTypeReducerValues = useSelector(
@@ -29,95 +30,17 @@ const AreaChair = () => {
   } = changeUserTypeReducerValues;
 
   const [searchFaculty, setSearchFaculty] = useState("");
-  const [listFaculty, setListFaculty] = useState([
-    {
-      id: 1,
-      fullname: "Ramos Erold 1",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    }
-  ]);
+  const [listFaculty, setListFaculty] = useState([]);
+  const [ableToSearch, setAbleToSearch] = useState(true);
   useEffect(() => {
     if (userTypeSuccess && !userTypeIsLoading) {
       console.log("ufkckkkkcakdsakfk");
-      navigate("/manage-faculty/area-chair/");
+      navigate(window.location.pathname);
     }
-    dispatch(getAreaChairs());
-  }, [dispatch, userTypeSuccess, userTypeIsLoading]);
+    if (ableToSearch) {
+      dispatch(getAreaChairs(search));
+    }
+  }, [dispatch, userTypeSuccess, userTypeIsLoading, search, ableToSearch]);
 
   useEffect(() => {
     if (areachairs && !userTypeIsLoading) {
@@ -125,8 +48,20 @@ const AreaChair = () => {
     }
   }, [areachairs, userTypeIsLoading]);
 
+  const disableSearch = () => {
+    setAbleToSearch(false);
+  };
+  const enableSearch = () => {
+    setAbleToSearch(true);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -158,10 +93,12 @@ const AreaChair = () => {
               height="11"
               viewBox="0 0 11 11"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M8.70835 4.12492L8.0621 4.77117L5.95835 2.672V10.0833H5.04169V2.672L2.93794 4.77575L2.29169 4.12492L5.50002 0.916585L8.70835 4.12492Z"
-                fill="#666B73"/>
+                fill="#666B73"
+              />
             </svg>
           </div>
           <div
@@ -196,31 +133,33 @@ const AreaChair = () => {
           </div>
         </li>
 
-        <div className={table["scrollable-area"]}>
-          {listFaculty &&
-            listFaculty.map((listFaculty) => ( /*listFaculty.map((data, index)*/
-              <Rows
-                // id={data.id}
-                // fullname={`${data.last_name}, ${data.first_name} ${data.middle_name}`}
-                // emp_no={data.emp_no}
-                // username={data.username}
-                // email={data.email}
-                // contact_no={data.contact_no}
-                // birthdate={data.birthdate}
-                // user_type={data.user_type}
-                // key={index}// id={data.id}
-
-                id={listFaculty.id}
-                fullname={listFaculty.fullname}
-                emp_no={listFaculty.emp_no}
-                username={listFaculty.username}
-                email={listFaculty.email}
-                contact_no={listFaculty.contact_no}
-                birthdate={listFaculty.birthdate}
-              />
-            ))}
-        </div>
+        {listFaculty.length === 0 && <p>Not Found</p>}
+        {listFaculty &&
+          listFaculty.map((data, index) => (
+            <Rows
+              enableSearch={enableSearch}
+              disableSearch={disableSearch}
+              id={data.id}
+              fullname={`${data.last_name}, ${data.first_name} ${data.middle_name}`}
+              emp_no={data.emp_no}
+              username={data.username}
+              email={data.email}
+              contact_no={data.contact_no}
+              birthdate={data.birthdate}
+              user_type={data.user_type}
+              assignee_id={data.assignee_id}
+              key={index}
+            />
+          ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={"/manage-faculty/area-chair/"}
+        />
+      </div>
     </Fragment>
   );
 };

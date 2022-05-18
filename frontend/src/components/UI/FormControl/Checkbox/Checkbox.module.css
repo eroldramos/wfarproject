@@ -17,7 +17,9 @@
     display: flex;
     align-items: center;
 }
-
+.form-control .no-height{
+    height: 20px;
+}
 .form-control .text {
     margin-left: 10px;
     font-weight: 400;

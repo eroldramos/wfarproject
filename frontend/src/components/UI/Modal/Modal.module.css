@@ -17,19 +17,21 @@
   background-color: white;
   padding: 1.5rem;
   /* James eto changes mo */
-  /* padding: 2.8rem; */ 
+  /* padding: 2.8rem; */
   /* bottom: 10vh; */
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
+  /* overflow-y: scroll;
+  border: 5px solid blue; */
 }
-.modal::-webkit-scrollbar{
+.modal::-webkit-scrollbar {
   width: 5px;
   border: 1px solid black;
 }
-.modal::-webkit-scrollbar-thumb{
-  background: #C4C4C4;
+.modal::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
   border-radius: 5px;
 }
 @media (min-width: 768px) {

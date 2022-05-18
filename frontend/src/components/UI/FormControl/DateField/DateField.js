@@ -4,6 +4,7 @@ import styles from "./DateField.module.css";
 const DateField = (props) => {
   let validationClass = props.error != null ? "invalid" : "";
   let importantClass = props.important === 1 ? "important" : "";
+  const labelControl = styles["label-control"] + styles[props.labelMargin]; // pass cp if don't want margin
   return (
     <div
       className={
@@ -13,10 +14,12 @@ const DateField = (props) => {
         " " +
         styles[props.size] +
         " " +
+        styles[props.formPadding] +
+        " " +
         styles[importantClass]
       }
     >
-      <label htmlFor={props.id}>{props.labelName}</label>
+      <label htmlFor={props.id} className = {labelControl}>{props.labelName}</label>
       <div className="date">
         {/* <svg
           width="17"
