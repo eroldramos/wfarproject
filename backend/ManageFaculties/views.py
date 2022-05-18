@@ -89,7 +89,7 @@ class RetrieveAllAssignedFaculty(APIView):
                 Q(middle_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).order_by('last_name')
-            p = Paginator(assigned_faculties,1)
+            p = Paginator(assigned_faculties,6)
             page = request.GET.get('page')
             if page == None or str(page) == "null":
                 page = 1
@@ -135,7 +135,7 @@ class RetrieveAllNormalFacultyUser(APIView):
 
             faculties = p.get_page(page)
 
-            serializer = ManageFacultiesSerializer(faculties, many=True)
+            serializer = ManageFacultiesUnassignmentSerializer(faculties, many=True)
       
             data={
                 "faculties": serializer.data,

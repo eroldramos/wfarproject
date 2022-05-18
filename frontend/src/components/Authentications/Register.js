@@ -10,7 +10,7 @@ import InputField from "../UI/FormControl/InputField/InputField";
 import DateField from "../UI/FormControl/DateField/DateField";
 import classes from "./Register.module.css";
 import Button from "../UI/FormControl/Button/Button";
-import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
+import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
 import useValidateInput from "../../hooks/useValidateInput";
 import { register } from "../../store/authActions";
 
@@ -499,7 +499,7 @@ const Register = () => {
             error={birthdateInputHasError ? "Please select a date." : null}
           />
 
-          <DropdownField
+          <CustomDropdownField
             id="civilStatus"
             name="civilStatus"
             options={CIVIL_STATUS}
@@ -513,7 +513,7 @@ const Register = () => {
             }
           />
 
-          <DropdownField
+          <CustomDropdownField
             id="sex"
             name="sex"
             labelName="Sex"

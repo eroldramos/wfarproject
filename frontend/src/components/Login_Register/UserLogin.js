@@ -48,12 +48,12 @@ const Login = () => {
     dispatch(login(username, password, "Faculty"));
   };
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     // if userInfo is null, can't be login
-  //     navigate("/dummydashboard");
-  //   }
-  // }, [navigate, userInfo]);
+  useEffect(() => {
+    if (userInfo) {
+      // if userInfo is null, can't be login
+      navigate("/dummydashboard");
+    }
+  }, [navigate, userInfo]);
 
   return (
     <div>
