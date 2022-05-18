@@ -263,7 +263,7 @@ class FacultyWfarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Faculty
-        fields = ('id', 'wfars')
+        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'wfars')
     
     def get_wfars(self, instance):
         semester_id = self.context.get("semester_id")

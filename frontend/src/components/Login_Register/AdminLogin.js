@@ -15,10 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./Login.module.css";
 import { login } from "../../store/authActions";
 
+
+
+let inLoadClassForAnimation = "";
+if(localStorage.getItem("initialReload") == "true"){
+  inLoadClassForAnimation = "login-form-delay";
+  console.log(inLoadClassForAnimation);
+}
+localStorage.setItem("initialReload", "true");
 const Login = () => {
-  const IMAGE = {
-    cictLogo: "asdd",
-  };
+  
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -60,9 +66,16 @@ const Login = () => {
     }
   }, [navigate, userInfo]);
 
+
+  let inLoadClassForAnimation = "";
+  if(localStorage.getItem("initialReload") == "true"){
+    inLoadClassForAnimation = "login-form-delay";
+  }
+
+  localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["login-form-container"]}>
+      <div className={styles["login-form-container"]+ " " + styles[inLoadClassForAnimation]}>
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>
@@ -103,7 +116,7 @@ const Login = () => {
             <div className={styles["form-field"]}>
               <InputField
                 id="sampleText"
-                type="text"
+                type="password"
                 labelName=""
                 inputName="password"
                 placeholder="Password"

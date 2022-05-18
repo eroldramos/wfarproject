@@ -26,6 +26,7 @@ const MySubmission = (props) => {
     
     // retrieving wfars and archived wfars
     useEffect(() => {
+        // mag-run tayo dito ng magdedetermine kung ano 'yung active semester
         console.log("FILTER SEMESTER RETRIEVE");
         dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveArchivedWfars(filterSemester));

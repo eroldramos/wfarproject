@@ -15,5 +15,4 @@ urlpatterns =[
     path('myWfar/entry/unarchive/<str:pk>/', views.UnarchiveWfarEntry.as_view(), name='myWfar_unarchive'),
     path('myWfar/entry/<str:pk>/', views.RetrieveWfarEntry.as_view(), name='myWfar_entry_view'),
     path('myWfar/getImage/<str:pk>/', views.GetImage.as_view(), name='myWfar_image'),
-    path('myWfar/retrieveWfarOverview/<str:faculty_checker_id>/', views.RetrieveFacultyWFAR.as_view(), name='wfar_faculty_overview')
 ]

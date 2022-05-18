@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 
 export const createWfar = () => {
     return async (dispatch, getState) => {
-        let url = `api/myWfar/create/`;
+        let url = `/api/myWfar/create/`;
 
         try {
 

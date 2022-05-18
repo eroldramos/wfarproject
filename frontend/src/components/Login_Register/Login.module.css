@@ -43,17 +43,20 @@
   z-index: 6;
   /* border: 1px solid black; */
 }
-
+.login-form-delay{
+  animation-delay: 0s;
+}
 .login-form {
   position: fixed;
   width: 527px;
-  height: 494px;
+  min-height: 494px;
   background-color: #fff;
   color: #323232;
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   padding: 30px 50px;
-  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
 }
 
 .cict-wfar-logo {
@@ -339,4 +342,8 @@
   z-index: 4;
   animation: fade-out ease 1s forwards;
   animation-delay: 6s;
+}
+.error{
+  text-align: center;
+  color: #FF6A6A;
 }

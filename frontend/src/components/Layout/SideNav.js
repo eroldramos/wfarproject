@@ -28,6 +28,7 @@ const SideNav = (props) => {
 
   const onLogoutHandler = () => {
     dispatch(logout());
+    console.log(logout())
   };
   //
   const loggedUser = useSelector((state) => state.login);

@@ -1,10 +1,18 @@
-.entryDetailsContainer{
-}
-.entryDetailsContainer h5{
+.entryDetailsTextContainer h3, .learningActivitiesContainer h3{
     font-weight: 600;
     margin: 10px 0;
     font-size: 16px;
+    display: inline;
 }
-.attachments h4{
-    margin: 5px 0;
+.entryDetailsContainer div{
+    margin-bottom: 7px;
+}
+.entryDetailsContainer p{
+    display: inline;
+}
+.attachments h2{
+    font-size: 16px;
+    margin: 5px 0 15px 0;
+    font-size: 16px;
+    font-weight: 600;
 }

@@ -13,7 +13,7 @@ import PostedComments from "./Comments/PostedComments";
 const WFARChecking = () =>{
 
     const [isNotFaculty, setIsNotFaculty] = useState(true);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(true);
 
     return (
         <Fragment>
@@ -32,12 +32,12 @@ const WFARChecking = () =>{
             </div>
             <div className={styles.mainContainer}>
                 <div className={styles.entriesContainer}>
-                    <h5 className={styles.Label}>Entries:</h5>
+                    <h3 className={styles.Label}>Entries:</h3>
                     <Entries/>
                 </div>
                 {/* <span className={styles.divider}/> */}
                 <div className={styles.commentsContainer}>
-                    <h5 className={styles.Label}> Comments/Remarks</h5>
+                    <h3 className={styles.Label}> Comments/Remarks</h3>
                     {isNotFaculty && <CommentInputs/>}{/* Pag faculty mag sasubmit wala to  */}
                     <PostedComments></PostedComments>
                 </div>
