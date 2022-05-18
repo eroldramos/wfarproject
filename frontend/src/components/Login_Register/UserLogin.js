@@ -4,7 +4,7 @@ import cictLogo from "../../assets/Login_Register-Images/cict-logo.png";
 import InputField from "../UI/FormControl/InputField/InputField";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect,Component } from "react";
 import {
   Link,
   useNavigate,
@@ -14,6 +14,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./Login.module.css";
 import { login } from "../../store/authActions";
+import { render } from "react-dom";
+
 
 const Login = () => {
   const IMAGE = {
@@ -48,11 +50,14 @@ const Login = () => {
     console.log(username, password);
     dispatch(login(username, password, "Faculty"));
   };
-
+  
+  // to remove animation in changing from login to reg vice versa
+  
   const onNavigateToSignUp = () => {
+    
     navigate("/register");
   };
-
+  
   useEffect(() => {
     if (userInfo) {
       // if userInfo is null, can't be login
@@ -60,9 +65,15 @@ const Login = () => {
     }
   }, [navigate, userInfo]);
 
+  let inLoadClassForAnimation = "";
+  if(localStorage.getItem("initialReload") == "true"){
+    inLoadClassForAnimation = "login-form-delay";
+  }
+
+  localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["login-form-container"]}>
+      <div className={styles["login-form-container"] + " " + styles[inLoadClassForAnimation]} onLoad>
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>

@@ -14,7 +14,7 @@ import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownF
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import DateField from "../UI/FormControl/DateField/DateField";
 import { register } from "../../store/authActions";
-const Register = () => {
+const Register = (props) => {
   const dispatch = useDispatch(); //use to call actions
   let navigate = useNavigate(); //use to navigate urls
 
@@ -100,7 +100,7 @@ const Register = () => {
     dispatch(register(registrationObj));
   };
 
-  const onNavigateToLogin = () => {
+  const onNavigateToLogin = () => {  
     navigate("/");
   };
 
@@ -367,9 +367,17 @@ const Register = () => {
   } = useValidateInput(
     (value) => value.trim() !== "" && onlyNumbers(value.trim())
   );
+
+  
+  let inLoadClassForAnimation = "";
+  if(localStorage.getItem("initialReload") == "true"){
+    inLoadClassForAnimation = "register-form-delay";
+    console.log(inLoadClassForAnimation);
+  }
+  localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["register-form-container"]}>
+      <div className={styles["register-form-container"] + " " + styles[inLoadClassForAnimation]}>
         <div className={styles["register-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>

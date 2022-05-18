@@ -9,6 +9,10 @@
     top: 0;
     left: 0;
     z-index: 5;
+    /* border: 5px solid black; */
+}
+.register-form-delay{
+    animation-delay: 0s;
 }
 .form-container{
     /* border: 1px solid red; */
