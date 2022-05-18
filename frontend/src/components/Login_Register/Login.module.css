@@ -2,13 +2,15 @@
   background: black;
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  left: 0;
+  left: 0; */
+  position: fixed;
   background-image: url("../../assets/Login_Register-Images/cict_bg1.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+  /* border: 1px solid black; */
 }
 
 .overlay {
@@ -25,6 +27,7 @@
 .form-container {
   /* border: 1px solid black; */
   margin-top: 10px;
+  padding: 10px 20px;
 }
 .login-form-container {
   animation: fade-in ease 2s both;
@@ -50,7 +53,7 @@
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   padding: 30px 50px;
-  /* border: 1px solid black; */
+  /* border: 1px solid red; */
 }
 
 .cict-wfar-logo {
@@ -110,17 +113,12 @@
   color: #666666;
 }
 
-.login-form form {
-  padding: 10px 15px;
-}
-.form-field {
-  padding-left: 10px;
-  /* border: 1px solid black; */
-  /* .form-field{
-    /* padding: 0 10px; */
-  /* border: 1px solid black; */
-}
-*/ .form-fields {
+
+/* .form-field {
+  padding-left: 10px; 
+  border: 1px solid black;
+} */
+.form-fields {
   /* border: 1px solid black; */
   width: fit-content;
 }
@@ -167,7 +165,7 @@
 .signin-button-container {
   width: 100%;
   /* border: 1px solid black; */
-  padding: 0 10px;
+  /* padding: 0 10px; */
   margin-top: 20px;
 }
 .signup-link {
