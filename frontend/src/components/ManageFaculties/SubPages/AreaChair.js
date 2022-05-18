@@ -6,6 +6,7 @@ import styles from "./Subpages.module.css";
 import { getAreaChairs } from "../../../store/manageFacultiesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import Paginator from "../SubComponents/Paginator";
 const AreaChair = () => {
   const search = useLocation().search;
   let navigate = useNavigate();
@@ -16,7 +17,7 @@ const AreaChair = () => {
   const {
     isLoading: getAreaChairsIsLoading,
     error: getAreaChairsError,
-    areachairs,
+    areachairs: { faculties: areachairs, pages, page },
   } = getAreaChairsReducerValues;
 
   const changeUserTypeReducerValues = useSelector(
@@ -51,13 +52,16 @@ const AreaChair = () => {
     //   user_type: 1,
     // },
   ]);
+  const [ableToSearch, setAbleToSearch] = useState(true);
   useEffect(() => {
     if (userTypeSuccess && !userTypeIsLoading) {
       console.log("ufkckkkkcakdsakfk");
-      navigate("/manage-faculty/area-chair/");
+      navigate(window.location.pathname);
     }
-    dispatch(getAreaChairs());
-  }, [dispatch, userTypeSuccess, userTypeIsLoading]);
+    if (ableToSearch) {
+      dispatch(getAreaChairs(search));
+    }
+  }, [dispatch, userTypeSuccess, userTypeIsLoading, search, ableToSearch]);
 
   useEffect(() => {
     if (areachairs && !userTypeIsLoading) {
@@ -65,8 +69,20 @@ const AreaChair = () => {
     }
   }, [areachairs, userTypeIsLoading]);
 
+  const disableSearch = () => {
+    setAbleToSearch(false);
+  };
+  const enableSearch = () => {
+    setAbleToSearch(true);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -129,6 +145,8 @@ const AreaChair = () => {
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows
+              enableSearch={enableSearch}
+              disableSearch={disableSearch}
               id={data.id}
               fullname={`${data.last_name}, ${data.first_name} ${data.middle_name}`}
               emp_no={data.emp_no}
@@ -142,6 +160,14 @@ const AreaChair = () => {
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={"/manage-faculty/area-chair/"}
+        />
+      </div>
     </Fragment>
   );
 };

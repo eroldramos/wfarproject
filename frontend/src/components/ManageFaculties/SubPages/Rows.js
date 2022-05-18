@@ -9,7 +9,7 @@ import ViewFacultyModal from "./Modals/ViewFacultyModal";
 import ViewStatusModal from "./Modals/ViewStatusModal";
 import FacultyAssignModal from "./Modals/FacultyAssignModal";
 import { useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -24,6 +24,7 @@ const Rows = (props) => {
     },
   ];
 
+  let navigate = useNavigate();
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
   const [promoteModalIsShown, setPromoteModalIsShown] = useState(false);
   const [demoteModalIsShown, setDemoteModalIsShown] = useState(false);
@@ -72,16 +73,34 @@ const Rows = (props) => {
   };
   const openViewFacultyModal = () => {
     setViewFacultyModal(true);
+    props.disableSearch();
+    console.log("disableSearch");
   };
   const closeViewFacultyModal = () => {
+    setViewFacultyModal(false);
+    props.enableSearch();
+    console.log("enableSearch");
+    let urlArray = window.location.pathname.split("/");
+    let backHistory = `/${urlArray[1]}/${urlArray[2]}/`;
+    navigate(backHistory);
+  };
+
+  const closeViewFacultyModalTransition = () => {
     setViewFacultyModal(false);
   };
 
   const openFacultyAssignModal = () => {
     setFacultyAssignModal(true);
+    props.disableSearch();
+    console.log("disableSearch", "-------");
   };
   const closeFacultyAssignModal = () => {
     setFacultyAssignModal(false);
+    props.enableSearch();
+    console.log("enableSearch", "-----------");
+    let urlArray = window.location.pathname.split("/");
+    let backHistory = `/${urlArray[1]}/${urlArray[2]}/`;
+    navigate(backHistory);
   };
   return (
     <Fragment>
@@ -144,7 +163,7 @@ const Rows = (props) => {
                 )
               : viewFacultyModal && (
                   <ViewStatusModal
-                    onClose={closeViewFacultyModal}
+                    onClose={closeViewFacultyModalTransition}
                     onOpenAssign={openFacultyAssignModal}
                     id={props.id}
                     fullname={props.fullname}

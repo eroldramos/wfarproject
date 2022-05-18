@@ -36,7 +36,7 @@ export const getSemsReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    semesters: [],
+    semesters: {},
   },
   reducers: {
     getSemsRequest(state, action) {
@@ -67,7 +67,7 @@ export const getArchivedSemsReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    semesters: [],
+    semesters: {},
   },
   reducers: {
     getArchivedSemsRequest(state, action) {

@@ -6,6 +6,7 @@ import styles from "./Subpages.module.css";
 import { getFaculties } from "../../../store/manageFacultiesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import Paginator from "../SubComponents/Paginator";
 const Faculty = () => {
   const search = useLocation().search;
   let navigate = useNavigate();
@@ -14,7 +15,7 @@ const Faculty = () => {
   const {
     isLoading: getFacultiesIsLoading,
     error: getFacultiesError,
-    faculties,
+    faculties: { faculties, pages, page },
   } = getFacultiesReducerValues;
 
   const changeUserTypeReducerValues = useSelector(
@@ -54,13 +55,25 @@ const Faculty = () => {
     //   user_type: 1,
     // },
   ]);
+
+  const [ableToSearch, setAbleToSearch] = useState(true);
+
   useEffect(() => {
     if (userTypeSuccess && !userTypeIsLoading) {
       console.log("ufkckkkkcakdsakfk");
-      navigate("/manage-faculty/faculty/");
+      navigate(window.location.pathname);
     }
-    dispatch(getFaculties());
-  }, [dispatch, userTypeSuccess, userTypeIsLoading, assignIsLoading]);
+    if (ableToSearch) {
+      dispatch(getFaculties(search));
+    }
+  }, [
+    dispatch,
+    userTypeSuccess,
+    userTypeIsLoading,
+    assignIsLoading,
+    search,
+    ableToSearch,
+  ]);
 
   useEffect(() => {
     if (faculties && !userTypeIsLoading) {
@@ -68,8 +81,20 @@ const Faculty = () => {
     }
   }, [faculties, userTypeIsLoading]);
 
+  const disableSearch = () => {
+    setAbleToSearch(false);
+  };
+  const enableSearch = () => {
+    setAbleToSearch(true);
+  };
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -132,6 +157,8 @@ const Faculty = () => {
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows
+              enableSearch={enableSearch}
+              disableSearch={disableSearch}
               id={data.id}
               fullname={`${data.last_name}, ${data.first_name} ${data.middle_name}`}
               emp_no={data.emp_no}
@@ -145,6 +172,14 @@ const Faculty = () => {
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={window.location.pathname}
+        />
+      </div>
     </Fragment>
   );
 };

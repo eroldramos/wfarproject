@@ -51,7 +51,7 @@ const ViewFacultyModal = (props) => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
     if (page == 1) {
-      navigate(newUrl + "assigned-faculty/");
+      navigate(newUrl + "assigned-faculty/" + props.id + "/");
     }
     if (page == 2) {
       navigate(newUrl + "unassigned-faculty/");
@@ -65,7 +65,8 @@ const ViewFacultyModal = (props) => {
   useEffect(() => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
-    navigate(newUrl + "assigned-faculty/");
+
+    navigate(newUrl + "assigned-faculty/" + props.id + "/");
   }, []);
   console.log(currentPage, "VIEWFACULTYMODAL");
   return (
@@ -87,7 +88,7 @@ const ViewFacultyModal = (props) => {
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
           <Routes>
             <Route
-              path={"/assigned-faculty/"}
+              path={"/assigned-faculty/:id/"}
               element={
                 <AssignedFaculty
                   onClose={props.onClose}
