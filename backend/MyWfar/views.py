@@ -1,5 +1,6 @@
 from calendar import week
 from datetime import datetime
+from email.policy import HTTP
 from multiprocessing import context
 from os import stat
 from random import sample
@@ -345,32 +346,3 @@ class GetImage(APIView):
         # except:
         #     pass
             # return Response({"test": "test"})
-
-
-# --------------------------
-class RetrieveFacultyWFAR(APIView):
-    permission_classes = [IsAdminAreaChairAndDeptHead]
-
-    def get(self, request, faculty_checker_id):
-
-        if faculty_checker_id == 0:
-            faculties = Faculty.objects.all()
-        else:
-            faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(pk=faculty_checker_id))
-        
-
-        semester = Semester.objects.get(is_active=True)
-        semester_id = semester.id
-        current_week_no = 3# step 2 - get the current_week
-            
-        semester_weeks = semester.no_of_weeks
-        semester_start_date = semester.start_date
-        semester_end_date = semester.end_date
-        semester_no_of_weeks = semester.no_of_weeks
-        
-        serializer = FacultyWfarSerializer(faculties, context={"semester_id": semester_id, "current_week_no": current_week_no}, many=True)
-        # serializer = FacultyWfarSerializer(faculties, many=True)
-        return Response(serializer.data)
-
-        pass
-    pass
