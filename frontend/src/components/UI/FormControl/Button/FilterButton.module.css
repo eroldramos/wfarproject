@@ -9,14 +9,19 @@
     border-radius: 5px;
     transition: .1s linear;
     cursor: pointer;
-    margin: 5px 15px;
-    border: 1.75px solid transparent;
+    margin: 5px 5px;
+    border: 1.75px solid #F8DFD8;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* transition: .1s linear; */
 }
+
 .button:hover {
-    transition: .1s linear;
+    border: 1.75px solid #BE5A40;
+}
+
+.button:active {
     border: 1.75px solid #BE5A40;
 }
 

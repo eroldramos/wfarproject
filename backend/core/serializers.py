@@ -244,3 +244,52 @@ class WfarEntryViewSerializer(serializers.ModelSerializer):
         fields = ('id', 'accomplishment_date', 'subject', 
                     'course_year_section', 'no_of_attendees', 'recording_url',
                     'wfar_entry_activities', 'wfar_entry_attachments');
+
+
+# --------------------------------------
+
+# class 
+
+class WfarSerializer2(serializers.ModelSerializer):
+
+    class Meta:
+        model = WFAR
+        fields = '__all__'
+
+class FacultyWfarSerializer(serializers.ModelSerializer):
+
+    wfars = serializers.SerializerMethodField()
+    # wfars = WfarSerializer2(many=True, read_only=True)
+
+    class Meta:
+        model = Faculty
+        fields = ('id', 'wfars')
+    
+    def get_wfars(self, instance):
+        semester_id = self.context.get("semester_id")
+        current_week_no = self.context.get("current_week_no")
+
+        # wfars_instances = instance.wfars.all()
+        wfars_instances = instance.wfars.filter(semester_id=semester_id, week_no__lte=current_week_no)
+        return WfarSerializer2(wfars_instances, many=True).data
+
+# class CarTypesSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = CarType
+#         fields = '__all__'
+
+
+# class CarSerializer(serializers.ModelSerializer):
+
+#     car_types = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = Car
+#         fields = '__all__'
+
+#     def get_car_types(self, instance):
+#         # Filter using the Car model instance and the CarType's related_name
+#         # (which in this case defaults to car_types_set)
+#         car_types_instances = instance.car_types_set.filter(brand="Toyota")
+#         return CarTypesSerializer(car_types_instances, many=True).data

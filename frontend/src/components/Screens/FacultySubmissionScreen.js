@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import FacultySubmission from "../FacultySubmissions/Overview/Overview"
+import FacultySubmission from "../FacultySubmissions/FacultySubmission";
 
 const FacultySubmissionScreen = () => {
   return (

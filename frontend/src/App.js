@@ -8,8 +8,6 @@ import LoginScreen from "./components/Screens/LoginScreen";
 import PendingAccountsScreen from "./components/Screens/PendingAccountsScreen";
 import AdminLoginScreen from "./components/Screens/AdminLoginScreen";
 import MySubmissionScreen from "./components/Screens/MySubmissionScreen";
-import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
-import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
 import AddEntry from "./components/WfarForm/AddEntry/AddEntry";
@@ -20,9 +18,11 @@ import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
+import WFARSubmissionsOverview from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
-import { useDispatch } from "react-redux";
-import { createWfar } from "./store/myWfarsActions";
+import { useDispatch } from 'react-redux'
+import { createWfar } from './store/myWfarsActions';
+import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,19 +37,20 @@ function App() {
 
   // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    dispatch(createWfar());
+    dispatch(createWfar()); 
   }, []);
 
+  const haveSession = false;
   return (
-    <div>
-      <SideNav userLevel="1"></SideNav>
-      <div id="main">
+    <div className="for-login-container">
+      {!haveSession && <Login/>}
+      {haveSession && <SideNav userLevel="1"></SideNav>}
+      <div id="main" >
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* dont remove, for testing of logout only. */}
-          <Route path="/OverView" element={<FacultySubmissionScreen />}></Route>
-          <Route path="/WeeklyView" element={<WeeklyView />}></Route>
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
+          <Route path="/FacultySubmission/*" element={<FacultySubmissionScreen />}></Route>
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 

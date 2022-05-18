@@ -2,3 +2,7 @@
 .opacity-50 {
     opacity: .5;
 }
+.for-login-container{
+    overflow: hidden;
+    height: 100vh;
+}
