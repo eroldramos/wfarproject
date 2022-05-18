@@ -20,8 +20,8 @@ import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import WFARSubmissionsOverview from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
-import { useDispatch } from 'react-redux'
-import { createWfar } from './store/myWfarsActions';
+import { useDispatch } from "react-redux";
+import { createWfar } from "./store/myWfarsActions";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
 
 function App() {
@@ -37,20 +37,23 @@ function App() {
 
   // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    dispatch(createWfar()); 
+    dispatch(createWfar());
   }, []);
 
-  const haveSession = false;
+  const haveSession = true;
   return (
     <div className="for-login-container">
-      {!haveSession && <Login/>}
+      {!haveSession && <LoginScreen />}
       {haveSession && <SideNav userLevel="1"></SideNav>}
-      <div id="main" >
+      <div id="main">
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* dont remove, for testing of logout only. */}
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
-          <Route path="/FacultySubmission/*" element={<FacultySubmissionScreen />}></Route>
+          <Route
+            path="/FacultySubmission/*"
+            element={<FacultySubmissionScreen />}
+          ></Route>
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
