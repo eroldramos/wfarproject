@@ -459,6 +459,7 @@ const Register = () => {
                   // noLabel = "no-label-input"
                   custom="form-control-custom"
                   labelMargin="nm"
+                  noLabel="no-label-input"
                 />
                 {/* <label for="">Middle Name</label>
                             <input type="text" placeholder="Middle Name"/> */}

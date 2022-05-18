@@ -19,25 +19,30 @@
 .entryTextContainer{
     width: 50%;
 }
-.detailsContainer h5{
+.detailsContainer h3{
     margin: 0;
 }
-.entryTextContainer h5{
-    margin-top: 6px;
+.entryTextContainer h3{
+    margin: 6px 0;
 }
-.entryTextContainer h5:nth-child(1){
+.entryTextContainer h3:nth-child(1){
     font-weight: 600;
+    font-size: 18px;
 }
-.entryTextContainer h5:nth-child(2){
-    font-weight: 500;
+.entryTextContainer h3:nth-child(2){
+    font-weight: 600;
     font-size: 16px;
+    display: inline;
+}
+.entryTextContainer p{
+    display: inline;
 }
 .attachmentContainer{
     display: flex;
     width: fit-content;
     float: right;
 }
-.attachmentContainer h5{
+.attachmentContainer h3{
     height: fit-content;
     position: relative;
     top: 34%;
@@ -58,6 +63,7 @@
     cursor: pointer;
 }
 .expandedEntry{
+    border: 1px solid black;
     margin: 0px 20px;
     margin-bottom: 20px;
     width: 93%;

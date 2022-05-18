@@ -103,7 +103,7 @@ const Login = () => {
             <div className={styles["form-field"]}>
               <InputField
                 id="sampleText"
-                type="text"
+                type="password"
                 labelName=""
                 inputName="password"
                 placeholder="Password"
