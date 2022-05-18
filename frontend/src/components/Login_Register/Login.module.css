@@ -25,6 +25,7 @@
 .form-container{
     /* border: 1px solid black; */
     margin-top: 10px;
+    padding: 10px 30px;
 }
 .login-form-container {
     animation: fade-in ease 2s both;
@@ -110,11 +111,8 @@
     color: #666666;
 }
 
-.login-form form {
-    padding: 10px 15px;
-}
 .form-field{
-    padding-left: 10px;
+    /* padding: 0 10px; */
     /* border: 1px solid black; */
 }
 .form-fields{
@@ -164,7 +162,7 @@
 .signin-button-container{
     width: 100%;
     /* border: 1px solid black; */
-    padding: 0 10px;
+    /* padding: 0 10px; */
     margin-top: 20px;
 }
 .signup-link{

@@ -4,29 +4,12 @@ import cictBg from "../../assets/Login_Register-Images/cict_bg1.png"
 import InputField from "../UI/FormControl/InputField/InputField";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox"
+import { Fragment } from "react";
 const Login = () =>{
-    const IMAGE = {
-        cictLogo: "asdd",
-    }
-    return(
-        <div>
-            <div className={styles["background-image"]} style = {{backgroundImage: 'url('+cictBg+')'}} ></div>
-            <div className={styles["overlay"]}></div>
-            <div className={styles["logo-splashscreen"]}>
-                <div className={styles["logo-splashscreen1"]}>
-                    <div className={styles["image-container"]}>
-                        <img src={cictLogo}/>
-                    </div>
-                </div>
-                <div className={styles["logo-splashscreen2"]}>
-                    <div className={styles["logo-text"]}>
-                        <p className={styles["cict-wfar"]}>CICT - WFAR</p>
-                        <p className={styles["management-system"]}>Management System</p>
-                    </div>
-                </div>
-            </div>
-            
+    
 
+    return(
+        <Fragment>
             <div className={styles["login-form-container"]}>
                 <div className={styles["login-form"]}>
                     <div className={styles["cict-wfar-logo"]}>
@@ -46,9 +29,9 @@ const Login = () =>{
                     <form className={styles["form-container"]} action="" id="login-fields" >
                         <div className={styles["form-field"]}>
                             <InputField 
-                                id="sampleText"
+                                id="userName"
                                 type="text"
-                                labelName="asda"
+                                labelName=""
                                 inputName="username"
                                 placeholder="Username or Email"
                                 size="lg"
@@ -91,12 +74,11 @@ const Login = () =>{
                         </div>
                         <div className={styles["signup-link"]}>
                             <p>Don't have an account?<h5> Sign up</h5></p>
-                            
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 export default Login;

@@ -23,6 +23,7 @@ import SampleRedux from "./SampleRedux";
 import { useDispatch } from "react-redux";
 import { createWfar } from "./store/myWfarsActions";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
+import LandingPage from "./components/Login_Register/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,10 +41,10 @@ function App() {
     dispatch(createWfar());
   }, []);
 
-  const haveSession = true;
+  const haveSession = false;
   return (
     <div className="for-login-container">
-      {!haveSession && <LoginScreen />}
+      {!haveSession && <LandingPage />}
       {haveSession && <SideNav userLevel="1"></SideNav>}
       <div id="main">
         <Routes>
@@ -58,8 +59,9 @@ function App() {
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/LoginScreen" element={<LoginScreen />}></Route>
           <Route path="/register" element={<RegisterScreen />}></Route>
-          <Route path="/" element={<SampleRedux />}></Route>
+          {/* <Route path="/" element={<SampleRedux />}></Route> */}
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
           <Route
             path="/mySubmission/*"
