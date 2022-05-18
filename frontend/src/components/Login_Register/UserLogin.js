@@ -56,23 +56,7 @@ const Login = () => {
   }, [navigate, userInfo]);
 
   return (
-    <div>
-      <div className={styles["background-image"]}></div>
-      <div className={styles["overlay"]}></div>
-      <div className={styles["logo-splashscreen"]}>
-        <div className={styles["logo-splashscreen1"]}>
-          <div className={styles["image-container"]}>
-            <img src={cictLogo} />
-          </div>
-        </div>
-        <div className={styles["logo-splashscreen2"]}>
-          <div className={styles["logo-text"]}>
-            <p className={styles["cict-wfar"]}>CICT - WFAR</p>
-            <p className={styles["management-system"]}>Management System</p>
-          </div>
-        </div>
-      </div>
-
+    <Fragment>
       <div className={styles["login-form-container"]}>
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
@@ -100,7 +84,7 @@ const Login = () => {
               <InputField
                 id="sampleText"
                 type="text"
-                labelName="asda"
+                labelName=""
                 inputName="username"
                 placeholder="Username or Email"
                 size="lg"
@@ -159,7 +143,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 export default Login;

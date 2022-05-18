@@ -42,11 +42,11 @@ function App() {
     dispatch(createWfar());
   }, []);
 
-  const haveSession = false;
+  const haveSession = true;
   return (
     <div className="for-login-container">
-      {/* {!haveSession && <Login />}
-      {haveSession && <SideNav userLevel="1"></SideNav>} */}
+      {!haveSession && <LandingPage />}
+      {haveSession && <SideNav userLevel="1"></SideNav>}
       <div id="main">
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
