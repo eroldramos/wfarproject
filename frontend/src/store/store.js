@@ -46,20 +46,17 @@ import {
   myWfarFetchEntryReducer,
 } from "./myWfarReducers";
 
-<<<<<<< HEAD
 import {
   wfarRetrieveOverviewReducer
 } from "./wfarReducers";
 
 console.log("HelloWorld");
-=======
 // sheen
 import{
   getAllWFARinThisWeekReducer,
   getAllUsersReducer,
   getActiveSemReducer,
 } from './dashboardReducer';
->>>>>>> 0e0bb18a20876cfd8107afabf50e2a45ee5122ef
 
 const store = configureStore({
   reducer: {
