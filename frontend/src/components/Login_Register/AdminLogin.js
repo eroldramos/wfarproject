@@ -46,7 +46,7 @@ const Login = () => {
     }
 
     console.log(username, password);
-    dispatch(login(username, password, "Faculty"));
+    dispatch(login(username, password, "Admin"));
   };
 
   const onNavigateToSignUp = () => {
@@ -74,7 +74,7 @@ const Login = () => {
             </div>
           </div>
           <div className={styles["form-greetings"]}>
-            <p>Welcome Back!</p>
+            <p>Administrator Login</p>
             <p>Please login to your account</p>
           </div>
           {error && <p className={styles["error"]}>{error}</p>}

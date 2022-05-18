@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import useValidateInput from "../../hooks/useValidateInput";
 import { useDispatch, useSelector } from "react-redux";
-import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
+import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import DateField from "../UI/FormControl/DateField/DateField";
 import { register } from "../../store/authActions";
@@ -98,6 +98,10 @@ const Register = () => {
     console.log(registrationObj);
 
     dispatch(register(registrationObj));
+  };
+
+  const onNavigateToLogin = () => {
+    navigate("/");
   };
 
   // Username Validations
@@ -381,7 +385,12 @@ const Register = () => {
             <p>Please create an account to continue</p>
           </div>
 
-          <form className={styles["form-container"]} action="" id="register-fields" onSubmit={onRegisterHandler}>
+          <form
+            className={styles["form-container"]}
+            action=""
+            id="register-fields"
+            onSubmit={onRegisterHandler}
+          >
             <div className={styles["register-form-section"]}>
               <p>Employee Information</p>
               <hr />
@@ -597,8 +606,8 @@ const Register = () => {
               <p>Personal Information</p>
               <hr />
               <div className={styles["registration-double-form"]}>
-              <div className={styles["form-field"]}>
-                  <DropdownField
+                <div className={styles["form-field"]}>
+                  <CustomDropdownField
                     id="civilStatus"
                     name="civilStatus"
                     labelName="Civil Status"
@@ -618,7 +627,7 @@ const Register = () => {
                                 <input type="date" placeholder="Birthdate"/> */}
                 </div>
                 <div className={styles["form-field"]}>
-                  <DropdownField
+                  <CustomDropdownField
                     id="sex"
                     name="sex"
                     labelName="Sex"
@@ -868,7 +877,8 @@ const Register = () => {
             ></SmallButton>
             <div className={styles["signin-link"]}>
               <p>
-                Already have an account?<h5> Sign in</h5>
+                Already have an account?
+                <h5 onClick={onNavigateToLogin}> Sign in</h5>
               </p>
             </div>
           </form>

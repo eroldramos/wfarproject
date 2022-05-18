@@ -98,6 +98,14 @@ const CreateSemester = () => {
     navigate("/manage-semesters/");
   };
 
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
+
   useEffect(() => {
     if (success) {
       navigate("/manage-semesters/");
