@@ -23,6 +23,7 @@ import SampleRedux from "./SampleRedux";
 import { useDispatch } from "react-redux";
 import { createWfar } from "./store/myWfarsActions";
 import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
+import Login from "./components/Login_Register/Login";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,8 +44,8 @@ function App() {
   const haveSession = false;
   return (
     <div className="for-login-container">
-      {!haveSession && <LoginScreen />}
-      {haveSession && <SideNav userLevel="1"></SideNav>}
+      {/* {!haveSession && <Login />}
+      {haveSession && <SideNav userLevel="1"></SideNav>} */}
       <div id="main">
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
@@ -99,6 +100,9 @@ function App() {
             path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
             element={<EditEntry />}
           ></Route>
+
+          {/* AUTHENTICATION ROUTES */}
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>
