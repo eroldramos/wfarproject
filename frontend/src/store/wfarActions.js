@@ -2,7 +2,7 @@ import SemesterFilter from "../components/FacultySubmissions/SemesterFilter/Seme
 import {
     wfarRetrieveOverviewActions
 } from "./wfarReducers";
-import axios from 'axios'
+// import axios from 'axios'
 
 export const retrieveWfarsOverview = (filterSemester, filterPage, filterSort, filterSearch) => {
     return async (dispatch, getState) => {
