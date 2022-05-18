@@ -5,15 +5,16 @@ import table from "./Table.module.css";
 import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   getUnassignedFaculties,
   assignedFaculty,
 } from "../../../../../store/manageFacultiesActions";
-
+import Paginator from "../../../SubComponents/Paginator";
 const UnassignedFaculty = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  const search = useLocation().search;
   const getUnassignedFacultiesReducerValues = useSelector(
     (state) => state.getUnassignedFaculties
   );
@@ -21,12 +22,12 @@ const UnassignedFaculty = (props) => {
   const {
     isLoading: unassignedIsLoading,
     error: unassignedError,
-    unassignedFaculties,
+    unassignedFaculties: { faculties: unassignedFaculties, page, pages },
   } = getUnassignedFacultiesReducerValues;
 
   useEffect(() => {
-    dispatch(getUnassignedFaculties());
-  }, [dispatch]);
+    dispatch(getUnassignedFaculties(search));
+  }, [dispatch, search]);
 
   useEffect(() => {
     if (unassignedFaculties) {
@@ -63,7 +64,7 @@ const UnassignedFaculty = (props) => {
   const [selectedUser, setSelectedUser] = useState([]);
   const [modalIsShown, setModalIsShown] = useState(false);
   const [searchFaculty, setSearchFaculty] = useState("");
-
+  console.log();
   const [checkedState, setCheckedState] = useState(
     new Array(listFaculties.length).fill(false)
   );
@@ -147,6 +148,11 @@ const UnassignedFaculty = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -229,6 +235,14 @@ const UnassignedFaculty = (props) => {
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={window.location.pathname}
+        />
+      </div>
     </Fragment>
   );
 };

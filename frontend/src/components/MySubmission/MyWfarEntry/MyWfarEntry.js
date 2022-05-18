@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PopupMenu from '../../UI/Menu/PopupMenu';
 import styles from './MyWfarEntry.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { archiveWfarEntry } from '../../../store/myWfarsActions';
 import Swal from 'sweetalert2';
 
@@ -9,6 +10,7 @@ const MyWfarEntry = (props) => {
 
     // hooks
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // use states
     const [displayPopup, setDisplayPopup] = useState("close");
@@ -18,6 +20,7 @@ const MyWfarEntry = (props) => {
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     // props
+    let wfarId = props.wfarId;
     let id = props.id;
     let wfarWeekNo = props.wfarWeekNo;
     let wfarStatus = props.wfarStatus;
@@ -26,6 +29,10 @@ const MyWfarEntry = (props) => {
     let accomplishmentDateLbl = month[accomplishmentDate.getMonth()] + " " + accomplishmentDate.getDate() + ", " + accomplishmentDate.getFullYear();
     let courseYearSection = props.courseYearSection;
     let subject = props.subject;
+
+    const onEditClickHandler = () => {
+        navigate('/mySubmission/wfar/' + wfarId +'/week/' + wfarWeekNo + '/edit-entry/' + id);
+    }
 
     // handlers
     const onArchiveClickHandler = () => {
@@ -66,7 +73,7 @@ const MyWfarEntry = (props) => {
         {
             id: 1,
             label: "Edit",
-            onClick: null
+            onClick: onEditClickHandler
         },
         {
             id: 2,

@@ -1,5 +1,4 @@
 .popup-menu-container {
-  float: right;
 }
 .filter-button-container {
   float: left;
@@ -11,11 +10,17 @@
   align-items: center;
   height: 44.5px;
 }
-.cleafix {
+.clearfix {
   clear: both;
 }
 .search-field-container {
+  width: fit-content;
   position: absolute;
-  right: 55px;
-  top: 120px;
+  right: 5%;
+}
+.pop-out-container {
+  background-color: red;
+  position: absolute;
+  right: 70px;
+  top: 110px;
 }

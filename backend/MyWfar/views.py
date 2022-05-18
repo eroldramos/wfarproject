@@ -1,5 +1,6 @@
 from calendar import week
 from datetime import datetime
+from multiprocessing import context
 from os import stat
 from random import sample
 from tokenize import maybe
@@ -9,8 +10,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from yaml import serialize
-from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer
-from core.permissions import IsAuthenticated
+from core.serializers import WfarEntryAttachmentSerializer
+from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
+from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead
 from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -55,6 +57,7 @@ class CreateWfar(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+
 
         try:
             # step 1 - get the faculty id
@@ -175,7 +178,9 @@ class UnsubmitWfar(APIView):
 class CreateWfarEntry(APIView):
     permission_classes = [IsAuthenticated]
 
+
     def post(self, request, wfar_pk):
+        
         try:
             data = request.data
             
@@ -187,24 +192,8 @@ class CreateWfarEntry(APIView):
                 no_of_attendees = data['no_of_attendees'],
                 recording_url = data['recording_url']
             )
-
-            sc_meetings = data['sc_meetings']
-            sc_activities = data['sc_activities']
+            
             activities = data['activities']
-
-            for file in sc_meetings:
-                WFAR_Entry_Attachment.objects.create(
-                    image_uri = file,
-                    type = 1,
-                    wfar_entry_id = entry
-                )
-
-            for file in sc_activities:
-                WFAR_Entry_Attachment.objects.create(
-                    image_uri = file,
-                    type = 2,
-                    wfar_entry_id = entry
-                )
 
             for activity in activities:
                 WFAR_Entry_Activity.objects.create(
@@ -212,11 +201,74 @@ class CreateWfarEntry(APIView):
                     wfar_entry_id = entry
                 )
 
-            return Response({"detail": "The WFAR entry has been added successfully."});
+            return Response({"detail": "The WFAR entry has been added successfully.", "id": entry.id}, status=status.HTTP_200_OK);
             pass
         except:
-            return Response({"detail": "The WFAR entry has not been added successfully."});
+            return Response({"detail": "The WFAR entry has not been added successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
             pass
+
+class UpdateWfarEntry(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        
+        try:
+            data = request.data
+
+            entry = WFAR_Entry.objects.get(pk=pk);
+            entry.accomplishment_date = data['accomplishment_date'];
+            entry.subject = data['subject'];
+            entry.course_year_section = data['course_year_section'];
+            entry.no_of_attendees = data['no_of_attendees'];
+            entry.recording_url = data['recording_url'];
+            entry.save();
+            
+            activitiesToBeReplaced = WFAR_Entry_Activity.objects.filter(wfar_entry_id=pk);
+            activitiesToBeReplaced.delete();
+
+            activities = data['activities']
+            for activity in activities:
+                WFAR_Entry_Activity.objects.create(
+                    description = activity,
+                    wfar_entry_id = entry
+                )
+
+            return Response({"detail": "The WFAR entry has been updated successfully."}, status=status.HTTP_200_OK);
+            pass
+        except:
+            return Response({"detail": "The WFAR entry has not been updated successfully."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+            pass
+class UpdateWfarEntryAttachments(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, wfar_entry_id):
+        try:
+            sc_meetings = request.FILES.getlist('sc_meetings')
+            sc_activities = request.FILES.getlist('sc_activities')
+
+            attachmentsToBeReplaced = WFAR_Entry_Attachment.objects.filter(wfar_entry_id=wfar_entry_id);
+            attachmentsToBeReplaced.delete();
+
+            for file in sc_meetings:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 1,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            for file in sc_activities:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 2,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            return Response({"detail": "The WFAR entry has been updated successfully."}, status=status.HTTP_200_OK);
+        except:
+            return Response({"detail": "The WFAR entry has been updated however attached images were not successfully uploaded."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+
+
 
 class ArchiveWfarEntry(APIView):
     permission_classes = [IsAuthenticated]
@@ -241,3 +293,84 @@ class UnarchiveWfarEntry(APIView):
             return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been restored successfully."}, status = status.HTTP_200_OK);
         except:
             return Response({"detail": "The WFAR entry cannot be restored, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+
+class UploadWfarEntryAttachments(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, wfar_entry_id):
+        try:
+            sc_meetings = request.FILES.getlist('sc_meetings')
+            sc_activities = request.FILES.getlist('sc_activities')
+
+            for file in sc_meetings:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 1,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            for file in sc_activities:
+                WFAR_Entry_Attachment.objects.create(
+                    image_uri = file,
+                    type = 2,
+                    wfar_entry_id = WFAR_Entry.objects.get(pk=wfar_entry_id)
+                )
+
+            return Response({"detail": "The WFAR entry has been added successfully."}, status=status.HTTP_200_OK);
+        except:
+            return Response({"detail": "The WFAR entry has been added however attached images were not successfully uploaded."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR);
+
+class RetrieveWfarEntry(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            wfar_entry = WFAR_Entry.objects.get(pk=pk)
+            serializer = WfarEntryViewSerializer(wfar_entry, context={"request": request})
+            return Response(serializer.data)
+        except:
+            pass
+
+class GetImage(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        # try:
+            wfar_entry_attachment = WFAR_Entry_Attachment.objects.get(pk=pk)
+            serializer = WfarEntryAttachmentSerializer(wfar_entry_attachment, many=False)
+            return Response(serializer.data)
+        # except:
+        #     pass
+            # return Response({"test": "test"})
+
+
+# --------------------------
+class RetrieveFacultyWFAR(APIView):
+    permission_classes = [IsAdminAreaChairAndDeptHead]
+
+    def get(self, request, faculty_checker_id):
+
+        if faculty_checker_id == 0:
+            faculties = Faculty.objects.all()
+        else:
+            faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(pk=faculty_checker_id))
+        
+
+        semester = Semester.objects.get(is_active=True)
+        semester_id = semester.id
+        current_week_no = 3# step 2 - get the current_week
+            
+        semester_weeks = semester.no_of_weeks
+        semester_start_date = semester.start_date
+        semester_end_date = semester.end_date
+        semester_no_of_weeks = semester.no_of_weeks
+        
+        serializer = FacultyWfarSerializer(faculties, context={"semester_id": semester_id, "current_week_no": current_week_no}, many=True)
+        # serializer = FacultyWfarSerializer(faculties, many=True)
+        return Response(serializer.data)
+
+        pass
+    pass

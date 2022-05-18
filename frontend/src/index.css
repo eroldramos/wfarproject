@@ -6,6 +6,11 @@
   user-select: none;
 }
 
+.filterButtonActive {
+  background-color: palegoldenrod;
+  border: 2px solid gray;
+}
+
 html {
   font-style: normal;
 }

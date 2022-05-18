@@ -1,6 +1,7 @@
 .form-control {
     width: 320px;
-    margin: 5px 5px;
+    /* margin: 5px 5px; */
+    margin: 5px 0px;
     position: relative;
     display: flex;
     align-items: center;

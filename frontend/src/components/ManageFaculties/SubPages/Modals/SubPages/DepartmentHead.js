@@ -10,6 +10,7 @@ import {
 } from "../../../../../store/manageFacultiesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import Paginator from "../../../SubComponents/Paginator";
 const DepartmentHead = (props) => {
   const icon = (
     <svg
@@ -36,12 +37,12 @@ const DepartmentHead = (props) => {
   const {
     isLoading: getDepartmentHeadsIsLoading,
     error: getDepartmentHeadsError,
-    departmentheads,
+    departmentheads: { faculties: departmentheads, pages, page },
   } = getDepartmentHeadsReducerValues;
 
   useEffect(() => {
-    dispatch(getDepartmentHeads());
-  }, [dispatch]);
+    dispatch(getDepartmentHeads(search));
+  }, [dispatch, search]);
 
   useEffect(() => {
     if (departmentheads) {
@@ -63,6 +64,13 @@ const DepartmentHead = (props) => {
   const [assigneeId, setAssigneeId] = useState("");
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(
+        `/manage-faculty/faculty/department-head/?search=${searchFaculty}&page=1`
+      );
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -143,6 +151,14 @@ const DepartmentHead = (props) => {
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={window.location.pathname}
+        />
+      </div>
     </Fragment>
   );
 };

@@ -15,7 +15,7 @@ const CheckingModal = (props) =>{
     const header = props.header;
     const buttonLabel = props.buttonLabel;
     return (
-        <Modal onClose = {props.onClose} size = "m">
+        <Modal onClose = {props.onClose} size = "s">
             <div className={styles.innerModal}>
                 <h3>{header}</h3>
                 <DropdownField 

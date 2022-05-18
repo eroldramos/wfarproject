@@ -2,14 +2,44 @@ import React, { Fragment, useState, useEffect } from "react";
 import styles from "./ManageSemesters.module.css";
 import IconButton from "../UI/FormControl/Button/IconButton";
 import SemesterRows from "./SemesterRows";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSems } from "../../store/manageSemActions";
 import Paginator from "./Paginator/Paginator";
+import DefaultPage from "./DefaultPage";
+import ArchivedPage from "./ArchivedPage";
+import Tab from "../UI/Tab/Tab";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom"; //for routing
 const ManageSemesters = () => {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
-  const search = useLocation().search;
+  const [currentPage, setCurrentPage] = useState(1);
+  const onChangePageHandler = (page) => {
+    setCurrentPage(page);
+
+    if (page == 1) {
+      navigate("/manage-semesters/");
+    }
+    if (page == 2) {
+      navigate("/manage-semesters/archives/");
+    }
+  };
+
+  const SAMPLE_ITEMS = [
+    {
+      label: "Semesters",
+      id: 1,
+      side: false,
+      onClick: () => onChangePageHandler(1),
+    },
+    {
+      label: "Archives",
+      id: 2,
+      side: false,
+      onClick: () => onChangePageHandler(2),
+    },
+  ];
+  useEffect(() => {
+    navigate("/manage-semesters/");
+  }, []);
   const icon = (
     <svg
       width="32"
@@ -25,31 +55,10 @@ const ManageSemesters = () => {
     </svg>
   );
 
-  const SEMESTERS = [
-    { label: "1st Semester", schoolYear: "2021-2022" },
-    { label: "1st Semester", schoolYear: "2021-2022" },
-    { label: "1st Semester", schoolYear: "2021-2022" },
-  ];
-
   const onNavigateCreateSemester = () => {
     navigate("/create-semester");
   };
-  const getSemsReducerValues = useSelector((state) => state.getSems);
-  const [allSemesters, setAllSemesters] = useState([]);
-  const {
-    isLoading,
-    error,
-    semesters: { semList, page, pages },
-  } = getSemsReducerValues;
-  useEffect(() => {
-    dispatch(getSems(search));
-  }, [dispatch, search]);
-  useEffect(() => {
-    if (semList) {
-      setAllSemesters(semList);
-    }
-  }, [semList]);
-  console.log(allSemesters);
+
   return (
     <Fragment>
       <h1>Manage Semesters</h1>
@@ -63,17 +72,14 @@ const ManageSemesters = () => {
         />
       </div>
       <div className={styles["clearfix"]}></div>
+      <Tab items={SAMPLE_ITEMS} currentPage={currentPage}></Tab>
 
-      {allSemesters.map((sem, index) => (
-        <SemesterRows
-          key={index}
-          semId={sem.id}
-          label={sem.label}
-          schoolYear={sem.school_year}
-        />
-      ))}
-      <div className={styles["paginator-container"]}>
-        <Paginator page={page} pages={pages} />
+      <div className={styles["semester-list-container"]}>
+        <Routes>
+          {/* in element properties we insert any element to render even exported elemt */}
+          <Route path="/" element={<DefaultPage />} />
+          <Route path="archives/" element={<ArchivedPage />} />
+        </Routes>
       </div>
     </Fragment>
   );

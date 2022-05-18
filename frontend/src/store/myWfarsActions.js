@@ -1,4 +1,5 @@
 import {
+    myWfarCreateActions,
     myWfarFetchActions,
     myWfarsArchivedActions,
     wfarSemestersActions,
@@ -6,10 +7,54 @@ import {
     myWfarUnsubmissionActions,
     myWfarRefreshActions,
     myWfarEntryArchiveActions,
-    myWfarEntryUnarchiveActions
+    myWfarEntryUnarchiveActions,
+    myWfarEntryCreateActions,
+    myWfarFetchEntryActions,
+    myWfarEntryUpdateActions
 } from './myWfarReducers';
 
 import Swal from 'sweetalert2';
+
+
+export const createWfar = () => {
+    return async (dispatch, getState) => {
+        let url = `api/myWfar/create/`;
+
+        try {
+
+
+            dispatch(myWfarCreateActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({"faculty_id": userInfo.id}),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            console.log(">>>>>>>> success")
+            const data = await response.json();
+            dispatch(myWfarCreateActions.requestSuccessfullyCompleted());
+            console.log(data)
+        } catch (error) {
+            console.log(">>>>>>>> may error")
+            console.log(error.message)
+            dispatch(myWfarCreateActions.requestFailed({ error: error.message }));
+        }
+    }
+}
 
 export const retrieveWfars = (filterSemester) => {
     return async (dispatch, getState) => {
@@ -158,7 +203,7 @@ export const submitWfar = (id, weekNo) => {
             dispatch(myWfarSubmissionActions.requestFailed({ error: error.message }));
             Swal.fire({
                 html:
-                    '<h4>' + error.message+'</h4>',
+                    '<h4>' + error.message + '</h4>',
                 icon: 'error',
                 confirmButtonColor: '#BE5A40'
             })
@@ -307,6 +352,152 @@ export const restoreWfarEntry = (id) => {
                 icon: 'error',
                 confirmButtonColor: '#BE5A40'
             })
+        }
+    }
+}
+
+export const createWfarEntry = (wfarId, weekNo, entry, formDataImages) => {
+
+    return async (dispatch, getState) => {
+        let url = `/api/myWfar/entry/wfar=${wfarId}/create/`;
+
+        try {
+            dispatch(myWfarEntryCreateActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(entry),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(myWfarEntryCreateActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
+
+            let uploadUrl = `/api/myWfar/entry/${data.id}/upload_attachments/`;
+            const response2 = await fetch(uploadUrl, {
+                method: "POST",
+                body: formDataImages,
+                headers: { "Authorization": "Bearer " + userInfo.token}
+            });
+
+            const uploadData = await response2.json();
+            console.log(uploadData);
+
+            if (!response2.ok) {
+                const data = await response2.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            console.log(data);
+        } catch (error) {
+            dispatch(myWfarEntryCreateActions.requestFailed({ error: error.message }));
+        }
+    }
+}
+
+export const updateWfarEntry = (wfarEntryId, entry, formDataImages) => {
+
+    return async (dispatch, getState) => {
+        let url = `/api/myWfar/entry/${wfarEntryId}/update/`;
+
+        try {
+            dispatch(myWfarEntryUpdateActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "PUT",
+                body: JSON.stringify(entry),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(myWfarEntryUpdateActions.requestSuccessfullyCompleted());
+            dispatch(myWfarRefreshActions.alertNewChange());
+
+            let uploadUrl = `/api/myWfar/entry/${wfarEntryId}/update_attachments/`;
+            const response2 = await fetch(uploadUrl, {
+                method: "POST",
+                body: formDataImages,
+                headers: { "Authorization": "Bearer " + userInfo.token }
+            });
+
+            const uploadData = await response2.json();
+            console.log(uploadData);
+
+            if (!response2.ok) {
+                const data = await response2.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            console.log(data);
+        } catch (error) {
+            dispatch(myWfarEntryUpdateActions.requestFailed({ error: error.message }));
+        }
+    }
+}
+
+
+export const fetchWfarEntry = (id) => {
+
+    return async (dispatch, getState) => {
+        let url = `/api/myWfar/entry/${id}/`;
+
+        try {
+            dispatch(myWfarFetchEntryActions.retrieveRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(myWfarFetchEntryActions.retrieveSuccessfully({entry: data}));
+            dispatch(myWfarRefreshActions.alertNewChange());
+
+            console.log(data);
+        } catch (error) {
+            dispatch(myWfarFetchEntryActions.retrieveFail({ error: error.message }));
         }
     }
 }

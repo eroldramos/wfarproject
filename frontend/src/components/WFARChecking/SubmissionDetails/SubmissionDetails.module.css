@@ -1,2 +1,14 @@
 .submissionDetailsContainer{
 }
+.dateContainer h5{
+    margin: 10px 0;
+    font-weight: 600;
+    padding-left: 0;
+}
+.facultyNameContainer h5{
+    margin: 10px 0;
+    font-weight: normal;
+}
+.WeekContainer h5{
+    margin: 10px 0;
+}

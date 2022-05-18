@@ -103,7 +103,7 @@ class WFAR(models.Model):
     checked_at = models.DateTimeField(null=True)
     submitted_at = models.DateTimeField(null=True)
     week_no = models.PositiveIntegerField()
-    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculty_id') #fk for the faculty who uploaded
+    faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='wfars') #fk for the faculty who uploaded
     faculty_checker_id = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checkers') # fk for the faculty who checked it ** pinagiisipan ko pa hehe
     semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE)
     # week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
@@ -125,12 +125,12 @@ class WFAR_Entry(models.Model):
 class WFAR_Entry_Attachment(models.Model):
     image_uri = models.ImageField(upload_to='uploads/') # image, paki-palitan na lang 'yung uploads/
     type = models.PositiveSmallIntegerField(default=1) # 1 - meet sc, 2 - activity
-    wfar_entry_id = models.ForeignKey(WFAR_Entry, on_delete=models.CASCADE)
+    wfar_entry_id = models.ForeignKey(WFAR_Entry, related_name='wfar_entry_attachments', on_delete=models.CASCADE)
 
 # WFAR Entry Learning Activities
 class WFAR_Entry_Activity(models.Model):
     description = models.TextField(max_length=500)
-    wfar_entry_id = models.ForeignKey(WFAR_Entry, on_delete=models.CASCADE)
+    wfar_entry_id = models.ForeignKey(WFAR_Entry, related_name='wfar_entry_activities', on_delete=models.CASCADE)
 
 # WFAR Comment
 class WFAR_Comment(models.Model):

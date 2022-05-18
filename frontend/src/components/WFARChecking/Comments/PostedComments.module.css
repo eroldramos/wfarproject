@@ -2,7 +2,6 @@
     width: 100%;
     left: 961px;
     top: 277px;
-    margin: 20px 0;
     background: #FFFFFF;
     border: 1px solid #F8F8FA;
     box-sizing: border-box;
@@ -30,20 +29,24 @@
 }
 .imageContainer{
     width: 60px;
+    padding-top: 5px;
 }
 .contentContainer{
     width: 90%;
     margin: 5%;
 }
-.contentContainer h4{
-    font-weight: 500;
+.contentContainer h5{
+    font-size: 16px;
+    font-weight: 300;
     margin: 0;
 }
 .details_TimeContainer{
     width: 100%;
 }
-.details_TimeContainer h4{
+.details_TimeContainer h5{
     margin: 5px 10px;
+    font-weight: 400;
+    font-size: 16px;
 }
 .details_TimeContainer h4:nth-child(1){
     font-weight: normal;

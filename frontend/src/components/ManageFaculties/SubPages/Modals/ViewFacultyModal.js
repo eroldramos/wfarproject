@@ -51,7 +51,7 @@ const ViewFacultyModal = (props) => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
     if (page == 1) {
-      navigate(newUrl + "assigned-faculty/");
+      navigate(newUrl + "assigned-faculty/" + props.id + "/");
     }
     if (page == 2) {
       navigate(newUrl + "unassigned-faculty/");
@@ -65,29 +65,35 @@ const ViewFacultyModal = (props) => {
   useEffect(() => {
     let urlArray = window.location.href.split("/");
     let newUrl = `/${urlArray[3]}/${urlArray[4]}/`;
-    navigate(newUrl + "assigned-faculty/");
+
+    navigate(newUrl + "assigned-faculty/" + props.id + "/");
   }, []);
   console.log(currentPage, "VIEWFACULTYMODAL");
   return (
     <Fragment>
-      <Modal onClose={props.onClose}>
+      <Modal onClose={props.onClose} size = "m">
         <div className={styles["container"]}>
-          <div className={styles["modal-btn-container"]}>
-            <EyeButton
-              icon={icon}
-              type={"primary"}
-              size="xs"
-              disabled={false}
-              onClick={null}
-            />
+          <div className={styles["header-container"]}>
+            <div className={styles["header-text-container"]}>
+              <h2>{props.fullname}</h2>
+              <h5>{user_type}</h5>
+            </div>
+            <div className={styles["modal-btn-container"]}>
+              <EyeButton
+                icon={icon}
+                type={"primary"}
+                size="xs"
+                disabled={false}
+                onClick={null}
+              />
+            </div>
           </div>
-          <h1>{props.fullname}</h1>
-          <p>{user_type}</p>
+          
           <div className={styles["clearfix"]}></div>
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
           <Routes>
             <Route
-              path={"/assigned-faculty/"}
+              path={"/assigned-faculty/:id/"}
               element={
                 <AssignedFaculty
                   onClose={props.onClose}

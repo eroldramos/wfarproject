@@ -4,6 +4,7 @@
     padding: 20px 25px;
     margin: 15px 0;
     width: 100%;
+    
 }
 
 .wfarContainer {
@@ -19,10 +20,10 @@
 
 .openClose {
     padding: 15px;
-    cursor: pointer;
 }
 
 .openClose svg {
+    cursor: pointer;
 }
 
 .entriesContainer.close {

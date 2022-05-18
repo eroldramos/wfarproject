@@ -50,37 +50,21 @@ const EditSemester = () => {
   const params = useParams();
   const [latestWeekId, setLatestWeekId] = useState(0);
   useEffect(() => {
-    if (!semDetails) {
-      dispatch(getSemDetails(params.semId));
-    }
     if (updateSemSuccess) {
       console.log(updateSemSuccess);
       dispatch(updateSemResetValue());
       dispatch(getSemDetailsResetValue());
       navigate(`/edit-semester/${params.semId}/`);
     }
-  }, [dispatch, params.semId, updateSemSuccess, semDetails]);
+    dispatch(getSemDetails(params.semId));
+  }, [dispatch, params.semId, updateSemSuccess, navigate]);
 
   useEffect(() => {
     if (semDetails) {
-      let newWeek = [];
-      for (let obj of semDetails.weeks) {
-        newWeek.push({
-          id: obj.id,
-          label: obj.label,
-          startDate: obj.startDate,
-          endDate: obj.endDate,
-          labelTouch: obj.labelTouch,
-          startDateTouch: obj.startDateTouch,
-          endDateTouch: obj.endDateTouch,
-        });
-      }
-      setWeekFormFields(newWeek);
       setLabelValue(semDetails.label);
       setSchoolYearValue(semDetails.school_year);
-      let highestId =
-        newWeek.length > 0 ? Math.max(...newWeek.map((o) => o.id)) : 0;
-      setLatestWeekId(highestId);
+      setStartDateValue(semDetails.start_date);
+      setEndDateValue(semDetails.end_date);
     }
   }, [semDetails]);
 
@@ -104,66 +88,25 @@ const EditSemester = () => {
     setEnteredValue: setSchoolYearValue,
   } = useValidateInput((value) => value.trim() !== "");
 
-  const [weekFormFields, setWeekFormFields] = useState([
-    {
-      id: "",
-      label: "",
-      startDate: "",
-      endDate: "",
-      labelTouch: false,
-      startDateTouch: false,
-      endDateTouch: false,
-    },
-  ]);
+  const {
+    value: enteredStartDate,
+    isValid: enteredStartDateIsValid,
+    hasError: startDateInputHasError,
+    valueChangeHandler: startDateChangeHandler,
+    inputBlurHandler: startDateBlurHandler,
+    reset: resetStartDate,
+    setEnteredValue: setStartDateValue,
+  } = useValidateInput((value) => value.trim() !== "");
 
-  const handleFormChange = (event, index) => {
-    let data = [...weekFormFields];
-    data[index][event.target.name] = event.target.value;
-    setWeekFormFields(data);
-  };
-
-  const handleLabelTouch = (event, index) => {
-    let data = [...weekFormFields];
-    data[index]["labelTouch"] = true;
-    setWeekFormFields(data);
-  };
-
-  const handleStartDateTouch = (event, index) => {
-    let data = [...weekFormFields];
-    data[index]["startDateTouch"] = true;
-    setWeekFormFields(data);
-  };
-
-  const handleEndDateTouch = (event, index) => {
-    let data = [...weekFormFields];
-    data[index]["endDateTouch"] = true;
-    setWeekFormFields(data);
-  };
-
-  const addFields = () => {
-    let object = {
-      id: latestWeekId + 1,
-      label: "",
-      startDate: "",
-      endDate: "",
-      labelTouch: false,
-      startDateTouch: false,
-      endDateTouch: false,
-    };
-    setLatestWeekId((latestWeekId) => latestWeekId + 1);
-    setWeekFormFields([...weekFormFields, object]);
-  };
-
-  const removeFields = (index) => {
-    let data = [...weekFormFields];
-    data.splice(index, 1);
-    setWeekFormFields(data);
-  };
-  const onCancelEdit = () => {
-    dispatch(updateSemResetValue());
-    dispatch(getSemDetailsResetValue());
-    navigate("/manage-semesters");
-  };
+  const {
+    value: enteredEndDate,
+    isValid: enteredEndDateIsValid,
+    hasError: endDateInputHasError,
+    valueChangeHandler: endDateChangeHandler,
+    inputBlurHandler: endDateBlurHandler,
+    reset: resetEndDate,
+    setEnteredValue: setEndDateValue,
+  } = useValidateInput((value) => value.trim() !== "");
 
   const submit = (e) => {
     e.preventDefault();
@@ -174,15 +117,12 @@ const EditSemester = () => {
     if (!enteredSchoolYearIsValid) {
       formErrors += 1;
     }
-    weekFormFields.map((field) => {
-      if (
-        field.startDate.length === 0 ||
-        field.endDate.length === 0 ||
-        field.label.length === 0
-      ) {
-        formErrors += 1;
-      }
-    });
+    if (!enteredEndDateIsValid) {
+      formErrors += 1;
+    }
+    if (!enteredStartDateIsValid) {
+      formErrors += 1;
+    }
     if (formErrors > 0) {
       alert("All fields are required!");
       return;
@@ -190,12 +130,15 @@ const EditSemester = () => {
     const obj = {
       label: enteredLabel,
       school_year: enteredSchoolYear,
-      weeks: weekFormFields,
+      start_date: enteredStartDate,
+      end_date: enteredEndDate,
     };
     console.log(obj, "-----");
     dispatch(updateSem(params.semId, obj));
   };
-  console.log(weekFormFields);
+  const onCancelHandler = () => {
+    navigate("/manage-semesters/");
+  };
   console.log(semDetails);
   console.log(latestWeekId, "latest");
   return (
@@ -232,72 +175,40 @@ const EditSemester = () => {
           />
         </div>
         <div className={styles["bottom-form-container"]}>
-          <label>Add Weeks</label>
-          {weekFormFields.map((form, index) => (
-            <AddWeekRows
-              key={index}
-              onChange={(event) => handleFormChange(event, index)}
-              handleLabelTouch={(event) => handleLabelTouch(event, index)}
-              handleStartDateTouch={(event) =>
-                handleStartDateTouch(event, index)
-              }
-              handleEndDateTouch={(event) => handleEndDateTouch(event, index)}
-              onClick={() => removeFields(index)}
-              label={form.label}
-              startDate={form.startDate}
-              endDate={form.endDate}
-              labelTouch={form.labelTouch}
-              startDateTouch={form.startDateTouch}
-              endDateTouch={form.endDateTouch}
-            />
-          ))}
-
-          <TransparentButton
-            onClick={addFields}
-            label="New Week"
-            type="transparent"
-            size="xs"
-            svg={icon}
+          <DateField
+            size="rg"
+            id="startDate"
+            inputName="startDate"
+            labelName={"Start Date"}
+            onChange={startDateChangeHandler}
+            onBlur={startDateBlurHandler}
+            value={enteredStartDate}
+            error={
+              startDateInputHasError ? "Please select a start date." : null
+            }
+          />
+          <DateField
+            size="rg"
+            id="endDate"
+            inputName="endDate"
+            labelName={"End Date"}
+            onChange={endDateChangeHandler}
+            onBlur={endDateBlurHandler}
+            value={enteredEndDate}
+            error={endDateInputHasError ? "Please select a end date." : null}
           />
         </div>
         <div className={styles["button-container"]}>
-          <Button label="Cancel" onClick={onCancelEdit} type="cancel" />
-          <Button label="Save" type="primary" />
+          <Button
+            label="Cancel"
+            type="cancel"
+            size="xs"
+            onClick={onCancelHandler}
+          />
+          <Button label="Save" type="primary" size="xs" />
         </div>
       </form>
     </Fragment>
-    // <div className="App">
-    //   <form onSubmit={submit}>
-    //     {weekFormFields.map((form, index) => {
-    //       return (
-    //         <div key={index}>
-    //           <input
-    //             name="label"
-    //             placeholder="Name"
-    //             onChange={(event) => handleFormChange(event, index)}
-    //             value={form.label}
-    //           />
-    //           <input
-    //             name="startDate"
-    //             placeholder="Age"
-    //             onChange={(event) => handleFormChange(event, index)}
-    //             value={form.startDate}
-    //           />
-    //           <input
-    //             name="endDate"
-    //             placeholder="Age"
-    //             onChange={(event) => handleFormChange(event, index)}
-    //             value={form.endDate}
-    //           />
-    //           <button onClick={() => removeFields(index)}>Remove</button>
-    //         </div>
-    //       );
-    //     })}
-    //   </form>
-    //   <button onClick={addFields}>Add More..</button>
-    //   <br />
-    //   <button onClick={submit}>Submit</button>
-    // </div>
   );
 };
 

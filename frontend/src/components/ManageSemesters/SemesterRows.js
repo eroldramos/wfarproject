@@ -1,9 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styles from "./SemesterRows.module.css";
 import PopupMenu from "./PopupMenu";
 import { useNavigate } from "react-router-dom";
+import { archiveSem, activateSem } from "../../store/manageSemActions";
+import { useDispatch, useSelector } from "react-redux";
+
 const SemesterRows = (props) => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const ITEMS = [
     {
       id: 1,
@@ -13,7 +17,12 @@ const SemesterRows = (props) => {
     {
       id: 2,
       label: "Archive",
-      onClick: null,
+      onClick: () => onArchiveSemester(props.semId),
+    },
+    {
+      id: 3,
+      label: "Activate",
+      onClick: () => onActivateSemester(props.semId),
     },
   ];
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
@@ -28,6 +37,14 @@ const SemesterRows = (props) => {
   const onNavigateEditSemester = (semId) => {
     navigate(`/edit-semester/${semId}/`);
   };
+  const onArchiveSemester = (semId) => {
+    dispatch(archiveSem(semId));
+    navigate(`/manage-semesters/`);
+  };
+  const onActivateSemester = (semId) => {
+    dispatch(activateSem(semId));
+    navigate(`/manage-semesters/`);
+  };
   return (
     <Fragment>
       <div
@@ -37,6 +54,7 @@ const SemesterRows = (props) => {
         <strong>
           {props.schoolYear} {props.label}
         </strong>
+
         <div className={styles["popup-menu-container"]}>
           <span style={{ cursor: "pointer" }} onClick={openPopMenuHandler}>
             <svg
@@ -57,6 +75,14 @@ const SemesterRows = (props) => {
             <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
           )}
         </div>
+
+        <div
+          className={
+            props.isActive
+              ? `${styles["active-status"]} ${styles["active"]}`
+              : `${styles["active-status"]} ${styles["inactive"]}`
+          }
+        ></div>
         <div className={styles["clearfix"]}></div>
       </div>
     </Fragment>

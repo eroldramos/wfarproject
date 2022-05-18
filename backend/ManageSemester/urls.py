@@ -6,13 +6,17 @@ urlpatterns =[
    
 
    path('retrieve-all-sem/',views.RetrieveAllSemesters.as_view(), name='retrieve-all-sem'),
+   path('retrieve-all-archived-sem/',views.RetrieveAllArchivedSemesters.as_view(), name='retrieve-all-archived-sem'),
 
    path('retrieve-all-sem-list/',views.RetrieveSemestersList.as_view(), name='retrieve-all-sem-list'), # ERIKA
   
-   path('retrieve-sem-details/<str:sem_id>/',views.RetrieveSemesterDetails.as_view(), name='retrieve-all-week-in-sem'),
+   path('retrieve-sem-details/<str:sem_id>/',views.RetrieveSemesterDetails.as_view(), name='retrieve-sem-details'),
+   path('archive-restore-sem/<str:pk>/',views.ArchiveRestoreSemester.as_view(), name='archive-restore-sem'),
 
    path('update-sem/<str:pk>/',views.UpdateSemester.as_view(), name='update-sem'),
-   path('delete-sem/<str:pk>/',views.DeleteSemester.as_view(), name='delete-sem'),
+   path('activate-sem/<str:pk>/',views.ActivateSemester.as_view(), name='update-sem'),
+   
+   # path('delete-sem/<str:pk>/',views.DeleteSemester.as_view(), name='delete-sem'),
 
 
    # Urls with dynamic values must be below static urls to avoid bugs

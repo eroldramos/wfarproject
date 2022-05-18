@@ -1,4 +1,5 @@
 from datetime import datetime
+from re import S
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,29 +8,38 @@ from core.models import Semester, Week
 from core.serializers import (
     SemesterSerializerYearAndSem , 
     WeekSerializer,
-    WeeksInASemesterSerializer)
+    SemesterAllFieldsSerializer)
 from datetime import datetime
 from django.db.models import Q
 from django.core.paginator import Paginator
+from datetime import datetime
+
 class CreateSemester(APIView):
     permission_classes = [IsAdminUser]    
     def post(self, request):
        
         try:
             data = request.data
+
+            start_date = datetime.strptime(data['start_date'], "%Y-%m-%d")
+            end_date = datetime.strptime(data['end_date'], "%Y-%m-%d")
+
+            start_date = datetime(start_date.year, start_date.month, start_date.day)
+            end_date = datetime(end_date.year, end_date.month, end_date.day)
+
+            no_of_weeks = ((abs(end_date - start_date).days) // 7)
+
+            
             semester = Semester.objects.create(
             label = data['label'],
             school_year = data['school_year'],
+            start_date = data['start_date'],
+            end_date = data['end_date'],
+            no_of_weeks = no_of_weeks,
             )
-            weeks = data['weeks']
-            for i in weeks:
-                week = Week.objects.create(
-                semester_id = semester, 
-                start_date = i['startDate'],
-                end_date = i['endDate'],
-                label = i['label'],
-            )
-          
+            print(request.data)
+            print("num of weeks",no_of_weeks)
+
             return Response({"detail": "Semester created!"}, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -58,94 +68,108 @@ class RetrieveAllSemesters(APIView):
         except:
             return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
 
+class RetrieveAllArchivedSemesters(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        try:
+            semester = Semester.objects.all().exclude(deleted_at__isnull=True).order_by('created_at')   
+            p = Paginator(semester, 6)
+            page = request.GET.get('page')
+            if page == None or str(page) == "null":
+                page = 1
+
+            semester = p.get_page(page)
+            serializer = SemesterSerializerYearAndSem(semester, many=True)
+
+            data={
+            "semList": serializer.data,
+            "page": int(page),
+            "pages": p.num_pages,
+            "first_page":1,
+            "last_page": p.num_pages
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class RetrieveSemesterDetails(APIView):
     permission_classes = [IsAdminUser]
     def get(self, request, sem_id):
         try:
             sem =  Semester.objects.get(id=sem_id)
-            serializer = WeeksInASemesterSerializer(sem, many=False)
+            serializer = SemesterAllFieldsSerializer(sem, many=False)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+            
 class UpdateSemester(APIView):
     permission_classes = [IsAdminUser]
     def put(self, request, pk):
         try:
             data =  request.data
+
+            start_date = datetime.strptime(data['start_date'], "%Y-%m-%d")
+            end_date = datetime.strptime(data['end_date'], "%Y-%m-%d")
+
+            start_date = datetime(start_date.year, start_date.month, start_date.day)
+            end_date = datetime(end_date.year, end_date.month, end_date.day)
+
+            no_of_weeks = ((abs(end_date - start_date).days) // 7)
+
             semester = Semester.objects.get(id=pk)
             semester.label = data['label']
             semester.school_year = data['school_year']
-            oldWeeks = list(semester.week_set.all())
-            oldWeekId = [oldWeek.id for oldWeek in oldWeeks]
-            newWeeks = data['weeks']
-            newWeekId = [newWeek['id'] for newWeek in newWeeks]
+            semester.start_date = data['start_date']
+            semester.end_date = data['end_date']
+            semester.no_of_weeks = no_of_weeks
             semester.save()
-            print(oldWeekId)
-            print(newWeekId)
-           
-            if(len(newWeeks)==0):
-                print(len(newWeeks),'---')
-                for oldWeek in oldWeeks:
-                    if oldWeek.id not in newWeekId:
-                        deleteWeek = Week.objects.get(id=oldWeek.id)
-                        print("will be deleted")
-                        deleteWeek.delete()
-                       
-       
-                newCreatedWeek= Week.objects.create(
-                            semester_id = semester, 
-                            start_date = datetime.strftime(datetime.now(), '%Y-%m-%d'),
-                            end_date = datetime.strftime(datetime.now(), '%Y-%m-%d'),
-                            label = 'Week 1',
-                            )
-                print(newCreatedWeek)       
-                            
-            else:
-                for newWeek in newWeeks:
-                    print('start')
-                    if Week.objects.filter(id=newWeek['id']).exists():
-                        
-                        if newWeek['id'] in oldWeekId:
-                                existedWeek =  Week.objects.get(id=newWeek['id'])
-                                existedWeek.start_date = newWeek['startDate']
-                                existedWeek.end_date = newWeek['endDate']
-                                existedWeek.label = newWeek['label']
-                                existedWeek.save()
-                                print('existed',newWeek['id'] )
-                            
-                        for oldWeek in oldWeeks:
-                            if oldWeek.id not in newWeekId:
-                                deleteWeek = Week.objects.get(id=oldWeek.id)
-                                print("will be deleted")
-                                deleteWeek.delete()
-                                            
-                            else:print("do nothing")
-
-                    else:
-                            
-                        newCreatedWeek= Week.objects.create(
-                                semester_id = semester, 
-                                start_date = newWeek['startDate'],
-                                end_date = newWeek['endDate'],
-                                label = newWeek['label'],
-                            )
-                        
-                        print('new', newWeek['id'])
+        
+    
             return Response({"detail": "Semester updated!"}, status=status.HTTP_200_OK)
          
   
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class DeleteSemester(APIView):
+class ArchiveRestoreSemester(APIView):
     permission_classes = [IsAdminUser]
     def delete(self, request, pk):
         try:
+            print(pk)
             semester = Semester.objects.get(id=pk)
-            semester.delete_at = datetime.now()
+            semester.deleted_at = datetime.now()
             semester.save()
             return Response({"detail": "Semester archived!"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def put(self, request, pk):
+        try:
+            semester = Semester.objects.get(id=pk)
+            semester.deleted_at = None
+            semester.save()
+            return Response({"detail": "Semester restored!"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ActivateSemester(APIView):
+    permission_classes = [IsAdminUser]
+    def put(self, request, pk):
+        try:
+
+            semsToDeactivate = Semester.objects.filter(is_active=True)
+
+            for sems in semsToDeactivate:
+                print(sems.is_active)
+                sem = Semester.objects.get(id=sems.id)
+                sem.is_active = False
+                sem.save()
+
+
+            semester = Semester.objects.get(id=pk)
+            semester.is_active = True
+            semester.save()
+            return Response({"detail": "Semester activated!"}, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             

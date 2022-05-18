@@ -7,7 +7,7 @@ from core.models import Semester, Week
 from core.serializers import (
     SemesterSerializerYearAndSem , 
     WeekSerializer,
-    WeeksInASemesterSerializer)
+    SemesterAllFieldsSerializer)
 from datetime import datetime
 from django.db.models import Q
 from django.core.paginator import Paginator

@@ -8,6 +8,7 @@
     box-sizing: border-box;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
+    animation: slide-down 300ms ease-out forwards;
 }
 .detailsContainer{
     width: 100%;
@@ -18,12 +19,18 @@
 .entryTextContainer{
     width: 50%;
 }
-.detailsContainer h4:nth-child(2){
+.detailsContainer h5{
+    margin: 0;
+}
+.entryTextContainer h5{
+    margin-top: 6px;
+}
+.entryTextContainer h5:nth-child(1){
     font-weight: 600;
 }
-.detailsContainer h4{
-    margin: 0;
-    margin-top: 7px;
+.entryTextContainer h5:nth-child(2){
+    font-weight: 500;
+    font-size: 16px;
 }
 .attachmentContainer{
     display: flex;
@@ -31,8 +38,12 @@
     float: right;
 }
 .attachmentContainer h5{
+    height: fit-content;
+    position: relative;
+    top: 34%;
     color: #777777;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 16px;
 }
 .chevronDown{
     height: fit-content;
@@ -45,7 +56,6 @@
     margin: 20px 0;
     margin-left: 30px;
     cursor: pointer;
-    display: none;
 }
 .expandedEntry{
     margin: 0px 20px;
@@ -56,3 +66,13 @@
     width: 100%;
     border: 5px solid black;
 } */
+.moreSettingsContainer{
+    margin-left: 20px;
+    float: right;
+}
+.moreSettingsContainer svg{
+    margin-top: 75%;
+}
+.moreSettingsContainer svg:hover{
+    cursor: pointer;
+}

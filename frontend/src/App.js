@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
@@ -8,19 +8,25 @@ import LoginScreen from "./components/Screens/LoginScreen";
 import PendingAccountsScreen from "./components/Screens/PendingAccountsScreen";
 import AdminLoginScreen from "./components/Screens/AdminLoginScreen";
 import MySubmissionScreen from "./components/Screens/MySubmissionScreen";
-import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
-import WeeklyView from "./components/FacultySubmissions/WeeklyView/WeeklyView";
 import WFARCheckingScreen from "./components/Screens/WFARCheckingScreen";
 import ManageSemestersScreen from "./components/Screens/ManageSemestersScreen";
-import AddEntry from "./components/WfarForm/AddEntry";
+import AddEntry from "./components/WfarForm/AddEntry/AddEntry";
+import EditEntry from "./components/WfarForm/EditEntry/EditEntry";
 import Dashboard from "./components/Dashboard/Dashboard";
 import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
+import WFARSubmissionsOverview from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
+import { useDispatch } from "react-redux";
+import { createWfar } from "./store/myWfarsActions";
+import FacultySubmissionScreen from "./components/Screens/FacultySubmissionScreen";
+
 function App() {
+  const dispatch = useDispatch();
+
   // sample use state for two-way binding
   const [sampleValue, setSampleValue] = useState("");
 
@@ -29,16 +35,25 @@ function App() {
     setSampleValue(event.target.value);
   };
 
+  // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
+  useEffect(() => {
+    dispatch(createWfar());
+  }, []);
+
+  const haveSession = true;
   return (
-    <div>
-      <SideNav userLevel="1"></SideNav>
+    <div className="for-login-container">
+      {!haveSession && <LoginScreen />}
+      {haveSession && <SideNav userLevel="1"></SideNav>}
       <div id="main">
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* dont remove, for testing of logout only. */}
-          <Route path="/OverView" element={<FacultySubmissionScreen />}></Route>
-          <Route path="/WeeklyView" element={<WeeklyView />}></Route>
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
+          <Route
+            path="/FacultySubmission/*"
+            element={<FacultySubmissionScreen />}
+          ></Route>
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
@@ -46,7 +61,10 @@ function App() {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/" element={<SampleRedux />}></Route>
           <Route path="/admin-login" element={<AdminLoginScreen />}></Route>
-          <Route path="/mySubmission/*" element={<MySubmissionScreen />}></Route>
+          <Route
+            path="/mySubmission/*"
+            element={<MySubmissionScreen />}
+          ></Route>
           <Route path="/profile" element={<AccountScreen />}></Route>
           <Route
             path="/manage-faculty/*"
@@ -54,7 +72,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/manage-semesters/"
+            path="/manage-semesters/*"
             element={<ManageSemestersScreen />}
           ></Route>
           <Route
@@ -69,7 +87,18 @@ function App() {
             path="/pending-accounts/"
             element={<PendingAccountsScreen />}
           ></Route>
-          <Route path="/mySubmission/wfar/add-entry" element={<AddEntry />}></Route>
+          <Route
+            path="/mySubmission/wfar/:id/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:id/week/:weekNo/add-entry"
+            element={<AddEntry />}
+          ></Route>
+          <Route
+            path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
+            element={<EditEntry />}
+          ></Route>
         </Routes>
       </div>
     </div>

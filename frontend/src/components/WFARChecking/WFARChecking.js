@@ -1,4 +1,4 @@
-import React,{Fragment} from "react";
+import React,{Fragment, useState} from "react";
 import styles from "./WFARChecking.module.css"
 import PrintWFARButton from "./Buttons/PrintWFARButton/PrintWFAR"
 import CheckWFARButton from "./Buttons/ChechWFARButton/CheckWFARButton";
@@ -12,11 +12,13 @@ import PostedComments from "./Comments/PostedComments";
 
 const WFARChecking = () =>{
 
-    //const Entries = 
+    const [isNotFaculty, setIsNotFaculty] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
+
     return (
         <Fragment>
             <div className={styles.firstContainer}>
-                <h1>Viewing WFAR</h1>
+                <h2>Viewing WFAR</h2>
                 <div className={styles.print_CheckContainer}>
                     <PrintWFARButton/>
                     <CheckWFARButton/>
@@ -26,17 +28,17 @@ const WFARChecking = () =>{
             </div>
             <div className={styles.secondContainer}>
                 <SubmissionDetails/>
-                <Status_Check/>{/* Pag dipa nachecheck wala to   */}
+                {isChecked && <Status_Check/>}{/* Pag dipa nachecheck wala to   */}
             </div>
             <div className={styles.mainContainer}>
                 <div className={styles.entriesContainer}>
-                    <h4 className={styles.Label}>Entries:</h4>
+                    <h5 className={styles.Label}>Entries:</h5>
                     <Entries/>
                 </div>
                 {/* <span className={styles.divider}/> */}
                 <div className={styles.commentsContainer}>
-                    <h4 className={styles.Label}> Comments/Remarks</h4>
-                    <CommentInputs></CommentInputs>{/* Pag faculty mag sasubmit wala to  */}
+                    <h5 className={styles.Label}> Comments/Remarks</h5>
+                    {isNotFaculty && <CommentInputs/>}{/* Pag faculty mag sasubmit wala to  */}
                     <PostedComments></PostedComments>
                 </div>
             </div>

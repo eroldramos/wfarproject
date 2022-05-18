@@ -2,14 +2,14 @@ import React, { Fragment, useState, useEffect } from "react";
 import table from "./Table.module.css";
 import PopupMenu from "../SubComponents/PopupMenu";
 import styles from "./Subpages.module.css";
-import FilterButton from "../../UI/FormControl/Button/FilterButton";
+import TableCellButton from "../../UI/FormControl/Button/TableCellButton";
 import PromoteModal from "./Modals/PromoteModal";
 import DemoteModal from "./Modals/DemoteModal";
 import ViewFacultyModal from "./Modals/ViewFacultyModal";
 import ViewStatusModal from "./Modals/ViewStatusModal";
 import FacultyAssignModal from "./Modals/FacultyAssignModal";
 import { useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -24,6 +24,7 @@ const Rows = (props) => {
     },
   ];
 
+  let navigate = useNavigate();
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
   const [promoteModalIsShown, setPromoteModalIsShown] = useState(false);
   const [demoteModalIsShown, setDemoteModalIsShown] = useState(false);
@@ -72,59 +73,74 @@ const Rows = (props) => {
   };
   const openViewFacultyModal = () => {
     setViewFacultyModal(true);
+    props.disableSearch();
+    console.log("disableSearch");
   };
   const closeViewFacultyModal = () => {
+    setViewFacultyModal(false);
+    props.enableSearch();
+    console.log("enableSearch");
+    let urlArray = window.location.pathname.split("/");
+    let backHistory = `/${urlArray[1]}/${urlArray[2]}/`;
+    navigate(backHistory);
+  };
+
+  const closeViewFacultyModalTransition = () => {
     setViewFacultyModal(false);
   };
 
   const openFacultyAssignModal = () => {
     setFacultyAssignModal(true);
+    props.disableSearch();
+    console.log("disableSearch", "-------");
   };
   const closeFacultyAssignModal = () => {
     setFacultyAssignModal(false);
+    props.enableSearch();
+    console.log("enableSearch", "-----------");
+    let urlArray = window.location.pathname.split("/");
+    let backHistory = `/${urlArray[1]}/${urlArray[2]}/`;
+    navigate(backHistory);
   };
   return (
     <Fragment>
       <li className={table["table-row"]} onMouseLeave={closePopMenuHandler}>
-        <div
-          className={`${table["col"]} ${table["col-1"]}`}
-          data-label="Full Name"
-        >
-          {props.fullname}
+        <div className={`${table["col"]} ${table["col-1"]}`}>
+          <h5>{props.fullname}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-2"]}`}
           data-label="Employee No."
         >
-          {props.emp_no}
+          <h5>{props.emp_no}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-3"]}`}
           data-label="Username"
         >
-          {props.username}
+          <h5>{props.username}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-4"]}`}
           data-label="Birthdate"
         >
-          {props.birthdate}
+          <h5>{props.birthdate}</h5>
         </div>
         <div className={`${table["col"]} ${table["col-5"]}`} data-label="Email">
-          {props.email}
+          <h5>{props.email}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-6"]}`}
           data-label="Contact"
         >
-          {props.contact_no}
+          <h5>{props.contact_no}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-7"]}`}
           data-label="Actions"
         >
           <div className={styles["filter-button-container"]}>
-            <FilterButton
+            <TableCellButton
               onClick={openViewFacultyModal}
               label={
                 props.user_type === 2 || props.user_type === 3
@@ -132,7 +148,7 @@ const Rows = (props) => {
                   : "View Status"
               }
               type="primary"
-            ></FilterButton>
+            ></TableCellButton>
             {props.user_type === 2 || props.user_type === 3
               ? viewFacultyModal && (
                   <ViewFacultyModal
@@ -144,7 +160,7 @@ const Rows = (props) => {
                 )
               : viewFacultyModal && (
                   <ViewStatusModal
-                    onClose={closeViewFacultyModal}
+                    onClose={closeViewFacultyModalTransition}
                     onOpenAssign={openFacultyAssignModal}
                     id={props.id}
                     fullname={props.fullname}
@@ -197,10 +213,11 @@ const Rows = (props) => {
                 user_type={props.user_type}
               />
             )}
-            {popupMenuIsShown && (
-              <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
-            )}
           </div>
+          {popupMenuIsShown && (
+            <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
+          )}
+
           <div className={styles["clearfix"]}></div>
         </div>
       </li>
