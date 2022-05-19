@@ -14,18 +14,18 @@ const EntryDetails = () =>{
     ]); 
     return (
         <div className={styles.entryDetailsContainer}>
-            <h5>Subject: {dataPlaceHolder}</h5>
-            <h5>Section: {dataPlaceHolder}</h5>
-            <h5>No of Attendees: {dataPlaceHolder}</h5>
-            <h5>Link of Team Meet Recording: {dataPlaceHolder}</h5>
+            <div className={styles.entryDetailsTextContainer}><h3>Subject: </h3><p>{dataPlaceHolder}</p></div>
+            <div className={styles.entryDetailsTextContainer}><h3>Section: </h3><p>{dataPlaceHolder}</p></div>
+            <div className={styles.entryDetailsTextContainer}><h3>No of Attendees: </h3><p>{dataPlaceHolder}</p></div>
+            <div className={styles.entryDetailsTextContainer}><h3>Link of Team Meet Recording: </h3><p>{dataPlaceHolder}</p></div>
             <div className={styles.learningActivitiesContainer}>
-                <h5>Learning Activities: {dataPlaceHolder}</h5>
+                <h3>Learning Activities: </h3>
                 <ol>
                     {activities.map(activities => <li>{activities}</li>)} 
                 </ol>
             </div>
             <div className={styles.attachments}>
-                <h5>Attachments: </h5>
+                <h2>Attachments: </h2>
                 <Attachments/>
             </div>
         </div>

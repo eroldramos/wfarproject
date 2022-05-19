@@ -8,8 +8,10 @@ import UserLogin from "./UserLogin";
 import AdminLogin from "./AdminLogin";
 import UserRegister from "./UserRegister";
 import { Routes, Route } from "react-router-dom";
+
 const Login = () => {
-  const isLogin = false;
+  
+  localStorage.setItem("initialReload", null);
   return (
     <div>
       <div
@@ -31,12 +33,10 @@ const Login = () => {
         </div>
       </div>
       <Routes>
-        <Route path="" element={<UserLogin />} />
-        <Route path="register/" element={<UserRegister />} />
+        <Route path="" element={<UserLogin/>} />
+        <Route path="register/" element={<UserRegister/>} />
         <Route path="admin-login/" element={<AdminLogin />} />
       </Routes>
-      {/* {isLogin && <UserLogin></UserLogin>}
-      {!isLogin && <UserRegister></UserRegister>} */}
     </div>
   );
 };
