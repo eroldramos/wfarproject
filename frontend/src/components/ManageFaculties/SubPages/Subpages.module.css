@@ -1,14 +1,23 @@
 .popup-menu-container {
+  width: fit-content;
+  float: right;
+  width: 20%;
 }
 .filter-button-container {
   float: left;
-  width: fit-content;
+  width: 80%;
   block-size: fit-content;
+  padding-left: 10px;
 }
 .popup-icon {
   display: flex;
   align-items: center;
   height: 44.5px;
+}
+.popup-icon svg {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .clearfix {
   clear: both;

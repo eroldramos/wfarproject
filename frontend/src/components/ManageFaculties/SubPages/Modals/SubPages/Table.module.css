@@ -1,6 +1,8 @@
 .responsive-table {
   list-style-position: inside;
   padding-left: 0;
+  border: 1px solid red;
+  margin: 0;
 }
 .col-header {
   color: #666b73;
@@ -78,6 +80,7 @@
   position: absolute;
   right: 55px;
   top: 240px;
+  /* border: 1px solid black; */
 }
 
 .icon-container2 {
@@ -89,3 +92,8 @@
 }
 .clearfix {
 } */
+.scrollable-container{
+  max-height: 100px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}

@@ -119,7 +119,7 @@ const AreaChair = (props) => {
             className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
           >
             <div className={table["label-container"]}>
-              Choose a Department Head.
+              Choose An Area Chair
             </div>
             <div className={table["icon-container2"]}>
               {assigneeId > 0 && (

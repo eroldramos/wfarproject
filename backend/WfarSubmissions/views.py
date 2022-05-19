@@ -1,10 +1,11 @@
+from ctypes import alignment
 import datetime
+from hashlib import new
 # Import mimetypes module
 import mimetypes
 # import os module
 import os
 from io import BytesIO
-
 
 from reportlab.platypus import Image, Table, TableStyle
 from reportlab.pdfgen import canvas
@@ -28,7 +29,7 @@ from yaml import serialize
 from core.serializers import WfarEntryAttachmentSerializer
 from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
 from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead
-from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
+from core.models import Semester,  WFAR, WFAR_Comment, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
@@ -74,7 +75,7 @@ class RetrieveFacultyWFAR(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
+            if faculty_checker_id == '0':
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
             else:
@@ -129,7 +130,7 @@ class RetrieveFacultyWFARNoSearch(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
+            if faculty_checker_id == '0':
                 faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
@@ -208,121 +209,187 @@ def getCurrentWeekNo(semester):
 
 class PrintWFAROverviewPDF(APIView):
     def post(self, request, semester_id, sort):
+        try:
+            semester = Semester.objects.get(pk=semester_id)
+            weeks = 1  # default
+            if (semester != None):
+                semester_id = semester.id
+                weeks = getCurrentWeekNo(semester)
 
-        if (sort == '0'):
-            sort_filter1 = "last_name"
-            sort_filter2 = "first_name"
-        else:
-            sort_filter1 = "-last_name"
-            sort_filter2 = "-first_name"
+                week_brackets = weeks[0]
+                current_week = weeks[1]
 
-        faculty_checker_id = request.data['faculty_checker_id']
-        if faculty_checker_id == 0:
-            faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
-        else:
-            faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+                if (sort == '0'):
+                    sort_filter1 = "last_name"
+                    sort_filter2 = "first_name"
+                else:
+                    sort_filter1 = "-last_name"
+                    sort_filter2 = "-first_name"
 
-        semester = Semester.objects.get(pk=semester_id)
-        weeks = 1 #default
-        if (semester != None):
-            semester_id = semester.id
-            weeks = getCurrentWeekNo(semester)
-                    
-        response = HttpResponse(content_type='application/pdf')
-        pdf_name = "report.pdf"
-        response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+                faculty_checker_id = request.data['faculty_checker_id']
+                if faculty_checker_id == '0':
+                    faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+                    description = f"This report shows the statuses of all the WFARs for S.Y. {semester.school_year} - {semester.label}."
+                else:
+                    facultyChecker = Faculty.objects.get(pk=faculty_checker_id)
+                    role = ""
+                    if facultyChecker.user_type == 2:
+                        role = "Department Head"
+                    elif facultyChecker.user_type == 3:
+                        role = "Area Chair"
 
-        buff = BytesIO()
-        paragraphStyle = getSampleStyleSheet()
+                    faculties = Faculty.objects.filter(
+                        assignee_id=facultyChecker).order_by(sort_filter1, sort_filter2)
+                    description = f"This report shows the statuses of the WFARs submitted by the faculties assigned to {role} {facultyChecker.first_name} {facultyChecker.last_name} for S.Y. {semester.school_year} - {semester.label}."
 
-        data = []
+                response = HttpResponse(content_type='application/pdf')
+                pdf_name = "report.pdf"
+                response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+
+                buff = BytesIO()
+
+                # paragraphStyle = getSampleStyleSheet()
+                contentStyle = ParagraphStyle(
+                    name='Normal',
+                    fontSize=10,
+                    alignment=TA_CENTER
+                )
+
+                contentStyleLeft = ParagraphStyle(
+                    name='Normal',
+                    fontSize=10,
+                )
+
+                data = []
+
+                semester_no_of_weeks = semester.no_of_weeks
+                col_widths = []
+                col_names = []
+                col_widths.append(45 * mm)
+                col_names.append(
+                    Paragraph(f"<font color='white'>Faculty</font>", contentStyle))
+                for i in range(semester_no_of_weeks):
+                    startWeek = week_brackets[(i * 2)].strftime("%b %d")
+                    endWeek = week_brackets[(i * 2) + 1].strftime("%b %d")
+                    col_widths.append(28 * mm)
+                    col_names.append(
+                        Paragraph(f"<font color='white'>Week{i+1}<br /><font size='8'>{startWeek} - {endWeek}</font></font>", contentStyle))
+
+                data.append(col_names)
+
+                counterF = 0
+                for faculty in faculties:
+                    newRow = []
+                    newRow.append(
+                        Paragraph(f"{faculty.last_name}, {faculty.first_name}", contentStyleLeft))
+                    for i in range(semester_no_of_weeks):
+
+                        wfar_status = ""
+                        wfar_id = -1
+
+                        if i < len(faculty.wfars.all()) and i < (current_week + 1):
+                            wfar = faculty.wfars.all()[i]
+                            wfar_status = wfar.status
+                            wfar_id = wfar.id
+                        else:
+                            if i < (current_week + 1):
+                                wfar_status = 1
+                            else:
+                                wfar_status = ""
+
+                        newRow.append(getStatus(wfar_id, wfar_status, contentStyle))
+                    data.append(newRow)
+                    counterF += 1
+
+                pdf = SimpleDocTemplate(
+                    buff,
+                    pagesize=landscape([937, 612]),
+                    rightMargin=35,
+                    leftMargin=35, topMargin=35, bottomMargin=35
+                )
+
+                table = Table(data, colWidths=col_widths)
+
+                style = TableStyle([
+                    ('BACKGROUND', (0, 0), (semester_no_of_weeks+1, 0),
+                    colors.HexColor("#BE5A40")),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                    ('FONTSIZE', (0, 0), (-1, -1), 11),
+                    ('TOPPADDING', (0, 0), (-1, -1), 8),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 9)
+                ])
+
+                table.setStyle(style)
+
+                rowNumber = len(data)
+                for i in range(1, rowNumber):
+                    if i % 2 == 0:
+                        bc = colors.white
+                    else:
+                        bc = colors.HexColor("#EEEEEE")
+                    ts = TableStyle(
+                        [('BACKGROUND', (0, i), (-1, i), bc)]
+                    )
+                    table.setStyle(ts)
+
+                borderStyle = TableStyle([
+                    ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#777777")),
+                    ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#777777"))
+                ])
+
+                title = "WFARs Overview"
+                styles = getSampleStyleSheet()
+                styles.add(ParagraphStyle(name='Subtitle',
+                                        fontSize=12,
+                                        leading=14,
+                                        spaceAfter=6,
+                                        alignment=TA_CENTER,),
+                        alias='subtitle')
+                styles.add(ParagraphStyle(name='DefaultHeading',
+                                        fontSize=18,
+                                        leading=22,
+                                        spaceBefore=12,
+                                        spaceAfter=6,
+                                        alignment=TA_CENTER,),
+                        alias='dh')
+
+                table.setStyle(borderStyle)
+
+                elems = []
+                elems.append(Image('reports/logo_header.jpg',
+                                width=11 * inch, height=.85 * inch))
+                # elems.append(Spacer(.25 * cm, .25 * cm))
+                elems.append(Spacer(1 * cm, 1 * cm))
+                # elems.append(Paragraph(title, styles['DefaultHeading']))
+                elems.append(Paragraph(description, styles['Subtitle']))
+                elems.append(Spacer(.25 * cm, .25 * cm))
+                elems.append(table)
+                elems.append(Spacer(1 * cm, 1 * cm))
+
+                pdf.build(elems, canvasmaker=PageNumCanvas)
+
+                response.write(buff.getvalue())
+                buff.close()            
+            return response
+        except:
+        #     pass
+            return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-        semester_no_of_weeks = semester.no_of_weeks
-        col_widths = []
-        col_names = []
-        col_widths.append(80 * mm)
-        col_names.append("Faculty");
-        for i in range(semester_no_of_weeks):        
-            col_widths.append(40 * mm)
-            col_names.append(f"Week {i+1}")
-
-        for f in faculties:
-            
-            break
-
-            
-        data.append(col_names)
-        data.append()
-        pdf = SimpleDocTemplate(
-            buff,
-            pagesize=landscape([937, 612]),
-            rightMargin=70,
-            leftMargin=70, topMargin=50, bottomMargin=70
-        )
-
-        table = Table(data, colWidths=col_widths)
-
-        style = TableStyle([
-            ('BACKGROUND', (0, 0), (5, 0), colors.HexColor("#8761F4")),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-            ('FONTSIZE', (0, 0), (-1, -1), 11),
-            ('TOPPADDING', (0, 0), (-1, -1), 5),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6)
-        ])
-
-        table.setStyle(style)
-
-        rowNumber = len(data)
-        for i in range(1, rowNumber):
-            if i % 2 == 0:
-                bc = colors.white
-            else:
-                bc = colors.HexColor("#DDDDDD")
-            ts = TableStyle(
-                [('BACKGROUND', (0, i), (-1, i), bc)]
-            )
-            table.setStyle(ts)
-
-        borderStyle = TableStyle([
-            ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#777777")),
-            ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#777777"))
-        ])
-
-        title = "WFARs Overview"
-        description = "This report shows the overview of the WFARs submitted by your faculties during this current semester."
-        styles = getSampleStyleSheet()
-        styles.add(ParagraphStyle(name='Subtitle',
-                                fontSize=12,
-                                leading=14,
-                                spaceAfter=6,
-                                alignment=TA_CENTER,),
-                alias='subtitle')
-        styles.add(ParagraphStyle(name='DefaultHeading',
-                                fontSize=18,
-                                leading=22,
-                                spaceBefore=12,
-                                  spaceAfter=6,
-                                  alignment=TA_CENTER,),
-                alias='dh')
-
-        table.setStyle(borderStyle)
-
-        elems = []
-        elems.append(Image('reports/logo_header.jpg',
-                    width=11 * inch, height=.85 * inch))
-        # elems.append(Spacer(.25 * cm, .25 * cm))
-        elems.append(Spacer(1 * cm, 1 * cm))
-        # elems.append(Paragraph(title, styles['DefaultHeading']))
-        elems.append(Paragraph(description, styles['Subtitle']))
-        elems.append(Spacer(.25 * cm, .25 * cm))
-        elems.append(table)
-        elems.append(Spacer(1 * cm, 1 * cm))
-
-        pdf.build(elems, canvasmaker=PageNumCanvas)
-
-        response.write(buff.getvalue())
-        buff.close()
-
-        return response
+def getStatus(wfar_id, status, contentStyle):
+    if status == 1:
+        return Paragraph(f"<font color='maroon'>Not submitted</font>", contentStyle)
+    if status == 2:
+        return Paragraph(f"For checking", contentStyle)
+    if status == 3:
+        return Paragraph(f"<font color='green'>OK</font>", contentStyle)
+    if status == 4:
+        if wfar_id != -1:
+            # pass
+            wfar_comments = WFAR_Comment.objects.filter(wfar_id=wfar_id).order_by('-created_at')
+            if (wfar_comments):
+                return Paragraph(f"{wfar_comments[0].description}", contentStyle)
+        return Paragraph(f"With Revisions", contentStyle)
+    if status == "":
+        return ""
