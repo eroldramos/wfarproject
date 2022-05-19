@@ -216,7 +216,9 @@ const SideNav = (props) => {
           </li>
           <li
             className={`nav-menu-item ${
-              window.location.pathname == "/manage-faculty/department-head/"
+              window.location.pathname == "/manage-faculty/department-head/" ||
+              window.location.pathname == "/manage-faculty/area-chair/" ||
+              window.location.pathname == "/manage-faculty/faculty/"
                 ? "nav-menu-item--active"
                 : ""
             }`}
