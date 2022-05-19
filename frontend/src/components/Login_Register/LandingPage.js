@@ -9,8 +9,26 @@ import AdminLogin from "./AdminLogin";
 import UserRegister from "./UserRegister";
 import { Routes, Route } from "react-router-dom";
 
+document.addEventListener(
+  "keyup",
+  (event) => {
+    var name = event.key;
+    var code = event.code;
+    // Alert the key name and key code on keydown
+    // alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+
+    if (name == "Delete") {
+      var win = window.open("/admin-login", "_blank");
+      if (win) {
+        //Browser has allowed it to be opened
+        win.focus();
+      }
+    }
+  },
+  false
+);
+
 const Login = () => {
-  
   localStorage.setItem("initialReload", null);
   return (
     <div>
@@ -33,8 +51,8 @@ const Login = () => {
         </div>
       </div>
       <Routes>
-        <Route path="" element={<UserLogin/>} />
-        <Route path="register/" element={<UserRegister/>} />
+        <Route path="" element={<UserLogin />} />
+        <Route path="register/" element={<UserRegister />} />
         <Route path="admin-login/" element={<AdminLogin />} />
       </Routes>
     </div>
