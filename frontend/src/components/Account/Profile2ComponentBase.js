@@ -109,7 +109,7 @@ const Profile = () => {
     inputBlurHandler: firstNameBlurHandler,
     reset: resetFirstNameInput,
     setEnteredValue: setEnteredFirstName,
-  } = useValidateInput((value) => value.trim() !== "");
+  } = useValidateInput((value) => value !== "");
 
   // Middle Name Validations
   const {
@@ -120,7 +120,7 @@ const Profile = () => {
     inputBlurHandler: middleNameBlurHandler,
     reset: resetMiddleNameInput,
     setEnteredValue: setEnteredMiddleName,
-  } = useValidateInput((value) => value.trim() !== "");
+  } = useValidateInput((value) => value !== "");
 
   // Last Name Validations
   const {
@@ -131,7 +131,7 @@ const Profile = () => {
     inputBlurHandler: lastNameBlurHandler,
     reset: resetLastNameInput,
     setEnteredValue: setEnteredLastName,
-  } = useValidateInput((value) => value.trim() !== "");
+  } = useValidateInput((value) => value !== "");
 
   // Employee No Validations
   const {
@@ -143,15 +143,15 @@ const Profile = () => {
     reset: resetEmployeeNoInput,
     setEnteredValue: setEnteredEmpNo,
   } = useValidateInput(
-    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+    (value) => value !== "" && onlyNumbers(value)
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
   }
   let employeeNoErrorMessage = "";
   if (
-    enteredEmployeeNo.trim() === "" ||
-    !onlyNumbers(enteredEmployeeNo.trim())
+    enteredEmployeeNo === "" ||
+    !onlyNumbers(enteredEmployeeNo)
   ) {
     employeeNoErrorMessage = "Please enter a valid employee number.";
   }
@@ -259,7 +259,7 @@ const Profile = () => {
     reset: resetContactNo,
     setEnteredValue: setEnteredContactNo,
   } = useValidateInput(
-    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+    (value) => value !== "" && onlyNumbers(value)
   );
 
   //Email Validations
@@ -271,7 +271,7 @@ const Profile = () => {
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
     setEnteredValue: setEnteredEmail,
-  } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
+  } = useValidateInput((value) => value.includes("@") && value !== "");
 
   let emailErrorMessage = "";
   if (!enteredEmail.includes("@") || enteredEmail === "") {
@@ -288,9 +288,9 @@ const Profile = () => {
     reset: resetPasswordInput,
   } = useValidateInput(
     (value) =>
-      value.trim() !== "" &&
-      value.trim().length > 8 &&
-      containsNumber(value.trim())
+      value !== "" &&
+      value.length > 8 &&
+      containsNumber(value)
   );
 
   function containsNumber(str) {
@@ -306,7 +306,7 @@ const Profile = () => {
     passwordErrorMessage =
       "Character must be at least morethan 8 characters long.";
   }
-  if (!containsNumber(enteredPassword.trim()) && enteredPassword !== "") {
+  if (!containsNumber(enteredPassword) && enteredPassword !== "") {
     passwordErrorMessage = "Please include a number in the password.";
   }
   //  Confirm Password Validations
@@ -319,7 +319,7 @@ const Profile = () => {
     inputBlurHandler: confirmPasswordBlurHandler,
     reset: resetConfirmPasswordInput,
   } = useValidateInput(
-    (value) => value.trim() !== "" && value.trim() === enteredPassword.trim()
+    (value) => value !== "" && value === enteredPassword
   );
   let confirmPasswordErrorMessage = "";
   if (
