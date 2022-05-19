@@ -51,8 +51,11 @@
     max-height: 500px;
     overflow-y: scroll;
   }
-  .modal.m.long-height{
+  .modal.long-height{
     top: 10vh;
+    min-height: 200px;
+    max-height: 1000px;
+    position: relative;
   }
 
   .modal.r {

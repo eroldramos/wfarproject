@@ -28,8 +28,25 @@
   right: 5%;
 }
 .pop-out-container {
-  background-color: red;
   position: absolute;
   right: 70px;
   top: 110px;
+}
+.no-data-text{
+  text-align: center;
+  font-size: 20px;
+  padding: 30px 0;
+  margin: 0;
+  font-weight: 600;
+  color: #777777;
+  
+  border: 1px solid #ebecee;
+  border-top: none;
+  
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.paginator-container{
+  width: fit-content;
+  float: right;
 }
