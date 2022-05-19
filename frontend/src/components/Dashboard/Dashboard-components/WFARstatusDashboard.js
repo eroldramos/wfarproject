@@ -5,11 +5,10 @@ const WFARstatusDashboard = (props) => {
     const sem = useSelector((state) => state.activeSem).activeSem;
     let label;
     let school_year;
-    if(useSelector((state) => state.activeSem).activeSem){
+    if(sem){
         label = sem[0].label;
         school_year = sem[0].school_year;
     }
-
     return (
         <div className="wfar-status-container">
                     <h3>WFAR Status</h3>

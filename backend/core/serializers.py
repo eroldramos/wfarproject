@@ -1,8 +1,10 @@
 from dataclasses import field, fields
 from rest_framework import serializers
-from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment
+from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment, WFAR_Comment
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import calendar
+import math
 
 class FacultySerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -143,9 +145,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 # ERIKA
 class SemesterSerializer(serializers.ModelSerializer):
+    current_week = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Semester
-        fields = ('id', 'start_date', 'end_date', 'no_of_weeks','label','school_year')
+        fields = ('id', 'start_date', 'end_date', 'no_of_weeks','label','school_year','current_week')
+
+    def get_current_week(self, obj):
+        difference_of_days = date.today()- obj.start_date
+        currentWeek = abs(math.floor((difference_of_days.days/7)+1))
+        return currentWeek
 
 class WfarEntrySerializer(serializers.ModelSerializer):
     # accomplishment_date = serializers.DateField(format="%B %d")
@@ -297,12 +305,22 @@ class FacultyWfarSerializer(serializers.ModelSerializer):
 
 # SHEEN
 #-------DASHBOARD
+class CommentsSerializer(serializers.ModelSerializer):
+    created_at_date = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR_Comment
+        fields = ('id','description','wfar_id','faculty_id','created_at_date','updated_at')
+
+    def get_created_at_date(self, obj):
+        datee = obj.created_at.date()
+        return datee
+
 class GetAllWFAR(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField(read_only=True)
     checker = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = WFAR
-        fields = ('id','status','created_at','updated_at','checked_at','submitted_at','submitted_at','owner','checker','semester_id')
+        fields = ('id','status','created_at','updated_at','week_no','checked_at','submitted_at','owner','checker','semester_id')
 
     def get_owner(self, obj):
         return (ProfileSerializer(obj.faculty_id).data)
@@ -315,7 +333,7 @@ class GetAllUser(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ('id', 'username', 'email', 'name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
+        fields = ('id', 'username', 'email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
 
     def get_isAdmin(self, obj):   
         return obj.is_staff

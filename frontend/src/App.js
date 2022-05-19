@@ -49,6 +49,7 @@ function App() {
         <Routes>
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* dont remove, for testing of logout only. */}
+          <Route path="/login" element={<LoginScreen />}></Route>
           <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
           <Route
             path="/FacultySubmission/*"
