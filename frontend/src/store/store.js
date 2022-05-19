@@ -47,19 +47,26 @@ import {
 } from "./myWfarReducers";
 
 import {
-
   wfarPrintOverviewReducer,
-  wfarRetrieveOverviewReducer
-} from "./wfarReducers"
+  wfarRetrieveOverviewReducer,
+} from "./wfarReducers";
 
 // sheen
-import{
+import {
   getAllWFARinThisWeekReducer,
   getAllUsersReducer,
   getActiveSemReducer,
   getWFARwholeSemReducer,
   getWFARCommentsReducer,
-} from './dashboardReducer';
+} from "./dashboardReducer";
+// erold
+import {
+  getCheckWfarReducer,
+  postCommentReducer,
+  changeCheckStatusReducer,
+  updateCommentReducer,
+  deleteCommentReducer,
+} from "./checkWfarReducers";
 
 const store = configureStore({
   reducer: {
@@ -83,6 +90,13 @@ const store = configureStore({
     archiveSem: archiveSemReducer.reducer,
     restoreSem: restoreSemReducer.reducer,
     activateSem: activateSemReducer.reducer,
+
+    //wfar checking
+    getCheckWfar: getCheckWfarReducer.reducer,
+    postComment: postCommentReducer.reducer,
+    changeCheckStatus: changeCheckStatusReducer.reducer,
+    updateComment: updateCommentReducer.reducer,
+    deleteComment: deleteCommentReducer.reducer,
 
     // For Demo purpose only
 

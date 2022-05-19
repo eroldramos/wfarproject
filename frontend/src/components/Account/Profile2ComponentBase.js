@@ -473,7 +473,9 @@ const Profile = () => {
               onClick={() => setIsopen(true)}
               label="Edit Profile"
               type="primary"
-              size="xs"></SmallButton>
+              size="xs">
+                
+              </SmallButton>
 
             {isOpen && <Modal onClose={onClose} size="r">
               <h1 className="MODAL_HEADER">Edit Details</h1>

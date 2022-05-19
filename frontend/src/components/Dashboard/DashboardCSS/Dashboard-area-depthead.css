@@ -255,6 +255,13 @@
     animation: third 0.5s 1 forwards 2s;
 }
 
+
+:root {
+    --first-port-degree: 100deg;
+    --second-port-degree: 150deg;
+    --third-port-degree: 111deg;
+}
+
 /* Animation */
 @keyframes first {
     from {
@@ -262,7 +269,7 @@
     }
 
     to {
-        transform: rotate(100deg);
+        transform: rotate(var(--first-port-degree));
     }
 }
 
@@ -272,7 +279,7 @@
     }
 
     to {
-        transform: rotate(150deg);
+        transform: rotate(var(--second-port-degree));
     }
 }
 
@@ -282,7 +289,7 @@
     }
 
     to {
-        transform: rotate(111deg);
+        transform: rotate(var(--third-port-degree));
     }
 }
 

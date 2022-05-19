@@ -44,12 +44,16 @@ function App() {
   const loggedUser = useSelector((state) => state.login);
   const { error, isLoading, userInfo } = loggedUser;
 
-  // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    if (userInfo) {
-      dispatch(createWfar());
+    if (userInfo != null) {
+      console.log(userInfo);
+      if (!userInfo.c) {
+        dispatch(createWfar());
+      }
     }
-  }, [userInfo, dispatch]);
+
+    console.log("hello!");
+  }, [userInfo]);
 
   return (
     <div className="for-login-container">
@@ -60,7 +64,10 @@ function App() {
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* <Route path="/" element={<LandingPage />}></Route> */}
           {/* dont remove, for testing of logout only. */}
-          <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
+          <Route
+            path="/WFARChecking/:id/"
+            element={<WFARCheckingScreen />}
+          ></Route>
           <Route
             path="/FacultySubmission/*"
             element={<FacultySubmissionScreen />}
@@ -69,7 +76,7 @@ function App() {
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/LoginScreen" element={<LoginScreen />}></Route>
+          {/* <Route path="/LoginScreen" element={<LoginScreen />}></Route> */}
           {/* <Route path="/register" element={<RegisterScreen />}></Route> */}
           {/* <Route path="/" element={<SampleRedux />}></Route> */}
           {/* <Route path="/admin-login" element={<AdminLoginScreen />}></Route> */}

@@ -305,33 +305,26 @@
 }
 
 
-.dashboard-admin #part1 {
-    transform: rotate(0deg);
-}
 
 .dashboard-admin #part1 .circle {
     background-color: #BA6124;
-    /*transform: rotate(76deg);*/
     animation: first 1s 1 forwards;
 }
 
-
-.dashboard-admin #part2 {
-    transform: rotate(100deg);
-}
 
 .dashboard-admin #part2 .circle {
     background-color: #DE752D;
     animation: second 1s 1 forwards 1s;
 }
 
-.dashboard-admin #part3 {
-    transform: rotate(250deg);
-}
-
 .dashboard-admin #part3 .circle {
     background-color: #F09971;
     animation: third 0.5s 1 forwards 2s;
+}
+:root {
+    --first-port-degree: 100deg;
+    --second-port-degree: 150deg;
+    --third-port-degree: 111deg;
 }
 
 /* Animation */
@@ -341,7 +334,7 @@
     }
 
     to {
-        transform: rotate(100deg);
+        transform: rotate(var(--first-port-degree));
     }
 }
 
@@ -351,7 +344,7 @@
     }
 
     to {
-        transform: rotate(150deg);
+        transform: rotate(var(--second-port-degree));
     }
 }
 
@@ -361,7 +354,7 @@
     }
 
     to {
-        transform: rotate(111deg);
+        transform: rotate(var(--third-port-degree));
     }
 }
 

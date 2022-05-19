@@ -13,47 +13,11 @@ from rest_framework.views import APIView
 from yaml import serialize
 from core.serializers import WfarEntryAttachmentSerializer
 from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
-from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead
+from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead, IsAuthenticatedAndNotAdmin
 from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
-
-from ctypes import alignment
-import datetime
-from hashlib import new
-# Import mimetypes module
-import mimetypes
-# import os module
-import os
-from io import BytesIO
-
-from reportlab.platypus import Image, Table, TableStyle
-from reportlab.lib.units import cm, inch
-from reportlab.lib.pagesizes import letter, landscape
-from ReportGeneration.views import PageNumCanvas
-from django.shortcuts import render
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.core.paginator import Paginator
-from django.db.models import Q
-from datetime import timedelta, date
-from django.db.models import Q
-from django.http import (FileResponse, Http404, HttpResponse,
-                         HttpResponseRedirect)
-# Import HttpResponse module
-from django.http.response import HttpResponse
-# Import render module
-from django.shortcuts import get_object_or_404, render
-from reportlab.lib import colors
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import mm
-from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer, Table,
-                                TableStyle)
-
-from reportlab.lib.enums import TA_LEFT, TA_CENTER
-
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
@@ -189,14 +153,14 @@ class SubmitWfar(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
-        try:
+        # try:
             wfar = WFAR.objects.get(pk=pk)
             wfar.submitted_at = datetime.now()
             wfar.status = 2
             wfar.save()
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been submitted."}, status = status.HTTP_200_OK);
-        except:
-            return Response({"detail": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+        # except:
+        #     return Response({"detail": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
 
 
 class UnsubmitWfar(APIView):
@@ -377,181 +341,3 @@ class GetImage(APIView):
         # except:
         #     pass
             # return Response({"test": "test"})
-
-
-class PrintWFARIndividualPDF(APIView):
-    def post(self, request):
-        # try:
-            wfar = WFAR.objects.get(pk=request.data['wfar_id'])
-            if (wfar != None):
-
-                semester = Semester.objects.get(pk=wfar.semester_id);
-                entries = WFAR_Entry.objects.filter(wfar_id = wfar);
-                title = f"Weekly Accomplishment Report A.Y. {semester.school_year}, {semester.label}"
-                
-                response = HttpResponse(content_type='application/pdf')
-                pdf_name = "report.pdf"
-                response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
-
-                buff = BytesIO()
-
-                contentStyle = ParagraphStyle(
-                    name='Normal',
-                    fontSize=10,
-                    alignment=TA_CENTER
-                )
-
-                contentStyleLeft = ParagraphStyle(
-                    name='Normal',
-                    fontSize=10,
-                )
-
-                data = []
-
-                col_widths = [30 * mm, 40 * mm, 30 * mm, 30 * mm, 45 * mm, 50 * mm]
-                col_names = []
-                col_widths.append(45 * mm)
-                col_names.append(Paragraph(f"<font color='white'>DATE</font><br />(MM/DD/YYYY)", contentStyle))
-                col_names.append(Paragraph(f"<font color='white'>SUBJECT BEING TAUGHT</font>", contentStyle))
-                col_names.append(Paragraph(f"<font color='white'>COURSE, YEAR, & SECTION</font>", contentStyle))
-                col_names.append(Paragraph(f"<font color='white'>NO. OF ATTENDEES</font>", contentStyle))
-                col_names.append(Paragraph(f"<font color='white'>LINK OF TEAM MEET RECORDING</font>", contentStyle))
-                col_names.append(Paragraph(f"<font color='white'>LEARNING ACTIVITIES</font>", contentStyle))
-                
-                data.append(col_names)
-
-                
-                pdf = SimpleDocTemplate(
-                    buff,
-                    pagesize=landscape([937, 612]),
-                    rightMargin=35,
-                    leftMargin=35, topMargin=35, bottomMargin=35
-                )
-
-                table = Table(data, colWidths=col_widths)
-
-                style = TableStyle([
-                    ('BACKGROUND', (0, 0), (6, 0),
-                     colors.HexColor("#BE5A40")),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 11),
-                    ('TOPPADDING', (0, 0), (-1, -1), 8),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 9)
-                ])
-
-                table.setStyle(style)
-
-                rowNumber = len(data)
-                for i in range(1, rowNumber):
-                    if i % 2 == 0:
-                        bc = colors.white
-                    else:
-                        bc = colors.HexColor("#EEEEEE")
-                    ts = TableStyle(
-                        [('BACKGROUND', (0, i), (-1, i), bc)]
-                    )
-                    table.setStyle(ts)
-
-                borderStyle = TableStyle([
-                    ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#777777")),
-                    ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#777777"))
-                ])
-
-                title = "WFARs Overview"
-                styles = getSampleStyleSheet()
-                styles.add(ParagraphStyle(name='Subtitle',
-                                          fontSize=12,
-                                          leading=14,
-                                          spaceAfter=6,
-                                          alignment=TA_CENTER,),
-                           alias='subtitle')
-                styles.add(ParagraphStyle(name='DefaultHeading',
-                                          fontSize=18,
-                                          leading=22,
-                                          spaceBefore=12,
-                                          spaceAfter=6,
-                                          alignment=TA_CENTER,),
-                           alias='dh')
-
-                table.setStyle(borderStyle)
-
-                elems = []
-                elems.append(Image('reports/logo_header.jpg',
-                                   width=11 * inch, height=.85 * inch))
-                # elems.append(Spacer(.25 * cm, .25 * cm))
-                elems.append(Spacer(1 * cm, 1 * cm))
-                # elems.append(Paragraph(title, styles['DefaultHeading']))
-                # elems.append(Paragraph(description, styles['Subtitle']))
-                elems.append(Spacer(.25 * cm, .25 * cm))
-                elems.append(table)
-                elems.append(Spacer(1 * cm, 1 * cm))
-
-                pdf.build(elems, canvasmaker=PageNumCanvas)
-
-                response.write(buff.getvalue())
-                buff.close()
-            return response
-        # except:
-        #     #     pass
-        #     return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-# def getStatus(wfar_id, status, contentStyle):
-#     if status == 1:
-#         return Paragraph(f"<font color='maroon'>Not submitted</font>", contentStyle)
-#     if status == 2:
-#         return Paragraph(f"For checking", contentStyle)
-#     if status == 3:
-#         return Paragraph(f"<font color='green'>OK</font>", contentStyle)
-#     if status == 4:
-#         if wfar_id != -1:
-#             # pass
-#             wfar_comments = WFAR_Comment.objects.filter(
-#                 wfar_id=wfar_id).order_by('-created_at')
-#             if (wfar_comments):
-#                 return Paragraph(f"{wfar_comments[0].description}", contentStyle)
-#         return Paragraph(f"With Revisions", contentStyle)
-#     if status == "":
-#         return ""
-
-
-# def getCurrentWeekNo(semester):
-#     semester_weeks = semester.no_of_weeks
-#     semester_start_date = semester.start_date
-#     semester_end_date = semester.end_date
-
-#     start = semester_start_date
-#     week_bracket = [start, start]
-#     week_no = semester_weeks
-
-#     weeks = []
-
-#     for i in range(semester_weeks):
-
-#         week_bracket[1] += timedelta(days=7)
-#         succeeding_date_day = week_bracket[1].isoweekday()
-
-#         if week_bracket[1] > semester_end_date:
-#             week_bracket[1] = semester_end_date
-
-#         if succeeding_date_day != 7:
-#             week_bracket[1] -= timedelta(days=succeeding_date_day)
-
-#             week_bracket[0] = week_bracket[1] - timedelta(days=6)
-#             previous_date_day = week_bracket[0].isoweekday()  # friday - 8 - 5
-
-#         week_bracket[0] = week_bracket[1] - timedelta(days=6)
-#         previous_date_day = week_bracket[0].isoweekday()  # friday - 8 - 5
-#         if previous_date_day != 1:
-#             week_bracket[0] += timedelta(days=8-previous_date_day)
-
-#         date_today = date.today()
-
-#         weeks.extend(week_bracket)
-#         if date_today >= week_bracket[0] and date_today <= week_bracket[1]:
-#             week_no = i
-#             # break
-
-#     # return week_bracket
-#     return [weeks, week_no]

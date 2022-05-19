@@ -31,7 +31,7 @@ const DropdownField = (props) => {
 				{props.options.map((option) => {
 					return (
 						<option key={option.value} value={option.value} selected={option.isSelected}>
-							{option.label}agaga{option.isSelected && "hello"}
+							{option.label}
 						</option>
 					);
 				})}

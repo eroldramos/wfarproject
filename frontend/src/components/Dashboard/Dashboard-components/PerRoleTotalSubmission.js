@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 const PerRoleTotalSubmission = (props) => {
 
-
     let role;
     let countOfSubmitted = 0;
 
@@ -21,11 +20,31 @@ const PerRoleTotalSubmission = (props) => {
             userWhoSubmittedID.push(wfarItem.owner.id)
         }
     });
-    
+
     const percentageOfSubmitted = parseInt((userWhoSubmittedID.length / totalCountPerRole) * 100);
 
+    let progressBar = document.querySelector(`.${props.role} .circular-progress`);
+    let valueContainer = document.querySelector(`.${props.role} .value-container`);
+
+    let progressValue = 0;
+    let progressEndValue = percentageOfSubmitted > 0 ? percentageOfSubmitted : 0;
+    let speed = 80;
+
+    if(percentageOfSubmitted>0){
+        let progress =  setInterval(() => {
+            progressValue ++;
+            valueContainer.textContent = progressValue +"%";
+            progressBar.style.background = `conic-gradient(#BE5A40   ${progressValue *3.6}deg,#F1BFB2 ${progressValue *3.6}deg)`;
+            if (progressValue == progressEndValue){
+                clearInterval(progress);
+            }
+        }, speed);    
+    }
+    
+  
+
     return (
-        <div className="per-role-submission">
+        <div className={`per-role-submission ${props.role}`}>
             <div className="info">
                 <h5>{props.role}</h5>
                 <div className="total-submission-status">
@@ -35,7 +54,7 @@ const PerRoleTotalSubmission = (props) => {
             </div>
             <div className="graph-container">
                 <div className="circular-progress">
-                    <div className="value-container">{percentageOfSubmitted > 0 ? percentageOfSubmitted : 0}%</div>
+                    <div className="value-container">0 %</div>
                 </div>
             </div>
         </div>

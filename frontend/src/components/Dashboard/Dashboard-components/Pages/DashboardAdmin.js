@@ -48,7 +48,7 @@ const DashboardAdmin = () => {
                     <PerRoleTotalSubmission role="FACULTY"/>
                 </div>
 
-                <WFARstatusDashboard/>
+                <WFARstatusDashboard role="dashboard-admin"/>
                 
                 <div className="management-container">
 

@@ -24,7 +24,7 @@ const Register = () => {
   useEffect(() => {
     if (success) {
       // if userInfo is null, can't be login
-      navigate("/dummydashboard");
+      navigate("/dashboard");
     }
   }, [navigate, success]);
 
