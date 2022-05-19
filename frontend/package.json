@@ -15,7 +15,6 @@
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.1",
     "react-scripts": "^5.0.1",
-    "react-to-print": "^2.14.7",
     "redux": "^4.2.0",
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.14",
