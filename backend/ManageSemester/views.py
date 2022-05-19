@@ -187,6 +187,18 @@ class RetrieveSemestersList(APIView):
         except:
             return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
 
+class RetrieveActiveSemester(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            semester = Semester.objects.filter(deleted_at=None, is_active=True).order_by('-created_at')
+            serializer = SemesterSerializerYearAndSem(semester, many=True)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 # class RetrieveSemesterDetail(APIView):
 #     permission_classes = [IsAdminUser]
