@@ -413,7 +413,7 @@ class WFARCheckingWFAREntriesSerializer(serializers.ModelSerializer):
         fields = ['id','accomplishment_date','subject','course_year_section','no_of_attendees','recording_url', "attachments", "activities",]
     def get_accomplishment_date(self, obj):
         accomplishment_date = None
-        if obj.accomplishment_dat:
+        if obj.accomplishment_date:
             accomplishment_date = datetime.strftime(obj.accomplishment_date, '%b %d, %Y')
         return accomplishment_date
 
