@@ -49,6 +49,12 @@ const PendingRows = (props) => {
         >
           {props.createdAt}
         </div>
+        <div
+          className={`${table["col"]} ${table["col-8"]}`}
+          data-label="Action"
+        >
+          {props.actions}
+        </div>
       </li>
     </Fragment>
   );

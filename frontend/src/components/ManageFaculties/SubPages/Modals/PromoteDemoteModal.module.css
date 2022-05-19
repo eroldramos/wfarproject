@@ -1,21 +1,30 @@
 .container {
   padding: 5px 20px;
+  border: 1px solid black;
 }
 .modal-btn-container {
   float: right;
 }
 
 .roles {
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   cursor: pointer;
+  /* border: 1px solid black; */
+  border-radius: 10px;
 }
+/* .roles h3{
+  margin-left: 20px;
+} */
 .roles.selected:hover,
 .roles.unselected:hover {
   background: #ccc;
 }
-.roles.selected {
+.roles.selected{
   background: #fff9f9;
-  padding: 30px 20px;
+  padding: 10px 20px;
+}
+.roles.selected h3{
+  color: #BE5A40;
 }
 .roles.selected h1 {
   color: #be5a40;
@@ -23,7 +32,7 @@
 
 .roles.unselected {
   background: #fff;
-  padding: 30px 20px;
+  padding: 10px 20px;
 }
 .roles.unselected h1 {
   color: #000;
@@ -32,7 +41,37 @@
 .clearfix {
   clear: both;
 }
+.confirm-btn-container {
+  width: fit-content;
+  float: right;
+  /* border: 1px solid black; */
+}
 .cancel-btn-container {
   float: right;
-  width: fix-content;
+  width: fit-content;
+  /* border: 1px solid black; */
+}
+.header-container{
+  justify-content: space-between;
+  display: flex;
+  /* border: 1px solid red; */
+  margin-bottom: 10px;
+}
+.header-container h2{
+  font-size: 18px;
+  margin: 8px 0;
+  width: fit-content;
+}
+.header-container h5{ 
+  font-size: 14px;
+  width: fit-content;
+}
+.header-text-container{
+  width: fit-content;
+}
+.roles-container{
+  /* border: 1px solid black; */
+}
+.button-container{
+  /* border: 1px solid black; */
 }

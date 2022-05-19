@@ -1,9 +1,18 @@
+import { useSelector } from "react-redux";
+
 const WFARstatusDashboard = (props) => {
 
+    const sem = useSelector((state) => state.activeSem).activeSem;
+    let label;
+    let school_year;
+    if(sem){
+        label = sem[0].label;
+        school_year = sem[0].school_year;
+    }
     return (
         <div className="wfar-status-container">
                     <h3>WFAR Status</h3>
-                    <p>1st Semester of 2021-2022</p>
+                    <p>{label} of {school_year}</p>
                     <div className="status-graph-container">
                         <div className="status-graph">
                             <div className="container">

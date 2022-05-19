@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   /* box-sizing: border-box; */
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   user-select: none;
+}
+
+.filterButtonActive {
+  background-color: palegoldenrod;
+  border: 2px solid gray;
 }
 
 html {
@@ -14,24 +19,23 @@ body {
   margin: 0;
 }
 
-
 h1 {
   font-size: 1.5em;
   margin: 0px 0 25px 0;
-  color: #BE5A40;
+  color: #be5a40;
 }
 
 #main {
   margin-left: 85px;
-  transition: .3s margin-left ease-in-out;
+  transition: 0.3s margin-left ease-in-out;
   padding: 45px 70px 45px 55px;
 }
 
 button:focus {
-  border: none!important;
-  outline: none!important;
+  border: none !important;
+  outline: none !important;
   outline: none;
-  box-shadow: none!important;
+  box-shadow: none !important;
 }
 
 /* .sweet-alert button {

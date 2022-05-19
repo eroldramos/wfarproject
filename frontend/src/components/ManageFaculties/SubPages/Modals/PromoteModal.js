@@ -64,20 +64,24 @@ const PromoteModal = (props) => {
   console.log(selectedRole);
   return (
     <Fragment>
-      <Modal onClose={props.onClose}>
-        <h1>User type : {props.user_type}</h1>
+      <Modal onClose={props.onClose} size="m">
         <div className={styles["container"]}>
-          <div className={styles["modal-btn-container"]}>
-            <ModalButton
-              label="Promote"
-              type={selectedRole === 0 ? "cancel" : "primary"}
-              size="rg"
-              disabled={selectedRole === 0 ? true : false}
-              onClick={promoteRole}
-            />
+          <div className={styles["header-container"]}>
+            <div className={styles["header-text-container"]}>
+              <h2>{props.fullname}</h2>
+              <h5>{user_type}</h5>
+            </div>
+            <div className={styles["modal-btn-container"]}>
+              <ModalButton
+                label="Promote"
+                type={selectedRole === 0 ? "cancel" : "primary"}
+                size="s"
+                disabled={selectedRole === 0 ? true : false}
+                onClick={null}
+              />
+            </div>
           </div>
-          <h1>{props.fullname}</h1>
-          <p>{user_type}</p>
+
           <div className={styles["clearfix"]}></div>
 
           <div className={styles["roles-container"]}>
@@ -92,7 +96,7 @@ const PromoteModal = (props) => {
                     : `${styles["roles"]} ${styles["unselected"]}`
                 }
               >
-                <h1>Faculty</h1>
+                <h3>Faculty</h3>
               </div>
             )}
 
@@ -107,7 +111,7 @@ const PromoteModal = (props) => {
                     : `${styles["roles"]} ${styles["unselected"]}`
                 }
               >
-                <h1>Area Chair</h1>
+                <h3>Area Chair</h3>
               </div>
             )}
 
@@ -122,7 +126,7 @@ const PromoteModal = (props) => {
                     : `${styles["roles"]} ${styles["unselected"]}`
                 }
               >
-                <h1>Department Head</h1>
+                <h3>Department Head</h3>
               </div>
             )}
           </div>
@@ -132,7 +136,16 @@ const PromoteModal = (props) => {
                 onClick={props.onClose}
                 label="Cancel"
                 type="cancel"
-                size="rg"
+                size="s"
+              />
+            </div>
+            <div className={styles["confirm-btn-container"]}>
+              <Button
+                disabled={selectedRole === 0 ? true : false}
+                onClick={promoteRole}
+                label="Confirm"
+                type="confirm"
+                size="s"
               />
             </div>
             <div className={styles["clearfix"]}></div>

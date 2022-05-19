@@ -13,11 +13,12 @@ const Entries = () =>{
         <div className={styles.entries}>
             <div className={styles.detailsContainer}>
                 <div className={styles.entryTextContainer}>
-                    <h5>Entry # 1</h5>
-                    <h5>Date Accomlished: Apr 29, 2022</h5>
+                    <h3>Entry # 1</h3>
+                    <h3>Date Accomlished: </h3>
+                    <p>Apr 29, 2022</p>
                 </div>
                 <div className={styles.attachmentContainer}>
-                    <h5>No attachments</h5>
+                    <h3>No attachments</h3>
                     {!expandIsCLicked && 
                         <div className={styles.chevronDown} onClick = {() => setExpandIsCLicked(true)}>
                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -10,6 +10,14 @@ import ArchivedPage from "./ArchivedPage";
 import Tab from "../UI/Tab/Tab";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom"; //for routing
 const ManageSemesters = () => {
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
+
   let navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const onChangePageHandler = (page) => {

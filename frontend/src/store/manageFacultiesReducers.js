@@ -5,7 +5,7 @@ export const getFacultiesReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    faculties: null,
+    faculties: {},
   },
   reducers: {
     getFacultiesRequest(state, action) {
@@ -31,7 +31,7 @@ export const getAreaChairsReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    areachairs: null,
+    areachairs: {},
   },
   reducers: {
     getAreaChairsRequest(state, action) {
@@ -57,7 +57,7 @@ export const getDepartmentHeadsReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    departmentheads: null,
+    departmentheads: {},
   },
   reducers: {
     getDepartmentHeadsRequest(state, action) {
@@ -83,7 +83,7 @@ export const getUnassignedFacultiesReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    unassignedFaculties: null,
+    unassignedFaculties: {},
   },
   reducers: {
     getUnassignedFacultiesRequest(state, action) {
@@ -110,7 +110,7 @@ export const getAssignedFacultiesReducer = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    assignedFaculties: null,
+    assignedFaculties: {},
   },
   reducers: {
     getAssignedFacultiesRequest(state, action) {

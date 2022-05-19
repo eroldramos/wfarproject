@@ -3,7 +3,9 @@
 .form-control {
     padding: 15px 10px 15px 0;
 }
-
+.form-control-custom{
+    padding: 8px 0;
+}
 .form-control.rg {
     width: 32.5%;
 }
@@ -16,7 +18,7 @@
     width: 100%;
 }
 
-.form-control label {
+.label-control {
     font-style: normal;
     font-weight: 600;
     font-size: 1em;
@@ -25,7 +27,12 @@
     display: block;
     margin: 15px 0;
 }
-
+.nm{ /* no margin for label*/
+    margin: 0;
+}
+.no-label-input{
+    display: none;
+}
 .form-control.important label:after {
     content: "*";
     font-weight: 600;

@@ -70,7 +70,7 @@ const FacultyAssignModal = (props) => {
   console.log(currentPage, "FacultyAssignModal");
   return (
     <Fragment>
-      <Modal onClose={props.onCloseAssignModal}>
+      <Modal onClose={props.onCloseAssignModal} size = "m">
         <div className={styles["container"]}>
           <div className={styles["modal-btn-container"]}>
             <EyeButton

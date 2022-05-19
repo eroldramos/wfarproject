@@ -1,9 +1,16 @@
 import SearchField from "../../../../UI/FormControl/SearchField/SearchField";
 import styles from "../ViewFacultyStatus.module.css";
-import Rows from "./Rows";
+import RadioRows from "./RadioRows";
 import table from "./Table.module.css";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
+import {
+  getAreaChairs,
+  assignedFaculty,
+} from "../../../../../store/manageFacultiesActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import Paginator from "../../../SubComponents/Paginator";
 const AreaChair = (props) => {
   const icon = (
     <svg
@@ -19,7 +26,31 @@ const AreaChair = (props) => {
       />
     </svg>
   );
-  const [listPendingAccounts, setListPendingAccounts] = useState([
+
+  const search = useLocation().search;
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const getAreaChairsReducerValues = useSelector(
+    (state) => state.getAreaChairs
+  );
+  const {
+    isLoading: getAreaChairsIsLoading,
+    error: getAreaChairsError,
+    areachairs: { faculties: areachairs, pages, page },
+  } = getAreaChairsReducerValues;
+  useEffect(() => {
+    dispatch(getAreaChairs(search));
+  }, [dispatch, search]);
+
+  useEffect(() => {
+    if (areachairs) {
+      setListFaculty(areachairs);
+    }
+  }, [areachairs]);
+
+  const [searchFaculty, setSearchFaculty] = useState("");
+  const [listFaculty, setListFaculty] = useState([
     {
       id: 1,
       fullname: "Erold Ramos",
@@ -29,106 +60,42 @@ const AreaChair = (props) => {
       fullname: "Erold Ramos",
     },
   ]);
-  const [isChecked, setIsChecked] = useState(true);
-  const [selectedUser, setSelectedUser] = useState([]);
-  const [modalIsShown, setModalIsShown] = useState(false);
-  const [searchFaculty, setSearchFaculty] = useState("");
-
-  const [checkedState, setCheckedState] = useState(
-    new Array(listPendingAccounts.length).fill(false)
-  );
-  const selectAllUsers = () => {
-    if (isChecked) {
-      setIsChecked((isChecked) => !isChecked);
-      const updatedCheckedState = checkedState.map((currentCheckState, index) =>
-        currentCheckState === isChecked ? currentCheckState : !currentCheckState
-      );
-
-      setCheckedState(updatedCheckedState);
-
-      let arrayId = [];
-      const newArrayId = updatedCheckedState.reduce(
-        (sum, currentState, index) => {
-          if (currentState === true) {
-            arrayId.push({
-              id: listPendingAccounts[index].id,
-              fullname: listPendingAccounts[index].fullname,
-            });
-            return arrayId;
-          }
-          return arrayId;
-        },
-        0
-      );
-      setSelectedUser(newArrayId);
-    }
-    if (!isChecked) {
-      setIsChecked((isChecked) => !isChecked);
-      const updatedCheckedState = checkedState.map((currentCheckState, index) =>
-        currentCheckState === !isChecked
-          ? !currentCheckState
-          : currentCheckState
-      );
-
-      setCheckedState(updatedCheckedState);
-      let arrayId = [];
-      const newArrayId = updatedCheckedState.reduce(
-        (sum, currentState, index) => {
-          if (currentState === true) {
-            arrayId.push({
-              id: listPendingAccounts[index].id,
-              fullname: listPendingAccounts[index].fullname,
-            });
-            return arrayId;
-          }
-          return arrayId;
-        },
-        0
-      );
-      setSelectedUser(newArrayId);
-    }
-  };
-
-  const handleOnChange = (position) => {
-    if (!isChecked) {
-      setIsChecked(true);
-    }
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-
-    setCheckedState(updatedCheckedState);
-    let arrayId = [];
-    const newArrayId = updatedCheckedState.reduce(
-      (sum, currentState, index) => {
-        if (currentState === true) {
-          arrayId.push({
-            id: listPendingAccounts[index].id,
-            fullname: listPendingAccounts[index].fullname,
-          });
-          return arrayId;
-        }
-        return arrayId;
-      },
-      0
-    );
-    setSelectedUser(newArrayId);
-  };
-
+  const [assigneeId, setAssigneeId] = useState("");
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
   };
+  const onHandleChange = (event) => {
+    setAssigneeId(event.target.value);
+  };
 
-  console.log(isChecked);
-  console.log(checkedState);
-  console.log(selectedUser);
-  console.log(checkedState[0]);
+  const onAssignedFacultyHandler = () => {
+    let selectedId = [];
+
+    selectedId.push(props.id);
+
+    console.log(selectedId);
+    let data = {
+      assignee_id: assigneeId,
+      assigned_faculties: selectedId,
+    };
+
+    dispatch(assignedFaculty(data));
+    console.log(data);
+    alert("Assigned Successfully");
+    props.onCloseAssignModal();
+  };
+
+  console.log(assigneeId);
   return (
     <Fragment>
-      AreaChair, {props.fullname + "/" + props.id + "/" + props.user_type}
       <div className={styles["search-field-container"]}>
         <form onSubmit={onSubmitHandler}>
           <SearchField
@@ -147,24 +114,18 @@ const AreaChair = (props) => {
         <li className={table["table-header"]}>
           <div
             className={`${table["col"]} ${table["col-1"]} ${table["col-header"]}`}
-          >
-            <input
-              type="checkbox"
-              checked={!isChecked && selectedUser.length > 0 ? true : false}
-              onChange={() => selectAllUsers()}
-            />
-          </div>
+          ></div>
           <div
             className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
           >
             <div className={table["label-container"]}>
-              {selectedUser.length} Selected.
+              Choose a Department Head.
             </div>
-            <div className={table["icon-container"]}>
-              {selectedUser.length > 0 && (
+            <div className={table["icon-container2"]}>
+              {assigneeId > 0 && (
                 <TransparentButton
-                  onClick={null}
-                  label="Remove "
+                  onClick={onAssignedFacultyHandler}
+                  label="Assign"
                   type="transparent"
                   size="xs"
                   svg={icon}
@@ -173,18 +134,28 @@ const AreaChair = (props) => {
             </div>
           </div>
         </li>
-        {listPendingAccounts.length === 0 && <p>Not Found</p>}
-        {listPendingAccounts &&
-          listPendingAccounts.map((data, index) => (
-            <Rows
+        {listFaculty.length === 0 && <p>Not Found</p>}
+        {listFaculty &&
+          listFaculty.map((data, index) => (
+            <RadioRows
               id={data.id}
-              fullname={data.fullname}
+              value={data.id}
+              first_name_and_middle_name={`${data.first_name} ${data.middle_name}`}
+              last_name={data.last_name}
               key={index}
-              checked={checkedState[index] ? checkedState[index] : false}
-              onChange={() => handleOnChange(index)}
+              checked={assigneeId == data.id}
+              onChange={onHandleChange}
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={window.location.pathname}
+        />
+      </div>
     </Fragment>
   );
 };

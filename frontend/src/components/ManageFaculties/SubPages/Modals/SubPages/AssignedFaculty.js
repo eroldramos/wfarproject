@@ -5,13 +5,16 @@ import table from "./Table.module.css";
 import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   getAssignedFaculties,
   unassignedFaculty,
 } from "../../../../../store/manageFacultiesActions";
+import Paginator from "../../../SubComponents/Paginator";
 const AssignedFaculty = (props) => {
   let navigate = useNavigate();
+  const search = useLocation().search;
+  const params = useParams();
   const dispatch = useDispatch();
   const getAssignedFacultiesReducerValues = useSelector(
     (state) => state.getAssignedFaculties
@@ -20,16 +23,13 @@ const AssignedFaculty = (props) => {
   const {
     isLoading: assignedIsLoading,
     error: assignedError,
-    assignedFaculties,
+    assignedFaculties: { assigned_faculties, page, pages },
   } = getAssignedFacultiesReducerValues;
 
-  const assigned_faculties = assignedFaculties
-    ? assignedFaculties.assigned_faculties
-    : [];
-
   useEffect(() => {
-    dispatch(getAssignedFaculties(props.id));
-  }, [dispatch]);
+    console.log("initialize");
+    dispatch(getAssignedFaculties(params.id, search));
+  }, [dispatch, params.id, search]);
 
   useEffect(() => {
     if (assigned_faculties && !assignedIsLoading) {
@@ -150,6 +150,13 @@ const AssignedFaculty = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (searchFaculty) {
+      console.log(window.location.pathname, "SEARCHHHHHHH");
+      navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
+    } else {
+      console.log(window.location);
+      navigate(window.location);
+    }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
@@ -233,6 +240,14 @@ const AssignedFaculty = (props) => {
             />
           ))}
       </ul>
+      <div className={styles["paginator-container"]}>
+        <Paginator
+          search={search}
+          page={page}
+          pages={pages}
+          url={`${window.location.pathname}`}
+        />
+      </div>
     </Fragment>
   );
 };

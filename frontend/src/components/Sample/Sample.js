@@ -242,6 +242,7 @@ function Sample() {
           <Button label="Cancel" type="cancel" size="s" />
 
           <Button label="Cancel" type="cancel" size="xs" />
+          <Button label="Confirm" type="confirm" size="s" />
 
           <IconButton label="Button" type="cancel" size="xs" svg={icon} />
         </fieldset>
@@ -254,7 +255,7 @@ function Sample() {
           labelName="search"
           inputName="search"
           placeholder="Search faculty"
-          size="md"
+          size="lg"
           type="filter"
         />
       </div>
@@ -339,9 +340,10 @@ function Sample() {
       <FilterButton label="Overview" type="primary"></FilterButton>
 
       <SmallButton label="Check WFAR" type="primary"></SmallButton>
-      <SmallButton label="Regular" type="primary" size="r"></SmallButton>
-      <SmallButton label="Small" type="primary" size="s"></SmallButton>
-      <SmallButton label="Extra Small" type="primary" size="xs"></SmallButton>
+      <SmallButton label="Small" type="primary" size="s-l"></SmallButton>
+      <SmallButton label="Medium" type="primary" size="m-l"></SmallButton>
+      <SmallButton label="Large" type="primary" size="l-l"></SmallButton>
+      <SmallButton label="Confirm" type="primary" size="s-l"></SmallButton>
       <PrintButton label="Print" type="primary"></PrintButton>
 
       {/* NESTED ROUTING */}

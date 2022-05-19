@@ -29,53 +29,55 @@ const ViewStatusModal = (props) => {
 
   const onOpenAssign = () => {
     props.onOpenAssign();
-    props.onClose();
+    props.closeViewFacultyModalTransition();
   };
 
   return (
     <Fragment>
-      <Modal onClose={props.onClose}>
-        <h1>User type : {props.user_type}</h1>
+      <Modal onClose={props.closeViewFacultyModal} size="m">
+        {/* <h1>User type : {props.user_type}</h1> */}
         <div className={styles["container"]}>
-          <div className={styles["modal-btn-container"]}>
-            <ModalButton
-              label={props.assignee_id ? "Assigned" : "Not assigned"}
-              type={null === 0 ? "cancel" : "primary"}
-              size="rg"
-              disabled={true}
-              onClick={null}
-            />
+          <div className={styles["header-container"]}>
+            <div className={styles["header-text-container"]}>
+              <h2>{props.fullname}</h2>
+              <h5>{user_type}</h5>
+            </div>
+            <div className={styles["modal-btn-container"]}>
+              <ModalButton
+                label={props.assignee_id ? "Assigned" : "Not assigned"}
+                type={null === 0 ? "cancel" : "primary"}
+                size="s"
+                disabled={true}
+                onClick={null}
+              />
+            </div>
           </div>
-          <h1>{props.fullname}</h1>
-          <p>{user_type}</p>
+
           <div className={styles["clearfix"]}></div>
 
           {props.assignee_id ? (
             <div onClick={null} className={styles["assign-container2"]}>
-              <div className={`${styles["assign-btn"]} ${styles["profile"]} `}>
-                <img
-                  src={props.assignee_id.profile_picture}
-                  height="70"
-                  width="70"
-                />
+              <div className={styles["assigned-to-container"]}>
+                <h3>ASSIGNED TO</h3>
               </div>
-              <div>
-                <h3
-                  style={{
-                    color: "#ccc",
-                  }}
-                >
-                  {props.assignee_id.user_type === 3 && "Department Head"}
-                  {props.assignee_id.user_type === 2 && "Area Chair"}
-                </h3>
-                <h1
-                  style={{
-                    fontWeight: "500",
-                  }}
-                >
-                  <strong>{props.assignee_id.last_name}, </strong>
-                  {props.assignee_id.first_name} {props.assignee_id.middle_name}
-                </h1>
+              <div className={styles["formater"]}>
+                <div className={`${styles["assign-btn"]} ${styles["profile"]} `}>
+                  <img
+                    src={props.assignee_id.profile_picture}
+                    height="70"
+                    width="70"
+                  />
+                </div>
+                <div className={styles["position-container"]}>
+                  <h3>
+                    {props.assignee_id.user_type === 3 && "Department Head"}
+                    {props.assignee_id.user_type === 2 && "Area Chair"}
+                  </h3>
+                  <h3>
+                    <strong>{props.assignee_id.last_name}, </strong>
+                    {props.assignee_id.first_name} {props.assignee_id.middle_name}
+                  </h3>
+                </div>
               </div>
             </div>
           ) : (
@@ -84,17 +86,17 @@ const ViewStatusModal = (props) => {
                 <div className={styles["assign-btn"]} onClick={onOpenAssign}>
                   {icon}
                 </div>
-                <h1>Assign</h1>
+                <h3>Assign</h3>
               </div>
             </div>
           )}
           <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button
-                onClick={props.onClose}
+                onClick={props.closeViewFacultyModal}
                 label="Close"
                 type="cancel"
-                size="rg"
+                size="s"
               />
             </div>
             <div className={styles["clearfix"]}></div>

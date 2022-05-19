@@ -2,6 +2,9 @@
     display: flex;
     justify-content: space-between;
 }
+.firstContainer h2{
+    font-size: 24px;
+}
 .print_CheckContainer{
     display: flex;
 }
@@ -12,6 +15,9 @@
 .mainContainer{
     margin-top: 20px;
     display: flex;
+}
+.mainContainer h3{
+    font-size: 18px;
 }
 .entriesContainer{
     width: 70%;

@@ -7,6 +7,7 @@ import WFARstatusDashboard from "../../Dashboard-components/WFARstatusDashboard"
 
 const DashboardAdmin = () => {
 
+
     return (
         <div className="dashboard-admin">
 
@@ -19,17 +20,20 @@ const DashboardAdmin = () => {
                 <NotificationInDashboard/>
 
                 <div className="total-submission-container">
-                    <PerRoleTotalSubmission/>
-                    <PerRoleTotalSubmission/>
-                    <PerRoleTotalSubmission/>
+
+                    <PerRoleTotalSubmission role="DEPARTMENT HEAD"/>
+                    <PerRoleTotalSubmission role="AREA CHAIR"/>
+                    <PerRoleTotalSubmission role="FACULTY"/>
                 </div>
 
                 <WFARstatusDashboard/>
-
+                
                 <div className="management-container">
-                    <ManagementPageRedirection/>
-                    <ManagementPageRedirection/>
-                    <ManagementPageRedirection/>
+
+                    <ManagementPageRedirection role="Department Head"/>
+                    <ManagementPageRedirection role="Area chair"/>
+                    <ManagementPageRedirection role="Faculty"/>
+                    
                     <div className="manage-pending-accounts">
                         <div className="pending-accounts-icon">
                             <img src={pendingAccountIcon} alt="" />

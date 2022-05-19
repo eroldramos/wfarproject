@@ -1,8 +1,10 @@
 from dataclasses import field, fields
 from rest_framework import serializers
-from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment
+from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment, WFAR_Comment
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import calendar
+import math
 
 class FacultySerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -10,7 +12,7 @@ class FacultySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'profile_picture']
 
     def get_isAdmin(self, obj):   
         return obj.is_staff
@@ -47,7 +49,7 @@ class FacultySerializerWithToken(FacultySerializer):
     expirationDate =  serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'token', 'expirationDate']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'token', 'expirationDate',  'profile_picture']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -82,14 +84,14 @@ class ManageFacultiesUnassignmentSerializer(ManageFacultiesSerializer):
 
 
 class ManageFacultiesAssignmentSerializer(ManageFacultiesSerializer):
-    assigned_faculties = serializers.SerializerMethodField(read_only=True)
+    # assigned_faculties = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type', 'assigned_faculties']
-    def get_assigned_faculties(self, obj):
-        faculties = obj.faculty_set.all()
-        serializer = ManageFacultiesSerializer(faculties, many=True)
-        return(serializer.data)
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type',]
+    # def get_assigned_faculties(self, obj):
+    #     faculties = obj.faculty_set.all()
+    #     serializer = ManageFacultiesSerializer(faculties, many=True)
+    #     return(serializer.data)
 
 class SemesterSerializerYearAndSem(serializers.ModelSerializer):
     class Meta:
@@ -143,9 +145,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 # ERIKA
 class SemesterSerializer(serializers.ModelSerializer):
+    current_week = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Semester
-        fields = ('id', 'start_date', 'end_date', 'no_of_weeks')
+        fields = ('id', 'start_date', 'end_date', 'no_of_weeks','label','school_year','current_week')
+
+    def get_current_week(self, obj):
+        difference_of_days = date.today()- obj.start_date
+        currentWeek = abs(math.floor((difference_of_days.days/7)+1))
+        return currentWeek
 
 class WfarEntrySerializer(serializers.ModelSerializer):
     # accomplishment_date = serializers.DateField(format="%B %d")
@@ -244,3 +252,95 @@ class WfarEntryViewSerializer(serializers.ModelSerializer):
         fields = ('id', 'accomplishment_date', 'subject', 
                     'course_year_section', 'no_of_attendees', 'recording_url',
                     'wfar_entry_activities', 'wfar_entry_attachments');
+
+
+# --------------------------------------
+
+# class 
+
+class WfarSerializer2(serializers.ModelSerializer):
+
+    class Meta:
+        model = WFAR
+        fields = '__all__'
+
+class FacultyWfarSerializer(serializers.ModelSerializer):
+
+    wfars = serializers.SerializerMethodField()
+    # wfars = WfarSerializer2(many=True, read_only=True)
+
+    class Meta:
+        model = Faculty
+        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'wfars')
+    
+    def get_wfars(self, instance):
+        semester_id = self.context.get("semester_id")
+        current_week_no = self.context.get("current_week_no")
+
+        # wfars_instances = instance.wfars.all()
+        wfars_instances = instance.wfars.filter(semester_id=semester_id, week_no__lte=current_week_no)
+        return WfarSerializer2(wfars_instances, many=True).data
+
+# class CarTypesSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = CarType
+#         fields = '__all__'
+
+
+# class CarSerializer(serializers.ModelSerializer):
+
+#     car_types = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = Car
+#         fields = '__all__'
+
+#     def get_car_types(self, instance):
+#         # Filter using the Car model instance and the CarType's related_name
+#         # (which in this case defaults to car_types_set)
+#         car_types_instances = instance.car_types_set.filter(brand="Toyota")
+#         return CarTypesSerializer(car_types_instances, many=True).data
+
+
+# SHEEN
+#-------DASHBOARD
+class CommentsSerializer(serializers.ModelSerializer):
+    created_at_date = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR_Comment
+        fields = ('id','description','wfar_id','faculty_id','created_at_date','updated_at')
+
+    def get_created_at_date(self, obj):
+        datee = obj.created_at.date()
+        return datee
+
+class GetAllWFAR(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField(read_only=True)
+    checker = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR
+        fields = ('id','status','created_at','updated_at','week_no','checked_at','submitted_at','owner','checker','semester_id')
+
+    def get_owner(self, obj):
+        return (ProfileSerializer(obj.faculty_id).data)
+    def get_checker(self, obj):
+        return (ProfileSerializer(obj.faculty_checker_id).data)
+
+class GetAllUser(serializers.ModelSerializer):
+    isAdmin = serializers.SerializerMethodField(read_only=True)
+    userType = serializers.SerializerMethodField(read_only=True)
+    name = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Faculty
+        fields = ('id', 'username', 'email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
+
+    def get_isAdmin(self, obj):   
+        return obj.is_staff
+    def get_userType(self, obj):
+        return obj.user_type
+    def get_name(self, obj):
+        name = f"{obj.first_name} {obj.last_name}"
+        if name == " ":
+            name = obj.email
+        return name

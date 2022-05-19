@@ -15,7 +15,10 @@
     align-items: center;
     justify-content: center;
 }
-
+.custom-width{
+    width: 100%;
+    margin: 5px 0px;
+}
 .button:hover {
     background: #E8B1A1;
     transition: .1s linear;
