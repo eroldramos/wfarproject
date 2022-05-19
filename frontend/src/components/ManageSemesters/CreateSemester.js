@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createSem } from "../../store/manageSemActions";
 import { useNavigate } from "react-router-dom";
 import { createSemReset } from "../../store/manageSemActions";
+import "./CreateSemester.css";
 const CreateSemester = () => {
   const createSemReducerValues = useSelector((state) => state.createSem);
   const { success, error, isLoading } = createSemReducerValues;
@@ -115,7 +116,6 @@ const CreateSemester = () => {
   return (
     <Fragment>
       <h1>Create New Semester</h1>
-      {isLoading && <p>loading...</p>}
       {success && <p>{success}</p>}
       {error && <p>{error}</p>}
       <form onSubmit={submit}>
@@ -148,6 +148,7 @@ const CreateSemester = () => {
             }
           />
         </div>
+        <div className="create-semester-container">
         <div className={styles["bottom-form-container"]}>
           <DateField
             size="rg"
@@ -172,6 +173,8 @@ const CreateSemester = () => {
             error={endDateInputHasError ? "Please select a end date." : null}
           />
         </div>
+        </div>
+        
         <div className={styles["button-container"]}>
           <Button
             label="Cancel"

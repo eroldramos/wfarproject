@@ -11,25 +11,38 @@ const Dashboard = () => {
 
     const loggedUser = useSelector((state) => state.login);
     const { userInfo, loading, error } = loggedUser;
-
+    let userID = 1;
+    if(userInfo!=null) userID = userInfo.id;
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getAllWFARinThisWeek())
         dispatch(getAllUser())
         dispatch(getActiveSem())
-        dispatch(getAllWFARwholeSem(userInfo.id))
+        dispatch(getAllWFARwholeSem(userID))
     }, [dispatch]);
 
     if (userInfo === null || error !== null) {
         return <Navigate to="/" />
     }
 
+    let resultContent = <span> </span>
+    if (userInfo) {
+        if(userInfo.isAdmin){
+            resultContent = <DashboardAdmin />
+        }
+        if(userInfo.userType === 2){
+            resultContent = <DashboardAreaDeptHead />
+        }
+        if(userInfo.userType === 1 && !userInfo.isAdmin){
+            resultContent = <DashboardFaculty />
+        }
+    }
+
+
     return (
         <div>
-            {userInfo.isAdmin && <DashboardAdmin />}
-            {(userInfo.userType === 2 || userInfo.userType === 3) && <DashboardAreaDeptHead />}
-            {(userInfo.userType === 1 && !userInfo.isAdmin) && <DashboardFaculty />}
+            {resultContent}
         </div>
     );
 };

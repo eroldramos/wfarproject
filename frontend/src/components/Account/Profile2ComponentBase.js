@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "../Account/Profile.css";
+import styles from "./Profile.module.css";
+import "./Profile.css";
 import Pic from "../Account/img/profpic.jpg";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
@@ -12,6 +13,8 @@ import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 import axios from 'axios';
 import { useSelector } from "react-redux";
+import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
+
 
 
 const EDITBUTTON_WRAPPER_STYLES = {
@@ -49,12 +52,10 @@ const CIVIL_STATUS = [
 
 
 const Profile = () => {
-  const [state, setState] = useState([])
-  const loggedUser = useSelector((state) => state.login);
-  const { userInfo } = loggedUser;
 
+  const [state, setState] = useState([])
   useEffect(() => {
-    const url = "/api/profile/" + userInfo.id;
+    const url = "/api/profile/";
     const fetchData = async () => {
       try {
         const response = await fetch(url);
@@ -66,7 +67,7 @@ const Profile = () => {
         setEnteredMiddleName(json[0].middle_name);
         setEnteredLastName(json[0].last_name);
         setEnteredEmpNo(json[0].emp_no);
-        setEnteredCivilStatus(json[0].civil_status);
+        setEnteredCivilStatus(2);
         setEnteredHouseNo(json[0].house_no);
         setEnteredStreet(json[0].street);
         setEnteredSubdivision(json[0].subdivision);
@@ -109,7 +110,7 @@ const Profile = () => {
     inputBlurHandler: firstNameBlurHandler,
     reset: resetFirstNameInput,
     setEnteredValue: setEnteredFirstName,
-  } = useValidateInput((value) => value !== "");
+  } = useValidateInput((value) => value.trim() !== "");
 
   // Middle Name Validations
   const {
@@ -120,7 +121,7 @@ const Profile = () => {
     inputBlurHandler: middleNameBlurHandler,
     reset: resetMiddleNameInput,
     setEnteredValue: setEnteredMiddleName,
-  } = useValidateInput((value) => value !== "");
+  } = useValidateInput((value) => value.trim() !== "");
 
   // Last Name Validations
   const {
@@ -131,7 +132,7 @@ const Profile = () => {
     inputBlurHandler: lastNameBlurHandler,
     reset: resetLastNameInput,
     setEnteredValue: setEnteredLastName,
-  } = useValidateInput((value) => value !== "");
+  } = useValidateInput((value) => value.trim() !== "");
 
   // Employee No Validations
   const {
@@ -143,15 +144,15 @@ const Profile = () => {
     reset: resetEmployeeNoInput,
     setEnteredValue: setEnteredEmpNo,
   } = useValidateInput(
-    (value) => value !== "" && onlyNumbers(value)
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
   }
   let employeeNoErrorMessage = "";
   if (
-    enteredEmployeeNo === "" ||
-    !onlyNumbers(enteredEmployeeNo)
+    enteredEmployeeNo.trim() === "" ||
+    !onlyNumbers(enteredEmployeeNo.trim())
   ) {
     employeeNoErrorMessage = "Please enter a valid employee number.";
   }
@@ -259,7 +260,7 @@ const Profile = () => {
     reset: resetContactNo,
     setEnteredValue: setEnteredContactNo,
   } = useValidateInput(
-    (value) => value !== "" && onlyNumbers(value)
+    (value) => value.trim() !== "" && onlyNumbers(value.trim())
   );
 
   //Email Validations
@@ -271,7 +272,7 @@ const Profile = () => {
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
     setEnteredValue: setEnteredEmail,
-  } = useValidateInput((value) => value.includes("@") && value !== "");
+  } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
 
   let emailErrorMessage = "";
   if (!enteredEmail.includes("@") || enteredEmail === "") {
@@ -288,9 +289,9 @@ const Profile = () => {
     reset: resetPasswordInput,
   } = useValidateInput(
     (value) =>
-      value !== "" &&
-      value.length > 8 &&
-      containsNumber(value)
+      value.trim() !== "" &&
+      value.trim().length > 8 &&
+      containsNumber(value.trim())
   );
 
   function containsNumber(str) {
@@ -306,7 +307,7 @@ const Profile = () => {
     passwordErrorMessage =
       "Character must be at least morethan 8 characters long.";
   }
-  if (!containsNumber(enteredPassword) && enteredPassword !== "") {
+  if (!containsNumber(enteredPassword.trim()) && enteredPassword !== "") {
     passwordErrorMessage = "Please include a number in the password.";
   }
   //  Confirm Password Validations
@@ -319,7 +320,7 @@ const Profile = () => {
     inputBlurHandler: confirmPasswordBlurHandler,
     reset: resetConfirmPasswordInput,
   } = useValidateInput(
-    (value) => value !== "" && value === enteredPassword
+    (value) => value.trim() !== "" && value.trim() === enteredPassword.trim()
   );
   let confirmPasswordErrorMessage = "";
   if (
@@ -385,7 +386,7 @@ const Profile = () => {
       });
       axios({
         method: 'POST',
-        url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
+        url: 'http://127.0.0.1:8000/api/profile/edit/',
         data: data
       });
     }
@@ -412,7 +413,7 @@ const Profile = () => {
         }
         axios({
           method: 'POST',
-          url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
+          url: 'http://127.0.0.1:8000/api/profile/edit-password/',
           data: data
         });
       } else {
@@ -439,17 +440,19 @@ const Profile = () => {
 
     var formData = new FormData();
     formData.append("profile_picture", evt.target.files[0]);
-    axios.post('http://127.0.0.1:8000/api/profile/edit-picture/' + userInfo.id + '/', formData, {
+    axios.post('http://127.0.0.1:8000/api/profile/edit-picture/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    })
+    }).then((result) => {
+      window.location.reload(false);
+    });
 
   }
 
   return (
     < Fragment >
-      <div className="profile-container">
+      <div className={styles["container"]}>
         <h1 className="HEADER">MY ACCOUNT</h1>
         <div className="EMP_POSITION">
 
@@ -476,7 +479,9 @@ const Profile = () => {
               onClick={() => setIsopen(true)}
               label="Edit Profile"
               type="primary"
-              size="xs"></SmallButton>
+              size="xs">
+
+            </SmallButton>
 
             {isOpen && <Modal onClose={onClose} size="r">
               <h1 className="MODAL_HEADER">Edit Details</h1>
@@ -532,18 +537,22 @@ const Profile = () => {
                 error={employeeNoInputHasError ? employeeNoErrorMessage : null}
               />
 
-              <DropdownField
+              <CustomDropdownField
                 id="civilStatus"
                 name="civilStatus"
-                options={CIVIL_STATUS}
                 labelName="Civil Status"
                 onChange={civilStatusChangeHandler}
                 onBlur={civilStatusBlurHandler}
                 value={enteredCivilStatus}
+                options={CIVIL_STATUS}
                 type="form"
+                setEnteredValue=''
                 error={
-                  civilStatusInputHasError ? "Please select a civil status." : null
+                  civilStatusInputHasError
+                    ? "Please select a civil status."
+                    : null
                 }
+                size="l"
               />
 
               <InputField
@@ -826,12 +835,17 @@ const Profile = () => {
                       <td>
                         {state.map((item) => {
                           if (item.civil_status === 1) {
-                            return <p className="userinput" style={{ color: '#000000' }}> Single </p>
-                          } else if (item.civil_status === 2) {
                             return <p className="userinput" style={{ color: '#000000' }}> Married </p>
+                          } else if (item.civil_status === 2) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Widow </p>
                           } else if (item.civil_status === 3) {
-                            return <p className="userinput" style={{ color: '#000000' }}> Widowed </p>
-                          } else {
+                            return <p className="userinput" style={{ color: '#000000' }}> Separated </p>
+                          } else if (item.civil_status === 4) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Divorced </p>
+                          } else if (item.civil_status === 5) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Single </p>
+                          }
+                          else {
                             return <p className="userinput" style={{ color: '#000000' }}> </p>
                           }
                         })}
