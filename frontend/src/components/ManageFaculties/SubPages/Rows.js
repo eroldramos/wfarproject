@@ -148,6 +148,7 @@ const Rows = (props) => {
                   : "View Status"
               }
               type="primary"
+              widthSize = "custom-width"
             ></TableCellButton>
             {props.user_type === 2 || props.user_type === 3
               ? viewFacultyModal && (

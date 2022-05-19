@@ -3,7 +3,7 @@ from re import S
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from core.permissions import IsAdminUser
+from core.permissions import IsAdminUser , IsAuthenticated
 from core.models import Semester, Week
 from core.serializers import (
     SemesterSerializerYearAndSem , 
@@ -177,7 +177,7 @@ class ActivateSemester(APIView):
 
 # Erika
 class RetrieveSemestersList(APIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         try:
             semester = Semester.objects.filter(deleted_at=None).order_by('created_at')   

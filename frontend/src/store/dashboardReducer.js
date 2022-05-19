@@ -77,3 +77,56 @@ export const getActiveSemReducer = createSlice({
 });
 
 export const getActiveSemAction = getActiveSemReducer.actions
+
+
+export const getWFARwholeSemReducer = createSlice({
+    name: "getWFARwholeSemReducer",
+    initialState: {
+        isLoading: false,
+        error: null,
+        wfar: [],
+    },
+    reducers: {
+        getWFARwholeSemRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        getWFARwholeSemSuccess(state, action) {
+            state.isLoading = false;
+            state.wfar = action.payload.wfar;
+            state.error = null;
+        },
+        getWFARwholeSemFail(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        },
+    },
+});
+
+export const getWFARwholeSemAction = getWFARwholeSemReducer.actions;
+
+export const getWFARCommentsReducer = createSlice({
+    name: "getWFARCommentsReducer",
+    initialState: {
+        isLoading: false,
+        error: null,
+        comment: [],
+    },
+    reducers: {
+        getWFARCommentsRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        getWFARCommentsSuccess(state, action) {
+            state.isLoading = false;
+            state.comment = action.payload.comment;
+            state.error = null;
+        },
+        getWFARCommentsFail(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        },
+    },
+});
+
+export const getWFARCommentsAction = getWFARCommentsReducer.actions;

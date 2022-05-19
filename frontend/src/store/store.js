@@ -57,6 +57,8 @@ import{
   getAllWFARinThisWeekReducer,
   getAllUsersReducer,
   getActiveSemReducer,
+  getWFARwholeSemReducer,
+  getWFARCommentsReducer,
 } from './dashboardReducer';
 
 const store = configureStore({
@@ -105,6 +107,8 @@ const store = configureStore({
     activeSem: getActiveSemReducer.reducer,
     allUsers: getAllUsersReducer.reducer,
     wfarPrintOverview: wfarPrintOverviewReducer.reducer,
+    allWFARwholeSem: getWFARwholeSemReducer.reducer,
+    allWFARcomments: getWFARCommentsReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

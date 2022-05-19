@@ -1,4 +1,4 @@
-.dashboard-faculty{
+.dashboard-faculty {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -10,18 +10,21 @@
 .dashboard-faculty h3,
 .dashboard-faculty h4,
 .dashboard-faculty h5,
-.dashboard-faculty p{
+.dashboard-faculty p {
     margin: 0;
 }
 
-.dashboard-faculty span{
+.dashboard-faculty span {
     margin-left: 0;
 }
 
 .dashboard-faculty .greetings,
 .dashboard-faculty .total-submission-container>div,
 .dashboard-faculty .wfar-status-container,
-.dashboard-faculty .management-container .revision-container {
+.dashboard-faculty .management-container .revision-container,
+.dashboard-faculty .management-container .revision-week,
+.dashboard-faculty .current-week-main-container,
+.dashboard-faculty .current-week-main-container .current-semester{
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
@@ -178,6 +181,11 @@
     right: 0;
 }
 
+.dashboard-faculty .my-wfar .my-wfar-container-dashboard{
+    /* height: 250px;
+    overflow-y: auto; */
+}
+
 /* SECTION 5 */
 
 .dashboard-faculty .management-container {
@@ -190,6 +198,7 @@
 
 .dashboard-faculty .revision-container {
     padding: 15px 18px;
+    overflow-y: auto;
 }
 
 .dashboard-faculty .revision-instance {
@@ -200,7 +209,9 @@
         "revision-date revision-date revision-date"
         "revision-comment revision-comment edit-button";
     font-size: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
+    box-shadow: none;
+    border-radius: none;
 }
 
 .dashboard-faculty .revision-date {
@@ -233,6 +244,8 @@
     grid-area: revision-comment;
     padding-left: 10px;
     padding-top: 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     /* border: #c7de2d solid; */
 }
 
