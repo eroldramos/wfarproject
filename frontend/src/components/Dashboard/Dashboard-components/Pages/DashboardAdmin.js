@@ -60,7 +60,7 @@ const DashboardAdmin = () => {
                         <div className="pending-accounts-icon">
                             <img src={pendingAccountIcon} alt="" />
                         </div>
-                        <h3>Pending Accounts <p className="no_pending_dashboard">{no_of_pending}</p></h3>
+                        <h3>Pending Accounts | <strong>{no_of_pending}</strong></h3>
                     </Link>
 
                 </div>
