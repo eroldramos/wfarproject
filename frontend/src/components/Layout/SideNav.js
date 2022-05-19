@@ -5,6 +5,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import "./SideNav.css";
 import { logout } from "../../store/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const SideNav = (props) => {
 	//HOOKS DECLARATIONS
@@ -38,7 +39,23 @@ const SideNav = (props) => {
 	//HANDLERS
 
 	const onLogoutHandler = () => {
-		dispatch(logout());
+
+		Swal.fire({
+			html:
+				'<h4>Logout</h4>' +
+				'<h5>Are you sure you want to logout?</h5>',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes',
+			confirmButtonColor: '#BE5A40'
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+				dispatch(logout());
+			}
+		})
+
+		
 		console.log(logout())
 	};
 	//
