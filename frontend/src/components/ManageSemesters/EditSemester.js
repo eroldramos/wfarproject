@@ -14,6 +14,7 @@ import {
   updateSem,
   updateSemResetValue,
 } from "../../store/manageSemActions";
+import "./CreateSemester.css";
 const EditSemester = () => {
   const icon = (
     <svg
@@ -183,6 +184,7 @@ const EditSemester = () => {
             }
           />
         </div>
+        <div className="create-semester-container">
         <div className={styles["bottom-form-container"]}>
           <DateField
             size="rg"
@@ -207,6 +209,8 @@ const EditSemester = () => {
             error={endDateInputHasError ? "Please select a end date." : null}
           />
         </div>
+        </div>
+        
         <div className={styles["button-container"]}>
           <Button
             label="Cancel"
