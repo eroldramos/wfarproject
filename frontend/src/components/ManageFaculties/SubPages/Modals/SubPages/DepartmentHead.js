@@ -137,7 +137,7 @@ const DepartmentHead = (props) => {
             </div>
           </div>
         </li>
-        {listFaculty.length === 0 && <p>Not Found</p>}
+        {listFaculty.length === 0 && <p className={table["no-data-text"]}>No Department Head Found</p>}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <RadioRows

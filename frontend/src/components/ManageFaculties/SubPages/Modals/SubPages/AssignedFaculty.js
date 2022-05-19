@@ -227,7 +227,7 @@ const AssignedFaculty = (props) => {
             </div>
           </div>
         </li>
-        {listFaculties.length === 0 && <p>Not Found</p>}
+        {listFaculties.length === 0 && <p className={table["no-data-text"]}>No data Found</p>}
         {listFaculties &&
           listFaculties.map((data, index) => (
             <Rows

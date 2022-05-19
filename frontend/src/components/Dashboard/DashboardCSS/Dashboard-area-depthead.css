@@ -105,6 +105,7 @@
     grid-area: total-submission-container;
     grid-template-rows: 1fr 1fr;
     grid-gap: 1em;
+    min-width: 270px;
 }
 
 .dashboard-area-depthead .total-submission-container .info p {
@@ -361,8 +362,9 @@
 
 .dashboard-area-depthead .no_pending_dashboard{
     display: inline;
-    margin-left: 40px;
-    font-size: 1.5em;
+    margin-left: 20px;
+    font-size: 2vw;
+
 }
 .dashboard-area-depthead .my-wfar-info h3 {
     font-weight: 600;
@@ -435,6 +437,7 @@
     display: flex;
     align-items: center;
     padding: 0;
+    font-size: 1vw;
 }
 
 .dashboard-area-depthead .manage-pending-accounts h3 {

@@ -319,7 +319,6 @@ const PendingAccounts = () => {
             Action
           </div>
         </li>
-        {acceptIsLoading && <p>Accepting...</p>}
         {acceptIsError && <p>{acceptIsError}</p>}
         {success && <p>{success}</p>}
         {isLoading && <p>Loading</p>}

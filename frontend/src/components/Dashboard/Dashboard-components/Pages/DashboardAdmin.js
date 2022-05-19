@@ -42,7 +42,6 @@ const DashboardAdmin = () => {
                 <NotificationInDashboard/>
 
                 <div className="total-submission-container">
-
                     <PerRoleTotalSubmission role="DEPARTMENT HEAD"/>
                     <PerRoleTotalSubmission role="AREA CHAIR"/>
                     <PerRoleTotalSubmission role="FACULTY"/>
@@ -51,7 +50,8 @@ const DashboardAdmin = () => {
                 <WFARstatusDashboard role="dashboard-admin"/>
                 
                 <div className="management-container">
-
+                
+                    
                     <ManagementPageRedirection role="Department Head"/>
                     <ManagementPageRedirection role="Area chair"/>
                     <ManagementPageRedirection role="Faculty"/>
@@ -60,7 +60,7 @@ const DashboardAdmin = () => {
                         <div className="pending-accounts-icon">
                             <img src={pendingAccountIcon} alt="" />
                         </div>
-                        <h3>Pending Accounts <p className="no_pending_dashboard">{no_of_pending}</p></h3>
+                        <h3>Pending Accounts | <strong>{no_of_pending}</strong></h3>
                     </Link>
 
                 </div>

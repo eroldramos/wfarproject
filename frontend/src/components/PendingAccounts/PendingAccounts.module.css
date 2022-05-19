@@ -4,7 +4,6 @@
 .paginator-container{
   display: flex;
   text-align: center;
-  border: 1px solid black;
   margin-top: 5px;
 }
 .search-field-container,
@@ -36,7 +35,6 @@
   border: 1px solid #ebecee;
   border-radius: 5px;
   padding: 5px 5px;
-  border: 1px solid black;
 }
 .no-pending-text{
   text-align: center;

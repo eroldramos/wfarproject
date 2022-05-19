@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import ProfileImage from "../../assets/profile.png";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import "./SideNav.css";
 import { logout } from "../../store/authActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -308,13 +308,13 @@ const SideNav = (props) => {
 
 				<div className="nav-footer">
 					<div className="account-profile" title="Account">
-						<div className="account-profile-image-container">
+						<Link className="account-profile-image-container" to={'/UserProfile/'}>
 							<div
 								style={{
 									backgroundImage: "url(" + profile_pic + ")",
 								}}
 							></div>
-						</div>
+						</Link>
 						<div className="account-label nav-open-text">
 							<span className="account-label-name">
 								{userInfo.name}

@@ -31,7 +31,7 @@ const Dashboard = () => {
         if(userInfo.isAdmin){
             resultContent = <DashboardAdmin />
         }
-        if(userInfo.userType === 2){
+        if(userInfo.userType === 2 ||userInfo.userType === 3){
             resultContent = <DashboardAreaDeptHead />
         }
         if(userInfo.userType === 1 && !userInfo.isAdmin){

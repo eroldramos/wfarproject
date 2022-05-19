@@ -2,7 +2,7 @@
 
 .pagination {
   display: inline-block;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .pagination a {
@@ -16,5 +16,5 @@
 .pagination a.active {
   color: #333333;
   font-weight: 700;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
