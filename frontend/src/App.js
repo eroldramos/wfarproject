@@ -28,7 +28,7 @@ import Register from "./components/Login_Register/UserRegister";
 import LandingPage from "./components/Login_Register/LandingPage";
 import { useSelector } from "react-redux";
 import ViewEntryModal from "./components/MySubmission/ViewEntryModal/ViewEntryModal";
-
+import UserProfile from "./components/Account/UserProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -114,6 +114,10 @@ function App() {
           <Route
             path="/ViewEntryModal"
             element={<ViewEntryModal />}
+          ></Route>
+          <Route
+            path="/UserProfile"
+            element={<UserProfile />}
           ></Route>
 
           {/* AUTHENTICATION ROUTES */}

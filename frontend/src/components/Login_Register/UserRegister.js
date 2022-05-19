@@ -29,7 +29,6 @@ const Register = (props) => {
       console.log(success);
       navigate("/");
     }
-    success = false;
   }, [navigate, success]);
 
   const GENDERS = [

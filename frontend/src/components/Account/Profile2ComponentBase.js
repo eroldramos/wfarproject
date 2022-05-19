@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "../Account/Profile.css";
+import styles from "./Profile.module.css";
+import "./Profile.css";
 import Pic from "../Account/img/profpic.jpg";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
@@ -445,7 +446,7 @@ const Profile = () => {
 
   return (
     < Fragment >
-      <div className="container">
+      <div className={styles["container"]}>
         <h1 className="HEADER">MY ACCOUNT</h1>
         <div className="EMP_POSITION">
 

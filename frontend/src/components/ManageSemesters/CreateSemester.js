@@ -115,7 +115,6 @@ const CreateSemester = () => {
   return (
     <Fragment>
       <h1>Create New Semester</h1>
-      {isLoading && <p>loading...</p>}
       {success && <p>{success}</p>}
       {error && <p>{error}</p>}
       <form onSubmit={submit}>
