@@ -1,6 +1,7 @@
 .responsive-table {
   list-style-position: inside;
   padding-left: 0;
+  /* border: 1px solid black; */
 }
 .col-header {
   color: #666b73;
@@ -19,6 +20,8 @@
   font-size: 14px;
   text-transform: capitalize;
   letter-spacing: 0.03em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .table-row {
   text-align: center;
@@ -51,9 +54,15 @@
   flex-basis: 10%;
 }
 .col-8 {
-  flex-basis: 10%;
+  flex-basis: 11%;
 }
 
+.table-header .col-1{
+  border-top-left-radius: 10px;
+}
+.table-header .col-8{
+  border-top-right-radius: 10px;
+}
 @media all and (max-width: 800px) {
   .table-header {
     display: none;

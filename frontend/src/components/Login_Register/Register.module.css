@@ -340,3 +340,12 @@ input[type=number] {
     animation: fade-out ease 1s forwards;
     animation-delay: 6s;
 }
+.error-handler-container{
+    margin-top: 20px;
+}
+.error-handler-container p{
+    text-align: center;
+    color: red;
+    margin: 5px 0;
+}
+

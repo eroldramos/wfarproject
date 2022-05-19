@@ -24,7 +24,7 @@
 .dashboard-faculty .management-container .revision-container,
 .dashboard-faculty .management-container .revision-week,
 .dashboard-faculty .current-week-main-container,
-.dashboard-faculty .current-week-main-container .current-semester{
+.dashboard-faculty .current-week-main-container .current-semester {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
@@ -32,7 +32,10 @@
 .dashboard-faculty .main-container {
     display: grid;
     margin-right: 2px;
-    height: 85vh;
+    /* margin-top: -25px; */
+    margin-top: -15px;
+
+    height: 90vh;
     grid-template-columns: 1.35fr .65fr .87fr;
     grid-template-rows: .66fr .70fr 2.5fr;
     grid-gap: 1em;
@@ -56,6 +59,8 @@
     align-items: center;
     grid-area: notifications;
     margin-left: 21px;
+    min-width: max-content;
+
 }
 
 .dashboard-faculty .notification-container {
@@ -74,12 +79,25 @@
 }
 
 .dashboard-faculty .greetings {
-    display: flex;
+    /* display: flex;
     margin-left: 20px;
     padding-left: 30px;
     justify-content: center;
     flex-direction: column;
-    height: 55px;
+    height: 55px; */
+    margin-left: 20px;
+    padding: 8px 30px;
+}
+
+.dashboard-faculty .greetings h3,
+.dashboard-faculty .greetings p {
+    margin: 3px;
+    font-weight: 600;
+}
+
+.dashboard-faculty .greetings p {
+    font-size: 12px;
+    color: #9C9C9C;
 }
 
 /* SECTION 2 */
@@ -89,6 +107,19 @@
     grid-area: total-submission-container;
     grid-template-rows: 1fr 1fr;
     grid-gap: 1em;
+}
+
+.dashboard-faculty .total-submission-container .info p {
+    color: #BBBBBB;
+    font-weight: 600;
+    font-size: 12px;
+    padding-top: 2px;
+}
+
+.dashboard-faculty .total-submission-container .info h3 {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .dashboard-faculty .total-submission-container>div {
@@ -127,6 +158,8 @@
     background-image: url("../../../assets/DashboardDummyImg/current-week.png");
     background-size: cover;
     position: relative;
+
+    min-width: 500px;
 }
 
 .dashboard-faculty .current-week-main-container .current-semester {
@@ -153,6 +186,8 @@
     font-weight: 700;
     font-size: 50px;
     letter-spacing: 0.245em;
+
+    min-width: max-content;
 }
 
 .dashboard-faculty .current-week-main-container .current-week-container p:nth-child(2) {
@@ -175,15 +210,25 @@
     position: relative;
 }
 
+.dashboard-faculty .my-wfar-info h3 {
+    font-weight: 600;
+    font-size: 20px;
+}
+
 .dashboard-faculty .my-wfar-info p {
     position: absolute;
     color: #BE5A40;
     right: 0;
 }
 
-.dashboard-faculty .my-wfar .my-wfar-container-dashboard{
+.dashboard-faculty .my-wfar .my-wfar-container-dashboard {
     /* height: 250px;
     overflow-y: auto; */
+}
+
+.dashboard-faculty .text-link {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 /* SECTION 5 */
@@ -194,6 +239,11 @@
     grid-template-rows: .2fr 7fr;
     grid-gap: 1em;
     margin-left: 21px;
+}
+
+.dashboard-faculty .management-container h3 {
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .dashboard-faculty .revision-container {
@@ -233,6 +283,7 @@
     justify-content: center;
     margin-right: 10px;
     font-size: 16px;
+    border-radius: 8px;
 }
 
 .dashboard-faculty .revision-day {

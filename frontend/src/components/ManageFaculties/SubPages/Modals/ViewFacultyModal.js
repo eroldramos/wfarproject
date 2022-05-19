@@ -121,7 +121,7 @@ const ViewFacultyModal = (props) => {
                 onClick={props.onClose}
                 label="Cancel"
                 type="cancel"
-                size="rg"
+                size="s"
               />
             </div>
             <div className={styles["clearfix"]}></div>
