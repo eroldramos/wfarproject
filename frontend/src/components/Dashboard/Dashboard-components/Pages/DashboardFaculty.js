@@ -5,38 +5,38 @@ import WFARcompleted from "../WFARcompleted";
 import WFARuncheckedFaculty from "../WFARuncheckedFaculty";
 import RevisionContainer from "../RevisionContainer";
 
-import { Fragment, useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import styles from "../../../MySubmission/MySubmission.module.css";
 import MyWFAR from "../../../MySubmission/MyWFAR/MyWFAR";
 import { useSelector, useDispatch } from "react-redux";
-import { retrieveWfars, retrieveArchivedWfars, retrieveWfarsSemestersList } from "../../../../store/myWfarsActions";
-import { myWfarSemesterFilterActions, myWfarRefreshActions } from "../../../../store/myWfarReducers";
+import { retrieveWfars, retrieveWfarsSemestersList } from "../../../../store/myWfarsActions";
 
 const DashboardFaculty = () => {
 
-    // // hooks
-    // const navigate = useNavigate();
-    // const dispatch = useDispatch();
+    // hooks
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    // // redux states, objects
-    // const wfars = useSelector((state) => state.allWFARwholeSem.wfar)
-    // let twoWfars;
-    // if (wfars.length>0) {
-    //     twoWfars = [wfars[0], wfars[1]]
-    // }
+    // redux states, objects
+    const wfars = useSelector((state) => state.myWfars.wfars);
+    let twoWfars;
+    if (wfars.length > 0) {
+        twoWfars = [wfars[0], wfars[1]]
+    }
 
-    // const semesters = useSelector((state) => state.wfarSemesters.semesters);
+    const semesters = useSelector((state) => state.wfarSemesters.semesters);
 
-    // // get active sem
-    // const sem = useSelector((state) => state.activeSem).activeSem;
-    // let filterSemester = 1;
-    // if (sem) filterSemester = sem[0].id
+    // get active sem
+    const sem = useSelector((state) => state.activeSem).activeSem;
+    let filterSemester = 1;
+    if (sem) filterSemester = sem[0].id
 
-    // // retrieving wfars and archived wfars
-    // useEffect(() => {
-    //     dispatch(retrieveWfarsSemestersList(filterSemester));
-    // }, [filterSemester]);
+    // retrieving wfars and archived wfars
+    useEffect(() => {
+        dispatch(retrieveWfars(filterSemester));
+        dispatch(retrieveWfarsSemestersList(filterSemester));
+    }, [filterSemester]);
 
     return (
         <div className="dashboard-faculty">
@@ -58,15 +58,16 @@ const DashboardFaculty = () => {
                 <div className="my-wfar">
                     <div className="my-wfar-info">
                         <h3>My WFAR</h3>
-                        <p>{'View All >'}</p>
+                        <Link to={'/mySubmission/'}>
+                            <p>{'View All  >'}</p>
+                        </Link>
                     </div>
                     <div className="my-wfar-container-dashboard">
-                        {/* {twoWfars &&
+                        {twoWfars &&
                             <Routes>
                                 <Route path="" element={<MyWFAR items={twoWfars} />}></Route>
                             </Routes>
-                        } */}
-
+                        }
                     </div>
                 </div>
 

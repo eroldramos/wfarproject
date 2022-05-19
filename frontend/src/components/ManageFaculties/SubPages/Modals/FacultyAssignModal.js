@@ -8,6 +8,7 @@ import Tab from "../../../UI/Tab/Tab";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import AreaChair from "./SubPages/AreaChair";
 import DepartmentHead from "./SubPages/DepartmentHead";
+
 const FacultyAssignModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
@@ -30,7 +31,21 @@ const FacultyAssignModal = (props) => {
       />
     </svg>
   );
-
+  
+  const addIcon = (
+    <svg
+      width="19"
+      height="13"
+      viewBox="0 0 19 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.2917 3.33334C10.2917 1.58376 8.87466 0.166672 7.12508 0.166672C5.3755 0.166672 3.95841 1.58376 3.95841 3.33334C3.95841 5.08292 5.3755 6.5 7.12508 6.5C8.87466 6.5 10.2917 5.08292 10.2917 3.33334ZM11.8751 4.91667V6.5H14.2501V8.875H15.8334V6.5H18.2084V4.91667H15.8334V2.54167H14.2501V4.91667H11.8751ZM0.791748 11.25V12.8333H13.4584V11.25C13.4584 9.14417 9.23883 8.08334 7.12508 8.08334C5.01133 8.08334 0.791748 9.14417 0.791748 11.25Z"
+        fill="#BE5A40"
+      />
+    </svg>
+  );
   const SAMPLE_ITEMS = [
     {
       label: "Department Head",
@@ -72,17 +87,22 @@ const FacultyAssignModal = (props) => {
     <Fragment>
       <Modal onClose={props.onCloseAssignModal} size = "m">
         <div className={styles["container"]}>
-          <div className={styles["modal-btn-container"]}>
-            <EyeButton
-              icon={icon}
-              type={"primary"}
-              size="xs"
-              disabled={false}
-              onClick={null}
-            />
+          <div className={styles["header-container"]}>
+            <div className={styles["header-text-container"]}>
+              <h2>{props.fullname}</h2>
+              <h5>{user_type}</h5>
+            </div>
+            <div className={styles["modal-btn-container"]}>
+              <EyeButton
+                icon={icon}
+                type={"primary"}
+                size="xs"
+                disabled={false}
+                onClick={null}
+              />
+            </div>
           </div>
-          <h1>{props.fullname}</h1>
-          <p>{user_type}</p>
+          
           <div className={styles["clearfix"]}></div>
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />
           <Routes>
@@ -115,7 +135,16 @@ const FacultyAssignModal = (props) => {
                 onClick={props.onCloseAssignModal}
                 label="Cancel"
                 type="cancel"
-                size="rg"
+                size="s"
+              />
+            </div>
+            <div className={styles["cancel-btn-container"]}>
+              <Button
+                onClick={props.onCloseAssignModal}
+                label="Assign"
+                type="confirm"
+                size="s"
+                svg = {icon}
               />
             </div>
             <div className={styles["clearfix"]}></div>

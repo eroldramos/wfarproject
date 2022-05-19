@@ -150,6 +150,7 @@ const DepartmentHead = (props) => {
               onChange={onHandleChange}
             />
           ))}
+          
       </ul>
       <div className={styles["paginator-container"]}>
         <Paginator

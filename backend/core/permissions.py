@@ -5,6 +5,14 @@ class IsAuthenticated(BasePermission):
         return bool(
              request.user and request.user.is_authenticated
         )
+
+
+class IsAuthenticatedAndNotAdmin(BasePermission):
+    def has_permission(self, request, view):
+        return bool(
+            request.user and request.user.is_authenticated and request.user.is_staff == 0
+        )
+
 class IsAdminUser(BasePermission):
     def has_permission(self, request, view):
         return bool(

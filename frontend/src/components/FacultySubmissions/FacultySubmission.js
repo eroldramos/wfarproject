@@ -57,5 +57,4 @@ const FacultySubmission = () => {
     )
 }
 
-
 export default FacultySubmission;
