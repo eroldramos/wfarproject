@@ -11,6 +11,8 @@ import styled from 'styled-components';
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 import axios from 'axios';
+import { useSelector } from "react-redux";
+
 
 const EDITBUTTON_WRAPPER_STYLES = {
   position: 'relative',
@@ -47,10 +49,12 @@ const CIVIL_STATUS = [
 
 
 const Profile = () => {
-
   const [state, setState] = useState([])
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+
   useEffect(() => {
-    const url = "/api/profile/";
+    const url = "/api/profile/" + userInfo.id;
     const fetchData = async () => {
       try {
         const response = await fetch(url);
@@ -62,7 +66,7 @@ const Profile = () => {
         setEnteredMiddleName(json[0].middle_name);
         setEnteredLastName(json[0].last_name);
         setEnteredEmpNo(json[0].emp_no);
-        setEnteredCivilStatus(2);
+        setEnteredCivilStatus(json[0].civil_status);
         setEnteredHouseNo(json[0].house_no);
         setEnteredStreet(json[0].street);
         setEnteredSubdivision(json[0].subdivision);
@@ -381,7 +385,7 @@ const Profile = () => {
       });
       axios({
         method: 'POST',
-        url: 'http://127.0.0.1:8000/api/profile/edit/',
+        url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
         data: data
       });
     }
@@ -408,7 +412,7 @@ const Profile = () => {
         }
         axios({
           method: 'POST',
-          url: 'http://127.0.0.1:8000/api/profile/edit-password/',
+          url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
           data: data
         });
       } else {
@@ -435,7 +439,7 @@ const Profile = () => {
 
     var formData = new FormData();
     formData.append("profile_picture", evt.target.files[0]);
-    axios.post('http://127.0.0.1:8000/api/profile/edit-picture/', formData, {
+    axios.post('http://127.0.0.1:8000/api/profile/edit-picture/' + userInfo.id + '/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
