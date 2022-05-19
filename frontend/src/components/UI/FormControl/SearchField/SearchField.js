@@ -1,6 +1,19 @@
 import styles from "./SearchField.module.css";
 
 const SearchField = (props) => {
+
+    const onKeyHandler = (event) => {
+        if (event.key === 'Enter') {
+            props.onEnterSearch(event.target.value);
+        }
+    }
+
+    const onChangeHandler = (event) => {
+        if (event.target.value === '') {
+            props.onEnterSearch(event.target.value);
+        }
+    }
+
     return (
         <div className={styles["form-control"] + " " + styles[props.type] + " " + styles[props.size]}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -8,7 +21,8 @@ const SearchField = (props) => {
             </svg>
             <input type="text"
                 id={props.id}
-                onChange={props.onChange} /* pwede 'to gamitin for kapag nag-enter sa field*/
+                onKeyDown={onKeyHandler} /* pwede 'to gamitin for kapag nag-enter sa field*/
+                onChange={onChangeHandler} /* pwede 'to gamitin for kapag nag-enter sa field*/
                 name={props.inputName}
                 placeholder={props.placeholder}
                 value={props.value} />

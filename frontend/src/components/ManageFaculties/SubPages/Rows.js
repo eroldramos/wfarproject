@@ -160,7 +160,10 @@ const Rows = (props) => {
                 )
               : viewFacultyModal && (
                   <ViewStatusModal
-                    onClose={closeViewFacultyModalTransition}
+                    closeViewFacultyModal={closeViewFacultyModal}
+                    closeViewFacultyModalTransition={
+                      closeViewFacultyModalTransition
+                    }
                     onOpenAssign={openFacultyAssignModal}
                     id={props.id}
                     fullname={props.fullname}

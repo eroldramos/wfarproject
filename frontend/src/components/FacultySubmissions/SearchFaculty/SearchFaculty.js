@@ -1,12 +1,13 @@
 import SearchField from "../../UI/FormControl/SearchField/SearchField";
 import styles from "./SearchFaculty.module.css";
 
-const searchFaculty = () => {
+const searchFaculty = (props) => {
+
   return (
     <div className={styles.searchFieldContainer}>
       <SearchField
         id="link"
-        onChange={null}
+        onEnterSearch={props.onEnterSearch}
         labelName="search"
         inputName="search"
         placeholder="Search faculty"

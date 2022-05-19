@@ -40,6 +40,8 @@ class Faculty(AbstractUser):
     def __str__(self):
         return f"{self.email}"
 
+    
+
 # class AssignFaculty(models.Model):
 #     pass
 

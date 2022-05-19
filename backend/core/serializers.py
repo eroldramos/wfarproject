@@ -12,7 +12,7 @@ class FacultySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'profile_picture']
 
     def get_isAdmin(self, obj):   
         return obj.is_staff
@@ -49,7 +49,7 @@ class FacultySerializerWithToken(FacultySerializer):
     expirationDate =  serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'token', 'expirationDate']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'userType', 'token', 'expirationDate',  'profile_picture']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -271,7 +271,7 @@ class FacultyWfarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Faculty
-        fields = ('id', 'wfars')
+        fields = ('id', 'first_name', 'middle_name', 'last_name', 'extension_name', 'wfars')
     
     def get_wfars(self, instance):
         semester_id = self.context.get("semester_id")

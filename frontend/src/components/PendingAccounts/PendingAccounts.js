@@ -62,6 +62,14 @@ const PendingAccounts = () => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [searchFaculty, setSearchFaculty] = useState("");
 
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
+
   useEffect(() => {
     if (success) {
       navigate("/pending-accounts/?search=&page=1");

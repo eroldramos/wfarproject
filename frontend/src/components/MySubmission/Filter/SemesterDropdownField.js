@@ -9,7 +9,8 @@ const SemesterDropdownField = (props) => {
         console.log(semester);
         semesters.push({
             value: semester.id,
-            label: semester.school_year + " - " + semester.label
+            label: semester.school_year + " - " + semester.label,
+            isSelected: semester.is_active,
         });
     });
 

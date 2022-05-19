@@ -4,7 +4,7 @@ import cictLogo from "../../assets/Login_Register-Images/cict-logo.png";
 import InputField from "../UI/FormControl/InputField/InputField";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
-import React, { Fragment, useState, useEffect,Component } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   Link,
   useNavigate,
@@ -14,13 +14,17 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./Login.module.css";
 import { login } from "../../store/authActions";
-import { render } from "react-dom";
 
 
+
+let inLoadClassForAnimation = "";
+if(localStorage.getItem("initialReload") == "true"){
+  inLoadClassForAnimation = "login-form-delay";
+  console.log(inLoadClassForAnimation);
+}
+localStorage.setItem("initialReload", "true");
 const Login = () => {
-  const IMAGE = {
-    cictLogo: "asdd",
-  };
+  
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,22 +52,20 @@ const Login = () => {
     }
 
     console.log(username, password);
-    dispatch(login(username, password, "Faculty"));
+    dispatch(login(username, password, "Admin"));
   };
-  
-  // to remove animation in changing from login to reg vice versa
-  
+
   const onNavigateToSignUp = () => {
-    
     navigate("/register");
   };
-  
+
   useEffect(() => {
     if (userInfo) {
       // if userInfo is null, can't be login
       navigate("/dummydashboard");
     }
   }, [navigate, userInfo]);
+
 
   let inLoadClassForAnimation = "";
   if(localStorage.getItem("initialReload") == "true"){
@@ -73,7 +75,7 @@ const Login = () => {
   localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["login-form-container"] + " " + styles[inLoadClassForAnimation]} onLoad>
+      <div className={styles["login-form-container"]+ " " + styles[inLoadClassForAnimation]}>
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>
@@ -85,7 +87,7 @@ const Login = () => {
             </div>
           </div>
           <div className={styles["form-greetings"]}>
-            <p>Welcome Back!</p>
+            <p>Administrator Login</p>
             <p>Please login to your account</p>
           </div>
           {error && <p className={styles["error"]}>{error}</p>}
