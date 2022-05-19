@@ -21,7 +21,8 @@
 .dashboard-admin .greetings,
 .dashboard-admin .total-submission-container>div,
 .dashboard-admin .wfar-status-container,
-.dashboard-admin .management-container>div {
+.dashboard-admin .management-container>div,
+.dashboard-admin .manage-pending-accounts {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
@@ -369,6 +370,16 @@
     height: 20px;
     width: 20px;
     margin-right: 10px;
+}
+
+.dashboard-admin .text-link {
+    color: inherit;
+}
+
+.dashboard-admin .no_pending_dashboard{
+    display: inline;
+    margin-left: 40px;
+    font-size: 1.5em;
 }
 
 .dashboard-admin .status-container .per-status-container:nth-child(1) .square {

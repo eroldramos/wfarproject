@@ -22,7 +22,8 @@
 .dashboard-area-depthead .total-submission-container>div,
 .dashboard-area-depthead .wfar-status-container,
 .dashboard-area-depthead .management-container .managed-faculties,
-.dashboard-area-depthead .management-container .manage-pending-accounts {
+.dashboard-area-depthead .management-container .manage-pending-accounts,
+.dashboard-area-depthead .text-link {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
@@ -299,6 +300,12 @@
     position: relative;
 }
 
+.dashboard-area-depthead .no_pending_dashboard{
+    display: inline;
+    margin-left: 40px;
+    font-size: 1.5em;
+}
+
 .dashboard-area-depthead .my-wfar-info p {
     position: absolute;
     color: #BE5A40;
@@ -318,6 +325,10 @@
 .dashboard-area-depthead .managed-faculties {
     padding: 15px 18px;
     overflow-y: auto;
+}
+
+.dashboard-area-depthead .text-link {
+    color: inherit;
 }
 
 .dashboard-area-depthead .faculties {
