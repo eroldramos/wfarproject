@@ -48,7 +48,11 @@
     width: 30rem;
     left: calc(60% - 25rem);
     min-height: 100px;
+    max-height: 500px;
     overflow-y: scroll;
+  }
+  .modal.m.long-height{
+    top: 10vh;
   }
 
   .modal.r {
