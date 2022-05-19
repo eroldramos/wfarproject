@@ -1,8 +1,18 @@
 from dataclasses import field, fields
 from rest_framework import serializers
-from core.models import Faculty, Semester, Week, WFAR, WFAR_Entry, WFAR_Entry_Activity, WFAR_Entry_Attachment
+from core.models import (
+    Faculty, 
+    Semester, 
+    Week, 
+    WFAR,
+    WFAR_Entry,
+    WFAR_Entry_Activity, 
+    WFAR_Entry_Attachment,
+    WFAR_Comment
+    )
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 class FacultySerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -326,3 +336,126 @@ class GetAllUser(serializers.ModelSerializer):
         if name == " ":
             name = obj.email
         return name
+
+
+# EROLD --------------------- WFARCHECKING ----------------------------------
+
+
+class WFARCheckingFacultySerializer (serializers.ModelSerializer):
+    class Meta:
+        model = Faculty
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'profile_picture']
+
+
+class WFARCheckingWFARSerializer(serializers.ModelSerializer):
+    semester =serializers.SerializerMethodField(read_only=True)
+    faculty = serializers.SerializerMethodField(read_only=True)
+    entries = serializers.SerializerMethodField(read_only=True)
+    submitted_at = serializers.SerializerMethodField(read_only=True)
+    comments = serializers.SerializerMethodField(read_only=True)
+    checked_at = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR
+        fields = ['id','status','checked_at', 'submitted_at', 'submitted_at', 'week_no', 'semester','faculty', 'entries', "comments"]
+
+    def get_checked_at(self, obj):
+        checked_at = None
+        if(obj.checked_at):
+            checked_at = datetime.strftime(obj.checked_at, '%b %d, %Y %I:%M %p')
+        return checked_at
+
+    def get_submitted_at(self, obj):
+        checked_at = datetime.strftime(obj.checked_at, '%b %d, %Y %I:%M %p')
+        return datetime.strftime(obj.submitted_at, '%b %d, %Y %I:%M %p')
+
+    def get_semester(self, obj):
+        semester = obj.semester_id
+        serializer = SemesterSerializerYearAndSem(semester, many=False)
+        return serializer.data
+    def get_faculty(self, obj):
+        faculty = obj.faculty_id
+        serializer = WFARCheckingFacultySerializer(faculty, many=False)
+        return serializer.data
+    def get_entries(self, obj):
+        entries = WFAR_Entry.objects.filter(wfar_id=obj.id)
+        
+        serializer = WFARCheckingWFAREntriesSerializer(entries, many=True)
+        return serializer.data
+    def get_comments(self, obj):
+        comments = WFAR_Comment.objects.filter(wfar_id=obj.id)
+        serializer = WFARCheckingWFARCommentsSerializer(comments, many=True)
+        return serializer.data
+class WFARCheckingWFAREntriesSerializer(serializers.ModelSerializer):
+    attachments = serializers.SerializerMethodField(read_only=True)
+    activities = serializers.SerializerMethodField(read_only=True)
+    accomplishment_date = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR_Entry
+        fields = ['id','accomplishment_date','subject','course_year_section','no_of_attendees','recording_url', "attachments", "activities",]
+    def get_accomplishment_date(self, obj):
+        accomplishment_date = datetime.strftime(obj.accomplishment_date, '%b %d, %Y')
+        return accomplishment_date
+
+    def get_attachments(self, obj):
+        attachments = WFAR_Entry_Attachment.objects.filter(wfar_entry_id =obj.id)
+        serializer = WFARCheckingWFAREntryAttachmentsSerializer(attachments, many=True)
+        return serializer.data
+    def get_activities(self, obj):
+        activities = WFAR_Entry_Activity.objects.filter(wfar_entry_id=obj.id)
+        serializer = WFARCheckingWFAREntryActivitiesSerializer(activities, many=True)
+        return serializer.data
+
+
+class WFARCheckingWFAREntryAttachmentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WFAR_Entry_Attachment
+        fields = ['id', 'image_uri', 'type']
+
+class WFARCheckingWFAREntryActivitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WFAR_Entry_Activity
+        fields = ['id', 'description']
+
+
+
+
+class WFARCheckingWFARCommentsSerializer(serializers.ModelSerializer):
+    faculty = serializers.SerializerMethodField(read_only=True)
+    created_at = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = WFAR_Comment
+        fields = ['id', 'created_at', 'faculty', 'description']
+    def get_created_at(self, obj):
+        d = obj.created_at
+        if d is not None:
+            diff = timezone.now() - d
+            s = diff.seconds
+            if diff.days > 30 or diff.days < 0:
+                return d.strftime('Y-m-d H:i')
+            elif diff.days == 1:
+                return 'One day ago'
+            elif diff.days > 1:
+                return '{} days ago'.format(diff.days)
+            elif s <= 1:
+                return 'just now'
+            elif s < 60:
+                return '{} seconds ago'.format(s)
+            elif s < 120:
+                return 'one minute ago'
+            elif s < 3600:
+                return '{} minutes ago'.format(round(s/60))
+            elif s < 7200:
+                return 'one hour ago'
+            else:
+                return '{} hours ago'.format(round(s/3600))
+        else:
+            return None
+
+    def get_faculty(self, obj):
+        faculty = obj.faculty_id
+        serializer= WFARCheckingFacultySerializer(faculty, many=False)
+        return serializer.data
+
+
+
+   

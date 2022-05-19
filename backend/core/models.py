@@ -139,3 +139,5 @@ class WFAR_Comment(models.Model):
     description = models.TextField(max_length=1000)
     wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE)
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
