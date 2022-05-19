@@ -1,16 +1,21 @@
+* {
+  overflow: hidden;
+}
+
 .upper-form-container div:nth-child(1) {
-  width: 35%;
+  width: 70%;
 }
 
 .upper-form-container div:nth-child(2) {
-  width: 15%;
+  width: 30%;
 }
 
 .bottom-form-container {
   display: flex;
   margin-top: 15px;
-  width: 77%;
+  width: 154%;
 }
+
 
 .upper-form-container {
   display: flex;
@@ -35,8 +40,17 @@
 
 .button-container {
   margin-top: 100px;
-  width: 49.5%;
+  width: 99.4%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.button-container .Button_cancel {
+  size: "lg";
+
+}
+
+#main form {
+  width: 100%;
 }
