@@ -64,7 +64,10 @@ function App() {
           <Route path="/dummydashboard" element={<DummyDashBoard />}></Route>
           {/* <Route path="/" element={<LandingPage />}></Route> */}
           {/* dont remove, for testing of logout only. */}
-          <Route path="/WFARChecking" element={<WFARCheckingScreen />}></Route>
+          <Route
+            path="/WFARChecking/:id/"
+            element={<WFARCheckingScreen />}
+          ></Route>
           <Route
             path="/FacultySubmission/*"
             element={<FacultySubmissionScreen />}
