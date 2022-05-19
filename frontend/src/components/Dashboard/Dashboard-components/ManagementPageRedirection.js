@@ -1,13 +1,24 @@
 import imageDefault from "../../../assets/DashboardDummyImg/image2.jpg"
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const ManagementPageRedirection = (props) => {
 
     let role;
+    let roleName = "";
 
-    if (props.role.toUpperCase() === "DEPARTMENT HEAD") role = 3;
-    if (props.role.toUpperCase() === "AREA CHAIR") role = 2;
-    if (props.role.toUpperCase() === "FACULTY") role = 1;
+    if (props.role.toUpperCase() === "DEPARTMENT HEAD"){
+        role = 3;
+        roleName = "department-head";
+    }
+    if (props.role.toUpperCase() === "AREA CHAIR"){
+        role = 2;
+        roleName = "area-chair";
+    }
+    if (props.role.toUpperCase() === "FACULTY"){
+        role = 1;
+        roleName = "faculty";
+    }
 
     const allUser = useSelector((state) => state.allUsers).users;
 
@@ -31,13 +42,16 @@ const ManagementPageRedirection = (props) => {
 
     return (
         <div className="manage-department-head">
-            <h3>{props.role}</h3>
-            <div className="users">
-                {
-                    resultContent
-                }
-            </div>
+            <Link className='text-link' to={`../manage-faculty/${roleName}/`}>
+                <h3>{props.role}</h3>
+                <div className="users">
+                    {
+                        resultContent
+                    }
+                </div>
+            </Link>
         </div>
+
     )
 }
 

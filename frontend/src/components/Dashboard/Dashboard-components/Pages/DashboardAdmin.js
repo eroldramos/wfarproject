@@ -42,7 +42,6 @@ const DashboardAdmin = () => {
                 <NotificationInDashboard/>
 
                 <div className="total-submission-container">
-
                     <PerRoleTotalSubmission role="DEPARTMENT HEAD"/>
                     <PerRoleTotalSubmission role="AREA CHAIR"/>
                     <PerRoleTotalSubmission role="FACULTY"/>
@@ -51,7 +50,8 @@ const DashboardAdmin = () => {
                 <WFARstatusDashboard role="dashboard-admin"/>
                 
                 <div className="management-container">
-
+                
+                    
                     <ManagementPageRedirection role="Department Head"/>
                     <ManagementPageRedirection role="Area chair"/>
                     <ManagementPageRedirection role="Faculty"/>

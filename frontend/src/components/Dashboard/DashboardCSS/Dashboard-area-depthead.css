@@ -105,6 +105,7 @@
     grid-area: total-submission-container;
     grid-template-rows: 1fr 1fr;
     grid-gap: 1em;
+    min-width: 270px;
 }
 
 .dashboard-area-depthead .total-submission-container .info p {
