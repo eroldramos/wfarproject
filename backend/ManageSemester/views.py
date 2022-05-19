@@ -48,7 +48,7 @@ class RetrieveAllSemesters(APIView):
     permission_classes = [IsAdminUser]
     def get(self, request):
         try:
-            semester = Semester.objects.filter(deleted_at=None).order_by('created_at')   
+            semester = Semester.objects.filter(deleted_at=None).order_by('-created_at')   
             p = Paginator(semester, 6)
             page = request.GET.get('page')
             if page == None or str(page) == "null":
@@ -72,7 +72,7 @@ class RetrieveAllArchivedSemesters(APIView):
     permission_classes = [IsAdminUser]
     def get(self, request):
         try:
-            semester = Semester.objects.all().exclude(deleted_at__isnull=True).order_by('created_at')   
+            semester = Semester.objects.all().exclude(deleted_at__isnull=True).order_by('-deleted_at')   
             p = Paginator(semester, 6)
             page = request.GET.get('page')
             if page == None or str(page) == "null":
@@ -180,7 +180,7 @@ class RetrieveSemestersList(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         try:
-            semester = Semester.objects.filter(deleted_at=None).order_by('created_at')   
+            semester = Semester.objects.filter(deleted_at=None).order_by('-created_at')   
             serializer = SemesterSerializerYearAndSem(semester, many=True)
 
             return Response(serializer.data, status=status.HTTP_200_OK)

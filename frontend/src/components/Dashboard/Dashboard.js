@@ -32,7 +32,6 @@ const Dashboard = () => {
             {(userInfo.userType === 1 && !userInfo.isAdmin) && <DashboardFaculty />}
         </div>
     );
-
 };
 
 export default Dashboard;

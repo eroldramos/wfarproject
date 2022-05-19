@@ -449,7 +449,7 @@ const Profile = () => {
 
   return (
     < Fragment >
-      <div className="container">
+      <div className="profile-container">
         <h1 className="HEADER">MY ACCOUNT</h1>
         <div className="EMP_POSITION">
 

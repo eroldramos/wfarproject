@@ -43,10 +43,6 @@
   justify-content: flex-end;
 }
 
-.button-container .Button_cancel {
-  size: "lg";
-
-}
 
 #main form {
   width: 100%;

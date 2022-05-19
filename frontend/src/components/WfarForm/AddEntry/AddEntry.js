@@ -322,6 +322,10 @@ const AddEntry = (props) => {
 
     }
 
+    const onClickCancelHandler = () => {
+        navigate(-1);
+    }
+
     return (
         <Fragment>
             <div className={styles['container']}>
@@ -428,7 +432,7 @@ const AddEntry = (props) => {
                         </div>
 
                         <div className={styles['button-container']}>
-                            <Button label="Cancel" type="cancel" onClick={null}></Button>
+                            <Button label="Cancel" type="cancel" onClick={onClickCancelHandler}></Button>
                             <Button label="Save Entry" type="primary" onClick={null}></Button>
                         </div>
                     </form>
