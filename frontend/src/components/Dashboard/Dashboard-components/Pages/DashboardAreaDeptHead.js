@@ -70,7 +70,7 @@ const DashboardAreaDeptHead = () => {
                     <WFARunchecked />
                 </div>
 
-                <WFARstatusDashboard />
+                <WFARstatusDashboard role="dashboard-area-depthead"/>
 
                 <div className="my-wfar">
                     <div className="my-wfar-info">

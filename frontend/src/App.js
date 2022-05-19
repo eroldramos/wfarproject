@@ -67,7 +67,7 @@ function App() {
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/LoginScreen" element={<LoginScreen />}></Route>
+          {/* <Route path="/LoginScreen" element={<LoginScreen />}></Route> */}
           {/* <Route path="/register" element={<RegisterScreen />}></Route> */}
           {/* <Route path="/" element={<SampleRedux />}></Route> */}
           {/* <Route path="/admin-login" element={<AdminLoginScreen />}></Route> */}
