@@ -91,7 +91,7 @@ class RetrieveArchivedMyWfarEntries(APIView):
 # ---------------------------------------------- CRUD
 
 class CreateWfar(APIView):
-    permission_classes = [IsAuthenticatedAndNotAdmin]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 

@@ -44,14 +44,16 @@ function App() {
   const loggedUser = useSelector((state) => state.login);
   const { error, isLoading, userInfo } = loggedUser;
 
-  // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    if (userInfo !== null) {
-      if (userInfo.is_staff == 0) {
+    if (userInfo != null) {
+      console.log(userInfo);
+      if (!userInfo.c) {
         dispatch(createWfar());
       }
     }
-  }, [userInfo, dispatch]);
+
+    console.log("hello!");
+  }, [userInfo]);
 
   return (
     <div className="for-login-container">
