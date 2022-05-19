@@ -13,7 +13,9 @@
   align-items: center;
   justify-content: center;
 }
+.button label{
 
+}
 .button.rg {
   font-size: 1em;
   padding: 15px 25px 11.5px 15px;
@@ -27,6 +29,7 @@
 
 .button.xs {
   font-size: 0.875em;
+  font-weight: 500;
   padding: 8px 15px 8px 10px;
   border: 1.75px solid transparent;
 }
@@ -49,9 +52,9 @@
 }
 
 .button.transparent {
-  background: none;
-  color: #be5a40;
-  font-weight: bold;
+  background: #BE5A40;
+  color: white;
+  font-weight: 500;
 }
 
 .button.transparent:hover {
@@ -65,5 +68,6 @@
 }
 
 .button svg {
-  margin-right: 5px;
+  color: white;
+  font-size: 100px;
 }

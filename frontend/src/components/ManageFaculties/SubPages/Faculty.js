@@ -265,7 +265,7 @@ const Faculty = () => {
             <h5>Actions</h5>
           </div>
         </li>
-        {listFaculty.length === 0 && <p className={styles["no-data-text"]}>No Faculty Found</p>}
+        {listFaculty.length === 0 && <p className={styles["no-data-text"]}>No data Found</p>}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows

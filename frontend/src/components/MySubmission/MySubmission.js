@@ -8,6 +8,7 @@ import MyWFAR from "./MyWFAR/MyWFAR";
 import { useSelector, useDispatch } from "react-redux";
 import { retrieveWfars, retrieveArchivedWfars, retrieveWfarsSemestersList } from "../../store/myWfarsActions";
 import { myWfarSemesterFilterActions, myWfarRefreshActions } from "../../store/myWfarReducers";
+import { retrieveActiveSemester } from "../../store/wfarActions";
 
 const MySubmission = (props) => {
 
@@ -22,12 +23,15 @@ const MySubmission = (props) => {
     const newChange = useSelector((state) => state.myWfarRefresh.newChange);
     
     // redux states, filter
-    const filterSemester = useSelector((state) => state.myWfarSemesterFilter.semester_id);
-    
+    const [filterSemester, setFilterSemester] = useState(1);
+    const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
+
     // retrieving wfars and archived wfars
     useEffect(() => {
         // mag-run tayo dito ng magdedetermine kung ano 'yung active semester
-        console.log("FILTER SEMESTER RETRIEVE");
+        dispatch(retrieveActiveSemester());
+        setFilterSemester(activeSemester.id);
+        dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveArchivedWfars(filterSemester));
         dispatch(retrieveWfarsSemestersList(filterSemester));

@@ -29,6 +29,7 @@
     font-weight: 400;
 }
 .image-container{
+    cursor: pointer;
     width: 150px;
     height: 150px;
     margin: auto;
@@ -62,4 +63,18 @@
 .details-placeholder:nth-child(1) p{
    text-align: right;
    font-weight: 600;
+}
+.modal-inner-container{
+    margin: 10px;
+}
+.modal-inner-container h3{
+    margin: 10px 0;
+}
+.form-field{
+}
+.button-field{
+    display: flex;
+    margin-right: 0px;
+    margin-left: auto;
+    width: fit-content;
 }

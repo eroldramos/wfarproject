@@ -15,6 +15,7 @@ urlpatterns =[
 
    path('update-sem/<str:pk>/',views.UpdateSemester.as_view(), name='update-sem'),
    path('activate-sem/<str:pk>/',views.ActivateSemester.as_view(), name='update-sem'),
+   path('retrieve-active-sem/',views.RetrieveActiveSemester.as_view(), name='retrieve-active-sem'),
    
    # path('delete-sem/<str:pk>/',views.DeleteSemester.as_view(), name='delete-sem'),
 

@@ -451,6 +451,7 @@
     box-sizing: border-box;
 }
 
+
 .dashboard-admin .users .user-container:nth-child(2) {
     position: relative;
     left: -14px;
@@ -459,6 +460,27 @@
 .dashboard-admin .users .user-container:nth-child(3) {
     position: relative;
     left: -28px;
+}
+
+.dashboard-admin .users .user-container:nth-child(4) {
+    position: relative;
+    left: -42px;
+}
+
+.dashboard-admin .users .user-container:nth-child(5) {
+    position: relative;
+    left: -54px;
+}
+
+.dashboard-admin .users .user-container:nth-child(6) {
+    position: relative;
+    left: -66px;
+}
+
+.dashboard-admin .users .user-container p{
+    font-weight: bold;
+    text-align: center;
+    padding-top: 7px;
 }
 
 .dashboard-admin .users .user-container img {
