@@ -176,10 +176,10 @@ const CreateSemester = () => {
           <Button
             label="Cancel"
             type="cancel"
-            size="xs"
+            size="rg"
             onClick={onCancelHandler}
           />
-          <Button label="Save" type="primary" size="xs" />
+          <Button label="Save" type="primary" size="rg" />
         </div>
       </form>
     </Fragment>
