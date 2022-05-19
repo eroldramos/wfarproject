@@ -48,6 +48,7 @@ import {
 
 import {
 
+  wfarPrintOverviewReducer,
   wfarRetrieveOverviewReducer
 } from "./wfarReducers"
 
@@ -105,6 +106,7 @@ const store = configureStore({
     allWFARthisWeek: getAllWFARinThisWeekReducer.reducer,
     activeSem: getActiveSemReducer.reducer,
     allUsers: getAllUsersReducer.reducer,
+    wfarPrintOverview: wfarPrintOverviewReducer.reducer,
     allWFARwholeSem: getWFARwholeSemReducer.reducer,
     allWFARcomments: getWFARCommentsReducer.reducer,
   },

@@ -1,4 +1,4 @@
-.dashboard-admin{
+.dashboard-admin {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -10,11 +10,11 @@
 .dashboard-admin h3,
 .dashboard-admin h4,
 .dashboard-admin h5,
-.dashboard-admin p{
+.dashboard-admin p {
     margin: 0;
 }
 
-.dashboard-admin span{
+.dashboard-admin span {
     margin-left: 0;
 }
 
@@ -29,7 +29,9 @@
 .dashboard-admin .main-container {
     display: grid;
     margin-right: 2px;
-    height: 85vh;
+    margin-top: -25px;
+    /* height: 85vh; */
+    height: 90vh;
     grid-template-columns: 2fr .87fr;
     grid-template-rows: .66fr .70fr 2.5fr;
     grid-gap: 1em;
@@ -53,6 +55,7 @@
     align-items: center;
     grid-area: notifications;
     margin-left: 21px;
+    min-width: max-content;
 }
 
 .dashboard-admin .notification-container {
@@ -72,13 +75,22 @@
 
 .dashboard-admin .greetings {
     margin-left: 20px;
-    padding: 5px 30px;
-    vertical-align: middle;
-    height: 62%;
+    padding: 8px 30px;
+    /* vertical-align: middle; */
+    /* display: flex;
+    align-items: center; */
+    /* height: 62%; */
 }
 
-.dashboard-admin .greetings h3, .dashboard-admin .greetings p{
+.dashboard-admin .greetings h3,
+.dashboard-admin .greetings p {
     margin: 3px;
+    font-weight: 600;
+}
+
+.dashboard-admin .greetings p {
+    font-size: 12px;
+    color: #9C9C9C;
 }
 
 /* SECTION 2 */
@@ -102,7 +114,7 @@
 
 .dashboard-admin .info .phrase {
     margin-top: 5px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .dashboard-admin .graph-container {
@@ -194,6 +206,7 @@
 
 .dashboard-admin .total-submission-container h5 {
     color: #cccccc;
+    font-size: 13px;
 }
 
 .dashboard-admin .total-submission-status {
@@ -220,6 +233,19 @@
     padding: 20px;
     grid-area: wfar-status-container;
 }
+
+.dashboard-admin .wfar-status-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.dashboard-admin .wfar-status-container p {
+    font-size: 12px;
+    color: #A6A6A6;
+    border-left: #D9D9D9 solid 2px;
+    padding-left: 5px;
+}
+
 
 /* START OF KOPYA */
 
@@ -364,11 +390,19 @@
     display: flex;
 }
 
+.dashboard-admin .status-container .per-status-container p {
+    padding: 0;
+    border: none;
+    font-size: 16px;
+    color: #000;
+}
+
 .dashboard-admin .status-container .per-status-container .square {
     border-radius: 0;
     height: 20px;
     width: 20px;
     margin-right: 10px;
+    border: solid 0.5px;
 }
 
 .dashboard-admin .status-container .per-status-container:nth-child(1) .square {
@@ -391,6 +425,11 @@
     grid-template-rows: 2fr 2fr 2fr 1fr;
     grid-gap: 1em;
     margin-left: 21px;
+}
+
+.dashboard-admin .management-container h3 {
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .dashboard-admin .users {
@@ -438,6 +477,11 @@
     display: flex;
     align-items: center;
     padding: 0;
+    font-weight: 600;
+}
+
+.dashboard-admin .manage-pending-accounts h3 {
+    font-weight: 600;
 }
 
 .dashboard-admin .pending-accounts-icon {
