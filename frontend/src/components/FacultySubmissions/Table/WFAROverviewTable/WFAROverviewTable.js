@@ -1,8 +1,10 @@
-import {Fragment, useEffect, useState } from "react";
+import {Fragment, useEffect, useState, useRef } from "react";
 import styles from "./WFAROverviewTable.module.css";
 import { useSelector } from "react-redux";
 
 const WFAROverviewTable = (props) => {
+
+
 	// constants
 	const month = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -114,7 +116,7 @@ const WFAROverviewTable = (props) => {
 						</tr>);
 				})}
 			</table>
-			
+
 		</div>
 	);
 };

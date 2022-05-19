@@ -1,13 +1,12 @@
 import "../../DashboardCSS/Dashboard-area-depthead.css"
 import pendingAccountIcon from "../../../../assets/DashboardDummyImg/access_time.svg"
 import NotificationInDashboard from "../../Dashboard-components/NotificationInDashboard";
-
-
 import WFARreceived from "../../Dashboard-components/WFARreceived";
 import WFARunchecked from "../../Dashboard-components/WFARunchecked";
 import ManageFacultiesUsers from "../../Dashboard-components/ManagementFacultiesUser";
 import WFARstatusDashboard from "../../Dashboard-components/WFARstatusDashboard";
 import WFARStatus from "../../../UI/WFAR/WFARStatus/WFARStatus";
+
 
 const DashboardAreaDeptHead = () => {
 
@@ -42,15 +41,8 @@ const DashboardAreaDeptHead = () => {
                     <div className="faculties">
                         <h3>Faculties</h3>
                     </div>
-                    <div className="managed-faculties">
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                        <ManageFacultiesUsers/>
-                    </div>
+                    
+                    <ManageFacultiesUsers/>
 
                     <div className="manage-pending-accounts">
                         <div className="pending-accounts-icon">

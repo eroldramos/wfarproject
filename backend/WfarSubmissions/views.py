@@ -235,22 +235,25 @@ class PrintWFAROverviewPDF(APIView):
         buff = BytesIO()
         paragraphStyle = getSampleStyleSheet()
 
-        data = [
-            ['Faculty', 'Name', 'Category', 'Uploader', 'Date Uploaded']
-        ]
+        data = []
 
 
         semester_no_of_weeks = semester.no_of_weeks
         col_widths = []
-        lists = []
+        col_names = []
         col_widths.append(80 * mm)
-        lists.append(Paragraph(f"Faculty", paragraphStyle['Normal']))
+        col_names.append("Faculty");
         for i in range(semester_no_of_weeks):        
             col_widths.append(40 * mm)
-            lists.append(Paragraph(f"Week {i+1}", paragraphStyle['Normal']))
-            
-        data.append(list)
+            col_names.append(f"Week {i+1}")
 
+        for f in faculties:
+            
+            break
+
+            
+        data.append(col_names)
+        data.append()
         pdf = SimpleDocTemplate(
             buff,
             pagesize=landscape([937, 612]),

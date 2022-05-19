@@ -1,4 +1,4 @@
-import { getAllWFARinThisWeekAction, getActiveSemAction, getAllUsersAction } from "./dashboardReducer";
+import { getAllWFARinThisWeekAction, getActiveSemAction, getAllUsersAction, getWFARwholeSemAction, getWFARCommentsAction } from "./dashboardReducer";
 
 export const getAllWFARinThisWeek = () => {
     return async (dispatch, getState) => {
@@ -14,7 +14,6 @@ export const getAllWFARinThisWeek = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + userInfo.token,
                 },
             });
             if (!response.ok) {
@@ -29,6 +28,70 @@ export const getAllWFARinThisWeek = () => {
         }
     };
 };
+
+export const getAllWFARwholeSem = (faculty_id) => {
+    return async (dispatch, getState) => {
+        let url = "/api/wfar-whole-sem/?faculty_id="+faculty_id;
+
+        try {
+            dispatch(getWFARwholeSemAction.getWFARwholeSemRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(getWFARwholeSemAction.getWFARwholeSemSuccess({ wfar: data }));
+        } catch (error) {
+            dispatch(getWFARwholeSemAction.getWFARwholeSemFail({error:error}));
+        }
+    }
+}
+
+export const getAllWFARComments = (wfar_id) => {
+    return async (dispatch, getState) => {
+        let url = "/api/wfar-comments/?wfar_id="+wfar_id;
+
+        try {
+            dispatch(getWFARCommentsAction.getWFARCommentsRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            dispatch(getWFARCommentsAction.getWFARCommentsSuccess({ comment: data }));
+        } catch (error) {
+            dispatch(getWFARCommentsAction.getWFARCommentsFail({error:error}));
+        }
+    }
+}
 
 
 export const getAllUser = () => {
@@ -45,7 +108,6 @@ export const getAllUser = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + userInfo.token,
                 },
             });
             if (!response.ok) {
@@ -62,6 +124,8 @@ export const getAllUser = () => {
 };
 
 
+
+
 export const getActiveSem = () => {
     return async (dispatch, getState) => {
         let url = "/api/active-semester/";
@@ -76,7 +140,6 @@ export const getActiveSem = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + userInfo.token,
                 },
             });
             if (!response.ok) {

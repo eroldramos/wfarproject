@@ -4,24 +4,9 @@ import PerRoleTotalSubmission from "../../Dashboard-components/PerRoleTotalSubmi
 import ManagementPageRedirection from "../../Dashboard-components/ManagementPageRedirection";
 import NotificationInDashboard from "../../Dashboard-components/NotificationInDashboard";
 import WFARstatusDashboard from "../../Dashboard-components/WFARstatusDashboard";
-import { useSelector, useDispatch} from "react-redux";
-import {useEffect} from "react";
-import { getAllWFARinThisWeek ,getAllUser, getActiveSem} from "../../../../store/dashboardAction";
 
 const DashboardAdmin = () => {
-    const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(getAllWFARinThisWeek())
-    },[dispatch]);
-
-    useEffect(()=>{
-        dispatch(getAllUser())
-    },[dispatch]);
-
-    useEffect(()=>{
-        dispatch(getActiveSem())
-    },[dispatch]);
 
     return (
         <div className="dashboard-admin">
@@ -42,7 +27,7 @@ const DashboardAdmin = () => {
                 </div>
 
                 <WFARstatusDashboard/>
-
+                
                 <div className="management-container">
 
                     <ManagementPageRedirection role="Department Head"/>
