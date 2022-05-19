@@ -22,7 +22,9 @@ const ModalOverlay = (props) => {
 
   return (
     <div className={modal}>
-      <div className={classes.content}>{props.children}</div>
+      <div className={classes["scrollable-area"]}>
+        <div className={classes.content}>{props.children}</div>
+      </div>
     </div>
   );
 };
