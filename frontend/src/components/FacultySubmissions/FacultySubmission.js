@@ -50,6 +50,7 @@ const FacultySubmission = () => {
 
             </div>
             <Routes>
+                <Route path="" element={<WFARSubmissionsOverview />}></Route>
                 <Route path="overview" element={<WFARSubmissionsOverview />}></Route>
                 <Route path="weekly-view" element={<WFARWeeklyView />}></Route>
             </Routes>
