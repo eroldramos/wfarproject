@@ -1,0 +1,65 @@
+.container{
+    display: flex;
+}
+.horizontal-container{
+    display: flex;
+    flex-direction: column;
+}
+.horizontal-container-1{
+    width: 30%;
+}
+.horizontal-container-2{
+    width: 70%;
+    margin-top: 50px;
+}
+.user-image-detail-container{
+    margin-top: 20px;
+    margin-right: 30px;
+}
+.user-image-detail-container h3{
+    text-align: center;
+    margin: 0;
+}
+.user-image-detail-container h3:nth-child(2){
+    font-size: 16px;
+    margin-top: 5px;
+}
+.user-image-detail-container h3:nth-child(3){
+    font-size: 14px;
+    font-weight: 400;
+}
+.image-container{
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.edit-buttons-container{
+    display: flex;
+    margin-right: 0px;
+    margin-left: auto;
+}
+.personal-info-container{
+}
+.user-details-container{
+    margin: 10px;
+    display: flex;
+}
+.details-placeholder{
+    margin-left: 20px;
+}
+.details-placeholder p{
+    margin: 0;
+    font-size: 16px;
+}
+.details-placeholder:nth-child(1){
+   width: 18%;
+}
+.details-placeholder:nth-child(1) p{
+   text-align: right;
+   font-weight: 600;
+}
