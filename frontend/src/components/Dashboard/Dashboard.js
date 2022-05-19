@@ -22,7 +22,7 @@ const Dashboard = () => {
     }, [dispatch]);
 
     if (userInfo === null || error !== null) {
-        return <Navigate to="/admin-login" />
+        return <Navigate to="/" />
     }
 
     return (

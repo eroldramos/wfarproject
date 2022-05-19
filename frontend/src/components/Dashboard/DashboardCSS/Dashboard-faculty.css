@@ -226,6 +226,11 @@
     overflow-y: auto; */
 }
 
+.dashboard-faculty .text-link {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 /* SECTION 5 */
 
 .dashboard-faculty .management-container {
