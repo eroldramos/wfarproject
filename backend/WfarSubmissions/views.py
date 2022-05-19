@@ -244,12 +244,12 @@ class PrintWFAROverviewPDF(APIView):
         col_widths = []
         lists = []
         col_widths.append(80 * mm)
-        lists.append(Paragraph(f"Faculty", paragraphStyle['Normal']))
+        # lists.append(Paragraph(f"Faculty", paragraphStyle['Normal']))
         for i in range(semester_no_of_weeks):        
             col_widths.append(40 * mm)
-            lists.append(Paragraph(f"Week {i+1}", paragraphStyle['Normal']))
+            # lists.append(Paragraph(f"Week {i+1}", paragraphStyle['Normal']))
             
-        data.append(list)
+        # data.append(list)
 
         pdf = SimpleDocTemplate(
             buff,
