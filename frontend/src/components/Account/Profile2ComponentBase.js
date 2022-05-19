@@ -12,6 +12,10 @@ import styled from 'styled-components';
 import DropdownField from "../UI/FormControl/DropdownField/DropdownField";
 import ImageCard from "../UI/FormControl/ImageCard/ImageCard";
 import axios from 'axios';
+import { useSelector } from "react-redux";
+import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
+
+
 
 const EDITBUTTON_WRAPPER_STYLES = {
   position: 'relative',
@@ -440,7 +444,9 @@ const Profile = () => {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    })
+    }).then((result) => {
+      window.location.reload(false);
+    });
 
   }
 
@@ -474,8 +480,8 @@ const Profile = () => {
               label="Edit Profile"
               type="primary"
               size="xs">
-                
-              </SmallButton>
+
+            </SmallButton>
 
             {isOpen && <Modal onClose={onClose} size="r">
               <h1 className="MODAL_HEADER">Edit Details</h1>
@@ -531,18 +537,22 @@ const Profile = () => {
                 error={employeeNoInputHasError ? employeeNoErrorMessage : null}
               />
 
-              <DropdownField
+              <CustomDropdownField
                 id="civilStatus"
                 name="civilStatus"
-                options={CIVIL_STATUS}
                 labelName="Civil Status"
                 onChange={civilStatusChangeHandler}
                 onBlur={civilStatusBlurHandler}
                 value={enteredCivilStatus}
+                options={CIVIL_STATUS}
                 type="form"
+                setEnteredValue=''
                 error={
-                  civilStatusInputHasError ? "Please select a civil status." : null
+                  civilStatusInputHasError
+                    ? "Please select a civil status."
+                    : null
                 }
+                size="l"
               />
 
               <InputField
@@ -825,12 +835,17 @@ const Profile = () => {
                       <td>
                         {state.map((item) => {
                           if (item.civil_status === 1) {
-                            return <p className="userinput" style={{ color: '#000000' }}> Single </p>
-                          } else if (item.civil_status === 2) {
                             return <p className="userinput" style={{ color: '#000000' }}> Married </p>
+                          } else if (item.civil_status === 2) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Widow </p>
                           } else if (item.civil_status === 3) {
-                            return <p className="userinput" style={{ color: '#000000' }}> Widowed </p>
-                          } else {
+                            return <p className="userinput" style={{ color: '#000000' }}> Separated </p>
+                          } else if (item.civil_status === 4) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Divorced </p>
+                          } else if (item.civil_status === 5) {
+                            return <p className="userinput" style={{ color: '#000000' }}> Single </p>
+                          }
+                          else {
                             return <p className="userinput" style={{ color: '#000000' }}> </p>
                           }
                         })}

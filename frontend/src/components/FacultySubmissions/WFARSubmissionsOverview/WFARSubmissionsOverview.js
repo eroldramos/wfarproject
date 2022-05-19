@@ -63,7 +63,8 @@ const WFARSubmissionsOverview = () => {
 	}
 
 	const onClickExportHandler = () => {
-		setIsPrintOverview(true);
+		// setIsPrintOverview(true);
+		dispatch(printWfarsOverview(selectedSemester, sort));
 	}
 
 	return (
