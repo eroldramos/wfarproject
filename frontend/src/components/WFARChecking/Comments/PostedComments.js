@@ -16,8 +16,8 @@ const PostedComments = () => {
           </div>
         </div>
         <div className={styles.details_TimeContainer}>
-          <h5>{facultyName}</h5>
-          <h5>{timeAgo}</h5>
+          <h3>{facultyName}</h3>
+          <h3>{timeAgo}</h3>
         </div>
         <div className={styles.moreContainer}>
           <svg
@@ -33,9 +33,9 @@ const PostedComments = () => {
         </div>
       </div>
       <div className={styles.contentContainer}>
-        <h5>
+        <h3>
           {comment}
-        </h5>
+        </h3>
       </div>
     </div>
   );

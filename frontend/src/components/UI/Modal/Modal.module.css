@@ -28,7 +28,8 @@
 }
 .modal::-webkit-scrollbar {
   width: 5px;
-  border: 1px solid black;
+  height: 10px;
+  /* border: 1px solid black; */
 }
 .modal::-webkit-scrollbar-thumb {
   background: #c4c4c4;
@@ -46,7 +47,7 @@
   .modal.m {
     width: 30rem;
     left: calc(60% - 25rem);
-    height: 57%;
+    min-height: 100px;
     overflow-y: scroll;
   }
 

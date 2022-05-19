@@ -8,7 +8,7 @@ const Button = (props) => {
 
     return (
         <Fragment>
-            <button className={classes} type={buttonType} onClick={props.onClick}>
+            <button className={classes} type={buttonType} onClick={props.onClick} disabled={props.disabled}>
                 {props.label}
             </button>
         </Fragment>

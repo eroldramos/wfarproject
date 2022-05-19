@@ -57,30 +57,27 @@ const ViewStatusModal = (props) => {
 
           {props.assignee_id ? (
             <div onClick={null} className={styles["assign-container2"]}>
-              <div className={`${styles["assign-btn"]} ${styles["profile"]} `}>
-                <img
-                  src={props.assignee_id.profile_picture}
-                  height="70"
-                  width="70"
-                />
+              <div className={styles["assigned-to-container"]}>
+                <h3>ASSIGNED TO</h3>
               </div>
-              <div>
-                <h3
-                  style={{
-                    color: "#ccc",
-                  }}
-                >
-                  {props.assignee_id.user_type === 3 && "Department Head"}
-                  {props.assignee_id.user_type === 2 && "Area Chair"}
-                </h3>
-                <h1
-                  style={{
-                    fontWeight: "500",
-                  }}
-                >
-                  <strong>{props.assignee_id.last_name}, </strong>
-                  {props.assignee_id.first_name} {props.assignee_id.middle_name}
-                </h1>
+              <div className={styles["formater"]}>
+                <div className={`${styles["assign-btn"]} ${styles["profile"]} `}>
+                  <img
+                    src={props.assignee_id.profile_picture}
+                    height="70"
+                    width="70"
+                  />
+                </div>
+                <div className={styles["position-container"]}>
+                  <h3>
+                    {props.assignee_id.user_type === 3 && "Department Head"}
+                    {props.assignee_id.user_type === 2 && "Area Chair"}
+                  </h3>
+                  <h3>
+                    <strong>{props.assignee_id.last_name}, </strong>
+                    {props.assignee_id.first_name} {props.assignee_id.middle_name}
+                  </h3>
+                </div>
               </div>
             </div>
           ) : (
@@ -89,7 +86,7 @@ const ViewStatusModal = (props) => {
                 <div className={styles["assign-btn"]} onClick={onOpenAssign}>
                   {icon}
                 </div>
-                <h1>Assign</h1>
+                <h3>Assign</h3>
               </div>
             </div>
           )}
@@ -99,7 +96,7 @@ const ViewStatusModal = (props) => {
                 onClick={props.closeViewFacultyModal}
                 label="Close"
                 type="cancel"
-                size="rg"
+                size="s"
               />
             </div>
             <div className={styles["clearfix"]}></div>
