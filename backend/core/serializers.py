@@ -376,14 +376,16 @@ class WFARCheckingWFARSerializer(serializers.ModelSerializer):
         fields = ['id','status','checked_at', 'submitted_at', 'submitted_at', 'week_no', 'semester','faculty', 'entries', "comments"]
 
     def get_checked_at(self, obj):
-        checked_at = None
+        checked_at_date = None
         if(obj.checked_at):
-            checked_at = datetime.strftime(obj.checked_at, '%b %d, %Y %I:%M %p')
-        return checked_at
+            checked_at_date = datetime.strftime(obj.checked_at, '%b %d, %Y %I:%M %p')
+        return checked_at_date
 
     def get_submitted_at(self, obj):
-        checked_at = datetime.strftime(obj.checked_at, '%b %d, %Y %I:%M %p')
-        return datetime.strftime(obj.submitted_at, '%b %d, %Y %I:%M %p')
+        submitted_at_date = None
+        if(obj.submitted_at):
+            submitted_at_date = datetime.strftime(obj.submitted_at, '%b %d, %Y %I:%M %p')
+        return submitted_at_date
 
     def get_semester(self, obj):
         semester = obj.semester_id
@@ -410,7 +412,9 @@ class WFARCheckingWFAREntriesSerializer(serializers.ModelSerializer):
         model = WFAR_Entry
         fields = ['id','accomplishment_date','subject','course_year_section','no_of_attendees','recording_url', "attachments", "activities",]
     def get_accomplishment_date(self, obj):
-        accomplishment_date = datetime.strftime(obj.accomplishment_date, '%b %d, %Y')
+        accomplishment_date = None
+        if obj.accomplishment_dat:
+            accomplishment_date = datetime.strftime(obj.accomplishment_date, '%b %d, %Y')
         return accomplishment_date
 
     def get_attachments(self, obj):
