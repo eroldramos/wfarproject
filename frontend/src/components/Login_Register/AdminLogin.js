@@ -91,7 +91,6 @@ const Login = () => {
             <p>Please login to your account</p>
           </div>
           {error && <p className={styles["error"]}>{error}</p>}
-          {isLoading && <p>loading...</p>}
           <form
             className={styles["form-container"]}
             action=""

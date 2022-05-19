@@ -8,7 +8,7 @@ export default function Profilemodal({ open, children, onClose}) {
     <div>
     <SmallButton
                 onClick={onClose}
-                label="Cancel"
+                label="asdasd"
                 type="primary"
                 size="xs"></SmallButton>
       {children}
