@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
 import ProfileImage from "../../assets/profile.png";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -63,6 +63,7 @@ const SideNav = (props) => {
 		console.log(logout())
 	};
 	//
+	const [profile_pic, setprofile_pic] = useState();
 	const loggedUser = useSelector((state) => state.login);
 	const { error, isLoading, userInfo } = loggedUser;
 	//   useEffect(() => {
@@ -70,6 +71,21 @@ const SideNav = (props) => {
 	//       navigate("/");
 	//     }
 	//   }, [userInfo, dispatch]);
+
+	useEffect(() => {
+		const url = "/api/profile/" + userInfo.id;
+		const fetchData = async () => {
+			try {
+				const response = await fetch(url);
+				const json = await response.json();
+				setprofile_pic(json[0].profile_picture)
+			} catch (error) {
+				console.log("error: ", error);
+			}
+		};
+		fetchData();
+	}, [userInfo, dispatch]);
+
 	const spanElements = document.getElementsByClassName("nav-open-text");
 	const liElements = document.getElementsByTagName("li");
 
@@ -295,7 +311,7 @@ const SideNav = (props) => {
 						<div className="account-profile-image-container">
 							<div
 								style={{
-									backgroundImage: "url(" + userInfo.profile_picture + ")",
+									backgroundImage: "url(" + profile_pic + ")",
 								}}
 							></div>
 						</div>
