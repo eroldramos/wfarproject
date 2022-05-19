@@ -46,7 +46,6 @@ import {
   myWfarFetchEntryReducer,
 } from "./myWfarReducers";
 
-import { wfarRetrieveOverviewReducer } from "./wfarReducers";
 import {
   wfarPrintOverviewReducer,
   wfarRetrieveOverviewReducer,

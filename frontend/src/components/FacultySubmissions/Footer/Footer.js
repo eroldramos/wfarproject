@@ -1,7 +1,6 @@
 import styles from "./Footer.module.css";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import ReactToPrint from "react-to-print";
 
 const Footer = (props) => {
 
