@@ -12,7 +12,7 @@ import PostedComments from "./Comments/PostedComments";
 import { useSelector, useDispatch } from "react-redux";
 import { getCheckWfar } from "../../store/checkWfarActions";
 import { useParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const WFARChecking = () => {
   const params = useParams();
   const [isNotFaculty, setIsNotFaculty] = useState(true);
@@ -130,6 +130,8 @@ const WFARChecking = () => {
 
   const dispatch = useDispatch();
 
+  let navigate = useNavigate();
+
   const postCommentReducerValues = useSelector((state) => state.postComment);
   const { isLoading: postCommentIsLoading } = postCommentReducerValues;
 
@@ -153,6 +155,14 @@ const WFARChecking = () => {
     changeCheckStatusrReducerValues;
 
   const [getComment, setGetComment] = useState({});
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(getCheckWfar(params.id));
