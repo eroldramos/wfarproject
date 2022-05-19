@@ -38,4 +38,29 @@ export const wfarRetrieveOverviewReducer = createSlice({
     }
 });
 
+
+export const wfarPrintOverviewReducer = createSlice({
+    name: "wfarPrintOverviewReducer",
+    initialState: {
+        isLoading: true,
+        error: null
+    },
+    reducers: {
+        sendRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        printSuccessfully(state, action) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        requestFail(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+
 export const wfarRetrieveOverviewActions = wfarRetrieveOverviewReducer.actions;
+export const wfarPrintOverviewActions = wfarPrintOverviewReducer.actions;
