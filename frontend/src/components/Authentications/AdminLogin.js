@@ -44,9 +44,10 @@ const AdminLogin = () => {
   useEffect(() => {
     if (userInfo) {
       // if userInfo is null, can't be login
-      navigate("/dummydashboard");
+      navigate("/dashboard");
     }
   }, [navigate, userInfo]);
+  
   return (
     <Fragment>
       <div className={classes.container}>

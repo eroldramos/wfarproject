@@ -1,10 +1,25 @@
+
+.upper-form-container div:nth-child(1) {
+  width: 70%;
+}
+
+.upper-form-container div:nth-child(2) {
+  width: 30%;
+}
+
+.bottom-form-container {
+  display: flex;
+  margin-top: 15px;
+  width: 154%;
+}
+
+
 .upper-form-container {
   display: flex;
+  margin-top: 25px 0;
 }
-.bottom-form-container,
-.upper-form-container {
-  margin: 25px 0;
-}
+
+
 .bottom-form-container label {
   font-style: normal;
   font-weight: 600;
@@ -14,16 +29,25 @@
   display: block;
   margin: 15px 0;
 }
-.bottom-form-container {
-  display: flex;
-}
+
 .delete-icon-container {
   display: flex;
   align-items: center;
 }
+
 .button-container {
   margin-top: 100px;
+  width: 99.4%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.button-container .Button_cancel {
+  size: "lg";
+
+}
+
+#main form {
+  width: 100%;
 }

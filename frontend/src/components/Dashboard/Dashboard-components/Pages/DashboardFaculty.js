@@ -1,106 +1,81 @@
 import "../../DashboardCSS/Dashboard-faculty.css"
-import pendingAccountIcon from "../../../../assets/DashboardDummyImg/access_time.svg"
-import PerRoleTotalSubmission from "../../Dashboard-components/PerRoleTotalSubmission";
-import ManagementPageRedirection from "../../Dashboard-components/ManagementPageRedirection";
 import NotificationInDashboard from "../../Dashboard-components/NotificationInDashboard";
-import WFARstatusDashboard from "../../Dashboard-components/WFARstatusDashboard";
+import CurrentWeekContainer from "../CurrentWeekContainer";
+import WFARcompleted from "../WFARcompleted";
+import WFARuncheckedFaculty from "../WFARuncheckedFaculty";
+import RevisionContainer from "../RevisionContainer";
+
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import styles from "../../../MySubmission/MySubmission.module.css";
+import MyWFAR from "../../../MySubmission/MyWFAR/MyWFAR";
+import { useSelector, useDispatch } from "react-redux";
+import { retrieveWfars, retrieveWfarsSemestersList } from "../../../../store/myWfarsActions";
 
 const DashboardFaculty = () => {
+
+    // hooks
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // redux states, objects
+    const wfars = useSelector((state) => state.myWfars.wfars);
+    let twoWfars;
+    if (wfars.length > 0) {
+        twoWfars = [wfars[0], wfars[1]]
+    }
+
+    const semesters = useSelector((state) => state.wfarSemesters.semesters);
+
+    // get active sem
+    const sem = useSelector((state) => state.activeSem).activeSem;
+    let filterSemester = 1;
+    if (sem) filterSemester = sem[0].id
+
+    // retrieving wfars and archived wfars
+    useEffect(() => {
+        dispatch(retrieveWfars(filterSemester));
+        dispatch(retrieveWfarsSemestersList(filterSemester));
+    }, [filterSemester]);
 
     return (
         <div className="dashboard-faculty">
 
-            <div class="main-container">
-                <div class="header">
+            <div className="main-container">
+                <div className="header">
                     <h1>Dashboard</h1>
                 </div>
 
-                <NotificationInDashboard/>
+                <NotificationInDashboard />
 
-                <div class="current-week-main-container">
-                    <div class="current-semester">
-                        <p>1st Semester of 2021-2022</p>
-                    </div>
-                    <div class="current-week-container">
-                        <p id="current-week">WEEK 7</p>
-                        <p>Current Week</p>
-                    </div>
+                <CurrentWeekContainer />
+
+                <div className="total-submission-container">
+                    <WFARcompleted />
+                    <WFARuncheckedFaculty />
                 </div>
 
-                <div class="total-submission-container">
-                    <div class="wfar-completed">
-                        <div class="info">
-                            <h3>WFAR</h3>
-                            <h3>Completed</h3>
-                        </div>
-                        <div class="number-completed-container">
-                            <div class="vertical-design"></div>
-                            <div class="number-completed">
-                                <p>06</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wfar-inprogress">
-                        <div class="info">
-                            <h3>WFAR</h3>
-                            <h3>In Progress</h3>
-                        </div>
-                        <div class="number-inprogress-container">
-                            <div class="vertical-design"></div>
-                            <div class="number-inprogress">
-                                <p>02</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="my-wfar">
-                    <div class="my-wfar-info">
+                <div className="my-wfar">
+                    <div className="my-wfar-info">
                         <h3>My WFAR</h3>
-                        <p>View All</p>
+                        <Link to={'/mySubmission/'}>
+                            <p>{'View All  >'}</p>
+                        </Link>
                     </div>
-
+                    <div className="my-wfar-container-dashboard">
+                        {twoWfars &&
+                            <Routes>
+                                <Route path="" element={<MyWFAR items={twoWfars} />}></Route>
+                            </Routes>
+                        }
+                    </div>
                 </div>
 
-                <div class="management-container">
-                    <div class="need-revision">
+                <div className="management-container">
+                    <div className="need-revision">
                         <h3>Need Revision</h3>
                     </div>
-                    <div class="revision-container">
-                        <div class="revision-instance">
-                            <div class="revision-date">
-                                <div class="revision-week">Week 4</div>
-                                <div class="revision-day">Commented 20 days ago</div>
-                            </div>
-                            <div class="revision-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor...</div>
-                            <div class="edit-button">
-                                <p>Edit</p>
-                            </div>
-                        </div>
-                        <div class="revision-instance">
-                            <div class="revision-date">
-                                <div class="revision-week">Week 3</div>
-                                <div class="revision-day">Commented 37 days ago</div>
-                            </div>
-                            <div class="revision-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor...</div>
-                            <div class="edit-button">
-                                <p>Edit</p>
-                            </div>
-                        </div>
-                        <div class="revision-instance">
-                            <div class="revision-date">
-                                <div class="revision-week">Week 1</div>
-                                <div class="revision-day">Commented 45 days ago</div>
-                            </div>
-                            <div class="revision-comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor...</div>
-                            <div class="edit-button">
-                                <p>Edit</p>
-                            </div>
-                        </div>
-                    </div>
+                    <RevisionContainer />
                 </div>
             </div>
         </div>

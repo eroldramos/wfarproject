@@ -1,0 +1,55 @@
+.view-entry-modal-container{
+    margin: 20px;
+}
+.container{
+    margin-bottom: 30px;
+}
+.close-btn{
+    cursor: pointer;
+    top: 30px;
+    right: 30px;
+    position: absolute;
+}
+.container h3, p{
+    color: #323232;
+}
+.container h3{
+    display: inline;
+    font-size: 16px;
+    font-weight: 700;
+}
+.container p{
+    font-size: 16px;
+    display: inline;
+}
+.container-1 h3:nth-child(1){
+    font-size: 18px;
+    display: block;
+    margin: 0;
+    margin-bottom: 8px;
+}
+.container-1 h3:nth-child(3){
+    font-size: 14px;
+}
+.content{
+    margin-bottom: 10px;
+}
+.container-4 h3{
+    display: block;
+    margin: 0;
+}
+.image-container{
+    display: flex;
+    flex-flow: row wrap;
+    margin: 7px 0;
+}
+.image-container div{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.image-container div img{
+    border-radius: 5px;
+    min-width: 100px;
+    max-width: 190px;
+    height: 140px;
+}

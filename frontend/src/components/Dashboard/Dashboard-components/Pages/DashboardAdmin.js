@@ -4,24 +4,31 @@ import PerRoleTotalSubmission from "../../Dashboard-components/PerRoleTotalSubmi
 import ManagementPageRedirection from "../../Dashboard-components/ManagementPageRedirection";
 import NotificationInDashboard from "../../Dashboard-components/NotificationInDashboard";
 import WFARstatusDashboard from "../../Dashboard-components/WFARstatusDashboard";
-import { useSelector, useDispatch} from "react-redux";
-import {useEffect} from "react";
-import { getAllWFARinThisWeek ,getAllUser, getActiveSem} from "../../../../store/dashboardAction";
+import { getPendingAccounts } from "../../../../store/pendingAccountsActions"
+import PendingAccountsScreen from "../../../Screens/FacultySubmissionScreen";
+import { useSelector, useDispatch } from "react-redux";
+import { retrieveWfars, retrieveWfarsSemestersList } from "../../../../store/myWfarsActions";
+
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
 const DashboardAdmin = () => {
-    const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(getAllWFARinThisWeek())
-    },[dispatch]);
+     // hooks
+     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(getAllUser())
-    },[dispatch]);
+     const pendingFaculties = useSelector((state) => state.getPendingAccounts);
+     let no_of_pending = 0;
+ 
+     if (pendingFaculties) {
+         if (pendingFaculties.pendingAccounts.faculties)
+             no_of_pending = pendingFaculties.pendingAccounts.faculties.length;
+     }
 
-    useEffect(()=>{
-        dispatch(getActiveSem())
-    },[dispatch]);
+     useEffect(() => {
+        dispatch(getPendingAccounts());
+    }, [dispatch]);
+
 
     return (
         <div className="dashboard-admin">
@@ -41,20 +48,21 @@ const DashboardAdmin = () => {
                     <PerRoleTotalSubmission role="FACULTY"/>
                 </div>
 
-                <WFARstatusDashboard/>
-
+                <WFARstatusDashboard role="dashboard-admin"/>
+                
                 <div className="management-container">
 
                     <ManagementPageRedirection role="Department Head"/>
                     <ManagementPageRedirection role="Area chair"/>
                     <ManagementPageRedirection role="Faculty"/>
                     
-                    <div className="manage-pending-accounts">
+                    <Link className="manage-pending-accounts text-link" to={'/pending-accounts/'}>
                         <div className="pending-accounts-icon">
                             <img src={pendingAccountIcon} alt="" />
                         </div>
-                        <h3>Pending Accounts</h3>
-                    </div>
+                        <h3>Pending Accounts <p className="no_pending_dashboard">{no_of_pending}</p></h3>
+                    </Link>
+
                 </div>
             </div>     
         </div>

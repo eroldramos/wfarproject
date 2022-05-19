@@ -1,8 +1,10 @@
-import {Fragment, useEffect, useState } from "react";
+import {Fragment, useEffect, useState, useRef } from "react";
 import styles from "./WFAROverviewTable.module.css";
 import { useSelector } from "react-redux";
 
 const WFAROverviewTable = (props) => {
+
+
 	// constants
 	const month = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -34,7 +36,6 @@ const WFAROverviewTable = (props) => {
 			console.log(facultiesWithWfars);
 
 			for (let i = 0; i < semesterNoOfWeeks; i++) {
-
 				let startDate = new Date(weekBrackets[i + i]);
 				let endDate = new Date(weekBrackets[i + i + 1]);
 				let startDateLbl = month[startDate.getMonth()] + " " + startDate.getDate();
@@ -54,7 +55,9 @@ const WFAROverviewTable = (props) => {
 			}
 
 			let faculties = facultiesWithWfars;
+			console.log("i > " + faculties.length);
 			for (let i = 0; i < faculties.length; i++) {
+				wfarsBuffer[i] = []
 				let wfarWithWeeks = faculties[i].wfars.length;
 				console.log("weeks: " + wfarWithWeeks);
 				console.log("current_week_no: " + currentWeekNo);
@@ -114,7 +117,7 @@ const WFAROverviewTable = (props) => {
 						</tr>);
 				})}
 			</table>
-			
+
 		</div>
 	);
 };

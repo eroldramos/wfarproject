@@ -17,4 +17,6 @@ urlpatterns = [
      path('update-comment/<str:pk>/', views.UpdateComment.as_view(), name='update-comment'),
      path('delete-comment/<str:pk>/', views.DeleteComment.as_view(), name='delete-comment'),
     
+    path('wfar/individual/print',
+         views.PrintWFARIndividualPDF.as_view(), name='printIndividual'),
 ]

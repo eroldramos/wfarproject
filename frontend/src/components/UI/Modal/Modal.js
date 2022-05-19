@@ -1,14 +1,25 @@
-import { Fragment } from "react";
+import { Fragment, useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 import classes from "./Modal.module.css";
 
-const Backdrop = (props) => {
-  return <div className={classes.backdrop} onClick={props.onClose} />;
-};
 
 const ModalOverlay = (props) => {
+  
   const modal = classes["modal"] + " " + classes[props.size];
+  
+  //calculating modal height
+  // const heightRef = useRef();
+  
+  // const [modalHeight, setModalHeight] = useState(modal.heightRef)
+
+  // useEffect(()=>{
+  //   console.log(heightRef.current.clientHeight+"Hello")
+  //   console.log("ASDS")
+  // }, [])
+
+  //
+
   return (
     <div className={modal}>
       <div className={classes.content}>{props.children}</div>
@@ -17,6 +28,12 @@ const ModalOverlay = (props) => {
 };
 
 const portalElement = document.getElementById("overlays");
+
+
+const Backdrop = (props) => {
+  return <div className={classes.backdrop} onClick={props.onClose} />;
+};
+
 
 const Modal = (props) => {
   return (

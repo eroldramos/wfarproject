@@ -42,11 +42,19 @@
 }
 
 .button.cancel {
+    /* background: #A1A1A1; */
     background: #A1A1A1;
 }
 
 .button.cancel:hover {
     background: #777777;
+}
+.button.confirm {
+    background: #BE5A40;
+}
+
+.button.confirm:hover {
+    background: #A83B1F;
 }
 
 @media only screen and (max-width: 768px) {

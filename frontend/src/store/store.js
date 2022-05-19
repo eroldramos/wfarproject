@@ -47,12 +47,18 @@ import {
 } from "./myWfarReducers";
 
 import { wfarRetrieveOverviewReducer } from "./wfarReducers";
+import {
+  wfarPrintOverviewReducer,
+  wfarRetrieveOverviewReducer,
+} from "./wfarReducers";
 
 // sheen
 import {
   getAllWFARinThisWeekReducer,
   getAllUsersReducer,
   getActiveSemReducer,
+  getWFARwholeSemReducer,
+  getWFARCommentsReducer,
 } from "./dashboardReducer";
 // erold
 import {
@@ -115,6 +121,9 @@ const store = configureStore({
     allWFARthisWeek: getAllWFARinThisWeekReducer.reducer,
     activeSem: getActiveSemReducer.reducer,
     allUsers: getAllUsersReducer.reducer,
+    wfarPrintOverview: wfarPrintOverviewReducer.reducer,
+    allWFARwholeSem: getWFARwholeSemReducer.reducer,
+    allWFARcomments: getWFARCommentsReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

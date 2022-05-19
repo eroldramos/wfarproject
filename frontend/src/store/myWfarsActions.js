@@ -22,7 +22,6 @@ export const createWfar = () => {
 
         try {
 
-
             dispatch(myWfarCreateActions.sendRequest());
 
             const {
@@ -44,13 +43,9 @@ export const createWfar = () => {
                 throw new Error(errorMessage);
             }
 
-            console.log(">>>>>>>> success")
             const data = await response.json();
             dispatch(myWfarCreateActions.requestSuccessfullyCompleted());
-            console.log(data)
         } catch (error) {
-            console.log(">>>>>>>> may error")
-            console.log(error.message)
             dispatch(myWfarCreateActions.requestFailed({ error: error.message }));
         }
     }
@@ -58,14 +53,15 @@ export const createWfar = () => {
 
 export const retrieveWfars = (filterSemester) => {
     return async (dispatch, getState) => {
-        let url = "/api/myWfar/?faculty_id=1&semester_id=" + filterSemester;
+
+        const {
+            login: { userInfo },
+        } = getState();
+
+        let url = "/api/myWfar/?faculty_id="+userInfo.id+"&semester_id=" + filterSemester;
 
         try {
             dispatch(myWfarFetchActions.retrieveRequest());
-
-            const {
-                login: { userInfo },
-            } = getState();
 
             const response = await fetch(url, {
                 method: "GET",
@@ -83,9 +79,7 @@ export const retrieveWfars = (filterSemester) => {
 
             const data = await response.json();
             dispatch(myWfarFetchActions.retrieveSuccessfully({ wfars: data }));
-            console.log(data)
         } catch (error) {
-            console.log(error.message)
             dispatch(myWfarFetchActions.retrieveFail({ error: error.message }));
         }
     }
@@ -93,14 +87,16 @@ export const retrieveWfars = (filterSemester) => {
 
 export const retrieveArchivedWfars = (filterSemester) => {
     return async (dispatch, getState) => {
-        let url = "/api/myWfar/archived/?faculty_id=1&semester_id=" + filterSemester;
+
+        const {
+            login: { userInfo },
+        } = getState();
+
+        let url = "/api/myWfar/archived/?faculty_id="+ userInfo.id +"&semester_id=" + filterSemester;
 
         try {
             dispatch(myWfarsArchivedActions.retrieveRequest());
 
-            const {
-                login: { userInfo },
-            } = getState();
 
             const response = await fetch(url, {
                 method: "GET",
@@ -118,9 +114,7 @@ export const retrieveArchivedWfars = (filterSemester) => {
 
             const data = await response.json();
             dispatch(myWfarsArchivedActions.retrieveSuccessfully({ archivedEntries: data }));
-            console.log(data)
         } catch (error) {
-            console.log(error.message)
             dispatch(myWfarsArchivedActions.retrieveFail({ error: error.message }));
         }
     }
@@ -153,21 +147,17 @@ export const retrieveWfarsSemestersList = () => {
 
             const data = await response.json();
             dispatch(wfarSemestersActions.retrieveSuccessfully({ semesters: data }));
-            console.log(data)
         } catch (error) {
-            console.log(error.message)
             dispatch(wfarSemestersActions.retrieveFail({ error: error.message }));
         }
     }
 }
 
 export const submitWfar = (id, weekNo) => {
-    console.log("hello");
 
     return async (dispatch, getState) => {
         let url = `/api/myWfar/submit/${id}/`;
 
-        console.log("hello2");
         try {
             dispatch(myWfarSubmissionActions.sendRequest());
 
@@ -395,7 +385,6 @@ export const createWfarEntry = (wfarId, weekNo, entry, formDataImages) => {
             });
 
             const uploadData = await response2.json();
-            console.log(uploadData);
 
             if (!response2.ok) {
                 const data = await response2.json();
@@ -403,7 +392,6 @@ export const createWfarEntry = (wfarId, weekNo, entry, formDataImages) => {
                 throw new Error(errorMessage);
             }
 
-            console.log(data);
         } catch (error) {
             dispatch(myWfarEntryCreateActions.requestFailed({ error: error.message }));
         }
@@ -449,7 +437,6 @@ export const updateWfarEntry = (wfarEntryId, entry, formDataImages) => {
             });
 
             const uploadData = await response2.json();
-            console.log(uploadData);
 
             if (!response2.ok) {
                 const data = await response2.json();
@@ -457,7 +444,6 @@ export const updateWfarEntry = (wfarEntryId, entry, formDataImages) => {
                 throw new Error(errorMessage);
             }
 
-            console.log(data);
         } catch (error) {
             dispatch(myWfarEntryUpdateActions.requestFailed({ error: error.message }));
         }
@@ -495,7 +481,7 @@ export const fetchWfarEntry = (id) => {
             dispatch(myWfarFetchEntryActions.retrieveSuccessfully({entry: data}));
             dispatch(myWfarRefreshActions.alertNewChange());
 
-            console.log(data);
+
         } catch (error) {
             dispatch(myWfarFetchEntryActions.retrieveFail({ error: error.message }));
         }
