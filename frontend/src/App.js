@@ -44,8 +44,10 @@ function App() {
 
   // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    if (userInfo) {
-      dispatch(createWfar());
+    if (userInfo !== null) {
+      if (userInfo.is_staff == 0) {
+        dispatch(createWfar());
+      }
     }
   }, [userInfo, dispatch]);
 

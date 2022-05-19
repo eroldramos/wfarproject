@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from yaml import serialize
 from core.serializers import WfarEntryAttachmentSerializer
 from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
-from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead
+from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead, IsAuthenticatedAndNotAdmin
 from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -91,7 +91,7 @@ class RetrieveArchivedMyWfarEntries(APIView):
 # ---------------------------------------------- CRUD
 
 class CreateWfar(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedAndNotAdmin]
 
     def post(self, request):
 
