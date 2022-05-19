@@ -3,12 +3,6 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import SmallButton from "../UI/FormControl/Button/SmallButton"
 import useValidateInput from "../../hooks/useValidateInput";
-<<<<<<< HEAD
-import Swal from "sweetalert2";
-import axios from "axios";
-// import Pic
-
-=======
 import Pic from "../Account/img/profpic.jpg";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import axios from 'axios';
@@ -16,7 +10,6 @@ import Modal from "../UI/Modal/Modal";
 import InputField from "../UI/FormControl/InputField/InputField";
 import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
 import Button from "../UI/FormControl/Button/ModalButton";
->>>>>>> 5ac30cb713e47229cbf1ed59bd7b913f9dc29159
 const UserProfile = () =>{
     const CIVIL_STATUS = [
         { label: "Please Select Civil Status", value: "" },
