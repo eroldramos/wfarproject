@@ -133,7 +133,7 @@ const AreaChair = () => {
           </div>
         </li>
 
-        {listFaculty.length === 0 && <p>Not Found</p>}
+        {listFaculty.length === 0 && <p className={styles["no-data-text"]}>No Area Chair Found</p>}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows

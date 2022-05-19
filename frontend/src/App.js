@@ -27,6 +27,8 @@ import Login from "./components/Login_Register/UserLogin";
 import Register from "./components/Login_Register/UserRegister";
 import LandingPage from "./components/Login_Register/LandingPage";
 import { useSelector } from "react-redux";
+import ViewEntryModal from "./components/MySubmission/ViewEntryModal/ViewEntryModal";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -42,12 +44,16 @@ function App() {
   const loggedUser = useSelector((state) => state.login);
   const { error, isLoading, userInfo } = loggedUser;
 
-  // patulong na lang po magdetermined kung naka-login na ba o hindi, saka po natin i-run 'yung use effect
   useEffect(() => {
-    if (userInfo) {
-      dispatch(createWfar());
+    if (userInfo != null) {
+      console.log(userInfo);
+      if (!userInfo.c) {
+        dispatch(createWfar());
+      }
     }
-  }, [userInfo, dispatch]);
+
+    console.log("hello!");
+  }, [userInfo]);
 
   return (
     <div className="for-login-container">
@@ -108,6 +114,10 @@ function App() {
           <Route
             path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
             element={<EditEntry />}
+          ></Route>
+          <Route
+            path="/ViewEntryModal"
+            element={<ViewEntryModal />}
           ></Route>
 
           {/* AUTHENTICATION ROUTES */}

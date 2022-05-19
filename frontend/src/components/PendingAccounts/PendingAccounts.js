@@ -324,7 +324,7 @@ const PendingAccounts = () => {
         {success && <p>{success}</p>}
         {isLoading && <p>Loading</p>}
         {error && <p>{error}</p>}
-        {listPendingAccounts.length === 0 && <p>Not Found</p>}
+        {listPendingAccounts.length === 0 && <p className={styles["no-pending-text"]}>No Pending Faculties</p>}
         {listPendingAccounts &&
           listPendingAccounts.map((data, index) => (
             <PendingRows

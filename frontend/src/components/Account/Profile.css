@@ -4,7 +4,7 @@
   }
 
   .container{
-    padding-top: 1px;
+    margin-left: 20px;
   }
   .pic{
    width: 250px;
@@ -12,23 +12,58 @@
    background-size: cover;
    display: block;
    border-radius: 125px;
-   cursor: pointer;
+   margin-left: 48px;
+  cursor: pointer !important;
+  }
+  .profilepic{
+    position: relative;
+    top: 60px;
+    padding-left: 30px;
+    z-index: 5 !important;
   }
   .Profile-head{
     position: relative;
-    bottom: 200px;
-    padding-left: 300px;
-    
+    bottom: 190px;
+    margin-top: 1px;
+    padding-left: 380px;
   }
   .DATADETAILS{
-    font-style: bold;
+    font-weight: bold;
     color: black;
+    margin-left: 60px;
+    font-size: 20px;
+
   }
   .Pdata{
-    padding-left: 60px;
+    margin-left: 10px;
+    text-align: right;
+  }
+  .PERSONALDATA{
+    margin-left: 99px;
+  }
+  .CONTACTINFO{
+    margin-left: 91px;
+  }
+  .SPECIALIZATION{
+    margin-left: 125px;
+  }
+  .EMP_POSITION{
+    position: relative;
+    top: 30px;
+    padding-right: 70%;
+    line-height: 30%;
+  }
+  .EMPPOS{
+    margin-left: 20px;
+    font-size: 22px;
+    font-weight: bolder;
+    text-align: center;
+
   }
   .userinput{
     font-style: bold;
+    margin-left: 40px;
+
   }
 
 .HEADER{
@@ -59,9 +94,13 @@ tr:nth-child(even) {
   background-color: #FFFFFF !important;
 }
 
-.upploadpic{
-  
-    margin: 200px;
-    padding: 2.8rem;
+.SideButtons{
+  position: relative;
+  bottom: 50px;
+  width: 100%;
+  padding-left: 1000px;
 }
-
+.ChangePicButton{
+  margin-top: 65px;
+  margin-left: 75px;
+}

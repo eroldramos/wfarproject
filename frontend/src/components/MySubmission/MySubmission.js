@@ -87,7 +87,7 @@ const MySubmission = (props) => {
 
     return (
         <Fragment>
-            <h1>My Weekly gagagasFaculty Accomplishment Reports</h1>
+            <h1>My Weekly Faculty Accomplishment Reports</h1>
             <SemesterDropdownField
                 id="semester"
                 name="semester"
