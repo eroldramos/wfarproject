@@ -37,18 +37,8 @@ const UnassignedFaculty = (props) => {
   }, [unassignedFaculties]);
 
   const icon = (
-    <svg
-      width="19"
-      height="13"
-      viewBox="0 0 19 13"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M10.2917 3.33334C10.2917 1.58376 8.87466 0.166672 7.12508 0.166672C5.3755 0.166672 3.95841 1.58376 3.95841 3.33334C3.95841 5.08292 5.3755 6.5 7.12508 6.5C8.87466 6.5 10.2917 5.08292 10.2917 3.33334ZM11.8751 4.91667V6.5H14.2501V8.875H15.8334V6.5H18.2084V4.91667H15.8334V2.54167H14.2501V4.91667H11.8751ZM0.791748 11.25V12.8333H13.4584V11.25C13.4584 9.14417 9.23883 8.08334 7.12508 8.08334C5.01133 8.08334 0.791748 9.14417 0.791748 11.25Z"
-        fill="#BE5A40"
-      />
-    </svg>
+    <svg width="17" height="17" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 4C6.5 2.895 5.605 2 4.5 2C3.395 2 2.5 2.895 2.5 4C2.5 5.105 3.395 6 4.5 6C5.605 6 6.5 5.105 6.5 4ZM7.5 5V6H9V7.5H10V6H11.5V5H10V3.5H9V5H7.5ZM0.5 9V10H8.5V9C8.5 7.67 5.835 7 4.5 7C3.165 7 0.5 7.67 0.5 9Z" fill="white"></path></svg>
+
   );
   const [listFaculties, setListFaculties] = useState([
     {
@@ -222,7 +212,7 @@ const UnassignedFaculty = (props) => {
             </div>
           </div>
         </li>
-        {listFaculties.length === 0 && <p>Not Found</p>}
+        {listFaculties.length === 0 && <p className={table["no-data-text"]}>No data Found</p>}
         {listFaculties &&
           listFaculties.map((data, index) => (
             <Rows

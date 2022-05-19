@@ -78,9 +78,8 @@
 }
 .icon-container {
   position: absolute;
-  right: 55px;
-  top: 240px;
-  /* border: 1px solid black; */
+  right: 40px;
+  top: 177px;
 }
 .no-data-text{
   text-align: center;
