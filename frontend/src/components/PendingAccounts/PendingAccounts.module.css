@@ -1,10 +1,19 @@
 .container {
   margin-top: 30px;
 }
+.paginator-container{
+  display: flex;
+  text-align: center;
+  border: 1px solid black;
+  margin-top: 5px;
+}
 .search-field-container,
 .modal-right-button,
 .paginator-container {
   float: right;
+}
+.export-container{
+  /* border: 1px solid black; */
 }
 .small-btn-container,
 .modal-left-button,
@@ -24,7 +33,22 @@
 }
 .bottom-box-container {
   background-color: #f8f8fa;
-  padding: 1rem;
   border: 1px solid #ebecee;
-  border-radius: 20px;
+  border-radius: 5px;
+  padding: 5px 5px;
+  border: 1px solid black;
+}
+.no-pending-text{
+  text-align: center;
+  font-size: 20px;
+  padding: 30px 0;
+  margin: 0;
+  font-weight: 600;
+  color: #777777;
+  
+  border: 1px solid #ebecee;
+  border-top: none;
+  
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

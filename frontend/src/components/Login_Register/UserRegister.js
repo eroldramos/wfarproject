@@ -15,6 +15,8 @@ import SmallButton from "../UI/FormControl/Button/SmallButton";
 import DateField from "../UI/FormControl/DateField/DateField";
 import { register } from "../../store/authActions";
 const Register = (props) => {
+
+  
   const dispatch = useDispatch(); //use to call actions
   let navigate = useNavigate(); //use to navigate urls
 
@@ -24,8 +26,10 @@ const Register = (props) => {
   useEffect(() => {
     if (success) {
       // if userInfo is null, can't be login
-      navigate("/dummydashboard");
+      console.log(success);
+      navigate("/");
     }
+    success = false;
   }, [navigate, success]);
 
   const GENDERS = [
@@ -100,7 +104,8 @@ const Register = (props) => {
     dispatch(register(registrationObj));
   };
 
-  const onNavigateToLogin = () => {  
+  const onNavigateToLogin = () => { 
+    localStorage.setItem("initialReload", "true"); 
     navigate("/");
   };
 
@@ -204,6 +209,9 @@ const Register = (props) => {
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
+  }
+  function onlyNumbersAndPlusSign(str){
+    return /^[0-9+]+$/.test(str);
   }
   let employeeNoErrorMessage = "";
   if (
@@ -353,10 +361,10 @@ const Register = (props) => {
     inputBlurHandler: zipCodeBlurHandler,
     reset: resetZipCode,
   } = useValidateInput(
-    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+    (value) => value.trim() !== "" && onlyNumbersAndPlusSign(value.trim())
   );
 
-  // House No Validations
+  // Contact No Validations
   const {
     value: enteredContactNo,
     isValid: enteredContactNoIsValid,
@@ -374,7 +382,7 @@ const Register = (props) => {
     inLoadClassForAnimation = "register-form-delay";
     console.log(inLoadClassForAnimation);
   }
-  localStorage.setItem("initialReload", "true");
+  
   return (
     <Fragment>
       <div className={styles["register-form-container"] + " " + styles[inLoadClassForAnimation]}>
@@ -393,6 +401,9 @@ const Register = (props) => {
             <p>Please create an account to continue</p>
           </div>
 
+          <div className={styles["error-handler-container"]}>
+            {error && error.map((err, index) => <p >{error[index]}</p>)}
+          </div>
           <form
             className={styles["form-container"]}
             action=""
@@ -467,7 +478,6 @@ const Register = (props) => {
                   // noLabel = "no-label-input"
                   custom="form-control-custom"
                   labelMargin="nm"
-                  noLabel="no-label-input"
                 />
                 {/* <label for="">Middle Name</label>
                             <input type="text" placeholder="Middle Name"/> */}

@@ -54,7 +54,7 @@ const Login = () => {
   // to remove animation in changing from login to reg vice versa
   
   const onNavigateToSignUp = () => {
-    
+    localStorage.setItem("initialReload", "true");
     navigate("/register");
   };
   
@@ -70,10 +70,9 @@ const Login = () => {
     inLoadClassForAnimation = "login-form-delay";
   }
 
-  localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["login-form-container"] + " " + styles[inLoadClassForAnimation]} onLoad>
+      <div className={styles["login-form-container"] + " " + styles[inLoadClassForAnimation]}>
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>
@@ -89,7 +88,6 @@ const Login = () => {
             <p>Please login to your account</p>
           </div>
           {error && <p className={styles["error"]}>{error}</p>}
-          {isLoading && <p>loading...</p>}
           <form
             className={styles["form-container"]}
             action=""
