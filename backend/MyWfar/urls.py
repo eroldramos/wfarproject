@@ -15,4 +15,7 @@ urlpatterns =[
     path('myWfar/entry/unarchive/<str:pk>/', views.UnarchiveWfarEntry.as_view(), name='myWfar_unarchive'),
     path('myWfar/entry/<str:pk>/', views.RetrieveWfarEntry.as_view(), name='myWfar_entry_view'),
     path('myWfar/getImage/<str:pk>/', views.GetImage.as_view(), name='myWfar_image'),
+    path('myWfar/getImage/<str:pk>/', views.GetImage.as_view(), name='myWfar_image'),
+    # path('myWfar/semester=<str:semester_id>/sort=<str:sort>/print',
+    #      views.PrintWFAROverviewPDF.as_view(), name='printFilter1'),
 ]

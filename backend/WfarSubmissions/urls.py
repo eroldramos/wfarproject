@@ -8,4 +8,6 @@ urlpatterns = [
          views.RetrieveFacultyWFAR.as_view(), name='wfar_faculty_overview'),
     path('wfar/overview/semester=<str:semester_id>/sort=<str:sort>/print',
          views.PrintWFAROverviewPDF.as_view(), name='printFilter1'),
+    path('wfar/individual/print',
+         views.PrintWFARIndividualPDF.as_view(), name='printIndividual'),
 ]
