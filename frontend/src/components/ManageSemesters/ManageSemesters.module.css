@@ -1,10 +1,13 @@
 .add-sem-btn-container {
   float: right;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
+
 .clearfix {
   clear: both;
 }
+
 .semester-list-container {
   margin-top: 30px;
+  /* position: relative; */
 }
