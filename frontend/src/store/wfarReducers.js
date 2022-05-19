@@ -62,5 +62,32 @@ export const wfarPrintOverviewReducer = createSlice({
 });
 
 
+export const wfarActiveSemesterReducer = createSlice({
+    name: "wfarActiveSemesterReducer",
+    initialState: {
+        isLoading: true,
+        semester: null,
+        error: null
+    },
+    reducers: {
+        retrieveRequest(state, action) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        retrieveSuccessfully(state, action) {
+            state.isLoading = false;
+            state.semester = action.payload.semester;
+            state.error = null;
+        },
+        requestFail(state, action) {
+            state.isLoading = false;
+            state.error = action.payload.error;
+        }
+    }
+});
+
+
+
 export const wfarRetrieveOverviewActions = wfarRetrieveOverviewReducer.actions;
 export const wfarPrintOverviewActions = wfarPrintOverviewReducer.actions;
+export const wfarActiveSemesterActions = wfarActiveSemesterReducer.actions;

@@ -1,7 +1,8 @@
 import SemesterFilter from "../components/FacultySubmissions/SemesterFilter/SemesterFilter";
 import {
     wfarRetrieveOverviewActions,
-    wfarPrintOverviewActions
+    wfarPrintOverviewActions,
+    wfarActiveSemesterActions
 } from "./wfarReducers";
 // import axios from 'axios'
 
@@ -104,3 +105,48 @@ export const printWfarsOverview = (filterSemester, filterSort) => {
     }
 }
 
+export const retrieveActiveSemester = () => {
+    return async (dispatch, getState) => {
+        // let url = `http://127.0.0.1:8000/api/wfar/retrieveWfarOverview/semester=${filterSemester}/page=${filterPage}`;
+
+        let url = `/api/retrieve-active-sem/`;
+
+        try {
+            dispatch(wfarActiveSemesterActions.retrieveRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            console.log("user info " + userInfo.token);
+            if (!response.ok) {
+                console.log("error encountered here");
+                const data = await response.json();
+                console.log("error encountered here2");
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            dispatch(wfarActiveSemesterActions.retrieveSuccessfully({
+                semester: data
+            }));
+
+            console.log(data);
+
+        } catch (error) {
+            console.log("error encountered here3");
+            console.log(error.message)
+            dispatch(wfarActiveSemesterActions.retrieveFail({ error: error.message }));
+        }
+    }
+}
