@@ -2,6 +2,9 @@ import styles from "./UserProfile.module.css"
 import React, { Fragment, useState, useEffect } from "react";
 import SmallButton from "../UI/FormControl/Button/SmallButton"
 import useValidateInput from "../../hooks/useValidateInput";
+import Swal from "sweetalert2";
+import axios from "axios";
+// import Pic
 
 const UserProfile = () =>{
 
