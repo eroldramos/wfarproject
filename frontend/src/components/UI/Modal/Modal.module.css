@@ -8,17 +8,19 @@
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+.scrollable-area{
+  padding: 1rem;
+  overflow-y: scroll;
+  min-height: 100px;
+  max-height: 450px;
+}
 .modal {
   position: fixed;
   top: 20vh;
-  overflow-y: scroll;
+  padding: .5rem;
   left: 25%;
   width: 50%;
   background-color: white;
-  padding: 1.5rem;
-  /* James eto changes mo */
-  /* padding: 2.8rem; */
-  /* bottom: 10vh; */
   border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
@@ -26,12 +28,12 @@
   /* overflow-y: scroll;
   border: 5px solid blue; */
 }
-.modal::-webkit-scrollbar {
+.scrollable-area::-webkit-scrollbar {
   width: 5px;
   height: 10px;
   /* border: 1px solid black; */
 }
-.modal::-webkit-scrollbar-thumb {
+.scrollable-area::-webkit-scrollbar-thumb {
   background: #c4c4c4;
   border-radius: 5px;
 }
@@ -49,7 +51,13 @@
     left: calc(60% - 25rem);
     min-height: 100px;
     max-height: 500px;
-    overflow-y: scroll;
+  }
+  .modal.m-long-height {
+    width: 30rem;
+    left: calc(60% - 25rem);
+    min-height: 100px;
+    max-height: 500px;
+    top: 10vh;
   }
   .modal.long-height{
     top: 10vh;
