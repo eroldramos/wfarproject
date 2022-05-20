@@ -2,6 +2,7 @@ from asyncio.log import logger
 from email.policy import HTTP
 from re import I
 from django.shortcuts import render
+import datetime
 
 from core.models import Faculty
 from rest_framework import status
@@ -62,5 +63,15 @@ class EditProfilePic(APIView):
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
         user.profile_picture = request.FILES['profile_picture']
+        user.save()
+        return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+
+
+class DeleteAccount(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        user = Faculty.objects.get(pk=pk)
+        user.deleted_at = datetime.datetime.now()
         user.save()
         return Response({"detail": "Edited"}, status=status.HTTP_200_OK)

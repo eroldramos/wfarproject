@@ -10,7 +10,14 @@ import Modal from "../UI/Modal/Modal";
 import InputField from "../UI/FormControl/InputField/InputField";
 import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownField";
 import Button from "../UI/FormControl/Button/ModalButton";
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/authActions";
+
 const UserProfile = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const CIVIL_STATUS = [
     { label: "Please Select Civil Status", value: "" },
     { label: "Married", value: 1 },
@@ -58,6 +65,35 @@ const UserProfile = () => {
   const [isOpen, setIsopen] = useState(false)
   const onClose = () => {
     setIsopen(false)
+  }
+  const constaccountDeleteSwal = () => {
+    Swal.fire({
+      title: 'Delete your Account?',
+      text: 'Enter your password to delete the account',
+      icon: 'warning',
+      confirmButtonText: 'OK', showConfirmButton: true,
+      input: 'password',
+      showLoaderOnConfirm: true,
+      preConfirm: (login) => {
+        //delete
+        Swal.fire({
+          title: 'Account Delete',
+          text: 'You will now be redirected to the login page',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          timer: 3000,
+          timerProgressBar: true,
+        }).then((result) => {
+          axios({
+            method: 'POST',
+            url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
+            data: {}
+          });
+          dispatch(logout());
+          navigate('/');
+        });
+      },
+    });
   }
 
   const [passisOpen, passsetIsopen] = useState(false)
@@ -256,6 +292,7 @@ const UserProfile = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
+    setEnteredValue: setEnteredPassword
   } = useValidateInput(
     (value) =>
       value !== "" &&
@@ -365,34 +402,25 @@ const UserProfile = () => {
     if (enteredPasswordIsValid &&
       enteredConfirmPasswordIsValid
     ) {
-      if (enteredCurrentPassword === currentPass) {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Password has been updated',
-          icon: 'success',
-          confirmButtonText: 'OK', showConfirmButton: true,
-          timer: 3000,
-          timerProgressBar: true,
-          allowOutsideClick: false,
-        }).then((result) => {
-          window.location.reload(false);
-        });
-        let data = {
-          password: enteredPassword
-        }
-        axios({
-          method: 'POST',
-          url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
-          data: data
-        });
-      } else {
-        Swal.fire({
-          title: 'Incorrect Password',
-          text: 'Please type your current password on the field provided',
-          icon: 'error',
-          confirmButtonText: 'OK',
-        });
+      Swal.fire({
+        title: 'Success!',
+        text: 'Password has been updated',
+        icon: 'success',
+        confirmButtonText: 'OK', showConfirmButton: true,
+        timer: 3000,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+      }).then((result) => {
+        window.location.reload(false);
+      });
+      let data = {
+        password: enteredPassword
       }
+      axios({
+        method: 'POST',
+        url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
+        data: data
+      });
     }
   }
 
@@ -427,7 +455,7 @@ const UserProfile = () => {
             <input id="input_file" type="file" onChange={(evt) => HandleProfileChange(evt)} accept={'image/*'} style={{ display: 'none' }} />
             <img id="get_file" src={profile_pic == null ? Pic : profile_pic} alt="pic" onClick={() => OpenProfileChange()} />
           </div>
-          <h3>Admin 123</h3>
+          <h3>{state.map((item) => item.username)}</h3>
           <h3>Username</h3>
         </div>
       </div>
@@ -441,6 +469,11 @@ const UserProfile = () => {
           <SmallButton
             onClick={() => passsetIsopen(true)}
             label="Change Password"
+            type="primary"
+            size="xs" />
+          <SmallButton
+            onClick={() => constaccountDeleteSwal()}
+            label="Delete account"
             type="primary"
             size="xs" />
           {isOpen && <Modal onClose={onClose} size="m-long-height">
