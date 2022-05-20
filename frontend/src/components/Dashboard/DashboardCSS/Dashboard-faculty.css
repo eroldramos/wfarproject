@@ -32,8 +32,8 @@
 .dashboard-faculty .main-container {
     display: grid;
     margin-right: 2px;
-    /* margin-top: -25px; */
-    margin-top: -15px;
+    margin-top: -25px;
+    /* margin-top: -15px; */
 
     height: 90vh;
     grid-template-columns: 1.35fr .65fr .87fr;
@@ -59,7 +59,7 @@
     align-items: center;
     grid-area: notifications;
     margin-left: 21px;
-    min-width: max-content;
+    /* min-width: max-content; */
 
 }
 
@@ -93,6 +93,7 @@
 .dashboard-faculty .greetings p {
     margin: 3px;
     font-weight: 600;
+    font-size: 1vw;
 }
 
 .dashboard-faculty .greetings p {
@@ -107,7 +108,7 @@
     grid-area: total-submission-container;
     grid-template-rows: 1fr 1fr;
     grid-gap: 1em;
-    min-width: 270px;
+    /* min-width: 270px; */
 }
 
 .dashboard-faculty .total-submission-container .info p {
@@ -160,7 +161,7 @@
     background-size: cover;
     position: relative;
 
-    min-width: 500px;
+    /* min-width: 500px; */
 }
 
 .dashboard-faculty .current-week-main-container .current-semester {
@@ -188,7 +189,7 @@
     font-size: 50px;
     letter-spacing: 0.245em;
 
-    min-width: max-content;
+    /* min-width: max-content; */
 }
 
 .dashboard-faculty .current-week-main-container .current-week-container p:nth-child(2) {
@@ -237,7 +238,7 @@
 .dashboard-faculty .management-container {
     grid-area: management-container;
     display: grid;
-    grid-template-rows: .2fr 7fr;
+    grid-template-rows: .1fr 7fr;
     grid-gap: 1em;
     margin-left: 21px;
 }
@@ -250,6 +251,8 @@
 .dashboard-faculty .revision-container {
     padding: 15px 18px;
     overflow-y: auto;
+    height: 550px;
+    
 }
 
 .dashboard-faculty .revision-instance {
