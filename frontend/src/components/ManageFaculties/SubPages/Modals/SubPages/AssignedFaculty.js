@@ -39,18 +39,10 @@ const AssignedFaculty = (props) => {
   }, [assigned_faculties, assignedIsLoading]);
 
   const icon = (
-    <svg
-      width="18"
-      height="13"
-      viewBox="0 0 18 13"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M10.0833 3.33335C10.0833 1.58377 8.66617 0.166687 6.91658 0.166687C5.167 0.166687 3.74992 1.58377 3.74992 3.33335C3.74992 5.08294 5.167 6.50002 6.91658 6.50002C8.66617 6.50002 10.0833 5.08294 10.0833 3.33335ZM12.4583 4.91669V6.50002H17.2083V4.91669H12.4583ZM0.583252 11.25V12.8333H13.2499V11.25C13.2499 9.14418 9.03033 8.08335 6.91658 8.08335C4.80283 8.08335 0.583252 9.14418 0.583252 11.25Z"
-        fill="#BE5A40"
-      />
-    </svg>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M6.5 4C6.5 2.895 5.605 2 4.5 2C3.395 2 2.5 2.895 2.5 4C2.5 5.105 3.395 6 4.5 6C5.605 6 6.5 5.105 6.5 4ZM7.5 5V6H9V7.5H10V6H11.5V5H10V3.5H9V5H7.5ZM0.5 9V10H8.5V9C8.5 7.67 5.835 7 4.5 7C3.165 7 0.5 7.67 0.5 9Z" fill="white"/>
+</svg>
+
   );
   const [listFaculties, setListFaculties] = useState([
     {
