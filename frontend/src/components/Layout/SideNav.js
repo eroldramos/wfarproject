@@ -222,35 +222,33 @@ const SideNav = (props) => {
               <span className="nav-open-text">Manage Semesters</span>
             </li>
           )}
-          {!userInfo.isAdmin && userInfo.userType != 1 && (
-            <li
-              className={`nav-menu-item ${
-                window.location.pathname == "/facultySubmission/" ||
-                window.location.pathname == "/facultySubmission/overview" ||
-                window.location.pathname == "/facultySubmission/weekly-view"
-                  ? "nav-menu-item--active"
-                  : ""
-              }`}
-              onClick={onNavigateToFacultySubmission}
-              title="Faculty Submissions"
+          <li
+            className={`nav-menu-item ${
+              window.location.pathname == "/facultySubmission/" ||
+              window.location.pathname == "/facultySubmission/overview" ||
+              window.location.pathname == "/facultySubmission/weekly-view"
+                ? "nav-menu-item--active"
+                : ""
+            }`}
+            onClick={onNavigateToFacultySubmission}
+            title="Faculty Submissions"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M2.22227 17.778H17.7777V2.22252H2.22227V17.778ZM17.7777 0C19.0056 0 20 0.994436 20 2.22227V17.7777C20 19.0056 19.0056 20 17.7777 20H2.22227C0.994436 20 0 19.0056 0 17.7777V2.22227C0 0.994436 0.994436 0 2.22227 0L17.7777 0ZM9.99982 16.6669C10.6142 16.6669 11.1109 16.1703 11.1109 15.5557V7.77781C11.1109 7.16451 10.6142 6.66676 9.99982 6.66676C9.38542 6.66676 8.88878 7.16455 8.88878 7.77781V15.5557C8.88878 16.1703 9.38542 16.6669 9.99982 16.6669ZM14.4445 16.6669C15.0589 16.6669 15.5555 16.1703 15.5555 15.5557V5.55565C15.5555 4.94236 15.0589 4.4446 14.4445 4.4446C13.83 4.4446 13.3333 4.94239 13.3333 5.55565V15.5557C13.3333 16.1703 13.83 16.6669 14.4445 16.6669ZM5.5555 16.6669C6.17004 16.6669 6.66669 16.1703 6.66669 15.5557V10.0003C6.66669 9.38703 6.17004 8.88928 5.5555 8.88928C4.94111 8.88928 4.44446 9.38707 4.44446 10.0003V15.5557C4.44446 16.1703 4.94111 16.6669 5.5555 16.6669Z"
-                  fill="white"
-                />
-              </svg>
-              <span className="nav-open-text">Faculty Submissions</span>
-            </li>
-          )}
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M2.22227 17.778H17.7777V2.22252H2.22227V17.778ZM17.7777 0C19.0056 0 20 0.994436 20 2.22227V17.7777C20 19.0056 19.0056 20 17.7777 20H2.22227C0.994436 20 0 19.0056 0 17.7777V2.22227C0 0.994436 0.994436 0 2.22227 0L17.7777 0ZM9.99982 16.6669C10.6142 16.6669 11.1109 16.1703 11.1109 15.5557V7.77781C11.1109 7.16451 10.6142 6.66676 9.99982 6.66676C9.38542 6.66676 8.88878 7.16455 8.88878 7.77781V15.5557C8.88878 16.1703 9.38542 16.6669 9.99982 16.6669ZM14.4445 16.6669C15.0589 16.6669 15.5555 16.1703 15.5555 15.5557V5.55565C15.5555 4.94236 15.0589 4.4446 14.4445 4.4446C13.83 4.4446 13.3333 4.94239 13.3333 5.55565V15.5557C13.3333 16.1703 13.83 16.6669 14.4445 16.6669ZM5.5555 16.6669C6.17004 16.6669 6.66669 16.1703 6.66669 15.5557V10.0003C6.66669 9.38703 6.17004 8.88928 5.5555 8.88928C4.94111 8.88928 4.44446 9.38707 4.44446 10.0003V15.5557C4.44446 16.1703 4.94111 16.6669 5.5555 16.6669Z"
+                fill="white"
+              />
+            </svg>
+            <span className="nav-open-text">Faculty Submissions</span>
+          </li>
           {!userInfo.isAdmin && (
             <li
               className={`nav-menu-item ${
@@ -294,56 +292,52 @@ const SideNav = (props) => {
               <span className="nav-open-text">My Submissions</span>
             </li>
           )}
-          {!userInfo.isAdmin && userInfo.userType != 1 && (
-            <li
-              className={`nav-menu-item ${
-                window.location.pathname == "/manage-faculty/department-head/"
-                  ? "nav-menu-item--active"
-                  : ""
-              }`}
-              onClick={onNavigateToManageFaculties}
-              title="Manage Faculties"
+          <li
+            className={`nav-menu-item ${
+              window.location.pathname == "/manage-faculty/department-head/"
+                ? "nav-menu-item--active"
+                : ""
+            }`}
+            onClick={onNavigateToManageFaculties}
+            title="Manage Faculties"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 4.90757V2.87053C10 1.75016 9.1 0.833496 8 0.833496H2C0.9 0.833496 0 1.75016 0 2.87053V17.1298C0 18.2502 0.9 19.1668 2 19.1668H18C19.1 19.1668 20 18.2502 20 17.1298V6.94461C20 5.82424 19.1 4.90757 18 4.90757H10ZM4 17.1298H2V15.0928H4V17.1298ZM4 13.0557H2V11.0187H4V13.0557ZM4 8.98164H2V6.94461H4V8.98164ZM4 4.90757H2V2.87053H4V4.90757ZM8 17.1298H6V15.0928H8V17.1298ZM8 13.0557H6V11.0187H8V13.0557ZM8 8.98164H6V6.94461H8V8.98164ZM8 4.90757H6V2.87053H8V4.90757ZM17 17.1298H10V15.0928H12V13.0557H10V11.0187H12V8.98164H10V6.94461H17C17.55 6.94461 18 7.40294 18 7.96313V16.1113C18 16.6715 17.55 17.1298 17 17.1298ZM16 8.98164H14V11.0187H16V8.98164ZM16 13.0557H14V15.0928H16V13.0557Z"
-                  fill="white"
-                />
-              </svg>
-              <span className="nav-open-text">Manage Faculties</span>
-            </li>
-          )}
-          {!userInfo.isAdmin && userInfo.userType != 1 && (
-            <li
-              className={`nav-menu-item ${
-                window.location.pathname == "/pending-accounts/"
-                  ? "nav-menu-item--active"
-                  : ""
-              }`}
-              onClick={onNavigateToPendingAccounts}
-              title="Pending Accounts"
+              <path
+                d="M10 4.90757V2.87053C10 1.75016 9.1 0.833496 8 0.833496H2C0.9 0.833496 0 1.75016 0 2.87053V17.1298C0 18.2502 0.9 19.1668 2 19.1668H18C19.1 19.1668 20 18.2502 20 17.1298V6.94461C20 5.82424 19.1 4.90757 18 4.90757H10ZM4 17.1298H2V15.0928H4V17.1298ZM4 13.0557H2V11.0187H4V13.0557ZM4 8.98164H2V6.94461H4V8.98164ZM4 4.90757H2V2.87053H4V4.90757ZM8 17.1298H6V15.0928H8V17.1298ZM8 13.0557H6V11.0187H8V13.0557ZM8 8.98164H6V6.94461H8V8.98164ZM8 4.90757H6V2.87053H8V4.90757ZM17 17.1298H10V15.0928H12V13.0557H10V11.0187H12V8.98164H10V6.94461H17C17.55 6.94461 18 7.40294 18 7.96313V16.1113C18 16.6715 17.55 17.1298 17 17.1298ZM16 8.98164H14V11.0187H16V8.98164ZM16 13.0557H14V15.0928H16V13.0557Z"
+                fill="white"
+              />
+            </svg>
+            <span className="nav-open-text">Manage Faculties</span>
+          </li>
+          <li
+            className={`nav-menu-item ${
+              window.location.pathname == "/pending-accounts/"
+                ? "nav-menu-item--active"
+                : ""
+            }`}
+            onClick={onNavigateToPendingAccounts}
+            title="Pending Accounts"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 10.625C11.3583 10.625 12.5583 10.95 13.5333 11.375C14.4333 11.775 15 12.675 15 13.65V14.1667C15 14.625 14.625 15 14.1667 15H5.83333C5.375 15 5 14.625 5 14.1667V13.6583C5 12.675 5.56667 11.775 6.46667 11.3833C7.44167 10.95 8.64167 10.625 10 10.625ZM3.33333 10.8333C4.25 10.8333 5 10.0833 5 9.16667C5 8.25 4.25 7.5 3.33333 7.5C2.41667 7.5 1.66667 8.25 1.66667 9.16667C1.66667 10.0833 2.41667 10.8333 3.33333 10.8333ZM4.275 11.75C3.96667 11.7 3.65833 11.6667 3.33333 11.6667C2.50833 11.6667 1.725 11.8417 1.01667 12.15C0.4 12.4167 0 13.0167 0 13.6917V14.1667C0 14.625 0.375 15 0.833333 15H3.75V13.6583C3.75 12.9667 3.94167 12.3167 4.275 11.75ZM16.6667 10.8333C17.5833 10.8333 18.3333 10.0833 18.3333 9.16667C18.3333 8.25 17.5833 7.5 16.6667 7.5C15.75 7.5 15 8.25 15 9.16667C15 10.0833 15.75 10.8333 16.6667 10.8333ZM20 13.6917C20 13.0167 19.6 12.4167 18.9833 12.15C18.275 11.8417 17.4917 11.6667 16.6667 11.6667C16.3417 11.6667 16.0333 11.7 15.725 11.75C16.0583 12.3167 16.25 12.9667 16.25 13.6583V15H19.1667C19.625 15 20 14.625 20 14.1667V13.6917ZM10 5C11.3833 5 12.5 6.11667 12.5 7.5C12.5 8.88333 11.3833 10 10 10C8.61667 10 7.5 8.88333 7.5 7.5C7.5 6.11667 8.61667 5 10 5Z"
-                  fill="white"
-                />
-              </svg>
-              <span className="nav-open-text">Pending Accounts</span>
-            </li>
-          )}
+              <path
+                d="M10 10.625C11.3583 10.625 12.5583 10.95 13.5333 11.375C14.4333 11.775 15 12.675 15 13.65V14.1667C15 14.625 14.625 15 14.1667 15H5.83333C5.375 15 5 14.625 5 14.1667V13.6583C5 12.675 5.56667 11.775 6.46667 11.3833C7.44167 10.95 8.64167 10.625 10 10.625ZM3.33333 10.8333C4.25 10.8333 5 10.0833 5 9.16667C5 8.25 4.25 7.5 3.33333 7.5C2.41667 7.5 1.66667 8.25 1.66667 9.16667C1.66667 10.0833 2.41667 10.8333 3.33333 10.8333ZM4.275 11.75C3.96667 11.7 3.65833 11.6667 3.33333 11.6667C2.50833 11.6667 1.725 11.8417 1.01667 12.15C0.4 12.4167 0 13.0167 0 13.6917V14.1667C0 14.625 0.375 15 0.833333 15H3.75V13.6583C3.75 12.9667 3.94167 12.3167 4.275 11.75ZM16.6667 10.8333C17.5833 10.8333 18.3333 10.0833 18.3333 9.16667C18.3333 8.25 17.5833 7.5 16.6667 7.5C15.75 7.5 15 8.25 15 9.16667C15 10.0833 15.75 10.8333 16.6667 10.8333ZM20 13.6917C20 13.0167 19.6 12.4167 18.9833 12.15C18.275 11.8417 17.4917 11.6667 16.6667 11.6667C16.3417 11.6667 16.0333 11.7 15.725 11.75C16.0583 12.3167 16.25 12.9667 16.25 13.6583V15H19.1667C19.625 15 20 14.625 20 14.1667V13.6917ZM10 5C11.3833 5 12.5 6.11667 12.5 7.5C12.5 8.88333 11.3833 10 10 10C8.61667 10 7.5 8.88333 7.5 7.5C7.5 6.11667 8.61667 5 10 5Z"
+                fill="white"
+              />
+            </svg>
+            <span className="nav-open-text">Pending Accounts</span>
+          </li>
         </ul>
 
         <div className="nav-footer">
