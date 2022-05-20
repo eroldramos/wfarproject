@@ -14,9 +14,10 @@ import CustomDropdownField from "../UI/FormControl/DropdownField/CustomDropdownF
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import DateField from "../UI/FormControl/DateField/DateField";
 import { register } from "../../store/authActions";
-const Register = (props) => {
 
-  
+import Swal from "sweetalert2";
+
+const Register = (props) => {
   const dispatch = useDispatch(); //use to call actions
   let navigate = useNavigate(); //use to navigate urls
 
@@ -27,7 +28,25 @@ const Register = (props) => {
     if (success) {
       // if userInfo is null, can't be login
       console.log(success);
-      navigate("/");
+
+      Swal.fire({
+        html:
+          "<h4>Account is on the process of validation!</h4>" +
+          "<h5>Account on process...</h5>",
+        icon: "warning",
+        showDenyButton: false,
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+        iconColor: "#D1D1D1", // question icon color
+        confirmButtonColor: "#BE5A40",
+        cancelButtonColor: "#A1A1A1",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/");
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     }
   }, [navigate, success]);
 
@@ -103,8 +122,8 @@ const Register = (props) => {
     dispatch(register(registrationObj));
   };
 
-  const onNavigateToLogin = () => { 
-    localStorage.setItem("initialReload", "true"); 
+  const onNavigateToLogin = () => {
+    localStorage.setItem("initialReload", "true");
     navigate("/");
   };
 
@@ -209,7 +228,7 @@ const Register = (props) => {
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
   }
-  function onlyNumbersAndPlusSign(str){
+  function onlyNumbersAndPlusSign(str) {
     return /^[0-9+]+$/.test(str);
   }
   let employeeNoErrorMessage = "";
@@ -375,16 +394,21 @@ const Register = (props) => {
     (value) => value.trim() !== "" && onlyNumbers(value.trim())
   );
 
-  
   let inLoadClassForAnimation = "";
-  if(localStorage.getItem("initialReload") == "true"){
+  if (localStorage.getItem("initialReload") == "true") {
     inLoadClassForAnimation = "register-form-delay";
     console.log(inLoadClassForAnimation);
   }
-  
+
   return (
     <Fragment>
-      <div className={styles["register-form-container"] + " " + styles[inLoadClassForAnimation]}>
+      <div
+        className={
+          styles["register-form-container"] +
+          " " +
+          styles[inLoadClassForAnimation]
+        }
+      >
         <div className={styles["register-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>
@@ -401,7 +425,7 @@ const Register = (props) => {
           </div>
 
           <div className={styles["error-handler-container"]}>
-            {error && error.map((err, index) => <p >{error[index]}</p>)}
+            {error && error.map((err, index) => <p>{error[index]}</p>)}
           </div>
           <form
             className={styles["form-container"]}

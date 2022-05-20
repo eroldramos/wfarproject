@@ -68,13 +68,12 @@ function App() {
             path="/WFARChecking/:id/"
             element={<WFARCheckingScreen />}
           ></Route>
-          {userInfo.isAdmin ||
-            (userInfo.userType > 1 && (
-              <Route
-                path="/FacultySubmission/*"
-                element={<FacultySubmissionScreen />}
-              ></Route>
-            ))}
+
+          <Route
+            path="/FacultySubmission/*"
+            element={<FacultySubmissionScreen />}
+          ></Route>
+
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
@@ -105,13 +104,11 @@ function App() {
             path="/edit-semester/:semId/"
             element={<EditSemesterScreen />}
           ></Route>
-          {userInfo.isAdmin ||
-            (userInfo.userType > 1 && (
-              <Route
-                path="/pending-accounts/"
-                element={<PendingAccountsScreen />}
-              ></Route>
-            ))}
+
+          <Route
+            path="/pending-accounts/"
+            element={<PendingAccountsScreen />}
+          ></Route>
 
           <Route
             path="/mySubmission/wfar/:id/add-entry"
