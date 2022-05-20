@@ -68,10 +68,13 @@ function App() {
             path="/WFARChecking/:id/"
             element={<WFARCheckingScreen />}
           ></Route>
-          <Route
-            path="/FacultySubmission/*"
-            element={<FacultySubmissionScreen />}
-          ></Route>
+          {userInfo.isAdmin ||
+            (userInfo.userType > 1 && (
+              <Route
+                path="/FacultySubmission/*"
+                element={<FacultySubmissionScreen />}
+              ></Route>
+            ))}
           <Route path="/sample/*" element={<Sample />}></Route>
           {/* /sample/* asterisk means there are child or nested routes inside of that page or element */}
 
@@ -102,10 +105,14 @@ function App() {
             path="/edit-semester/:semId/"
             element={<EditSemesterScreen />}
           ></Route>
-          <Route
-            path="/pending-accounts/"
-            element={<PendingAccountsScreen />}
-          ></Route>
+          {userInfo.isAdmin ||
+            (userInfo.userType > 1 && (
+              <Route
+                path="/pending-accounts/"
+                element={<PendingAccountsScreen />}
+              ></Route>
+            ))}
+
           <Route
             path="/mySubmission/wfar/:id/add-entry"
             element={<AddEntry />}
@@ -118,17 +125,15 @@ function App() {
             path="/mySubmission/wfar/:wfar_id/week/:weekNo/edit-entry/:id"
             element={<EditEntry />}
           ></Route>
-          <Route
-            path="/ViewEntryModal"
-            element={<ViewEntryModal />}
-          ></Route>
-          <Route
-            path="/UserProfile"
-            element={<UserProfile />}
-          ></Route>
+          <Route path="/ViewEntryModal" element={<ViewEntryModal />}></Route>
+          <Route path="/UserProfile" element={<UserProfile />}></Route>
 
           {/* AUTHENTICATION ROUTES */}
           <Route path="/*" element={<LandingPage />} />
+
+          {/* <Route path="*">
+            <p>Not Found</p>
+          </Route> */}
         </Routes>
       </div>
     </div>

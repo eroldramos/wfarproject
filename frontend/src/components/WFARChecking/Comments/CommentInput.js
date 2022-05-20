@@ -4,11 +4,14 @@ import CommentField from "../../UI/FormControl/InputField/CommentField";
 import Button from "../../UI/FormControl/Button/SmallButton";
 import React, { useState, useEffect } from "react";
 import { postComment, updateComment } from "../../../store/checkWfarActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const CommentInput = (props) => {
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState(null);
   const dispatch = useDispatch();
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
 
   useEffect(() => {
     setComment(props.getComment.description);
@@ -48,7 +51,9 @@ const CommentInput = (props) => {
     <div className={styles.commentInputContainer}>
       <div className={styles.innerContainer}>
         <div className={styles.profileContainer}>
-          <div style={{ backgroundImage: "url(" + ProfileImage + ")" }}></div>
+          <div
+            style={{ backgroundImage: "url(" + userInfo.profile_picture + ")" }}
+          ></div>
         </div>
         <div className={styles.inputContainer}>
           <div className={styles.commentField}>
