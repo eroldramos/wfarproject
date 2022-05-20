@@ -2,7 +2,8 @@ import SemesterFilter from "../components/FacultySubmissions/SemesterFilter/Seme
 import {
     wfarRetrieveOverviewActions,
     wfarPrintOverviewActions,
-    wfarActiveSemesterActions
+    wfarActiveSemesterActions,
+    wfarPrintIndividualActions
 } from "./wfarReducers";
 // import axios from 'axios'
 
@@ -101,6 +102,48 @@ export const printWfarsOverview = (filterSemester, filterSort) => {
 
         } catch (error) {
             dispatch(wfarPrintOverviewActions.requestFail({ error: "Sorry an error has occured while trying to export this table to pdf. Please try again later." }));
+        }
+    }
+}
+
+export const printWfarIndividual = (wfar_id) => {
+    return async (dispatch, getState) => {
+
+        try {
+            dispatch(wfarPrintIndividualActions.sendRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            fetch(`/api/wfar/individual/print`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({ "wfar_id": wfar_id }),
+                    headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + userInfo.token }
+                }).then(response => response.blob()).then(response => {
+
+                    let date = new Date();
+
+                    const fileURL = URL.createObjectURL(response);
+                    let a = document.createElement("a");
+                    document.body.appendChild(a);
+                    a.style = "display: none";
+                    a.href = fileURL;
+
+                    const timestamp = date.getFullYear() + "" + (date.getMonth() + 1) + "" + date.getDate() + "" +
+                        date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+
+                    console.log(timestamp);
+                    a.download = "WFAR_" + timestamp + ".pdf";
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(fileURL);
+                    dispatch(wfarPrintIndividualActions.printSuccessfully());
+                })
+
+        } catch (error) {
+            dispatch(wfarPrintIndividualActions.requestFail({ error: "Sorry an error has occured while trying to export this WFAR to pdf. Please try again later." }));
         }
     }
 }

@@ -6,6 +6,8 @@ import Footer from "../Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import WFAROverviewTable from "../Table/WFAROverviewTable/WFAROverviewTable";
 import { retrieveWfarsOverview, printWfarsOverview } from "../../../store/wfarActions";
+import { retrieveWfarsSemestersList } from "../../../store/myWfarsActions";
+import { retrieveActiveSemester } from "../../../store/wfarActions";
 import Swal from "sweetalert2";
 
 const WFARSubmissionsOverview = () => {
@@ -15,6 +17,8 @@ const WFARSubmissionsOverview = () => {
 
 	const semesters = useSelector((state) => state.wfarSemesters.semesters);
 	const printError = useSelector((state) => state.wfarPrintOverview.error);
+	const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
+	
 	// gumawa ng redux state na makukuha 'yung active semester para sa default
 	const [selectedSemester, setSelectedSemester] = useState(1);
 	const [selectedPageNo, setSelectedPageNo] = useState(1);
@@ -22,10 +26,25 @@ const WFARSubmissionsOverview = () => {
 	const [sort, setSort] = useState(0); // 0 - Ascending, 1 - Descending
 	const [isPrintSelected, setIsPrintOverview] = useState(false);
 
+	// retrieving wfars and archived wfars
+	useEffect(() => {
+		dispatch(retrieveWfarsSemestersList());
+		dispatch(retrieveActiveSemester());
+
+	}, []);
+
+	useEffect(() => {
+		if (activeSemester != null) {
+			setSelectedSemester(activeSemester[0].id);
+		}
+	}, [activeSemester])
+
 	useEffect(() => {
 		dispatch(retrieveWfarsOverview(selectedSemester, selectedPageNo, sort, searchValue));
 	}, [selectedSemester, selectedPageNo, sort, searchValue]);
 
+
+	/// others
 
 	useEffect(() => {
 		if (isPrintSelected) {

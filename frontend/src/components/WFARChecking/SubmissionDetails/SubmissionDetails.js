@@ -17,10 +17,10 @@ const SubmissionDetails = (props) => {
               {props.semester.label}
             </h3>
           </div>
-          <div className={styles.dateContainer}>
+          {props.submitted_at !== null && <div className={styles.dateContainer}>
             <h3>Submitted on: </h3>
             <p>{props.submitted_at}</p>
-          </div>
+          </div>}
         </div>
       )}
     </Fragment>

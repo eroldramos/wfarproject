@@ -9,7 +9,7 @@ const ArchivedEntries = (props) => {
     return (
         <Fragment>
             <div className={styles['archived-entries']}>
-                {items.map(item => {
+                {items.length > 0 && items.map(item => {
                     return (<ArchivedEntry key={item.id} 
                                             id={item.id}
                                             accomplishmentDate={item.accomplishment_date}
@@ -18,6 +18,7 @@ const ArchivedEntries = (props) => {
                                             semester={item.semester}
                                             weekNo={item.week_no} />);
                 })}
+                {items.length <= 0 && <div className="placeholder-data-not-available">No archived entries for the selected semester.</div>}
             </div>
         </Fragment>
 

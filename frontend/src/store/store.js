@@ -49,7 +49,8 @@ import {
 import {
   wfarPrintOverviewReducer,
   wfarRetrieveOverviewReducer,
-  wfarActiveSemesterReducer
+  wfarActiveSemesterReducer,
+  wfarPrintIndividualReducer
 } from "./wfarReducers";
 
 // sheen
@@ -125,6 +126,7 @@ const store = configureStore({
     allWFARwholeSem: getWFARwholeSemReducer.reducer,
     allWFARcomments: getWFARCommentsReducer.reducer,
     wfarActiveSemester: wfarActiveSemesterReducer.reducer,
+    wfarPrintIndividual: wfarPrintIndividualReducer.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
