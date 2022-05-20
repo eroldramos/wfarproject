@@ -395,9 +395,12 @@ class PrintWFARIndividualPDF(APIView):
             entries = WFAR_Entry.objects.filter(wfar_id=wfar)
             week_no = wfar.week_no
             weeks = getWeeks(semester)[0]
+
+            # return Response({"test": len(weeks), "week_no": week_no})
+
             week_bracket = []
-            week_bracket.append(weeks[week_no * 2])
-            week_bracket.append(weeks[(week_no * 2) + 1])
+            week_bracket.append(weeks[(week_no - 1) * 2])
+            week_bracket.append(weeks[((week_no - 1) * 2) + 1])
 
             startWeek = week_bracket[0].strftime("%b %d")
             endWeek = week_bracket[1].strftime("%b %d")
@@ -661,6 +664,104 @@ class PrintWFARIndividualPDF(APIView):
 
 
 
+# EROLD -------
+
+
+class RetrieveWFARPerUser(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, pk):
+        # try:  
+            wfar = WFAR.objects.get(id=pk)
+            serializer = WFARCheckingWFARSerializer(wfar, many=False)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        # except:
+        #     return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+class CreateCommentToWFAR(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        try:
+            faculty_id = request.user.id
+            wfar_id = request.data['wfar_id']
+            description = request.data['description']
+
+            faculty = Faculty.objects.get(id=faculty_id)
+            wfar = WFAR.objects.get(id=wfar_id)
+            
+            WFAR_Comment.objects.create(
+                faculty_id = faculty,
+                wfar_id = wfar,
+                description = description
+
+            )
+
+            message = {
+                "detail": "comment added!"
+            }
+            return Response(message, status=status.HTTP_200_OK)
+        except:
+            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+
+class UpdateWFARStatus(APIView):
+    permission_classes = [IsAuthenticated]
+    def put(self, request, statusVal):
+        try:
+            if statusVal == 3:
+                wfar = WFAR.objects.get(id=request.data['wfar_id'])
+                wfar.status = 3
+                wfar.checked_at = datetime.now()
+                wfar.faculty_checker_id = request.user
+                wfar.save()
+            if statusVal == 4:
+                wfar = WFAR.objects.get(id=request.data['wfar_id'])
+                wfar.status = 4
+                wfar.checked_at = datetime.now()
+                wfar.faculty_checker_id = request.user
+                wfar.save()
+
+            message = {
+                "detail": "status updated!"
+            }
+            return Response(message, status=status.HTTP_200_OK)
+        except:
+            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  
+
+
+class UpdateComment(APIView):
+    permission_classes = [IsAuthenticated]
+    def put(self, request, pk):
+        try:    
+            comment = WFAR_Comment.objects.get(id=pk)
+            comment.description = request.data['description']
+            comment.save()
+
+            message = {
+                "detail": "comment updated!"
+            }
+            return Response(message, status=status.HTTP_200_OK)
+        except:
+            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+class DeleteComment(APIView):
+    permission_classes = [IsAuthenticated]
+    def delete(self, request, pk):
+        try:    
+            comment = WFAR_Comment.objects.get(id=pk)
+            comment.delete()
+
+            message = {
+                "detail": "comment deleted!"
+            }
+            return Response(message, status=status.HTTP_200_OK)
+        except:
+            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)    
+
+
+
+
+
+
+
+    
 
     
 

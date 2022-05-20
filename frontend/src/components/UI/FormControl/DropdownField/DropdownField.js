@@ -2,8 +2,6 @@ import styles from "./DropdownField.module.css";
 
 const DropdownField = (props) => {
 
-	console.log("dropdown field: ");
-	console.log(props.options);
 
 	const onChangeHandler = (event) => {
 		props.onChange(event.target.value);

@@ -1,11 +1,87 @@
 import styles from "./Entries.module.css";
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import EntryData from "./ExpandedEntry/EntryData";
+import PopupMenu from "../PopupMenu/PopupMenu";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { archiveWfarEntry } from "../../../store/myWfarsActions";
+import Swal from "sweetalert2";
 
 const Entries = (props) => {
   const expandAttachments = () => {};
   const [isFacultyView, setIsFacultyView] = useState(true);
   const [expandIsCLicked, setExpandIsCLicked] = useState(false);
+
+
+  // hooks
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // use states
+  const [displayPopup, setDisplayPopup] = useState("close");
+  const [isArchive, setIsArchive] = useState(false);
+
+  // constants
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  // props
+  let wfarId = props.entry.id;
+  let id = props.entry.id;
+  let wfarWeekNo = props.week_no;
+
+  const onEditClickHandler = () => {
+    console.log(props.entry);
+    navigate('/mySubmission/wfar/' + wfarId + '/week/' + wfarWeekNo + '/edit-entry/' + id);
+  }
+
+  // handlers
+  const onArchiveClickHandler = () => {
+    Swal.fire({
+      html:
+        '<h4>Archiving Entry from WFAR Week ' + wfarWeekNo + '</h4>' +
+        '<h5>Are you sure you want to archive this entry?</h5>',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Submit',
+      iconColor: '#D1D1D1',
+      confirmButtonColor: '#BE5A40',
+      cancelButtonColor: '#A1A1A1'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setIsArchive(true);
+      }
+    })
+  }
+
+  // handlers
+  const onClickMoreOptionsHandler = () => {
+    let display = displayPopup === "open" ? "close" : "open";
+    setDisplayPopup(display);
+  }
+
+  // use effects
+  useEffect(() => {
+    if (isArchive) {
+      console.log("i am in use effect")
+      dispatch(archiveWfarEntry(id));
+      setIsArchive(false);
+    }
+  }, [isArchive])
+
+  // popup
+  const popup_items = [
+    {
+      id: 1,
+      label: "Edit",
+      onClick: onEditClickHandler
+    },
+    {
+      id: 2,
+      label: "Archive",
+      onClick: onArchiveClickHandler
+    }
+  ];
+
 
   return (
     <Fragment>
@@ -55,11 +131,12 @@ const Entries = (props) => {
                       fill="#323232"
                     />
                   </svg>
+
                 </div>
               )}
-              {isFacultyView && (
+              {(isFacultyView && props.status === 1) && (
                 <div className={styles.moreSettingsContainer}>
-                  <svg
+                  <svg onClick={onClickMoreOptionsHandler}
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -71,6 +148,18 @@ const Entries = (props) => {
                       fill="#323232"
                     />
                   </svg>
+
+                  <div className={styles["pop-up"] + ' ' + styles[displayPopup]}>
+                    <ul>
+                      {popup_items.map(item => {
+                        return (
+                          <li key={item.id} onClick={item.onClick}>
+                            {item.label}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </div>
               )}
               {/* Faculty edit settings */}

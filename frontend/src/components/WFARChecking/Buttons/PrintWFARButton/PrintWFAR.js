@@ -1,15 +1,12 @@
 import PrintButton from "../../../UI/FormControl/Button/PrintButton"
 import styles from "./PrintWFAR.module.css";
 
-const printButton = () =>{
-    const printWFAR = () => {
-        alert("Print WFAR");
-    }
+const printButton = (props) =>{
     return (
         <div className={styles.printButtonContainer}>
             <PrintButton
-                onClick = {printWFAR}
-                label = "Print"
+                onClick = {props.onClick}
+                label = "Export to PDF"
                 type = "primary"
             />
         </div>
