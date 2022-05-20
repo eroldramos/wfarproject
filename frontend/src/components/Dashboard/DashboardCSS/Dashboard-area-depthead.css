@@ -32,11 +32,11 @@
 .dashboard-area-depthead .main-container {
     display: grid;
     margin-right: 2px;
-    margin-top: -15px;
+    margin-top: -25px;
     /* height: 85vh; */
-    height: 90vh;
-    grid-template-columns: .65fr 1.35fr .87fr;
-    grid-template-rows: .66fr .70fr 2.5fr;
+    height: 75vh;
+    grid-template-columns: .40fr 1fr .60fr;
+    grid-template-rows: .30fr .40fr 1.5fr;
     grid-gap: 1em;
     grid-template-areas:
         "header header notifications"
@@ -54,7 +54,7 @@
 
 .dashboard-area-depthead .notifications {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 4fr;
     align-items: center;
     grid-area: notifications;
     margin-left: 21px;
@@ -90,6 +90,7 @@
 .dashboard-area-depthead .greetings p {
     margin: 3px;
     font-weight: 600;
+    font-size: 1vw;
 }
 
 .dashboard-area-depthead .greetings p {
@@ -103,9 +104,9 @@
 .dashboard-area-depthead .total-submission-container {
     display: grid;
     grid-area: total-submission-container;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 0.2fr 0.2fr;
     grid-gap: 1em;
-    min-width: 270px;
+    /* min-width: 270px; */
 }
 
 .dashboard-area-depthead .total-submission-container .info p {
@@ -151,8 +152,9 @@
 /* SECTION 3 */
 
 .dashboard-area-depthead .wfar-status-container {
-    padding: 20px;
+    padding: 10px;
     grid-area: wfar-status-container;
+    height: 280px;
 }
 
 .dashboard-area-depthead .wfar-status-container h3 {
@@ -176,17 +178,17 @@
 }
 
 .dashboard-area-depthead .status-graph>div {
-    padding-top: 25px;
+    padding-top: 15px;
 }
 
 .dashboard-area-depthead .status-graph-container {
-    min-width: 500px;
+    /* min-width: 500px; */
 }
 
 .dashboard-area-depthead .donut-chart {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     margin: 0 auto 2rem;
     border-radius: 100%
 }
@@ -383,11 +385,11 @@
 .dashboard-area-depthead .management-container {
     grid-area: management-container;
     display: grid;
-    grid-template-rows: .2fr 6fr 1fr;
+    grid-template-rows: 0.1fr 6fr 1fr;
     grid-gap: 1em;
     margin-left: 21px;
-    min-width: max-content;
-
+    height: 550px;
+    /* min-width: max-content; */
 }
 
 .dashboard-area-depthead .managed-faculties {
