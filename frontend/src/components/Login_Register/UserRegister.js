@@ -35,8 +35,8 @@ const Register = (props) => {
           "<h5>Account on process...</h5>",
         icon: "warning",
         showDenyButton: false,
-        showCancelButton: true,
-        confirmButtonText: "Confirm",
+        showCancelButton: false,
+        confirmButtonText: "OK",
         iconColor: "#D1D1D1", // question icon color
         confirmButtonColor: "#BE5A40",
         cancelButtonColor: "#A1A1A1",
