@@ -10,11 +10,13 @@ import { submitWfar, unsubmitWfar } from "../../../store/myWfarsActions";
 import { myWfarRefreshActions } from "../../../store/myWfarReducers";
 import Swal from 'sweetalert2';
 import { NavLink, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MyWFARCard = (props) => {
 
     // hooks
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // simple states
     const [displayEntries, setDisplayEntries] = useState("close");
@@ -156,13 +158,17 @@ const MyWFARCard = (props) => {
             break;
     }
 
+    const onClickMyWFARCardHandler = () => {
+        navigate('/WFARChecking/' + id);
+    }
+
     return (
         <div className={styles.card}>
 
             <div className={styles.wfarContainer}>
 
                 <div>
-                    <div className={styles.weekContainer}>
+                    <div className={styles.weekContainer} onClick={onClickMyWFARCardHandler} style={{cursor: "pointer"}}>
                         <div className={styles.weekLabel}> Week {weekNo} </div>
                         <div className={styles.weekDate}> {startDateLbl} - {endDateLbl} </div>
                     </div>
@@ -170,7 +176,7 @@ const MyWFARCard = (props) => {
 
 
                 <div>
-                    <div className={styles.entryLabelContainer}>
+                    <div className={styles.entryLabelContainer} onClick={onClickMyWFARCardHandler} style={{ cursor: "pointer" }}>
                         <div className={styles.entryNo}> {noOfEntries} </div>
                         <div className={styles.entryWord}> {entryLabel} </div>
                     </div>

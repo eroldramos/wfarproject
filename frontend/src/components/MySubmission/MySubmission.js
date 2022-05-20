@@ -26,11 +26,18 @@ const MySubmission = (props) => {
     const [filterSemester, setFilterSemester] = useState(1);
     const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
 
+    useEffect(() => {
+        dispatch(retrieveActiveSemester());
+    }, []);
+
+    useEffect(() => {
+        if (activeSemester != null) {
+            setFilterSemester(activeSemester[0].id);
+        }
+    }, [activeSemester])
+
     // retrieving wfars and archived wfars
     useEffect(() => {
-        // mag-run tayo dito ng magdedetermine kung ano 'yung active semester
-        dispatch(retrieveActiveSemester());
-        setFilterSemester(activeSemester.id);
         dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveWfars(filterSemester));
         dispatch(retrieveArchivedWfars(filterSemester));
@@ -49,7 +56,8 @@ const MySubmission = (props) => {
 
     // handlers
     const onChangeSemesterHandler = (id) => {
-        dispatch(myWfarSemesterFilterActions.changeSemesterFilter({ id: id }))
+        console.log("on change semester id: " + id);
+        setFilterSemester(id);
     }
 
     // tab

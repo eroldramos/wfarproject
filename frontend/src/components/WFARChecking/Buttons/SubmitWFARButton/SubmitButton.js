@@ -1,14 +1,12 @@
 import SmallButton from "../../../UI/FormControl/Button/SmallButton";
 import styles from "./SubmitButton.module.css"
 
-const checkWFARButton = () =>{
-    const checkWFAR = () =>{
-        alert("Submit WFAR")
-    }
+const checkWFARButton = (props) =>{
+
     return (
         <div>
             <SmallButton
-                onClick = {checkWFAR}
+                onClick = {props.onClick}
                 label="Submit
                 "
                 type="primary"/>

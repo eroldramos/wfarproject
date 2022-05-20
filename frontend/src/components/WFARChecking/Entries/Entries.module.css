@@ -74,10 +74,47 @@
 .moreSettingsContainer{
     margin-left: 20px;
     float: right;
+    position:relative;
+    /* border: 2px solid black; */
 }
 .moreSettingsContainer svg{
     margin-top: 75%;
 }
 .moreSettingsContainer svg:hover{
     cursor: pointer;
+}
+
+.pop-up {
+    position: absolute;
+    right: 25px;
+    margin-top: -20px;
+    background: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 0.75em;
+}
+
+.pop-up.open {
+    display: block;
+}
+
+.pop-up.close {
+    display: none;
+}
+
+.pop-up ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pop-up ul li {
+    padding: 5px 25px 6px 6px;
+    cursor: pointer;
+}
+
+.pop-up ul li:hover {
+    background: #f1f1f1;
+    border-radius: 5px;
 }
