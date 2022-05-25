@@ -22,7 +22,6 @@ export const createWfar = () => {
 
         try {
 
-
             dispatch(myWfarCreateActions.sendRequest());
 
             const {
@@ -58,14 +57,15 @@ export const createWfar = () => {
 
 export const retrieveWfars = (filterSemester) => {
     return async (dispatch, getState) => {
-        let url = "/api/myWfar/?faculty_id=1&semester_id=" + filterSemester;
+
+        const {
+            login: { userInfo },
+        } = getState();
+
+        let url = "/api/myWfar/?faculty_id="+userInfo.id+"&semester_id=" + filterSemester;
 
         try {
             dispatch(myWfarFetchActions.retrieveRequest());
-
-            const {
-                login: { userInfo },
-            } = getState();
 
             const response = await fetch(url, {
                 method: "GET",
@@ -93,14 +93,16 @@ export const retrieveWfars = (filterSemester) => {
 
 export const retrieveArchivedWfars = (filterSemester) => {
     return async (dispatch, getState) => {
-        let url = "/api/myWfar/archived/?faculty_id=1&semester_id=" + filterSemester;
+
+        const {
+            login: { userInfo },
+        } = getState();
+
+        let url = "/api/myWfar/archived/?faculty_id="+ userInfo.id +"&semester_id=" + filterSemester;
 
         try {
             dispatch(myWfarsArchivedActions.retrieveRequest());
 
-            const {
-                login: { userInfo },
-            } = getState();
 
             const response = await fetch(url, {
                 method: "GET",
