@@ -13,10 +13,11 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./Login.module.css";
-import { login } from "../../store/authActions";
-import { render } from "react-dom";
+import { forgetPassword } from "../../store/authActions";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import useValidateInput from "../../hooks/useValidateInput";
 
-const Login = () => {
+const ForgotPassword = () => {
   const IMAGE = {
     cictLogo: "asdd",
   };
@@ -24,37 +25,43 @@ const Login = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const forgetPasswordReducer = useSelector((state) => state.forgetPassword);
+  const { error, isLoading, success } = forgetPasswordReducer;
 
-  const loggedUser = useSelector((state) => state.login);
-  const { error, isLoading, userInfo } = loggedUser;
+  const [sendPasswordResetOnce, setSendPasswordResetOnce] = useState(true);
 
-  const setUsernameValue = (event) => {
-    setUsername(event.target.value);
-  };
+  const login = useSelector((state) => state.login);
+  const { userInfo } = login;
 
-  const setPasswordValue = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const onLoginHandler = (event) => {
+  const onForgetHandler = (event) => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
-    if (username == "" || password == "") {
+    if (enteredEmail == "" && !enteredEmailIsValid) {
       alert("fields can't be empty");
       return;
     }
-
-    console.log(username, password);
-    dispatch(login(username, password, "Faculty"));
+    let data = {
+      email: enteredEmail,
+    };
+    if (sendPasswordResetOnce) {
+      dispatch(forgetPassword(data));
+    } else {
+      alert("You already sent a password reset request!");
+    }
   };
-
+  useEffect(() => {
+    if (success) {
+      setSendPasswordResetOnce(false);
+    }
+    if (error) {
+      setSendPasswordResetOnce(true);
+    }
+  }, [success, error]);
   // to remove animation in changing from login to reg vice versa
 
-  const onNavigateToSignUp = () => {
+  const onNavigate = () => {
     localStorage.setItem("initialReload", "true");
-    navigate("/register");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -68,11 +75,20 @@ const Login = () => {
   if (localStorage.getItem("initialReload") == "true") {
     inLoadClassForAnimation = "login-form-delay";
   }
+  //Email Validations
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
 
-  const onNavigateForgetPassword = () => {
-    localStorage.setItem("initialReload", "true");
-    navigate("/forgot-password");
-  };
+  let emailErrorMessage = "";
+  if (!enteredEmail.includes("@") || enteredEmail === "") {
+    emailErrorMessage = "Please enter a valid email address.";
+  }
   return (
     <Fragment>
       <div
@@ -91,75 +107,49 @@ const Login = () => {
             </div>
           </div>
           <div className={styles["form-greetings"]}>
-            <p>Welcome Back!</p>
-            <p>Please login to your account</p>
+            <p>Forgot your password?</p>
+            <p>Please enter your email!</p>
           </div>
+          {isLoading && <LoadingSpinner />}
+          {success && <p className={styles["success"]}>{success}</p>}
           {error && <p className={styles["error"]}>{error}</p>}
           <form
             className={styles["form-container"]}
             action=""
             id="login-fields"
-            onSubmit={onLoginHandler}
+            onSubmit={onForgetHandler}
           >
             <div className={styles["form-field"]}>
               <InputField
-                id="sampleText"
+                id="email"
                 type="text"
                 labelName=""
-                inputName="username"
-                placeholder="Username or Email"
+                name="email"
+                placeholder="Email"
+                onChange={emailChangeHandler}
+                onBlur={emailBlurHandler}
+                value={enteredEmail}
+                error={emailInputHasError ? emailErrorMessage : null}
                 size="lg"
-                noLabel="no-label-input"
+                // noLabel = "no-label-input"
                 custom="form-control-custom"
-                onChange={setUsernameValue}
-                value={username}
+                labelMargin="nm"
               />
               {/* <input type="text" placeholder="Username or Email"/> */}
             </div>
-            <div className={styles["form-field"]}>
-              <InputField
-                id="sampleText"
-                type="password"
-                labelName=""
-                inputName="password"
-                placeholder="Password"
-                size="lg"
-                noLabel="no-label-input"
-                custom="form-control-custom"
-                onChange={setPasswordValue}
-                value={password}
-              />
-              {/* <input type="password" placeholder="Password"/> */}
-            </div>
-            <div>
-              <div className={styles["form-fields"]}>
-                <Checkbox
-                  id="rememberMe"
-                  name="rememberMe"
-                  label=""
-                  labelName="Remember me"
-                  onChange={null}
-                  type="filter"
-                  custom="no-height"
-                />
-                {/* <input type="checkbox" name="remember-me" id="remember-me"/>
-                                <label for="remember-me">Remember me</label> */}
-              </div>
-              <div className={styles["forgot-password"]}>
-                <h5 onClick={onNavigateForgetPassword}>Forgot password?</h5>
-              </div>
-            </div>
+            <br></br>
+            <div></div>
             <div className={styles["signin-button-container"]}>
               <SmallButton
-                label="Sign in"
+                label="Request Password Reset"
                 type="primary"
                 size="l-l"
               ></SmallButton>
             </div>
             <div className={styles["signup-link"]}>
               <p>
-                Don't have an account?
-                <h5 onClick={onNavigateToSignUp}> Sign up</h5>
+                Remember password?
+                <h5 onClick={onNavigate}> Sign in</h5>
               </p>
             </div>
           </form>
@@ -168,4 +158,4 @@ const Login = () => {
     </Fragment>
   );
 };
-export default Login;
+export default ForgotPassword;

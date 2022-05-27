@@ -9,7 +9,7 @@ import {
 } from "../../store/pendingAccountsActions";
 import SmallButton from "../UI/FormControl/Button/SmallButton";
 import Button from "../UI/FormControl/Button/Button";
-import SearchField from "../UI/FormControl/SearchField/SearchField";
+import CustomSearchField from "../UI/FormControl/SearchField/CustomSearchField";
 import styles from "./PendingAccounts.module.css";
 import table from "./Table.module.css";
 import PendingRows from "./PendingRows";
@@ -248,7 +248,7 @@ const PendingAccounts = () => {
       <div className={styles["container"]}>
         <div className={styles["search-field-container"]}>
           <form onSubmit={onSubmitHandler}>
-            <SearchField
+            <CustomSearchField
               id="link"
               onChange={setSearchFacultyValue}
               labelName="search"
@@ -323,7 +323,9 @@ const PendingAccounts = () => {
         {success && <p>{success}</p>}
         {isLoading && <p>Loading</p>}
         {error && <p>{error}</p>}
-        {listPendingAccounts.length === 0 && <p className={styles["no-pending-text"]}>No Pending Faculties</p>}
+        {listPendingAccounts.length === 0 && (
+          <p className={styles["no-pending-text"]}>No Pending Faculties</p>
+        )}
         {listPendingAccounts &&
           listPendingAccounts.map((data, index) => (
             <PendingRows

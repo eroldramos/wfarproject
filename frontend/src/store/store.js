@@ -1,5 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authLoginReducer, authRegisterReducer } from "./authReducers";
+import {
+  authLoginReducer,
+  authRegisterReducer,
+  forgetPasswordReducer,
+  resetPasswordReducer,
+} from "./authReducers";
 import {
   getPendingAccountsReducer,
   acceptAccountsReducer,
@@ -50,7 +55,7 @@ import {
   wfarPrintOverviewReducer,
   wfarRetrieveOverviewReducer,
   wfarActiveSemesterReducer,
-  wfarPrintIndividualReducer
+  wfarPrintIndividualReducer,
 } from "./wfarReducers";
 
 // sheen
@@ -74,6 +79,8 @@ const store = configureStore({
   reducer: {
     login: authLoginReducer.reducer,
     register: authRegisterReducer.reducer,
+    forgetPassword: forgetPasswordReducer.reducer,
+    resetPassword: resetPasswordReducer.reducer,
     getPendingAccounts: getPendingAccountsReducer.reducer,
     acceptAccounts: acceptAccountsReducer.reducer,
     createSem: createSemReducer.reducer,
@@ -126,7 +133,7 @@ const store = configureStore({
     allWFARwholeSem: getWFARwholeSemReducer.reducer,
     allWFARcomments: getWFARCommentsReducer.reducer,
     wfarActiveSemester: wfarActiveSemesterReducer.reducer,
-    wfarPrintIndividual: wfarPrintIndividualReducer.reducer
+    wfarPrintIndividual: wfarPrintIndividualReducer.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

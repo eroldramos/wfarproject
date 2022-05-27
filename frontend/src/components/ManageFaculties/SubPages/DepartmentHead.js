@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import table from "./Table.module.css";
-import SearchField from "../../UI/FormControl/SearchField/SearchField";
+import CustomSearchField from "../../UI/FormControl/SearchField/CustomSearchField";
 import Rows from "./Rows";
 import styles from "./Subpages.module.css";
 import { getDepartmentHeads } from "../../../store/manageFacultiesActions";
@@ -91,7 +91,7 @@ const DepartmentHead = () => {
     <Fragment>
       <div className={styles["search-field-container"]}>
         <form onSubmit={onSubmitHandler}>
-          <SearchField
+          <CustomSearchField
             id="link"
             onChange={setSearchFacultyValue}
             labelName="search"
@@ -153,7 +153,9 @@ const DepartmentHead = () => {
             <h5>Actions</h5>
           </div>
         </li>
-        {listFaculty.length === 0 && <p className={styles["no-data-text"]}>No data Found</p>}
+        {listFaculty.length === 0 && (
+          <p className={styles["no-data-text"]}>No data Found</p>
+        )}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows

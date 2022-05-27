@@ -75,3 +75,5 @@ class DeleteAccount(APIView):
         user.deleted_at = datetime.datetime.now()
         user.save()
         return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+
+

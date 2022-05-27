@@ -1,4 +1,9 @@
-import { authLoginActions, authRegisterActions } from "./authReducers";
+import {
+  authLoginActions,
+  authRegisterActions,
+  forgetPasswordActions,
+  resetPasswordActions,
+} from "./authReducers";
 
 export const login = (username, password, loginMode) => {
   return async (dispatch, getState) => {
@@ -86,5 +91,75 @@ export const logout = () => {
   return async (dispatch, getState) => {
     dispatch(authLoginActions.logout());
     localStorage.removeItem("userInfo");
+  };
+};
+
+export const forgetPassword = (obj) => {
+  return async (dispatch, getState) => {
+    let url = "/api/forgot-password/";
+
+    try {
+      dispatch(forgetPasswordActions.forgetPasswordRequest());
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        let errorMessage = data.detail;
+        console.log(data);
+        throw new Error(errorMessage);
+      }
+      const data = await response.json();
+
+      dispatch(
+        forgetPasswordActions.forgetPasswordSuccess({ success: data.detail })
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        forgetPasswordActions.forgetPasswordFail({ error: error.message })
+      );
+    }
+  };
+};
+
+export const resetPassword = (obj, token) => {
+  return async (dispatch, getState) => {
+    let url = `/api/reset-password/${token}/`;
+
+    try {
+      dispatch(resetPasswordActions.resetPasswordRequest());
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        let errorMessage = data.detail;
+        console.log(data);
+        throw new Error(errorMessage);
+      }
+      const data = await response.json();
+
+      dispatch(
+        resetPasswordActions.resetPasswordSuccess({ success: data.detail })
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        resetPasswordActions.resetPasswordFail({ error: error.message })
+      );
+    }
   };
 };

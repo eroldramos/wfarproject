@@ -1,4 +1,4 @@
-import SearchField from "../../../../UI/FormControl/SearchField/SearchField";
+import CustomSearchField from "../../../../UI/FormControl/SearchField/CustomSearchField";
 import styles from "../ViewFacultyStatus.module.css";
 import RadioRows from "./RadioRows";
 import table from "./Table.module.css";
@@ -13,7 +13,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Paginator from "../../../SubComponents/Paginator";
 const AreaChair = (props) => {
   const icon = (
-    <svg width="17" height="17" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 4C6.5 2.895 5.605 2 4.5 2C3.395 2 2.5 2.895 2.5 4C2.5 5.105 3.395 6 4.5 6C5.605 6 6.5 5.105 6.5 4ZM7.5 5V6H9V7.5H10V6H11.5V5H10V3.5H9V5H7.5ZM0.5 9V10H8.5V9C8.5 7.67 5.835 7 4.5 7C3.165 7 0.5 7.67 0.5 9Z" fill="white"></path></svg>
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.5 4C6.5 2.895 5.605 2 4.5 2C3.395 2 2.5 2.895 2.5 4C2.5 5.105 3.395 6 4.5 6C5.605 6 6.5 5.105 6.5 4ZM7.5 5V6H9V7.5H10V6H11.5V5H10V3.5H9V5H7.5ZM0.5 9V10H8.5V9C8.5 7.67 5.835 7 4.5 7C3.165 7 0.5 7.67 0.5 9Z"
+        fill="white"
+      ></path>
+    </svg>
   );
 
   const search = useLocation().search;
@@ -87,7 +98,7 @@ const AreaChair = (props) => {
     <Fragment>
       <div className={styles["search-field-container"]}>
         <form onSubmit={onSubmitHandler}>
-          <SearchField
+          <CustomSearchField
             id="link"
             onChange={setSearchFacultyValue}
             labelName="search"
@@ -107,9 +118,7 @@ const AreaChair = (props) => {
           <div
             className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
           >
-            <div className={table["label-container"]}>
-              Choose An Area Chair
-            </div>
+            <div className={table["label-container"]}>Choose An Area Chair</div>
             <div className={table["icon-container2"]}>
               {assigneeId > 0 && (
                 <TransparentButton
@@ -123,7 +132,9 @@ const AreaChair = (props) => {
             </div>
           </div>
         </li>
-        {listFaculty.length === 0 && <p className={table["no-data-text"]}>No data Found</p>}
+        {listFaculty.length === 0 && (
+          <p className={table["no-data-text"]}>No data Found</p>
+        )}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <RadioRows

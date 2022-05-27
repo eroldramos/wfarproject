@@ -43,7 +43,7 @@
   z-index: 6;
   /* border: 1px solid black; */
 }
-.login-form-delay{
+.login-form-delay {
   animation-delay: 0s;
 }
 .login-form {
@@ -343,7 +343,11 @@
   animation: fade-out ease 1s forwards;
   animation-delay: 6s;
 }
-.error{
+.error {
   text-align: center;
-  color: #FF6A6A;
+  color: #ff6a6a;
+}
+.success {
+  text-align: center;
+  color: #1de054;
 }

@@ -6,6 +6,13 @@ from core.models import Faculty
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 
+
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from itsdangerous import TimedJSONWebSignatureSerializer 
 # Create your views here.
 
 
@@ -177,6 +184,63 @@ class FacultyRegister(APIView):
 
         else:
             return Response({"errors": errors}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+
+
+
+# Forget and reset password 
+
+
+def get_reset_token(user_id, expires_sec=1800):
+        s = TimedJSONWebSignatureSerializer(settings.SECRET_KEY, expires_sec)
+        return s.dumps({'user_id': user_id}).decode('utf-8')
+def verify_reset_token(token):
+        s = TimedJSONWebSignatureSerializer(settings.SECRET_KEY)
+        try:
+            user_id = s.loads(token)['user_id']
+            return Faculty.objects.get(id=user_id)
+        except:
+            return None
+
+class ForgotPassword(APIView):
+    def post(self, request):
+
+        if Faculty.objects.filter(email=request.data['email']).exists():
+            faculty = Faculty.objects.get(email=request.data['email'])
+
+
+            token = get_reset_token(user_id = faculty.id)
+
+            subject = 'Password Reset Request'
+            email_from = settings.EMAIL_HOST_USER
+            html_content = render_to_string('email_body.html', {
+                "faculty": faculty,
+                "url": f"http://localhost:3000/reset-password/{token}/"
+            })
+            text_content = strip_tags(html_content)
+            recipient_list = [faculty.email, ]
+            msg = EmailMultiAlternatives(subject, text_content, email_from, recipient_list)
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            return Response({'detail':'An email has been sent with instructions to reset your password. Make sure to check it also in spam.'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail':'Email does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+        
+        # send_mail( subject, message, email_from, recipient_list )
+
+
+class ResetPassword(APIView):
+    def post(self, request, token):
+        faculty = verify_reset_token(token)
+        if faculty is None:
+            return  Response({'detail':'The token for reset password is expired!'}, status=status.HTTP_400_BAD_REQUEST)
+        if faculty is not None:
+            faculty.password = make_password(request.data['new_password'])
+            faculty.save()
+            return  Response({'detail':'Password has been changed! Please login again.'}, status=status.HTTP_200_OK)
         
 
 

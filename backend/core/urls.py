@@ -9,6 +9,7 @@ urlpatterns =[
    # path('create-sems/', views.CreateSem.as_view(), name="create-sems")
 
      path('create-comment-to-wfar/', views.CreateCommentToWFAR.as_view(), name='create-comment-to-wfar'),
+ 
      path('update-wfar-status/<int:statusVal>/', views.UpdateWFARStatus.as_view(), name='update-status-wfar'),
  
      path('retrieve-wfar-per-user/<str:pk>/', views.RetrieveWFARPerUser.as_view(), name='retrieve-wfar-per-user'),
