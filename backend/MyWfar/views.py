@@ -14,7 +14,7 @@ from yaml import serialize
 from core.serializers import WfarEntryAttachmentSerializer
 from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
 from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead, IsAuthenticatedAndNotAdmin
-from core.models import Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
+from core.models import Notification, Semester,  WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
@@ -149,7 +149,7 @@ class CreateWfar(APIView):
         except:
             return Response({"detail": "An error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class SubmitWfar(APIView):
+class SubmitWfar(APIView):  
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
@@ -158,6 +158,16 @@ class SubmitWfar(APIView):
             wfar.submitted_at = datetime.now()
             wfar.status = 2
             wfar.save()
+
+            faculty = wfar.faculty_id
+            faculty_assignee = faculty.assignee_id
+            notification = Notification()
+            notification.detail = f"{faculty.last_name}, {faculty.first_name} has submitted WFAR for week {wfar.week_no}."
+            notification.type = 1
+            notification.owner_id = faculty_assignee
+            notification.wfar_id = wfar
+            notification.save()
+
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been submitted."}, status = status.HTTP_200_OK);
         # except:
         #     return Response({"detail": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
@@ -172,6 +182,16 @@ class UnsubmitWfar(APIView):
             wfar.submitted_at = None
             wfar.status = 1
             wfar.save()
+
+            faculty = wfar.faculty_id
+            faculty_assignee = faculty.assignee_id
+            notification = Notification()
+            notification.detail = f"{faculty.last_name}, {faculty.first_name} has unsubmitted WFAR for week {wfar.week_no}."
+            notification.type = 2
+            notification.owner_id = faculty_assignee
+            notification.wfar_id = wfar
+            notification.save()
+
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been unsubmitted."}, status = status.HTTP_200_OK);
         except:
             return Response({"detail": "The WFAR cannot be unsubmitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);

@@ -7,7 +7,7 @@ ManageFacultiesUnassignmentSerializer,
 FacultySerializer
 )
 from core.permissions import IsAdminUser, IsAdminAreaChairAndDeptHead
-from core.models import Faculty
+from core.models import Faculty, Notification
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
@@ -18,14 +18,33 @@ class ChangeUserType(APIView):
         try:
             
             faculty = Faculty.objects.get(id=request.data['id'])
+            faculty_prev_user_type = faculty.user_type
             faculty.user_type = int(request.data['new_user_type'])
             faculty.save()
             
-            message = "Role updated to Faculty."   
+            message = "Role updated to Faculty."  
+            detail = "You have been demoted to a normal Faculty position."
+            notif_type = 8
+
             if request.data['new_user_type']==2:
                 message = "Role updated to Area Chair."
+                if faculty_prev_user_type == 3:
+                    detail = "You have been demoted to an Area Chair position."
+                    notif_type = 8
+                else:
+                    detail = "You have been promoted to an Area Chair position."
+                    notif_type = 7
             if request.data['new_user_type']==3:
                 message = "Role updated to Department Head."
+                notif_type = 7
+                detail = "You have been promoted to a Department Head position."
+
+            notification = Notification()
+            notification.detail = detail
+            notification.type = notif_type
+            notification.owner_id = faculty
+            notification.save()
+            
             return Response({"detail": message}, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
