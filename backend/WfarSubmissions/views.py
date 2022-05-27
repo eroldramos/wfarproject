@@ -196,7 +196,7 @@ def getWeeks(semester):
 
 class PrintWFAROverviewPDF(APIView):
     def post(self, request, semester_id, sort):
-        try:
+        # try:
             semester = Semester.objects.get(pk=semester_id)
             weeks = 1  # default
             if (semester != None):
@@ -238,13 +238,13 @@ class PrintWFAROverviewPDF(APIView):
                 # paragraphStyle = getSampleStyleSheet()
                 contentStyle = ParagraphStyle(
                     name='Normal',
-                    fontSize=10,
+                    fontSize=9,
                     alignment=TA_CENTER
                 )
 
                 contentStyleLeft = ParagraphStyle(
                     name='Normal',
-                    fontSize=10,
+                    fontSize=9,
                 )
 
                 data = []
@@ -252,23 +252,44 @@ class PrintWFAROverviewPDF(APIView):
                 semester_no_of_weeks = semester.no_of_weeks
                 col_widths = []
                 col_names = []
-                col_widths.append(45 * mm)
+                col_widths.append(40 * mm)
                 col_names.append(
-                    Paragraph(f"<font color='white'>Faculty</font>", contentStyle))
+                    Paragraph(f"<b><font color='#000'>Faculty</font></b>", contentStyle))
+
+
+                width = 265/semester_no_of_weeks;
+                week_label = "Week "
+                font_size = 7.5
+                
                 for i in range(semester_no_of_weeks):
                     startWeek = week_brackets[(i * 2)].strftime("%b %d")
                     endWeek = week_brackets[(i * 2) + 1].strftime("%b %d")
-                    col_widths.append(28 * mm)
+                    startMonth = week_brackets[(i * 2)].month
+                    endMonth = week_brackets[(i * 2) + 1].month
+
+                    if (startMonth == endMonth):
+                        endWeek = week_brackets[(i * 2) + 1].strftime("%d")
+                    
+                    # shorten...
+                    if (semester_no_of_weeks > 12):
+                        font_size = 6.75
+
+                    if (semester_no_of_weeks > 14):
+                        week_label = "W"
+                    
+
+                    col_widths.append(width * mm)
                     col_names.append(
-                        Paragraph(f"<font color='white'>Week{i+1}<br /><font size='8'>{startWeek} - {endWeek}</font></font>", contentStyle))
+                        Paragraph(f"<b><font color='#000'>{week_label}{i+1}<br /><font size='{font_size}'>{startWeek}-{endWeek}</font></font></b>", contentStyle))
 
                 data.append(col_names)
 
                 counterF = 0
                 for faculty in faculties:
                     newRow = []
+                    middle_name = faculty.middle_name[0] + "." if faculty.middle_name != None else ""
                     newRow.append(
-                        Paragraph(f"{faculty.last_name}, {faculty.first_name}", contentStyleLeft))
+                        Paragraph(f"<b>{faculty.last_name}, {faculty.first_name} {middle_name}</b>", contentStyleLeft))
                     for i in range(semester_no_of_weeks):
 
                         wfar_status = ""
@@ -300,12 +321,12 @@ class PrintWFAROverviewPDF(APIView):
 
                 style = TableStyle([
                     ('BACKGROUND', (0, 0), (semester_no_of_weeks+1, 0),
-                     colors.HexColor("#BE5A40")),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                     colors.HexColor("#FFFFFF")),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
                     ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
                     ('FONTSIZE', (0, 0), (-1, -1), 11),
-                    ('TOPPADDING', (0, 0), (-1, -1), 8),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 9)
+                    ('TOPPADDING', (0, 0), (-1, -1), 6),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 7)
                 ])
 
                 table.setStyle(style)
@@ -321,9 +342,14 @@ class PrintWFAROverviewPDF(APIView):
                     )
                     table.setStyle(ts)
 
+                # borderStyle = TableStyle([
+                #     ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#333333")),
+                #     ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#333333"))
+                # ])
+
                 borderStyle = TableStyle([
-                    ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#777777")),
-                    ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#777777"))
+                    ('BOX', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA")),
+                    ('GRID', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA"))
                 ])
 
                 title = "WFARs Overview"
@@ -360,18 +386,18 @@ class PrintWFAROverviewPDF(APIView):
                 response.write(buff.getvalue())
                 buff.close()
             return response
-        except:
-            #     pass
-            return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # except:
+        #     #     pass
+        #     return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def getStatus(wfar_id, status, contentStyle):
     if status == 1:
-        return Paragraph(f"<font color='maroon'>Not submitted</font>", contentStyle)
+        return Paragraph(f"<font color='maroon' size='8.5'>Not submitted</font>", contentStyle)
     if status == 2:
-        return Paragraph(f"For checking", contentStyle)
+        return Paragraph(f"<font size='8.5'>For checking</font>", contentStyle)
     if status == 3:
-        return Paragraph(f"<font color='green'>OK</font>", contentStyle)
+        return Paragraph(f"<font color='green' size='8.5'>OK</font>", contentStyle)
     if status == 4:
         if wfar_id != -1:
             # pass
