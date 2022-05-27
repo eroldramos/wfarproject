@@ -59,7 +59,7 @@ const ManageFaculties = () => {
   console.log(currentPage);
   return (
     <Fragment>
-      <h1>Manage Faculties</h1>
+      <h1>Manage Faculty</h1>
       <div className={styles["main-container"]}>
         <div className={styles["tab-container"]}>
           <Tab items={SAMPLE_ITEMS} currentPage={currentPage} />

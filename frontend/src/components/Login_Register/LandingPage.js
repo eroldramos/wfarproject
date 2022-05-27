@@ -6,6 +6,8 @@ import SmallButton from "../UI/FormControl/Button/SmallButton";
 import Checkbox from "../UI/FormControl/Checkbox/Checkbox";
 import UserLogin from "./UserLogin";
 import AdminLogin from "./AdminLogin";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
 import UserRegister from "./UserRegister";
 import { Routes, Route } from "react-router-dom";
 
@@ -54,6 +56,8 @@ const Login = () => {
         <Route path="" element={<UserLogin />} />
         <Route path="register/" element={<UserRegister />} />
         <Route path="admin-login/" element={<AdminLogin />} />
+        <Route path="forgot-password/" element={<ForgotPassword />} />
+        <Route path="reset-password/:token/" element={<ResetPassword />} />
       </Routes>
     </div>
   );

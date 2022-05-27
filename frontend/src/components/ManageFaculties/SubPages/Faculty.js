@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import table from "./Table.module.css";
-import SearchField from "../../UI/FormControl/SearchField/SearchField";
+import CustomSearchField from "../../UI/FormControl/SearchField/CustomSearchField";
 import Rows from "./Rows";
 import styles from "./Subpages.module.css";
 import { getFaculties } from "../../../store/manageFacultiesActions";
@@ -33,128 +33,7 @@ const Faculty = () => {
   const { isLoading: assignIsLoading } = assignedFacultyReducerValues;
 
   const [searchFaculty, setSearchFaculty] = useState("");
-  const [listFaculty, setListFaculty] = useState([
-    {
-      id: 1,
-      fullname: "Ramos Erold 1",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-    {
-      id: 2,
-      fullname: "Erold Ramos",
-      emp_no: "2018-101188",
-      username: "eroldramos",
-      birthdate: "2015-02-03",
-      email: "eroldramos@gmail.com",
-      contact_no: "09563435355",
-      user_type: 1,
-    },
-  ]);
+  const [listFaculty, setListFaculty] = useState([]);
 
   const [ableToSearch, setAbleToSearch] = useState(true);
 
@@ -203,7 +82,7 @@ const Faculty = () => {
     <Fragment>
       <div className={styles["search-field-container"]}>
         <form onSubmit={onSubmitHandler}>
-          <SearchField
+          <CustomSearchField
             id="link"
             onChange={setSearchFacultyValue}
             labelName="search"
@@ -265,7 +144,9 @@ const Faculty = () => {
             <h5>Actions</h5>
           </div>
         </li>
-        {listFaculty.length === 0 && <p className={styles["no-data-text"]}>No data Found</p>}
+        {listFaculty.length === 0 && (
+          <p className={styles["no-data-text"]}>No data Found</p>
+        )}
         {listFaculty &&
           listFaculty.map((data, index) => (
             <Rows

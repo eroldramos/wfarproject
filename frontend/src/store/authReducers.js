@@ -63,3 +63,69 @@ export const authRegisterReducer = createSlice({
 });
 
 export const authRegisterActions = authRegisterReducer.actions;
+
+export const forgetPasswordReducer = createSlice({
+  name: "forgetPassword",
+  initialState: {
+    isLoading: false,
+    error: null,
+    success: null,
+  },
+  reducers: {
+    forgetPasswordRequest(state, action) {
+      state.isLoading = true;
+      state.success = null;
+      state.error = null;
+    },
+    forgetPasswordSuccess(state, action) {
+      state.isLoading = false;
+      state.success = action.payload.success;
+      state.error = null;
+    },
+    forgetPasswordFail(state, action) {
+      state.isLoading = false;
+      state.success = null;
+      state.error = action.payload.error;
+    },
+    forgetPasswordReset(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.success = null;
+    },
+  },
+});
+
+export const forgetPasswordActions = forgetPasswordReducer.actions;
+
+export const resetPasswordReducer = createSlice({
+  name: "resetPassword",
+  initialState: {
+    isLoading: false,
+    error: null,
+    success: null,
+  },
+  reducers: {
+    resetPasswordRequest(state, action) {
+      state.isLoading = true;
+      state.success = null;
+      state.error = null;
+    },
+    resetPasswordSuccess(state, action) {
+      state.isLoading = false;
+      state.success = action.payload.success;
+      state.error = null;
+    },
+    resetPasswordFail(state, action) {
+      state.isLoading = false;
+      state.success = null;
+      state.error = action.payload.error;
+    },
+    resetPasswordReset(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.success = null;
+    },
+  },
+});
+
+export const resetPasswordActions = resetPasswordReducer.actions;
