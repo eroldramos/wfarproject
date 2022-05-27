@@ -271,9 +271,29 @@ class AssignedFaculties(APIView):
             for id in data:
                 print(id)
                 faculty = Faculty.objects.get(id=id)
+                faculty_prev_assignee = faculty.assignee_id
                 faculty.assignee_id = assignedTo
                 faculty.save()
+
+                if faculty_prev_assignee != None:
+                    detail = f"You have been reassigned to {faculty.last_name}, {faculty.first_name}."
+                else:
+                    detail = f"You have been assigned to {faculty.last_name}, {faculty.first_name}."
+
+                notification = Notification()
+                notification.detail = detail
+                notification.type = 9
+                notification.owner_id = faculty
+                notification.save()
+                
             message = {"detail":"faculties assigned!"}
+
+            notification = Notification()
+            notification.detail = f"You have been assigned faculties."
+            notification.type = 10
+            notification.owner_id = assignedTo
+            notification.save()
+
             return Response(message,status=status.HTTP_200_OK)
         except:
             message ={'detail': 'Something went wrong!'}
