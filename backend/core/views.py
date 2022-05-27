@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.permissions import IsAdminUser
-from core.models import Semester, Week
+from core.models import Notification, Semester, Week
 from core.serializers import (
     SemesterSerializerYearAndSem , 
     WeekSerializer,
@@ -41,12 +41,20 @@ class CreateCommentToWFAR(APIView):
             faculty = Faculty.objects.get(id=faculty_id)
             wfar = WFAR.objects.get(id=wfar_id)
             
-            WFAR_Comment.objects.create(
+            wfar_comment = WFAR_Comment.objects.create(
                 faculty_id = faculty,
                 wfar_id = wfar,
                 description = description
 
             )
+
+            notification = Notification()
+            notification.detail = f"A new comment has been added to your WFAR entry for Week {wfar.week_no}."
+            notification.type = 5
+            notification.owner_id = wfar.faculty_id
+            notification.wfar_id = wfar
+            notification.wfar_comment_id = wfar_comment
+            notification.save()
 
             message = {
                 "detail": "comment added!"
@@ -59,18 +67,36 @@ class UpdateWFARStatus(APIView):
     permission_classes = [IsAuthenticated]
     def put(self, request, statusVal):
         try:
+
             if statusVal == 3:
                 wfar = WFAR.objects.get(id=request.data['wfar_id'])
                 wfar.status = 3
                 wfar.checked_at = datetime.now()
                 wfar.faculty_checker_id = request.user
                 wfar.save()
-            if statusVal == 4:
+
+                notifType = 3
+                detail = f"Your WFAR for week {wfar.week_no} has been checked and received ok status!"
+
+            elif statusVal == 4:
+                notifType = 4
                 wfar = WFAR.objects.get(id=request.data['wfar_id'])
                 wfar.status = 4
                 wfar.checked_at = datetime.now()
                 wfar.faculty_checker_id = request.user
                 wfar.save()
+
+                notifType = 4
+                detail = f"Your WFAR for week {wfar.week_no} has been checked with revisions!"
+
+            faculty = wfar.faculty_id
+            
+            notification = Notification()
+            notification.detail = detail
+            notification.type = notifType
+            notification.owner_id = faculty
+            notification.wfar_id = wfar
+            notification.save()
 
             message = {
                 "detail": "status updated!"

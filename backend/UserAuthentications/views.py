@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.serializers import FacultySerializerWithToken
-from core.models import Faculty
+from core.models import Faculty, Notification
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 
@@ -178,6 +178,12 @@ class FacultyRegister(APIView):
                 contact_no = data['contact_no'],
                 )
             
+                notification = Notification()
+                notification.detail = f"{user.last_name}, {user.first_name} has registered on the system."
+                notification.type = 6
+                notification.faculty_registered_id = user
+                notification.save()
+
                 return Response({"detail": "Registered successfully!"}, status=status.HTTP_200_OK)
             except:
                 return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

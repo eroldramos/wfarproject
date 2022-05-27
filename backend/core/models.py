@@ -172,3 +172,13 @@ class WFAR_Comment(models.Model):
     faculty_id = models.ForeignKey(Faculty, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Notification(models.Model):
+    detail = models.TextField(max_length=1000)
+    type = models.PositiveSmallIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    read_at = models.DateTimeField(null=True)
+    owner_id = models.ForeignKey(Faculty, related_name="faculty_owner", on_delete=models.CASCADE, null=True)
+    wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE, null=True)
+    wfar_comment_id = models.ForeignKey(WFAR_Comment, on_delete=models.CASCADE, null=True)
+    faculty_registered_id = models.ForeignKey(Faculty, related_name="faculty_registered", on_delete=models.CASCADE, null=True)

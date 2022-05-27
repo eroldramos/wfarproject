@@ -7,7 +7,7 @@ ManageFacultiesUnassignmentSerializer,
 FacultySerializer
 )
 from core.permissions import IsAdminUser, IsAdminAreaChairAndDeptHead
-from core.models import Faculty
+from core.models import Faculty, Notification
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
@@ -18,14 +18,33 @@ class ChangeUserType(APIView):
         try:
             
             faculty = Faculty.objects.get(id=request.data['id'])
+            faculty_prev_user_type = faculty.user_type
             faculty.user_type = int(request.data['new_user_type'])
             faculty.save()
             
-            message = "Role updated to Faculty."   
+            message = "Role updated to Faculty."  
+            detail = "You have been demoted to a normal Faculty position."
+            notif_type = 8
+
             if request.data['new_user_type']==2:
                 message = "Role updated to Area Chair."
+                if faculty_prev_user_type == 3:
+                    detail = "You have been demoted to an Area Chair position."
+                    notif_type = 8
+                else:
+                    detail = "You have been promoted to an Area Chair position."
+                    notif_type = 7
             if request.data['new_user_type']==3:
                 message = "Role updated to Department Head."
+                notif_type = 7
+                detail = "You have been promoted to a Department Head position."
+
+            notification = Notification()
+            notification.detail = detail
+            notification.type = notif_type
+            notification.owner_id = faculty
+            notification.save()
+            
             return Response({"detail": message}, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -252,9 +271,29 @@ class AssignedFaculties(APIView):
             for id in data:
                 print(id)
                 faculty = Faculty.objects.get(id=id)
+                faculty_prev_assignee = faculty.assignee_id
                 faculty.assignee_id = assignedTo
                 faculty.save()
+
+                if faculty_prev_assignee != None:
+                    detail = f"You have been reassigned to {faculty.last_name}, {faculty.first_name}."
+                else:
+                    detail = f"You have been assigned to {faculty.last_name}, {faculty.first_name}."
+
+                notification = Notification()
+                notification.detail = detail
+                notification.type = 9
+                notification.owner_id = faculty
+                notification.save()
+                
             message = {"detail":"faculties assigned!"}
+
+            notification = Notification()
+            notification.detail = f"You have been assigned faculties."
+            notification.type = 10
+            notification.owner_id = assignedTo
+            notification.save()
+
             return Response(message,status=status.HTTP_200_OK)
         except:
             message ={'detail': 'Something went wrong!'}
