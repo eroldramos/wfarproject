@@ -16,6 +16,9 @@
 .button label{
 
 }
+.button svg{
+  margin-right: 3px;
+}
 .button.rg {
   font-size: 1em;
   padding: 15px 25px 11.5px 15px;

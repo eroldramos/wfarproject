@@ -1,7 +1,111 @@
 .container{
+}
+.header-container{
+    width: 100%;
+}
+.body-container{
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px rgba(233, 216, 206, 0.7);
+}
+.dp-container{
+    display: flex;
+    height: 170px;
+    background: linear-gradient(#BB7360 65%, transparent 35%);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+.image-container{   
+    width: 18%;
+}
+.name-container{
+    width: 82%;
+    margin-top: 115px;
+}
+.name-container h3, p{
+    margin: 0;
+}
+.name-container p{
+    color: #BAB7B7;
+}
+.name-container h3{
+    font-weight: 600;
+}
+.image-bg-container{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 18px 0 0 40px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.image-bg-container img {
+    width: 130px;
+    height: 130px;
+    cursor: pointer;
+}
+.edit-buttons-container{
+    margin-left: 30px;
+    padding-top: 30px;
+    width: 18%;
+}
+.edit-buttons-container button{
+    margin-top: 20px;
+    position: relative;
+    right: 0;
+}
+.button-field{
+    display: flex;
+    margin-right: 0px;
+    margin-left: auto;
+    width: fit-content;
+} 
+.details-container{
     display: flex;
 }
-.horizontal-container{
+.user-details-container{
+    width: 82%;
+}
+.user-details-container h3{
+    margin-left: 60px;
+}
+.scrollable-area{
+    overflow-y: scroll;
+    margin: 10px 5px 10px 10px;
+    height: 320px;
+}
+.scrollable-area::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+    /* border: 1px solid black; */
+  }
+  .scrollable-area::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 5px;
+  }
+.user-info-container{
+    margin-top: 20px;
+    display: flex;
+}
+.details-placeholder{
+    margin-left: 20px;
+}
+.details-placeholder p{
+    margin: 0;
+    font-size: 16px;
+}
+.details-placeholder:nth-child(1){
+   width: 18%;
+   margin-left: 100px;
+}
+.details-placeholder:nth-child(1) p{
+   font-weight: 600;
+}
+.info-text{
+    color: #888888;
+}
+/* .horizontal-container{
     display: flex;
     flex-direction: column;
 }
@@ -77,4 +181,4 @@
     margin-right: 0px;
     margin-left: auto;
     width: fit-content;
-}
+} */
