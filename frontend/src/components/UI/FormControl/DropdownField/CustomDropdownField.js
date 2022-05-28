@@ -16,7 +16,9 @@ const CustomDropdownField = (props) => {
         " " +
         styles[props.size] +
         " " +
-        styles[props.type]
+        styles[props.type] +
+        " " +
+        styles[props.custom]
       }
     >
       <label htmlFor={props.id}>{props.labelName}</label>

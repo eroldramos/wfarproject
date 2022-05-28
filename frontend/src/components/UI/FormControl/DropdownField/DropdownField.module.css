@@ -124,3 +124,14 @@
   font-size: 0.875em;
   display: block;
 }
+.custom-dropdown{
+  margin: 5px 0px;
+  padding: 0px 10px 15px 0;
+}
+.custom-dropdown.form select{
+  height: 40px;
+  background-position-y: 8px;
+}
+.custom-dropdown.form label{
+  margin: 5px 0;
+}
