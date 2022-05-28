@@ -307,7 +307,7 @@ class AssignedFaculties(APIView):
 
             detail2=f"You have been assigned faculties."
             subject2="You have Faculty Assignment"
-            send_email(faculty.id, subject2, detail2)
+            send_email(assignedTo.id, subject2, detail2)
 
             return Response(message,status=status.HTTP_200_OK)
         except:
