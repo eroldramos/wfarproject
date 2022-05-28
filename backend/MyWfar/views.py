@@ -20,7 +20,7 @@ from django.db.models import Q
 from datetime import timedelta, date
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
-
+from core.SendEmail import send_email
 class RetrieveMyWfar(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -168,6 +168,11 @@ class SubmitWfar(APIView):
             notification.wfar_id = wfar
             notification.save()
 
+            subject = "Faculty submited a WFAR"
+            message = f"{faculty.last_name}, {faculty.first_name} has submitted WFAR for week {wfar.week_no}."
+            send_email(faculty.id, subject, message)
+
+
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been submitted."}, status = status.HTTP_200_OK);
         # except:
         #     return Response({"detail": "The WFAR cannot be sumitted, an error has occured."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
@@ -191,6 +196,10 @@ class UnsubmitWfar(APIView):
             notification.owner_id = faculty_assignee
             notification.wfar_id = wfar
             notification.save()
+
+            subject = "Faculty unsubmited a WFAR"
+            message = f"{faculty.last_name}, {faculty.first_name} has unsubmitted WFAR for week {wfar.week_no}."
+            send_email(faculty.id, subject, message)
 
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been unsubmitted."}, status = status.HTTP_200_OK);
         except:

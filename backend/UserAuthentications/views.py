@@ -7,12 +7,14 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 
 
-from django.core.mail import send_mail
+
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 from itsdangerous import TimedJSONWebSignatureSerializer 
+from core.SendEmail import send_email
+
 # Create your views here.
 
 
@@ -183,6 +185,11 @@ class FacultyRegister(APIView):
                 notification.type = 6
                 notification.faculty_registered_id = user
                 notification.save()
+                
+                subject = "Account has been registered"
+                message = f"You have successfully registered! Your account is currently on process of validation."
+
+                send_email(user.id, subject, message)
 
                 return Response({"detail": "Registered successfully!"}, status=status.HTTP_200_OK)
             except:

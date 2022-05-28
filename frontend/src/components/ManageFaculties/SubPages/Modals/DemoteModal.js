@@ -64,7 +64,7 @@ const DemoteModal = (props) => {
             </div>
             <div className={styles["modal-btn-container"]}>
               <ModalButton
-                label="Promote"
+                label="Demote"
                 type={selectedRole === 0 ? "cancel" : "primary"}
                 size="s"
                 disabled={selectedRole === 0 ? true : false}
