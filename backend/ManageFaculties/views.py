@@ -284,14 +284,18 @@ class AssignedFaculties(APIView):
 
                 if faculty_prev_assignee != None:
                     detail = f"You have been reassigned to {faculty.last_name}, {faculty.first_name}."
+                    subject = "Faculty reassignment"
                 else:
                     detail = f"You have been assigned to {faculty.last_name}, {faculty.first_name}."
+                    subject = "Faculty assignment"
 
                 notification = Notification()
                 notification.detail = detail
                 notification.type = 9
                 notification.owner_id = faculty
                 notification.save()
+
+                send_email(faculty.id, subject, detail)
                 
             message = {"detail":"faculties assigned!"}
 
@@ -300,6 +304,10 @@ class AssignedFaculties(APIView):
             notification.type = 10
             notification.owner_id = assignedTo
             notification.save()
+
+            detail2=f"You have been assigned faculties."
+            subject2="You have Faculty Assignment"
+            send_email(faculty.id, subject2, detail2)
 
             return Response(message,status=status.HTTP_200_OK)
         except:
