@@ -18,18 +18,18 @@ from core.models import Semester, WFAR_Comment, WFAR, WFAR_Entry, Faculty, WFAR_
 
 from django.contrib.auth.hashers import make_password
 # EROLD -------
-
+from core.SendEmail import send_email
 
 class RetrieveWFARPerUser(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, pk):
-        # try:
+        try:
             wfar = WFAR.objects.get(id=pk)
             serializer = WFARCheckingWFARSerializer(wfar, many=False)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
-        # except:
-        #     return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+        except:
+            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
 class CreateCommentToWFAR(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
@@ -47,7 +47,7 @@ class CreateCommentToWFAR(APIView):
                 description = description
 
             )
-
+            
             notification = Notification()
             notification.detail = f"A new comment has been added to your WFAR entry for Week {wfar.week_no}."
             notification.type = 5
@@ -55,6 +55,10 @@ class CreateCommentToWFAR(APIView):
             notification.wfar_id = wfar
             notification.wfar_comment_id = wfar_comment
             notification.save()
+
+            subject = "A new comment has been added to you WFAR entry"
+            message = f"A new comment has been added to your WFAR entry for Week {wfar.week_no}."
+            send_email(faculty.id, subject, message)
 
             message = {
                 "detail": "comment added!"
@@ -77,6 +81,7 @@ class UpdateWFARStatus(APIView):
 
                 notifType = 3
                 detail = f"Your WFAR for week {wfar.week_no} has been checked and received ok status!"
+                subject = f"WFAR for week {wfar.week_no} has been checked and received ok status!"
 
             elif statusVal == 4:
                 notifType = 4
@@ -88,6 +93,7 @@ class UpdateWFARStatus(APIView):
 
                 notifType = 4
                 detail = f"Your WFAR for week {wfar.week_no} has been checked with revisions!"
+                subject = f"WFAR for week {wfar.week_no} has been checked with revisions!"
 
             faculty = wfar.faculty_id
             
@@ -97,6 +103,8 @@ class UpdateWFARStatus(APIView):
             notification.owner_id = faculty
             notification.wfar_id = wfar
             notification.save()
+
+            send_email(faculty.id, subject, detail)
 
             message = {
                 "detail": "status updated!"

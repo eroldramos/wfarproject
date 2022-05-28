@@ -7,6 +7,8 @@ from core.models import Faculty
 from datetime import datetime
 from django.db.models import Q
 from django.core.paginator import Paginator
+from core.SendEmail import send_email
+
 class RetrievePendingFaculties(APIView):
     permission_classes = [IsAdminAreaChairAndDeptHead]
     def get(self, request):
@@ -52,6 +54,11 @@ class AcceptFacultyAccount(APIView):
                 faculty = Faculty.objects.get(id=id)
                 faculty.accepted_at = datetime.now()
                 faculty.save()
+
+                subject = "Account accepted"
+                message = f"Your account has been accepted. You are able to login now."
+
+                send_email(faculty.id, subject, message)
             message = {"detail":"Account(s) accepted!"}
             return Response(message,status=status.HTTP_200_OK)
         except:

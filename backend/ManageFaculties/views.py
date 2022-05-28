@@ -11,7 +11,7 @@ from core.models import Faculty, Notification
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
-
+from core.SendEmail import send_email
 class ChangeUserType(APIView):
     permission_classes = [IsAdminUser]
     def put(self, request):
@@ -22,28 +22,35 @@ class ChangeUserType(APIView):
             faculty.user_type = int(request.data['new_user_type'])
             faculty.save()
             
-            message = "Role updated to Faculty."  
+            message = "Role updated to normal Faculty."  
             detail = "You have been demoted to a normal Faculty position."
             notif_type = 8
+
+            subject = "Demoted to a normal Faculty position"
 
             if request.data['new_user_type']==2:
                 message = "Role updated to Area Chair."
                 if faculty_prev_user_type == 3:
                     detail = "You have been demoted to an Area Chair position."
                     notif_type = 8
+                    subject = "Demoted to an Area Chair Position"
                 else:
                     detail = "You have been promoted to an Area Chair position."
                     notif_type = 7
+                    subject = "Promoted to an Area Chair Position"
             if request.data['new_user_type']==3:
                 message = "Role updated to Department Head."
                 notif_type = 7
                 detail = "You have been promoted to a Department Head position."
+                subject = "Promoted to an Department Head position"
 
             notification = Notification()
             notification.detail = detail
             notification.type = notif_type
             notification.owner_id = faculty
             notification.save()
+
+            send_email(faculty.id, subject, detail)
             
             return Response({"detail": message}, status=status.HTTP_200_OK)
         except:
