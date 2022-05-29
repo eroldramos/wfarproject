@@ -55,6 +55,13 @@
     background: #F4F4F4;
     transition: .05s linear;
 }
+.edit-profile-form-control{
+    padding: 0px 10px 15px 0;
+}
+.edit-profile-form-control input{
+    height: 40px;
+    padding: 10px 10px;
+}
 
 .form-control input:focus {
     background-color: #FFFFFF;

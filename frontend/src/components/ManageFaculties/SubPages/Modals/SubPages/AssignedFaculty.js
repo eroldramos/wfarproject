@@ -40,14 +40,14 @@ const AssignedFaculty = (props) => {
 
   const icon = (
     <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
+      width="16"
+      height="16"
+      viewBox="0 0 84 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M6.5 4C6.5 2.895 5.605 2 4.5 2C3.395 2 2.5 2.895 2.5 4C2.5 5.105 3.395 6 4.5 6C5.605 6 6.5 5.105 6.5 4ZM7.5 5V6H9V7.5H10V6H11.5V5H10V3.5H9V5H7.5ZM0.5 9V10H8.5V9C8.5 7.67 5.835 7 4.5 7C3.165 7 0.5 7.67 0.5 9Z"
+        d="M48 16C48 7.16 40.84 0 32 0C23.16 0 16 7.16 16 16C16 24.84 23.16 32 32 32C40.84 32 48 24.84 48 16ZM60 24V32H84V24H60ZM0 56V64H64V56C64 45.36 42.68 40 32 40C21.32 40 0 45.36 0 56Z"
         fill="white"
       />
     </svg>
@@ -218,7 +218,7 @@ const AssignedFaculty = (props) => {
               {selectedUser.length > 0 && (
                 <TransparentButton
                   onClick={onUnassignedFacultyHandler}
-                  label="Remove "
+                  label="Remove"
                   type="transparent"
                   size="xs"
                   svg={icon}

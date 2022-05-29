@@ -43,8 +43,14 @@
 .m-l{
     width: 150px;
 }
+.c-s{
+    width: 90%;
+}
 .l-l{
     margin: 5px 0;
     width: 100%;
     /* border: 1px solid red; */
+}
+.button label{
+    border: 1px solid black;
 }
