@@ -64,12 +64,17 @@ class FacultyLogin(APIView):
             user = authenticate(request, username = username, password = password)
 
             if user is not None:
-                if not user.is_staff and user.accepted_at:
+                if not user.is_staff and user.accepted_at and not user.deleted_at:
                     serializer = FacultySerializerWithToken(user, many=False)
                     return Response(serializer.data, status = status.HTTP_200_OK)
                 if not user.is_staff and not user.accepted_at:
                     message = {
                         "detail": "Login declined! Please contact your administrator to validate your account."
+                    }
+                    return Response(message, status = status.HTTP_401_UNAUTHORIZED)
+                if not user.is_staff and user.deleted_at:
+                    message = {
+                        "detail": "Account is deactivated!"
                     }
                     return Response(message, status = status.HTTP_401_UNAUTHORIZED)
                 if user.is_staff:
