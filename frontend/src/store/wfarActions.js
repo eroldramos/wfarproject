@@ -23,16 +23,19 @@ export const retrieveWfarsOverview = (filterSemester, filterPage, filterSort, fi
                 login: { userInfo },
             } = getState();
 
+            const userId = userInfo.isAdmin ? 0 : userInfo.id;
+            console.log("userfffffffffinfo");
+            console.log(userInfo);
+
             const response = await fetch(url, {
                 method: "POST",
-                body: JSON.stringify({ "faculty_checker_id": userInfo.id }),
+                body: JSON.stringify({ "faculty_checker_id": userId }),
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + userInfo.token,
                 }
             });
 
-            console.log("user info " + userInfo.token);
             if (!response.ok) {
                 console.log("error encountered here");
                 const data = await response.json();

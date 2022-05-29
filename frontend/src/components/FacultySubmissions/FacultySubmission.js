@@ -26,14 +26,14 @@ const FacultySubmission = () => {
                 </div>
 
                 <div className={styles.viewOptionsContainer}>
-                    {/* <FilterButton
+                    <FilterButton
                         label="Overview"
                         type="primary"
                         linkTo="overview" />
                     <FilterButton
                         label="Weekly View"
                         type="primary"
-                        linkTo="weekly-view" /> */}
+                        linkTo="weekly-view" />
                 </div>
 
             </div>

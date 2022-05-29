@@ -61,7 +61,7 @@ class RetrieveFacultyWFAR(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == '0':
+            if faculty_checker_id == 0:
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
             else:
@@ -110,13 +110,13 @@ class RetrieveFacultyWFARNoSearch(APIView):
 
             if (sort == '0'):
                 sort_filter1 = "last_name"
-                sort_filter2 = "first_name"
+                sort_filter2 = "first_name" 
             else:
                 sort_filter1 = "-last_name"
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == '0':
+            if faculty_checker_id == 0:
                 faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(

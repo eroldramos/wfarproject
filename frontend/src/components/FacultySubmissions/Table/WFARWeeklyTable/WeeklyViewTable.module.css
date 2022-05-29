@@ -11,7 +11,7 @@
 }
 .weeklyTable tr th{
     text-align: center;
-    font-weight: normal;
+    font-weight: bold;
 }
 .weeklyTable tr th:nth-child(1){
     text-align: left;
@@ -63,4 +63,8 @@
 }
 .weeklyTable tr td:nth-child(5){
     border-right: none;
+}
+
+.weeklyTable tr, .weeklyTable td, .weeklyTable th {
+    background-color: #FFFFFF !important;
 }

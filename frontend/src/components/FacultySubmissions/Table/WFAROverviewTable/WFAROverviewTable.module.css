@@ -19,8 +19,14 @@
 .table{
     border-collapse: collapse;
     width: 100%;
+    background-color: #FFFFFF!important;
     /* max-width: 1250px; */
 }
+
+.table td, .table tr, .table th {
+    background-color: #FFFFFF !important;
+}
+
 .table tr:nth-child(1) th{
     padding: 0;
 }
