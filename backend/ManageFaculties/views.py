@@ -136,6 +136,46 @@ class RetrieveAllAssignedFaculty(APIView):
             return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class RetrieveAllAssignedFacultyForAreaChairHead(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, pk):
+        try:
+            search =  request.GET.get('search') if request.GET.get('search') != None else ''
+            faculty = Faculty.objects.get(id=pk,)
+            faculty_serializer = FacultySerializer(faculty, many=False)
+            assigned_faculties = Faculty.objects.filter(
+                    Q(is_staff = False),
+                    Q(assignee_id = faculty.id),
+                       Q(birthdate__icontains = search)|
+                Q(emp_no__icontains = search)|
+                Q(username__icontains = search)|
+                Q(email__icontains = search)|
+                Q(first_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(middle_name__icontains = search)|
+                Q(contact_no__icontains = search)
+            ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
+            p = Paginator(assigned_faculties,6)
+            page = request.GET.get('page')
+            if page == None or str(page) == "null":
+                page = 1
+
+            assigned_faculties = p.get_page(page)
+            serializer = ManageFacultiesAssignmentSerializer(assigned_faculties, many=True)
+            
+            data = {
+                "checker": faculty_serializer.data,
+                "faculties": serializer.data,
+                "page": int(page),
+                "pages": p.num_pages,
+                "first_page":1,
+                "last_page": p.num_pages, 
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": "Something went wrong!"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class RetrieveAllNormalFacultyUser(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):

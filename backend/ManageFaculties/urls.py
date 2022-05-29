@@ -11,6 +11,7 @@ urlpatterns =[
 
     path('change-user-type/', views.ChangeUserType.as_view(), name='change-user-type'),
     path('retrieve-all-assigned-faculty/<str:pk>/', views.RetrieveAllAssignedFaculty.as_view(), name='retrieve-all-assigned-faculty'),
+    path('retrieve-all-assigned-faculty-for-area-chair-head/<str:pk>/', views.RetrieveAllAssignedFacultyForAreaChairHead.as_view(), name='retrieve-all-assigned-faculty-for-area-chair-head'),
 #     path('promote-user-to-area-chair/<str:pk>/', views.PromoteUserToAreaChair.as_view(), name='promote-user-to-area-chair'),
 #     path('promote-user-to-department-head/<str:pk>/', views.PromoteUserToDepartmentHead.as_view(), name='promote-user-to-department-head'),
 ]
