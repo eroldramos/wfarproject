@@ -161,7 +161,7 @@ class RetrieveAllAssignedFacultyForAreaChairHead(APIView):
                 page = 1
 
             assigned_faculties = p.get_page(page)
-            serializer = ManageFacultiesAssignmentSerializer(assigned_faculties, many=True)
+            serializer = ManageFacultiesUnassignmentSerializer(assigned_faculties, many=True)
             
             data = {
                 "checker": faculty_serializer.data,

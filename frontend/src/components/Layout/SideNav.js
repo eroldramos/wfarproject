@@ -294,7 +294,13 @@ const SideNav = (props) => {
           )}
           <li
             className={`nav-menu-item ${
-              window.location.pathname == "/manage-faculty/department-head/"
+              window.location.pathname == "/manage-faculty/department-head/" ||
+              window.location.pathname == "/manage-faculty/area-chair/" ||
+              window.location.pathname == "/manage-faculty/faculty/" ||
+              window.location.pathname.split("/")[3] == "assigned-faculty" ||
+              window.location.pathname.split("/")[3] == "unassigned-faculty" ||
+              window.location.pathname.split("/")[3] == "department-head" ||
+              window.location.pathname.split("/")[3] == "area-chair"
                 ? "nav-menu-item--active"
                 : ""
             }`}
