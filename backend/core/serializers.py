@@ -94,7 +94,7 @@ class ManageFacultiesAssignmentSerializer(ManageFacultiesSerializer):
     # assigned_faculties = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type',]
+        fields=['id', 'last_name', 'first_name', 'middle_name', 'emp_no','username', 'birthdate', 'email', 'contact_no', 'user_type', ]
     # def get_assigned_faculties(self, obj):
     #     faculties = obj.faculty_set.all()
     #     serializer = ManageFacultiesSerializer(faculties, many=True)

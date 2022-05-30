@@ -16,6 +16,7 @@ class RetrievePendingFaculties(APIView):
             search =  request.GET.get('search') if request.GET.get('search') != None else ''
             faculties = Faculty.objects.filter(
                 Q(accepted_at = None),
+                Q(deleted_at = None),
                 Q(is_staff = False),
                 Q(created_at__icontains = search)|
                 Q(emp_no__icontains = search)|

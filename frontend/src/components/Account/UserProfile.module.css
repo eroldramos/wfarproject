@@ -32,18 +32,29 @@
 }
 .image-bg-container{
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    margin: 18px 0 0 40px;
     background: #FFFFFF;
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    padding: 12px;
+    min-width: 100px;
+    min-height: 100px;
+    max-width: 150px;
+    max-height: 150px;
+    margin: 17px 0 0 23%;
+}
+@media screen and (max-width: 1080px) and (min-width: 480px){
+    .image-bg-container{
+        margin-top: 50px;
+    }
 }
 .image-bg-container img {
-    width: 130px;
-    height: 130px;
+    border-radius: 50%;
     cursor: pointer;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 130px;
+    max-height: 130px;
 }
 .edit-buttons-container{
     margin-left: 30px;

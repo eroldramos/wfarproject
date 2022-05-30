@@ -17,6 +17,9 @@ export const getFaculties = (search = "") => {
       login: { userInfo },
     } = getState();
 
+    if (!userInfo.isAdmin) {
+      url = `/api/retrieve-all-assigned-faculty-for-area-chair-head/${userInfo.id}/${search}`;
+    }
     try {
       dispatch(getFacultiesActions.getFacultiesRequest());
 
