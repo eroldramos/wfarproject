@@ -2,7 +2,6 @@ import styles from "./DropdownField.module.css";
 
 const DropdownField = (props) => {
 
-
 	const onChangeHandler = (event) => {
 		props.onChange(event.target.value);
 	}
@@ -24,11 +23,10 @@ const DropdownField = (props) => {
 			<select
 				className={styles["form-control"]}
 				onChange={onChangeHandler}
-				onBlur={props.onBlur}
-			>
+				onBlur={props.onBlur}>
 				{props.options.map((option) => {
 					return (
-						<option key={option.value} value={option.value} selected={option.isSelected}>
+						<option key={option.value} value={option.value} selected={option.value === props.selectedValue}>
 							{option.label}
 						</option>
 					);

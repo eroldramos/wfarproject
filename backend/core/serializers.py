@@ -1,4 +1,3 @@
-from dataclasses import field, fields
 from rest_framework import serializers
 from core.models import (
     Faculty, 
@@ -13,7 +12,6 @@ from core.models import (
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from datetime import datetime, timedelta, date
 from django.utils import timezone
-import calendar
 import math
 class FacultySerializer(serializers.ModelSerializer):
     isAdmin = serializers.SerializerMethodField(read_only=True)
@@ -134,7 +132,8 @@ class SemesterAllFieldsSerializer(serializers.ModelSerializer):
   
     class Meta:
         model = Semester
-        fields = ('id', 'label', 'school_year', 'start_date', 'end_date')
+        fields = ('id', 'label', 'school_year',
+                  'start_date', 'end_date', 'no_of_weeks')
 
 
 
@@ -152,7 +151,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         return name
 
 
-# ERIKA
 class SemesterSerializer(serializers.ModelSerializer):
     current_week = serializers.SerializerMethodField(read_only=True)
     class Meta:
@@ -164,14 +162,21 @@ class SemesterSerializer(serializers.ModelSerializer):
         currentWeek = abs(math.floor((difference_of_days.days/7)+1))
         return currentWeek
 
+
+# ERIKA ---------------------------------
+
+
+
+
+
+# Basic WFAR 
 class WfarEntrySerializer(serializers.ModelSerializer):
-    # accomplishment_date = serializers.DateField(format="%B %d")
     class Meta:
         model = WFAR_Entry
         fields = ('id', 'accomplishment_date', 'subject', 'course_year_section', 'deleted_at')
 
+# Archived WFAR Entry
 class WfarArchivedEntrySerializer(serializers.ModelSerializer):
-    # accomplishment_date = serializers.DateField(format="%B %d")
     semester = serializers.SerializerMethodField()
     week_no = serializers.SerializerMethodField()
     class Meta:
@@ -184,6 +189,7 @@ class WfarArchivedEntrySerializer(serializers.ModelSerializer):
     def get_week_no(self, obj):
         return obj.wfar_id.week_no;
 
+# WFAR with Semester and Week bracket
 class WfarSerializer(serializers.ModelSerializer):
     wfar_entries = WfarEntrySerializer(many=True, read_only=True)
     semester = serializers.SerializerMethodField(read_only=True)
@@ -225,15 +231,30 @@ class WfarSerializer(serializers.ModelSerializer):
             if (i + 1 == week_no):
                 break;
 
-
         week_bracket[0] = week_bracket[1] - timedelta(6)
         return week_bracket; 
 
+# Basic WFAR
+class WfarSerializer2(serializers.ModelSerializer):
+
+    no_of_entries = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = WFAR
+        fields = ('id', 'status', 'created_at', 'updated_at', 'checked_at', 'submitted_at', 'week_no', 'semester_id', 'no_of_entries')
+
+    def get_no_of_entries(self, obj):
+        no_of_entries = WFAR_Entry.objects.filter(wfar_id=obj.id);
+        return no_of_entries.count()
+
+
+# WFAR Entry Activity
 class WfarEntryActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = WFAR_Entry_Activity
         fields = ('id', 'description')
 
+# WFAR Entry Attachment
 class WfarEntryAttachmentSerializer(serializers.ModelSerializer):
     image_uri = serializers.SerializerMethodField(read_only=True)
     class Meta:
@@ -246,13 +267,7 @@ class WfarEntryAttachmentSerializer(serializers.ModelSerializer):
         imgage_uri = obj.image_uri.url
         return request.build_absolute_uri(imgage_uri)
 
-
-    # def get_image_uri(self, obj):
-    #     # request = self.context.get('request')
-    #     image_uri = obj.image_uri.url
-    #     return image_uri;
-
-
+# WFAR Entry with activities and attachments
 class WfarEntryViewSerializer(serializers.ModelSerializer):
     wfar_entry_activities = WfarEntryActivitySerializer(many=True, read_only=True)
     wfar_entry_attachments = WfarEntryAttachmentSerializer(many=True, read_only=True)
@@ -263,20 +278,10 @@ class WfarEntryViewSerializer(serializers.ModelSerializer):
                     'wfar_entry_activities', 'wfar_entry_attachments');
 
 
-# --------------------------------------
-
-# class 
-
-class WfarSerializer2(serializers.ModelSerializer):
-
-    class Meta:
-        model = WFAR
-        fields = '__all__'
-
+# Faculty including their WFARs
 class FacultyWfarSerializer(serializers.ModelSerializer):
 
     wfars = serializers.SerializerMethodField()
-    # wfars = WfarSerializer2(many=True, read_only=True)
 
     class Meta:
         model = Faculty
@@ -286,30 +291,40 @@ class FacultyWfarSerializer(serializers.ModelSerializer):
         semester_id = self.context.get("semester_id")
         current_week_no = self.context.get("current_week_no")
 
-        # wfars_instances = instance.wfars.all()
         wfars_instances = instance.wfars.filter(semester_id=semester_id, week_no__lte=current_week_no)
         return WfarSerializer2(wfars_instances, many=True).data
 
-# class CarTypesSerializer(serializers.ModelSerializer):
+# Faculty including their WFARs for the specified week
+class FacultyWeeklyWfarSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = CarType
-#         fields = '__all__'
+    wfars = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Faculty
+        fields = ('id', 'first_name', 'middle_name',
+                  'last_name', 'extension_name', 'wfars')
+
+    def get_wfars(self, instance):
+        semester_id = self.context.get("semester_id")
+        week_no = self.context.get("week_no")
+        wfar_status = self.context.get("wfar_status")
+
+        if wfar_status == '0' or wfar_status == '1':
+            wfars_instances = instance.wfars.filter(semester_id=semester_id, week_no=week_no)
+        else:
+            wfars_instances = instance.wfars.filter(semester_id=semester_id, week_no=week_no, status=wfar_status)
+
+        return WfarSerializer2(wfars_instances, many=True).data
 
 
-# class CarSerializer(serializers.ModelSerializer):
 
-#     car_types = serializers.SerializerMethodField()
 
-#     class Meta:
-#         model = Car
-#         fields = '__all__'
 
-#     def get_car_types(self, instance):
-#         # Filter using the Car model instance and the CarType's related_name
-#         # (which in this case defaults to car_types_set)
-#         car_types_instances = instance.car_types_set.filter(brand="Toyota")
-#         return CarTypesSerializer(car_types_instances, many=True).data
+
+
+
+
+
 
 
 # SHEEN

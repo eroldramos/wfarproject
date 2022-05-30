@@ -1,22 +1,21 @@
 import React from "react";
-import WeekOptions from "../../../UI/FormControl/DropdownField/DropdownField";
+import DropdownField from "../../../UI/FormControl/DropdownField/DropdownField";
 import styles from "./WeekFilter.module.css";
 
-const weekOptions = (props) => {
-    const WEEK_FILTER = [
-        { label: "Week 1", id: 1 },
-        { label: "Week 2", id: 2 },
-        { label: "Week 3", id: 3 },
-        { label: "Week 3", id: 3 },
-    ];
+const WeekFilter = (props) => {
+
+    console.log("props.selectedWeekNo");
+    console.log(props.selectedWeekNo);
+
     return (
         <div className={styles.weekOptionsContainer}>
-            <WeekOptions
+            <DropdownField
                 id={props.id}
                 name={props.name}
                 labelName={props.labelName}
-                onChange={null}
-                options={WEEK_FILTER}
+                onChange={props.onChange}
+                selectedValue={props.selectedWeekNo}
+                options={props.weeks}
                 size={props.size}
                 type={props.type}
             />
@@ -24,4 +23,4 @@ const weekOptions = (props) => {
     );
 };
 
-export default weekOptions;
+export default WeekFilter;

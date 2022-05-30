@@ -1,6 +1,9 @@
 import DropdownField from "../../UI/FormControl/DropdownField/DropdownField";
 import styles from "./SemesterFilter.module.css";
+import { useSelector } from "react-redux";
+
 const SemesterFilter = (props) => {
+	const selectedSemester = useSelector(state => state.wfarSelectedSemester.semester);
 
 	let semesters = [];
 	props.options.map((semester) => {
@@ -8,9 +11,10 @@ const SemesterFilter = (props) => {
 		semesters.push({
 			value: semester.id,
 			label: semester.school_year + " - " + semester.label,
-			isSelected: semester.is_active
+			isSelected: semester.id == selectedSemester.id ? true : false
 		});
 	});
+
 	return (
 		<div className={styles.semFilterContainer}>
 			<DropdownField
