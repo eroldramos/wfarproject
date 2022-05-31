@@ -1,44 +1,33 @@
-from ctypes import alignment
 import datetime
-from hashlib import new
-# Import mimetypes module
-import mimetypes
-# import os module
-import os
 from io import BytesIO
 
 from reportlab.platypus import Image, Table, TableStyle
 from reportlab.lib.units import cm, inch
-from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.pagesizes import landscape
 from ReportGeneration.views import PageNumCanvas
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from yaml import serialize
-from core.serializers import WfarEntryAttachmentSerializer, WFARCheckingWFARSerializer #EROLD
-from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
-from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead
+from core.serializers import WFARCheckingWFARSerializer #EROLD
+from core.serializers import FacultyWfarSerializer, FacultyWeeklyWfarSerializer
+from core.permissions import IsAuthenticated
 from core.models import Semester, WFAR_Comment, WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
 from django.db.models import Q
-from django.http import (FileResponse, Http404, HttpResponse,
-                         HttpResponseRedirect)
-# Import HttpResponse module
+from django.http import (HttpResponse)
 from django.http.response import HttpResponse
-# Import render module
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
 from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer, Table,
                                 TableStyle)
 
-from reportlab.lib.enums import TA_LEFT, TA_CENTER
+from reportlab.lib.enums import TA_CENTER
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 # Create your views here.
 
 # --------------------------
@@ -99,7 +88,6 @@ class RetrieveFacultyWFAR(APIView):
         except:
             # pass
             return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class RetrieveFacultyWFARNoSearch(APIView):
     # permission_classes = [IsAdminAreaChairAndDeptHead]
@@ -386,10 +374,6 @@ class PrintWFAROverviewPDF(APIView):
                 response.write(buff.getvalue())
                 buff.close()
             return response
-        # except:
-        #     #     pass
-        #     return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 def getStatus(wfar_id, status, contentStyle):
     if status == 1:
@@ -686,6 +670,113 @@ class PrintWFARIndividualPDF(APIView):
             buff.close()
         return response
 
+
+# WEEK ------------------------
+class RetrieveFacultyWeeklyWFAR(APIView):
+    # permission_classes = [IsAdminAreaChairAndDeptHead]
+
+    def post(self, request, semester_id, week_no, wfar_status, page_no, sort, search):
+
+        try:
+
+            if (sort == '0'):
+                sort_filter1 = "last_name"
+                sort_filter2 = "first_name"
+            else:
+                sort_filter1 = "-last_name"
+                sort_filter2 = "-first_name"
+
+            faculty_checker_id = request.data['faculty_checker_id']
+            if faculty_checker_id == 0:
+                faculties = Faculty.objects.filter(
+                    Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
+            else:
+                faculties = Faculty.objects.filter(
+                    Q(last_name__icontains=search) | Q(
+                        first_name__icontains=search),
+                    assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+
+            pages = Paginator(faculties, 10)
+            faculties = pages.get_page(page_no)
+
+            semester = Semester.objects.get(pk=semester_id)
+            if (semester != None):
+                semester_id = semester.id
+                weeks = getWeeks(semester)
+
+                serializer = FacultyWeeklyWfarSerializer(faculties, context={
+                    "semester_id": semester_id, "week_no": week_no, "wfar_status": wfar_status}, many=True)
+
+                data = {
+                    "faculties": serializer.data,
+                    "page_no": page_no,
+                    "no_of_pages": pages.num_pages,
+                    "first_page": 1,
+                    "last_page": pages.num_pages,
+                    "week_brackets": weeks[0],
+                    "semester_no_of_weeks": semester.no_of_weeks,
+                    "current_week_no": weeks[1] + 1
+                }
+
+                return Response(data, status=wfar_status.HTTP_200_OK)
+
+            else:
+                return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
+        except:
+            # pass
+            return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RetrieveFacultyWeeklyWFARNoSearch(APIView):
+    # permission_classes = [IsAdminAreaChairAndDeptHead]
+
+    def post(self, request, semester_id, week_no, wfar_status, page_no, sort):
+
+        # try:
+
+            if (sort == '0'):
+                sort_filter1 = "last_name"
+                sort_filter2 = "first_name"
+            else:
+                sort_filter1 = "-last_name"
+                sort_filter2 = "-first_name"
+
+            faculty_checker_id = request.data['faculty_checker_id']
+            if faculty_checker_id == 0  or faculty_checker_id == '0':
+                faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+            else:
+                faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
+                    pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+
+            pages = Paginator(faculties, 10)
+            faculties = pages.get_page(page_no)
+
+            semester = Semester.objects.get(pk=semester_id)
+            if (semester != None):
+                semester_id = semester.id
+                weeks = getWeeks(semester)
+
+                serializer = FacultyWeeklyWfarSerializer(faculties, context={
+                    "semester_id": semester_id, "week_no": week_no, "wfar_status": wfar_status}, many=True)
+
+                data = {
+                    "faculties": serializer.data,
+                    "page_no": page_no,
+                    "no_of_pages": pages.num_pages,
+                    "first_page": 1,
+                    "last_page": pages.num_pages,
+                    "week_brackets": weeks[0],
+                    "semester_no_of_weeks": semester.no_of_weeks,
+                    "current_week_no": weeks[1] + 1
+                }
+
+                return Response(data, status=status.HTTP_200_OK)
+
+            else:
+                return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
+        # except:
+        #     # pass
+        #     return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

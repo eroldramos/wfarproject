@@ -3,7 +3,8 @@ import {
     wfarRetrieveOverviewActions,
     wfarPrintOverviewActions,
     wfarActiveSemesterActions,
-    wfarPrintIndividualActions
+    wfarPrintIndividualActions,
+    weeklyWfarRetrieveActions
 } from "./wfarReducers";
 // import axios from 'axios'
 
@@ -193,6 +194,66 @@ export const retrieveActiveSemester = () => {
             console.log("error encountered here3");
             console.log(error.message)
             dispatch(wfarActiveSemesterActions.retrieveFail({ error: error.message }));
+        }
+    }
+}
+
+export const retrieveWeeklyWfars = (filterSemester, filterWeek, status, filterPage, filterSort, filterSearch) => {
+    return async (dispatch, getState) => {
+
+        let url = `/api/wfar/semester=${filterSemester}/week=${filterWeek}/wfar_status=${status}/page=${filterPage}/sort=${filterSort}`;
+        if (filterSearch !== '') {
+            url = `/api/wfar/semester=${filterSemester}/week=${filterWeek}/wfar_status=${status}/page=${filterPage}/sort=${filterSort}/search=${filterSearch}`;
+        }
+
+        try {
+            dispatch(weeklyWfarRetrieveActions.retrieveRequest());
+
+            const {
+                login: { userInfo },
+            } = getState();
+
+            console.log("THE USER INFO IS ___________");
+            console.log(userInfo);
+
+            const userId = userInfo.isAdmin ? 0 : userInfo.id;
+
+            console.log("USER ID ___________");
+            console.log(userId);
+            
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({ "faculty_checker_id": userId }),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + userInfo.token,
+                }
+            });
+
+            if (!response.ok) {
+                console.log("error encountered here");
+                const data = await response.json();
+                console.log("error encountered here2");
+                let errorMessage = data.detail;
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            dispatch(weeklyWfarRetrieveActions.retrieveSuccessfully({
+                facultiesWithWfars: data.faculties,
+                pageNo: data.page_no,
+                noOfPages: data.no_of_pages,
+                firstPage: data.first_page,
+                lastPage: data.last_page
+            }));
+
+            console.log(data);
+
+        } catch (error) {
+            console.log("error encountered here3");
+            console.log(error.message)
+            dispatch(weeklyWfarRetrieveActions.retrieveFail({ error: error.message }));
         }
     }
 }

@@ -1,43 +1,46 @@
-
-.tableContainer{ 
-    overflow-x: auto;
-    /* max-width: 1250px; */
-    background: #FFFFFF;
-    /* background: pink; */
-    border: 1px solid #EAEBED;
+.table {
+    display: block;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
     border-radius: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* margin: 0 5px; */
+    margin-left: 5px;
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #EAEBED !important;
 }
-.tableContainer::-webkit-scrollbar{
+
+.table::-webkit-scrollbar {
     width: 10px;
     height: 8px;
 }
-.tableContainer::-webkit-scrollbar-thumb{
+
+.table::-webkit-scrollbar-thumb {
     background: #C4C4C4;
     border-radius: 5px;
 }
-.table{
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #FFFFFF!important;
-    /* max-width: 1250px; */
-}
 
-.table td, .table tr, .table th {
+.table td,
+.table tr,
+.table th {
     background-color: #FFFFFF !important;
+    padding: 0px 40px !important;
+    height: 60px;
+    border: 1 solid #EAEBED !important;
+    text-align: center;
 }
 
-.table tr:nth-child(1) th{
-    padding: 0;
-}
-.table tr:nth-child(1) th .weekLabel{
+.table tr:nth-child(1) th .weekLabel {
     font-weight: 500;
     font-size: 12px;
     margin: 0px 0 8px 0;
     color: #777777;
 }
-.weekTextContainer{
-    position: relative; 
+
+.weekTextContainer {
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
     margin: 8px 0px 3px 0;
@@ -52,48 +55,46 @@
 
 .weekLabel {
     width: 150px;
+    /* background-color: #0F8B57; */
 }
 
-.presentWeek{
+.presentWeek {
     color: #FFFFFF;
     background: #0F8B57;
 }
-.table tr th:nth-child(1){
-    text-align: left;
-    padding: 25px 40px;
+
+.table tr th:nth-child(1) {
     font-size: 14px;
-    display: flex;
+    border-top-left-radius: 10px;
 }
 
 .facultyLabel {
     width: 150px;
 }
 
-.table tr td:nth-child(1){
+.table tr td:nth-child(1) {
     border-left: none;
     text-align: left;
-    padding: 25px 40px;
 }
-.table tr th:nth-child(1) svg:hover{
+
+.table tr th:nth-child(1) svg:hover {
     cursor: pointer;
 }
-.table tr th:nth-child(1) svg{
+
+.table tr th:nth-child(1) svg {
     margin-left: 10px;
 }
-.table tr th:nth-child(1) svg:hover{
+
+.table tr th:nth-child(1) svg:hover {
     cursor: pointer;
 }
-.table tr th, td{
-    padding: 14px;
-    border: 1px solid #EAEBED;
-    text-align: center;
-}
-.table tr th{
+
+.table tr th {
     border-top: none;
     border-left: none;
 }
 
-.table strong{
+.table strong {
     font-weight: 600;
 }
 
@@ -118,4 +119,12 @@
 
 .sortDescSvg {
     transform: rotate(180deg);
+}
+
+/* fixed */
+.table .fixed {
+    background-color: #fafafa !important;
+    position: sticky;
+    left: 0;
+    z-index: 5;
 }
