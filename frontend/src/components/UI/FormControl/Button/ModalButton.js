@@ -4,7 +4,7 @@ import styles from "./ModalButton.module.css";
 const Button = (props) => {
   const buttonType = props.type == "primary" ? "submit" : "button";
   const classes =
-    styles["button"] + " " + styles[props.type] + " " + styles[props.size]; // r = regular, s = small, xs = extra small
+    styles["button"] + " " + styles[props.type] + " " + styles[props.size] + " " + styles[props.hover]; // r = regular, s = small, xs = extra small
 
   return (
     <Fragment>

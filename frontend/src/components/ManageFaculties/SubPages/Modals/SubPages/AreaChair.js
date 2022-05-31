@@ -1,6 +1,7 @@
 import CustomSearchField from "../../../../UI/FormControl/SearchField/CustomSearchField";
 import styles from "../ViewFacultyStatus.module.css";
 import RadioRows from "./RadioRows";
+import Button from "../../../../UI/FormControl/Button/Button";
 import table from "./Table.module.css";
 import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
@@ -115,11 +116,16 @@ const AreaChair = (props) => {
           <div
             className={`${table["col"]} ${table["col-1"]} ${table["col-header"]}`}
           ></div>
-          <div
-            className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
-          >
+          <div className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}>
             <div className={table["label-container"]}>Choose An Area Chair</div>
-            <div className={table["icon-container2"]}>
+            {/* <div className={table["icon-container2"]}>
+              <TransparentButton
+                onClick={onAssignedFacultyHandler}
+                label="Assign"
+                type="transparent"
+                size="xs"
+                svg={icon}
+              />
               {assigneeId > 0 && (
                 <TransparentButton
                   onClick={onAssignedFacultyHandler}
@@ -129,7 +135,7 @@ const AreaChair = (props) => {
                   svg={icon}
                 />
               )}
-            </div>
+            </div> */}
           </div>
         </li>
         {listFaculty.length === 0 && (
@@ -155,6 +161,28 @@ const AreaChair = (props) => {
           pages={pages}
           url={window.location.pathname}
         />
+      </div>
+      <div className={styles["button-container"]}>
+        <div className={styles["cancel-btn-container"]}>
+          <Button
+            onClick={props.onCloseAssignModal}
+            label="Cancel"
+            type="cancel"
+            size="s"
+          />
+        </div>
+        <div className={styles["assign-btn-container"]}>
+          {assigneeId > 0 && (
+            <TransparentButton
+              onClick={onAssignedFacultyHandler}
+              label="Assign"
+              type="transparent"
+              size="cs"
+              svg={icon}
+            />
+          )}
+        </div>
+        <div className={styles["clearfix"]}></div>
       </div>
     </Fragment>
   );

@@ -115,7 +115,7 @@ const ViewFacultyModal = (props) => {
               }
             />
           </Routes>
-          <div className={styles["button-container"]}>
+          {/* <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button
                 onClick={props.onClose}
@@ -125,7 +125,7 @@ const ViewFacultyModal = (props) => {
               />
             </div>
             <div className={styles["clearfix"]}></div>
-          </div>
+          </div> */}
         </div>
       </Modal>
     </Fragment>

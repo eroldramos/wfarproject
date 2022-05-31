@@ -129,7 +129,7 @@ const FacultyAssignModal = (props) => {
               }
             />
           </Routes>
-          <div className={styles["button-container"]}>
+          {/* <div className={styles["button-container"]}>
             <div className={styles["cancel-btn-container"]}>
               <Button
                 onClick={props.onCloseAssignModal}
@@ -138,7 +138,7 @@ const FacultyAssignModal = (props) => {
                 size="s"
               />
             </div>
-            <div className={styles["cancel-btn-container"]}>
+            { <div className={styles["cancel-btn-container"]}>
               <Button
                 onClick={props.onCloseAssignModal}
                 label="Assign"
@@ -146,9 +146,9 @@ const FacultyAssignModal = (props) => {
                 size="s"
                 svg = {icon}
               />
-            </div>
+            </div> }
             <div className={styles["clearfix"]}></div>
-          </div>
+          </div> */}
         </div>
       </Modal>
     </Fragment>

@@ -94,16 +94,15 @@
   border-bottom-right-radius: 10px;
 }
 .icon-container2 {
-  position: absolute;
-  right: 55px;
-  top: 240px;
+  border: 1px solid black;
 }
 /* .label-container {
 }
 .clearfix {
 } */
 .scrollable-container{
-  max-height: 100px;
+  min-height: 100px;
+  max-height: 150px;
   overflow-y: scroll;
   border: 1px solid black;
 }

@@ -49,6 +49,7 @@ const ViewStatusModal = (props) => {
                 size="s"
                 disabled={true}
                 onClick={null}
+                hover = "hover-none"
               />
             </div>
           </div>
@@ -64,8 +65,6 @@ const ViewStatusModal = (props) => {
                 <div className={`${styles["assign-btn"]} ${styles["profile"]} `}>
                   <img
                     src={props.assignee_id.profile_picture}
-                    height="70"
-                    width="70"
                   />
                 </div>
                 <div className={styles["position-container"]}>

@@ -59,9 +59,15 @@
 .cancel-btn-container {
   float: right;
   width: fix-content;
-  /* border: 1px solid black; */
 }
-
+.assign-btn-container{
+  float: right;
+  width: fix-content;
+}
+.icon-container{
+  float: right;
+  width: fix-content;
+}
 .assign-container {
   background-color: #f8f8fa;
   padding: 15px 20px;
@@ -130,7 +136,14 @@
   border-radius: 10px;
   background: #ccc;
   margin: 0 10px;
-  cursor: pointer;
+  /* cursor: pointer; */
+  width: 70px;
+  height: 70px;
+}
+.profile img{
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
 }
 .assign-btn:hover {
   opacity: 0.5;

@@ -29,6 +29,10 @@
   font-size: 0.875em;
   padding: 11.5px 25px 11.5px 15px;
 }
+.button.cs{
+  font-size: .875em;
+  padding: 11.5px 20px;
+}
 
 .button.xs {
   font-size: 0.875em;

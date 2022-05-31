@@ -1,6 +1,7 @@
 import CustomSearchField from "../../../../UI/FormControl/SearchField/CustomSearchField";
 import styles from "../ViewFacultyStatus.module.css";
 import Rows from "./Rows";
+import Button from "../../../../UI/FormControl/Button/Button";
 import table from "./Table.module.css";
 import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
@@ -209,7 +210,7 @@ const UnassignedFaculty = (props) => {
             <div className={table["label-container"]}>
               {selectedUser.length} Selected.
             </div>
-            <div className={table["icon-container"]}>
+            {/* <div className={table["icon-container"]}>
               {selectedUser.length > 0 && (
                 <TransparentButton
                   onClick={onAssignedFacultyHandler}
@@ -219,7 +220,7 @@ const UnassignedFaculty = (props) => {
                   svg={icon}
                 />
               )}
-            </div>
+            </div> */}
           </div>
         </li>
         {listFaculties.length === 0 && (
@@ -244,6 +245,28 @@ const UnassignedFaculty = (props) => {
           pages={pages}
           url={window.location.pathname}
         />
+      </div>
+      <div className={styles["button-container"]}>
+        <div className={styles["cancel-btn-container"]}>
+          <Button
+            onClick={props.onCloseAssignModal}
+            label="Cancel"
+            type="cancel"
+            size="s"
+          />
+        </div>
+        <div className={styles["icon-container"]}>
+          {selectedUser.length > 0 && (
+            <TransparentButton
+              onClick={onAssignedFacultyHandler}
+              label="Remove"
+              type="transparent"
+              size="cs"
+              svg={icon}
+            />
+          )}
+        </div>
+        <div className={styles["clearfix"]}></div>
       </div>
     </Fragment>
   );

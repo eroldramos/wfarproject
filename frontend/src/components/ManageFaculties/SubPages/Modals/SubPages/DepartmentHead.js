@@ -2,6 +2,7 @@ import CustomSearchField from "../../../../UI/FormControl/SearchField/CustomSear
 import styles from "../ViewFacultyStatus.module.css";
 import RadioRows from "./RadioRows";
 import table from "./Table.module.css";
+import Button from "../../../../UI/FormControl/Button/Button";
 import React, { Fragment, useState, useEffect } from "react";
 import TransparentButton from "../../../../UI/FormControl/Button/TransparentButton";
 import {
@@ -14,8 +15,8 @@ import Paginator from "../../../SubComponents/Paginator";
 const DepartmentHead = (props) => {
   const icon = (
     <svg
-      width="12"
-      height="12"
+      width="17"
+      height="17"
       viewBox="0 0 12 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +125,14 @@ const DepartmentHead = (props) => {
             <div className={table["label-container"]}>
               Choose a Department Head.
             </div>
-            <div className={table["icon-container2"]}>
+            {/* <div className={table["icon-container2"]}>
+              <TransparentButton
+                  onClick={onAssignedFacultyHandler}
+                  label="Assign"
+                  type="transparent"
+                  size="xs"
+                  svg={icon}
+                />
               {assigneeId > 0 && (
                 <TransparentButton
                   onClick={onAssignedFacultyHandler}
@@ -134,7 +142,7 @@ const DepartmentHead = (props) => {
                   svg={icon}
                 />
               )}
-            </div>
+            </div> */}
           </div>
         </li>
         {listFaculty.length === 0 && (
@@ -160,6 +168,28 @@ const DepartmentHead = (props) => {
           pages={pages}
           url={window.location.pathname}
         />
+      </div>
+      <div className={styles["button-container"]}>
+        <div className={styles["cancel-btn-container"]}>
+          <Button
+            onClick={props.onCloseAssignModal}
+            label="Cancel"
+            type="cancel"
+            size="s"
+          />
+        </div>
+        <div className={styles["assign-btn-container"]}>
+          {assigneeId > 0 && (
+            <TransparentButton
+              onClick={onAssignedFacultyHandler}
+              label="Assign"
+              type="transparent"
+              size="cs"
+              svg={icon}
+            />
+          )}
+        </div>
+        <div className={styles["clearfix"]}></div>
       </div>
     </Fragment>
   );
