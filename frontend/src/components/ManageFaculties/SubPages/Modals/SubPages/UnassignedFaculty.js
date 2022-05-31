@@ -173,6 +173,9 @@ const UnassignedFaculty = (props) => {
     alert("Assigned Successfully");
     props.onClose();
   };
+  const closeModal = () =>{
+    props.onClose();
+  }
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
@@ -249,7 +252,7 @@ const UnassignedFaculty = (props) => {
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
           <Button
-            onClick={props.onCloseAssignModal}
+            onClick={closeModal}
             label="Cancel"
             type="cancel"
             size="s"

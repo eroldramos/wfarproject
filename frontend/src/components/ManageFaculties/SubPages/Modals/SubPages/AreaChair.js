@@ -94,6 +94,9 @@ const AreaChair = (props) => {
     props.onCloseAssignModal();
   };
 
+  const closeModal = () =>{
+    props.onCloseAssignModal();
+  }
   console.log(assigneeId);
   return (
     <Fragment>
@@ -165,7 +168,7 @@ const AreaChair = (props) => {
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
           <Button
-            onClick={props.onCloseAssignModal}
+            onClick={closeModal}
             label="Cancel"
             type="cancel"
             size="s"

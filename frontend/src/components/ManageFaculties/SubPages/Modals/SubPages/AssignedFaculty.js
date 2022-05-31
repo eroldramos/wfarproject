@@ -177,7 +177,9 @@ const AssignedFaculty = (props) => {
     alert("Removed Successfully");
     props.onClose();
   };
-
+  const closeModal = () =>{
+    props.onClose();
+  }
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
@@ -254,7 +256,7 @@ const AssignedFaculty = (props) => {
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
           <Button
-            onClick={props.onCloseAssignModal}
+            onClick={closeModal}
             label="Cancel"
             type="cancel"
             size="s"
