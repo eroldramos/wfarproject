@@ -128,7 +128,6 @@ class WFAR(models.Model):
     faculty_checker_id = models.ForeignKey(
         Faculty, on_delete=models.CASCADE, null=True, related_name='faculty_checkers')
     semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    # week_id = models.ForeignKey(Week, on_delete=models.CASCADE, null=True, related_name='week_id') #fk para don sa week san iuupload yung WFAR (?)
 
 
 # WFAR Entry
