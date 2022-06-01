@@ -10,6 +10,8 @@ urlpatterns = [
          name=''),
     path('profile/edit-password/<str:pk>/', views.EditPassword.as_view(),
          name=''),
+    path('profile/upload-signature/<str:pk>/', views.SetSignature.as_view(),
+         name=''),
     path('profile/delete-account/<str:pk>/', views.DeleteAccount.as_view(),
          name=''),
 

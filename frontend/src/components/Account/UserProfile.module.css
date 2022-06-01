@@ -1,5 +1,4 @@
-.container{
-}
+
 .header-container{
     width: 100%;
 }
@@ -136,5 +135,10 @@
 background: #c4c4c4;
 border-radius: 5px;
 }
-.form-field{
+#UploadSignature{
+      cursor: pointer !important;
+}
+#UploadSignature:hover{
+      color: blue;
+      font-size: 2em;
 }

@@ -42,6 +42,8 @@ class Faculty(AbstractUser):
         'self', on_delete=models.SET_NULL, null=True)
     profile_picture = models.ImageField(
         upload_to='profile_picture', null=True, default='/avatar.svg')
+    signature = models.ImageField(
+        upload_to='signatures', null=True)
     # added null=True for assignee_id to avoid can't be null error
 
     class Meta:
@@ -172,12 +174,16 @@ class WFAR_Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Notification(models.Model):
     detail = models.TextField(max_length=1000)
     type = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     read_at = models.DateTimeField(null=True)
-    owner_id = models.ForeignKey(Faculty, related_name="faculty_owner", on_delete=models.CASCADE, null=True)
+    owner_id = models.ForeignKey(
+        Faculty, related_name="faculty_owner", on_delete=models.CASCADE, null=True)
     wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE, null=True)
-    wfar_comment_id = models.ForeignKey(WFAR_Comment, on_delete=models.CASCADE, null=True)
-    faculty_registered_id = models.ForeignKey(Faculty, related_name="faculty_registered", on_delete=models.CASCADE, null=True)
+    wfar_comment_id = models.ForeignKey(
+        WFAR_Comment, on_delete=models.CASCADE, null=True)
+    faculty_registered_id = models.ForeignKey(
+        Faculty, related_name="faculty_registered", on_delete=models.CASCADE, null=True)

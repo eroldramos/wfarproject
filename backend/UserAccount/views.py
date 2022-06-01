@@ -12,6 +12,7 @@ from core.serializers import ProfileSerializer
 from core.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 
+
 class RetrieveAccountDetails(APIView):
     #permission_classes = [IsAuthenticated]
 
@@ -77,3 +78,11 @@ class DeleteAccount(APIView):
         return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
 
 
+class SetSignature(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        user = Faculty.objects.get(pk=pk)
+        user.signature = request.FILES['signature']
+        user.save()
+        return Response({"detail": "Edited"}, status=status.HTTP_200_OK)

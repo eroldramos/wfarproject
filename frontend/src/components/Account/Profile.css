@@ -15,6 +15,15 @@
    margin-left: 48px;
   cursor: pointer !important;
   }
+  
+  .UploadSignature{
+      cursor: pointer !important;
+
+  }
+  .UploadSignature:hover{
+      color: blue;
+
+  }
   .profilepic{
     position: relative;
     top: 60px;
