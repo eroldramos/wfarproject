@@ -455,7 +455,7 @@ const UserProfile = () => {
           <div className={styles["image-container"]}>
             <div className={styles["image-bg-container"]}>
               <input id="input_file" type="file" onChange={(evt) => HandleProfileChange(evt)} accept={'image/*'} style={{ display: 'none' }} />
-              <img id="get_file" style={{ borderRadius: '50%' }} src={profile_pic == null ? Pic : profile_pic} alt="pic" onClick={() => OpenProfileChange()} />
+              <img id="get_file" src={profile_pic == null ? Pic : profile_pic} alt="pic" onClick={() => OpenProfileChange()} />
             </div>
           </div>
           <div className={styles["name-container"]}>
