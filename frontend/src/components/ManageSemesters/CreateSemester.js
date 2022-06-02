@@ -9,6 +9,7 @@ import { createSem } from "../../store/manageSemActions";
 import { useNavigate } from "react-router-dom";
 import { createSemReset } from "../../store/manageSemActions";
 import "./CreateSemester.css";
+import Swal from "sweetalert2";
 const CreateSemester = () => {
   const createSemReducerValues = useSelector((state) => state.createSem);
   const { success, error, isLoading } = createSemReducerValues;
@@ -109,8 +110,25 @@ const CreateSemester = () => {
 
   useEffect(() => {
     if (success) {
-      navigate("/manage-semesters/");
-      dispatch(createSemReset());
+      Swal.fire({
+        html:
+          "<h4>Semester created!</h4>" +
+          "<h5>A new semester has been created.</h5>",
+        icon: "success",
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: "OK",
+        iconColor: "#D1D1D1", // question icon color
+        confirmButtonColor: "#BE5A40",
+        cancelButtonColor: "#A1A1A1",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/manage-semesters/");
+          dispatch(createSemReset());
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     }
   }, [success]);
   return (
@@ -149,32 +167,32 @@ const CreateSemester = () => {
           />
         </div>
         <div className="create-semester-container">
-        <div className={styles["bottom-form-container"]}>
-          <DateField
-            size="rg"
-            id="startDate"
-            inputName="startDate"
-            labelName={"Start Date"}
-            onChange={startDateChangeHandler}
-            onBlur={startDateBlurHandler}
-            value={enteredStartDate}
-            error={
-              startDateInputHasError ? "Please select a start date." : null
-            }
-          />
-          <DateField
-            size="rg"
-            id="endDate"
-            inputName="endDate"
-            labelName={"End Date"}
-            onChange={endDateChangeHandler}
-            onBlur={endDateBlurHandler}
-            value={enteredEndDate}
-            error={endDateInputHasError ? "Please select a end date." : null}
-          />
+          <div className={styles["bottom-form-container"]}>
+            <DateField
+              size="rg"
+              id="startDate"
+              inputName="startDate"
+              labelName={"Start Date"}
+              onChange={startDateChangeHandler}
+              onBlur={startDateBlurHandler}
+              value={enteredStartDate}
+              error={
+                startDateInputHasError ? "Please select a start date." : null
+              }
+            />
+            <DateField
+              size="rg"
+              id="endDate"
+              inputName="endDate"
+              labelName={"End Date"}
+              onChange={endDateChangeHandler}
+              onBlur={endDateBlurHandler}
+              value={enteredEndDate}
+              error={endDateInputHasError ? "Please select a end date." : null}
+            />
+          </div>
         </div>
-        </div>
-        
+
         <div className={styles["button-container"]}>
           <Button
             label="Cancel"
