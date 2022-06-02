@@ -527,6 +527,345 @@ const UserProfile = () => {
               type="primary"
               size="c-s" />
           </div>
+          {isOpen && <Modal onClose={onClose} size="m-long-height">
+            <div className={styles["modal-inner-container"]}>
+              <h3 className={styles["modal-header-text"]}>Edit Profile</h3>
+              <p className={styles["modal-desc-text"]}>Fill out the required fields</p>
+              <div className={styles["input-field-scrollable"]}>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    labelName="First Name"
+                    placeholder="Enter a first name"
+                    onChange={firstNameChangeHandler}
+                    onBlur={firstNameBlurHandler}
+                    value={enteredFirstName}
+                    error={
+                      firstNameInputHasError ? "Please enter a valid first name." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="middleName"
+                    name="middleName"
+                    labelName="Middle Name"
+                    placeholder="Enter a middle name"
+                    onChange={middleNameChangeHandler}
+                    onBlur={middleNameBlurHandler}
+                    value={enteredMiddleName}
+                    error={
+                      middleNameInputHasError ? "Please enter a middle name." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    labelName="Last Name"
+                    placeholder="Enter a last name"
+                    onChange={lastNameChangeHandler}
+                    onBlur={lastNameBlurHandler}
+                    value={enteredLastName}
+                    error={lastNameInputHasError ? "Please enter a last name." : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="empNo"
+                    name="empNo"
+                    labelName="Employee No."
+                    placeholder="Enter a employee no."
+                    onChange={employeeNoChangeHandler}
+                    onBlur={employeeNoBlurHandler}
+                    value={enteredEmployeeNo}
+                    error={employeeNoInputHasError ? employeeNoErrorMessage : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <CustomDropdownField
+                    id="civilStatus"
+                    name="civilStatus"
+                    labelName="Civil Status"
+                    onChange={civilStatusChangeHandler}
+                    onBlur={civilStatusBlurHandler}
+                    value={enteredCivilStatus}
+                    options={CIVIL_STATUS}
+                    type="form"
+                    setEnteredValue=''
+                    error={
+                      civilStatusInputHasError
+                        ? "Please select a civil status."
+                        : null
+                    }
+                    size="l"
+                    custom="custom-dropdown"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="houseNo"
+                    name="houseNo"
+                    labelName="House No."
+                    placeholder="Enter a house no."
+                    onChange={houseNoChangeHandler}
+                    onBlur={houseNoBlurHandler}
+                    value={enteredHouseNo}
+                    error={
+                      houseNoInputHasError ? "Please enter a valid house no.." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="street"
+                    name="street"
+                    labelName="Street"
+                    placeholder="Enter a street"
+                    onChange={streetChangeHandler}
+                    onBlur={streetBlurHandler}
+                    value={enteredStreet}
+                    error={streetInputHasError ? "Please enter a valid street." : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="subdivision"
+                    name="subdivision"
+                    labelName="Subdivision"
+                    placeholder="Enter a subdivision"
+                    onChange={subdivisionChangeHandler}
+                    onBlur={subdivisionBlurHandler}
+                    value={enteredSubdivision}
+                    error={
+                      subdivisionInputHasError
+                        ? "Please enter a valid subdivision."
+                        : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="barangay"
+                    name="barangay"
+                    labelName="Barangay"
+                    placeholder="Enter a barangay"
+                    onChange={barangayChangeHandler}
+                    onBlur={barangayBlurHandler}
+                    value={enteredBarangay}
+                    error={
+                      barangayInputHasError ? "Please enter a valid barangay." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="municipality"
+                    name="municipality"
+                    labelName="Municipality"
+                    placeholder="Enter a municipality"
+                    onChange={municipalityChangeHandler}
+                    onBlur={municipalityBlurHandler}
+                    value={enteredMunicipality}
+                    error={
+                      municipalityInputHasError
+                        ? "Please enter a valid municipality."
+                        : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="province"
+                    name="province"
+                    labelName="Province"
+                    placeholder="Enter a province"
+                    onChange={provinceChangeHandler}
+                    onBlur={provinceBlurHandler}
+                    value={enteredProvince}
+                    error={
+                      provinceInputHasError ? "Please enter a valid province." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    labelName="Zip Code"
+                    placeholder="Enter a zip code"
+                    onChange={zipCodeChangeHandler}
+                    onBlur={zipCodeBlurHandler}
+                    value={enteredZipCode}
+                    error={
+                      zipCodeInputHasError ? "Please enter a valid zip code." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="contactNo"
+                    name="contactNo"
+                    labelName="Contact No."
+                    placeholder="Enter a contact no."
+                    onChange={contactNoChangeHandler}
+                    onBlur={contactNoBlurHandler}
+                    value={enteredContactNo}
+                    error={
+                      contactNoInputHasError ? "Please enter a contact no.." : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="email"
+                    name="email"
+                    labelName="Email"
+                    placeholder="Enter an email"
+                    onChange={emailChangeHandler}
+                    onBlur={emailBlurHandler}
+                    value={enteredEmail}
+                    error={emailInputHasError ? emailErrorMessage : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["button-field"]}>
+                  <SmallButton
+                    onClick={onSubmit}
+                    label="Save"
+                    type="primary"
+                    size="s" />
+                  <Button
+                    onClick={onClose}
+                    label="Cancel"
+                    type="cancel"
+                    size="s" />
+                </div>
+              </div>
+            </div>
+          </Modal>}
+          {passisOpen && <Modal onClose={passonClose} size="m">
+            <div className={styles["modal-inner-container"]}>
+              <h3 className={styles["modal-header-text"]}>Change Password</h3>
+              <p className={styles["modal-desc-text"]}>Fill out the required fields </p>
+              <div className={styles["input-field-scrollable"]}>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="password"
+                    id="currentpassword"
+                    name="currentpassword"
+                    labelName="Current Password"
+                    placeholder="Enter your current password"
+                    onChange={CurrentPasswordChangeHandler}
+                    onBlur={CurrentPasswordBlurHandler}
+                    value={enteredCurrentPassword}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="password"
+                    id="password"
+                    name="password"
+                    labelName="New Password"
+                    placeholder="Enter a password"
+                    onChange={passwordChangeHandler}
+                    onBlur={passwordBlurHandler}
+                    value={enteredPassword}
+                    error={passwordInputHasError ? passwordErrorMessage : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="password"
+                    id="confirmPassowrd"
+                    name="confirmPassword"
+                    labelName="Confirm New Password"
+                    placeholder="Confirm password"
+                    onChange={confirmPasswordChangeHandler}
+                    onBlur={confirmPasswordBlurHandler}
+                    value={enteredConfirmPassword}
+                    error={
+                      confirmPasswordInputHasError ? confirmPasswordErrorMessage : null
+                    }
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["button-field"]}>
+                  <SmallButton
+                    onClick={passonSubmit}
+                    label="Save"
+                    type="primary"
+                    size="s" />
+                  <Button
+                    onClick={passonClose}
+                    label="Cancel"
+                    type="cancel"
+                    size="s" />
+                </div>
+              </div>
+            </div>
+          </Modal>}
           <div className={styles["user-details-container"]}>
             <div className={styles["scrollable-area"]}>
               <h3 className={styles["section-text"]}>Personal Information</h3>
@@ -662,13 +1001,16 @@ const UserProfile = () => {
                 </div>
                 <div className={styles["details-placeholder"]}>
                   <input id="input_file2" type="file" onChange={(evt) => HandleSignatureChange(evt)} accept={'image/*'} style={{ display: 'none' }} />
+                  {/* <p className={styles["info-text"] + " " + styles["signature-info-text"]}>
+                  
+                  </p> */}
                   {
                     state.map((item) => {
                       if (signature == null) {
-                        return <p id="UploadSignature" onClick={() => OpenSignatureChange()}>none (click here to upload)</p>
+                        return <p id={styles["UploadSignature"]} onClick={() => OpenSignatureChange()}>none (click here to upload)</p>
                       }
                       else {
-                        return <p id="UploadSignature" onClick={() => openSignature(true)}>click here to view</p>
+                        return <p id={styles["UploadSignature"]} onClick={() => openSignature(true)}>click here to view</p>
                       }
                     })}
                 </div>
