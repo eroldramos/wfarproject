@@ -1,4 +1,5 @@
 #side-nav {
+    z-index: 100;
     background: #BE5A40;
     width: 85px;
     height: 100vh;

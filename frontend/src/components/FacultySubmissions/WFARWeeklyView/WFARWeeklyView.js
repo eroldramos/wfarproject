@@ -45,7 +45,7 @@ const WFARWeeklyView = () => {
         if (selectedSemester != null && activeSemester != null) {
             let tempWeeks = [];
 
-            for (let i = 1; i <= selectedSemester.no_of_weeks; i++) {
+            for (let i = 1; i <= selectedSemester.current_week  ; i++) {
                 tempWeeks.push({ value: i, label: "Week " + i });
             }
 
@@ -61,6 +61,7 @@ const WFARWeeklyView = () => {
     useEffect(() => {
         if (selectedSemester != null) {
             console.log("week no : " + selectedWeekNo);
+            console.log("searchValue : " + searchValue);
             dispatch(retrieveWeeklyWfars(selectedSemester.id, selectedWeekNo, status, selectedPageNo, sort, searchValue));
         }
     }, [selectedSemester, selectedWeekNo, status, selectedPageNo, searchValue, sort])
@@ -141,7 +142,7 @@ const WFARWeeklyView = () => {
                 </div>
             </div>
             <div className={styles.tableContainer}>
-                <WeeklyTable></WeeklyTable>
+                <WeeklyTable status={status}></WeeklyTable>
             </div>
             <div className={styles.footerContainer}>
                 <Footer></Footer>

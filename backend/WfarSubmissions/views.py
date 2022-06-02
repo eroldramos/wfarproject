@@ -718,7 +718,7 @@ class RetrieveFacultyWeeklyWFAR(APIView):
                     "current_week_no": weeks[1] + 1
                 }
 
-                return Response(data, status=wfar_status.HTTP_200_OK)
+                return Response(data, status=status.HTTP_200_OK)
 
             else:
                 return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
