@@ -113,3 +113,11 @@ td {
 .clickable {
     cursor: pointer;
 }
+
+.sortAscSvg {
+    transform: rotate(0deg);
+}
+
+.sortDescSvg {
+    transform: rotate(180deg);
+}

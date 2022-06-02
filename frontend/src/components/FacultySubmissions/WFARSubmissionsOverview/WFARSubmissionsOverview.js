@@ -92,6 +92,10 @@ const WFARSubmissionsOverview = () => {
 		dispatch(printWfarsOverview(selectedSemester.id, sort));
 	}
 
+	const pageNo = useSelector(state => state.wfarRetrieveOverview.pageNo);
+	const noOfPages = useSelector(state => state.wfarRetrieveOverview.noOfPages);
+
+
 	return (
 		<Fragment>
 			<div className={styles.secondarycontainer}>
@@ -115,7 +119,10 @@ const WFARSubmissionsOverview = () => {
 				<WFAROverviewTable onSortClicked={onSortClicked}></WFAROverviewTable>
 			</div>
 			<div className={styles.footerContainer}>
-				<Footer onSelectedPage={onSelectedPage} onClickExportHandler={onClickExportHandler}></Footer>
+				<Footer
+					pageNo={pageNo}
+					noOfPages={noOfPages}
+					onSelectedPage={onSelectedPage} onClickExportHandler={onClickExportHandler}></Footer>
 			</div>
 		</Fragment>
 	);

@@ -19,6 +19,10 @@ const WFARWeeklyView = () => {
     const semesters = useSelector((state) => state.wfarSemesters.semesters);
     const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
 
+
+    const pageNo = useSelector(state => state.weeklyWfarRetrieve.pageNo);
+    const noOfPages = useSelector(state => state.weeklyWfarRetrieve.noOfPages);
+
     // 
     const selectedSemester = useSelector(state => state.wfarSelectedSemester.semester);
     const [selectedWeekNo, setSelectedWeekNo] = useState(1);
@@ -104,6 +108,11 @@ const WFARWeeklyView = () => {
         setStatus(statusNo);
     }
 
+
+    const onClickExportHandler = () => {
+        // dispatch(printWfarsOverview(selectedSemester.id, sort));
+    }
+
     return (
         <Fragment>
             <div className={styles.secondarycontainer}>
@@ -147,10 +156,13 @@ const WFARWeeklyView = () => {
                 </div>
             </div>
             <div className={styles.tableContainer}>
-                <WeeklyTable status={status}></WeeklyTable>
+                <WeeklyTable status={status} onSortClicked={onSortClicked}></WeeklyTable>
             </div>
             <div className={styles.footerContainer}>
-                <Footer></Footer>
+                <Footer
+                    pageNo={pageNo}
+                    noOfPages={noOfPages}
+                    onSelectedPage={onSelectedPage} onClickExportHandler={onClickExportHandler}></Footer>
             </div>
         </Fragment>
     );

@@ -4,14 +4,31 @@ import { useEffect, useState } from "react";
 
 const Footer = (props) => {
 
-    const pageNo = useSelector(state => state.wfarRetrieveOverview.pageNo);
-    const noOfPages = useSelector(state => state.wfarRetrieveOverview.noOfPages);
-
+    let pageNo = props.pageNo;
+    let noOfPages = props.noOfPages;
     const [liPages, setLiPages] = useState([]);
 
     const pageOnClick = (i) => {
         props.onSelectedPage(i);
     }
+    useEffect(() => {
+
+    let pagesBuffer = [];
+
+    if (pageNo !== 0 && noOfPages !== 0) {
+        for (let i = 1; i <= noOfPages; i++) {
+            if (i === parseInt(pageNo)) {
+                pagesBuffer.push(<li className={styles['active']} onClick={() => pageOnClick(i)}>{i}</li>);
+            } else {
+                pagesBuffer.push(<li onClick={() => pageOnClick(i)}>{i}</li>);
+            }
+        }
+
+        setLiPages(pagesBuffer);
+    }
+    }, [pageNo, noOfPages]);
+
+
 
     const onClickPrevPageHandler = () => {
         let tempPageNo = parseInt(pageNo) - 1;
@@ -25,32 +42,6 @@ const Footer = (props) => {
         if (parseInt(tempPageNo) >= 1 && parseInt(tempPageNo) <= parseInt(noOfPages)) {
             props.onSelectedPage(tempPageNo);
         }
-    }
-
-    useEffect(() => {
-
-        let pagesBuffer = [];
-
-        if (pageNo !== 0 && noOfPages !== 0) {
-            for (let i = 1; i <= noOfPages; i++) {
-                if (i === parseInt(pageNo)) {
-                    pagesBuffer.push(<li className={styles['active']} onClick={() => pageOnClick(i)}>{i}</li>);
-                } else {
-                    pagesBuffer.push(<li onClick={() => pageOnClick(i)}>{i}</li>);
-                }
-            }
-
-            setLiPages(pagesBuffer);
-        }
-    }, [pageNo, noOfPages]);
-
-    const onClickExportHandler = () => {
-        // window.location = 'http://127.0.0.1:8000/api/wfar/overview/faculty=1/semester=1/sort=1/print';
-        // var restorepage = document.body.innerHTML;
-        // var printcontent = document.getElementById("tableWFAROverview").innerHTML;
-        // document.body.innerHTML = printcontent;
-        // window.print();
-        // document.body.innerHTML = restorepage;
     }
 
     return (

@@ -10,11 +10,23 @@ const WeeklyTable = (props) => {
     // hooks
     const dispatch = useDispatch();
     const facultiesWithWfars = useSelector(state => state.weeklyWfarRetrieve.facultiesWithWfars);
+    const [sortSvgClass, setSortSvgClass] = useState('sortAscSvg');
 
 
     useEffect(() => {
 
     }, [facultiesWithWfars]);
+
+
+    const onClickSortHandler = () => {
+        props.onSortClicked();
+        setSortSvgClass((prevState) => {
+            return prevState === 'sortAscSvg' ? 'sortDescSvg' : 'sortAscSvg';
+        });
+
+        console.log(sortSvgClass);
+    }
+
 
     function displayStatus(status) {
         switch (status) {
@@ -62,8 +74,8 @@ const WeeklyTable = (props) => {
                     <th>
                         Faculty{" "}
                         <svg
-                            className={styles.sortFacultyName}
-                            onClick={null}
+                            className={styles.sortFacultyName + " " + styles[sortSvgClass]}
+                            onClick={onClickSortHandler}
                             width="11"
                             height="11"
                             viewBox="0 0 11 11"
@@ -135,15 +147,16 @@ const WeeklyTable = (props) => {
                 })}
 
 
-                {counter == 0 && 
+                {counter == 0 &&
                     <tr>
                         <td colSpan={5}>
                             <div className="placeholder-data-not-available">No data is available.</div>
                         </td>
-                    </tr> }
+                    </tr>}
             </table>
         </div>
     );
 };
+
 
 export default WeeklyTable;
