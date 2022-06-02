@@ -45,15 +45,20 @@ const WFARWeeklyView = () => {
         if (selectedSemester != null && activeSemester != null) {
             let tempWeeks = [];
 
-            for (let i = 1; i <= selectedSemester.current_week  ; i++) {
+            let weeks = selectedSemester.current_week > selectedSemester.no_of_weeks ? 
+                selectedSemester.no_of_weeks : selectedSemester.current_week;
+            for (let i = 1; i <= weeks; i++) {
                 tempWeeks.push({ value: i, label: "Week " + i });
             }
+
+            console.log("selected semester: ");
+            console.log(selectedSemester)
 
             setWeeks(tempWeeks);
             if (selectedSemester.id == activeSemester[0].id) {
                 setSelectedWeekNo(selectedSemester.current_week);
             } else {
-                setSelectedWeekNo(selectedSemester.no_of_weeks);
+                setSelectedWeekNo(1);
             }
         }
     }, [selectedSemester, activeSemester])
