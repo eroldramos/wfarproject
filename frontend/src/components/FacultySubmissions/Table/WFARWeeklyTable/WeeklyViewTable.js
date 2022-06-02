@@ -16,15 +16,45 @@ const WeeklyTable = (props) => {
 
     }, [facultiesWithWfars]);
 
+    function displayStatus(status) {
+        switch (status) {
+            case 1:
+                return <div class={styles['noSubmission']}>No submission</div>
 
-    // const wfarStatus = 1; // 1 not submitted 2 to be checked 3 ok 4 with revision
+            case 2:
+                return <div class={styles['forChecking']}>To be checked</div>
 
-    // useEffect(() => {
-    //     if (wfarStatus === 1) { setButtonId("notSubmitted"); setButtonLabel("Check Submission"); }
-    //     else if (wfarStatus === 2) { setButtonId("toBeChecked"); setButtonLabel("Check Submission"); }
-    //     else if (wfarStatus === 3) { setButtonId("ok"); setButtonLabel("View Submission"); }
-    //     else if (wfarStatus === 4) { setButtonId("withRevisions"); setButtonLabel("Re-check Submission"); }
-    // }, [])
+            case 3:
+                return <div class={styles['ok']}>Ok</div>
+
+            case 4:
+                return <div class={styles['withRevisions']}>With Revisions</div>
+
+            default:
+                return <div class={styles['noSubmission']}>No Submission</div>
+        }
+    }
+
+    let counter = 0;
+
+    function dateFormat(dateSubmitted) {
+
+        // constants
+        const date = new Date(dateSubmitted);
+        const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const day = date.getDay();
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const minutesWithLeadingZero = minutes.toString().length < 2 ? "0" + minutes : minutes;
+        const timeLabel = hours >= 12 ? "pm" : "am";
+
+        const formatted = `${month[date.getMonth()]} ${day}, ${year} ${hours}:${minutesWithLeadingZero} ${timeLabel}`;
+        return formatted;
+
+
+    }
+
     return (
         <div className={styles.weeklyTableContainer}>
             <table className={styles.weeklyTable}>
@@ -49,15 +79,53 @@ const WeeklyTable = (props) => {
                     <th>Date Submitted</th>
                     <th></th>
                 </tr>
+
+
                 {facultiesWithWfars && facultiesWithWfars.map((faculty, index) => {
+
+
+                    if ((props.status == 2 || props.status == 3 || props.status == 4) && faculty.wfars.length == 0) {
+                        return "";
+                    }
+
+                    else if (props.status == 1 && faculty.wfars.length > 0) {
+                        if (faculty.wfars[0].status != 1) {
+                            return ""
+                        }
+                    }
+
+                    else if (props.status == 2 && faculty.wfars[0].status != 2) {
+                        return "";
+                    } else if (props.status == 3 && faculty.wfars[0].status != 3) {
+                        return "";
+                    } else if (props.status == 4 && faculty.wfars[0].status != 4) {
+                        return "";
+                    }
+
+                    counter = counter + 1;
+
                     return (
-                        <tr key={index}> {/* row 1  */}
+                        <tr key={index}
+                            className={faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null ? styles['clickable'] : ""}
+
+                        > {/* row 1  */}
                             <td><strong>{faculty.last_name}</strong>, {faculty.first_name} {faculty.middle_name != null ? faculty.middle_name[0] + "." : ""} {faculty.extension_name != null ? faculty.extension_name : ""}
                             </td>
                             <td>
-                                {faculty.wfars.length > 0 && faculty.wfars[0].no_of_entries } Entries
+                                {faculty.wfars.length == 0 && 'No Entry'}
+                                {/* {faculty.wfars.length == 1 && faculty.wfars[0].no_of_entries + ' Entry'}  */}
+                                {faculty.wfars.length > 0 && faculty.wfars[0].no_of_entries == 0 && 'No Entry'}
+                                {faculty.wfars.length > 0 && faculty.wfars[0].no_of_entries == 1 && faculty.wfars[0].no_of_entries + ' Entry'}
+                                {faculty.wfars.length > 0 && faculty.wfars[0].no_of_entries > 1 && faculty.wfars[0].no_of_entries + ' Entries'}
                             </td>
-                            <td>sample</td>
+                            <td>
+                                {faculty.wfars.length > 0 && displayStatus(faculty.wfars[0].status)}
+                                {faculty.wfars.length == 0 && <div class={styles['noSubmission']}>No submission</div>}
+                            </td>
+                            <td>{faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null && dateFormat(faculty.wfars[0].submitted_at)}
+                                {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at == null && "N/A"}
+                                {faculty.wfars.length == 0 && "N/A"}
+                            </td>
                             <td><TableCellButton
                                 id={null}
                                 label={"Check Submission"}
@@ -66,6 +134,13 @@ const WeeklyTable = (props) => {
                         </tr>)
                 })}
 
+
+                {counter == 0 && 
+                    <tr>
+                        <td colSpan={5}>
+                            <div className="placeholder-data-not-available">No data is available.</div>
+                        </td>
+                    </tr> }
             </table>
         </div>
     );

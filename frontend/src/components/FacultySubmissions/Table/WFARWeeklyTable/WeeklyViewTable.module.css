@@ -1,70 +1,115 @@
-
-.weeklyTableContainer{ 
-    background: #FFFFFF;
+.weeklyTableContainer {
     border: 1px solid #EAEBED;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.02);
     border-radius: 10px;
 }
-.weeklyTable{
+
+.weeklyTable {
+    user-select: none;
     width: 100%;
     border-collapse: collapse;
+    font-weight: 600;
+    color: #666B73;
 }
-.weeklyTable tr th{
+
+.weeklyTable tr th {
     text-align: center;
     font-weight: bold;
 }
-.weeklyTable tr th:nth-child(1){
+
+.weeklyTable tr th:nth-child(1) {
     text-align: left;
     padding-left: 40px;
 }
-.weeklyTable tr td:nth-child(1){
+
+.weeklyTable tr td:nth-child(1) {
     text-align: left;
     padding-left: 40px;
 }
-.weeklyTable tr td:nth-child(5){
+
+.weeklyTable tr td:nth-child(5) {
     padding: 5px;
     width: 230px;
 }
-.sortFacultyName:hover{
+
+.sortFacultyName:hover {
     cursor: pointer;
 }
-.sortFacultyName{
+
+.sortFacultyName {
     margin-left: 15px;
     cursor: pointer;
 }
-.weeklyTable tr th, td{
+
+.weeklyTable tr th,
+td {
     font-size: 14px;
-    background: transparent;
     padding: 14px;
     border: 1px solid #EAEBED;
     text-align: center;
 }
-.weeklyTable tr th{
+
+.weeklyTable tr th {
     margin: 0;
 }
-.weeklyTable tr td:nth-child(5){
+
+.weeklyTable tr td:nth-child(5) {
     padding: 5px;
     width: 230px;
 }
-.weeklyTable tr:nth-child(1) th{
+
+.weeklyTable tr:nth-child(1) th {
     border-top: none;
 }
-.weeklyTable tr:nth-child(7) td{
+
+.weeklyTable tr:nth-child(7) td {
     border-bottom: none;
 }
-.weeklyTable tr th:nth-child(1){
+
+.weeklyTable tr th:nth-child(1) {
     border-left: none;
 }
-.weeklyTable tr td{
+
+.weeklyTable tr td {
     border-left: none;
 }
-.weeklyTable tr:nth-child(1) th{
-    border-right: none;
-}
-.weeklyTable tr td:nth-child(5){
+
+.weeklyTable tr:nth-child(1) th {
     border-right: none;
 }
 
-.weeklyTable tr, .weeklyTable td, .weeklyTable th {
-    background-color: #FFFFFF !important;
+.weeklyTable tr td:nth-child(5) {
+    border-right: none;
+}
+
+.weeklyTable td:nth-child(1) {
+    color: #333;
+}
+
+.noSubmission {
+    color: #EC5151;
+}
+
+.forChecking {
+    color: #777777;
+}
+
+.withRevisions {
+    color: #DC831B;
+}
+
+.ok {
+    color: #1A9E50;
+}
+
+.weeklyTable tr:not(:first-child){
+    /* transition: .12s ease-in-out; */
+}
+
+.weeklyTable tr:not(:first-child):hover {
+    background-color: #F2F2F2 !important;
+}
+
+.clickable {
+    cursor: pointer;
 }
