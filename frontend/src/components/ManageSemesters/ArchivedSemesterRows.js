@@ -4,6 +4,7 @@ import PopupMenu from "./PopupMenu";
 import { useNavigate } from "react-router-dom";
 import { restoreSem } from "../../store/manageSemActions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 const ArchivedSemesterRows = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,8 +33,25 @@ const ArchivedSemesterRows = (props) => {
     navigate(`/edit-semester/${semId}/`);
   };
   const onRestoreSemester = (semId) => {
-    dispatch(restoreSem(semId));
-    navigate(`/manage-semesters/archives/`);
+    Swal.fire({
+      html:
+        "<h4>Do you want to restore this semester?</h4>" +
+        "<h5>Restoring semester.</h5>",
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(restoreSem(semId));
+        navigate(`/manage-semesters/archives/`);
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
   };
   return (
     <Fragment>
