@@ -3,7 +3,7 @@
 * {
   /* box-sizing: border-box; */
   font-family: "Public Sans", sans-serif;
-  user-select: none;
+  /* user-select: none; */
 }
 
 .filterButtonActive {
@@ -65,4 +65,10 @@ a {
   margin: 0;
   font-weight: 600;
   color: #777777;
+  width: 100%;
+  text-align: center;
+}
+
+img {
+  object-fit: cover !important;
 }
