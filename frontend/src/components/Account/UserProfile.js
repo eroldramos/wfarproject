@@ -73,7 +73,9 @@ const UserProfile = () => {
       title: 'Delete your Account?',
       text: 'Enter your password to delete the account',
       icon: 'warning',
-      confirmButtonText: 'OK', showConfirmButton: true,
+      confirmButtonText: 'OK',
+      showConfirmButton: true,
+      showCancelButton: true,
       input: 'password',
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
