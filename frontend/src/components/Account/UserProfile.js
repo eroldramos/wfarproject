@@ -498,6 +498,9 @@ const UserProfile = () => {
             <h3>{state.map((item) => item.name)}</h3>
             <p>    {state.map((item) => {
               if (item.user_type === 1) {
+                if (item.is_superuser) {
+                  return <p className="userinput" style={{ color: '#000000' }}> Admin </p>
+                }
                 return <p className="userinput" style={{ color: '#000000' }}> Faculty </p>
               } else if (item.sex === 2) {
                 return <p className="userinput" style={{ color: '#000000' }}> Area Chair </p>
