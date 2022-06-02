@@ -73,7 +73,9 @@ const UserProfile = () => {
       title: 'Delete your Account?',
       text: 'Enter your password to delete the account',
       icon: 'warning',
-      confirmButtonText: 'OK', showConfirmButton: true,
+      confirmButtonText: 'OK',
+      showConfirmButton: true,
+      showCancelButton: true,
       input: 'password',
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
@@ -498,6 +500,9 @@ const UserProfile = () => {
             <h3>{state.map((item) => item.name)}</h3>
             <p>    {state.map((item) => {
               if (item.user_type === 1) {
+                if (item.is_superuser) {
+                  return <p className="userinput" style={{ color: '#000000' }}> Admin </p>
+                }
                 return <p className="userinput" style={{ color: '#000000' }}> Faculty </p>
               } else if (item.sex === 2) {
                 return <p className="userinput" style={{ color: '#000000' }}> Area Chair </p>
