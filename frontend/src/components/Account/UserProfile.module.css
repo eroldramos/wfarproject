@@ -83,7 +83,7 @@
 }
 .scrollable-area{
     overflow-y: scroll;
-    margin: 10px 5px 10px 10px;
+    margin: 10px 5px 20px 10px;
     height: 320px;
 }
 .scrollable-area::-webkit-scrollbar {
@@ -140,6 +140,5 @@ border-radius: 5px;
       cursor: pointer !important;
 }
 #UploadSignature:hover{
-      color: blue;
-      font-size: 2em;
+      color: rgb(235, 193, 137);
 }

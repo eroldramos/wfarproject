@@ -54,7 +54,7 @@
   }
   .modal.m-long-height {
     width: 30rem;
-    left: calc(60% - 25rem);
+    left: calc(61% - 25rem);
     min-height: 100px;
     max-height: 500px;
     top: 10vh;
