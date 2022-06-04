@@ -14,22 +14,34 @@
     border-top-right-radius: 7px;
     /* border: 1px solid black; */
 }
-.image-container{   
-    width: 18%;
+
+.image-container {
+    width: 20%;
 }
-.name-container{
-    width: 82%;
-    margin-top: 115px;
+
+.name-container {
+    width: 80%;
+    margin-top: 78px;
 }
-.name-container h3, p{
+
+.name-container h3,
+p {
     margin: 0;
 }
-.name-container p{
+
+.name-container p {
     color: #BAB7B7;
+    font-size: 18px;
+    margin-top: 10px;
 }
-.name-container h3{
+
+.name-container h3 {
     font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #FFFFFF;
 }
+
 .image-bg-container{
     border-radius: 50%;
     background: #FFFFFF;
