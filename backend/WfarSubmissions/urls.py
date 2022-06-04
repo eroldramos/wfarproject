@@ -19,6 +19,7 @@ path('wfar/individual/print',
     path('wfar/semester=<str:semester_id>/week=<str:week_no>/wfar_status=<str:wfar_status>/page=<str:page_no>/sort=<str:sort>/search=<str:search>',
          views.RetrieveFacultyWeeklyWFAR.as_view(), name='wfar_faculty_weekly'),
 
- 
+    path('wfar/semester=<str:semester_id>/week=<str:week_no>/wfar_status=<str:wfar_status>/sort=<str:sort>/print',
+         views.PrintWeeklyWFARPDF.as_view(), name='weeklyPrint'),
     
     ]

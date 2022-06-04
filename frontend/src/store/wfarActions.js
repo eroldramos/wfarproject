@@ -4,7 +4,8 @@ import {
     wfarPrintOverviewActions,
     wfarActiveSemesterActions,
     wfarPrintIndividualActions,
-    weeklyWfarRetrieveActions
+    weeklyWfarRetrieveActions,
+    weeklyWfarPrintActions
 } from "./wfarReducers";
 // import axios from 'axios'
 
@@ -148,6 +149,50 @@ export const printWfarIndividual = (wfar_id) => {
 
         } catch (error) {
             dispatch(wfarPrintIndividualActions.requestFail({ error: "Sorry an error has occured while trying to export this WFAR to pdf. Please try again later." }));
+        }
+    }
+}
+
+
+export const printWeeklyWfar = (filterSemester, filterWeek, filterStatus, filterSort) => {
+    return async (dispatch, getState) => {
+
+        console.log("filter status");
+        console.log(filterStatus);
+
+        try {
+            dispatch(weeklyWfarPrintActions.sendRequest());
+
+            const { login: { userInfo }, } = getState();
+
+            fetch(`/api/wfar/semester=${filterSemester}/week=${filterWeek}/wfar_status=${filterStatus}/sort=${filterSort}/print`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({ "faculty_checker_id": userInfo.id }),
+                    headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + userInfo.token }
+                }).then(response => response.blob()).then(response => {
+
+                    let date = new Date();
+
+                    const fileURL = URL.createObjectURL(response);
+                    let a = document.createElement("a");
+                    document.body.appendChild(a);
+                    a.style = "display: none";
+                    a.href = fileURL;
+
+                    const timestamp = date.getFullYear() + "" + (date.getMonth() + 1) + "" + date.getDate() + "" +
+                        date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+
+                    console.log(timestamp);
+                    a.download = "WFAR_" + timestamp + ".pdf";
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(fileURL);
+                    dispatch(weeklyWfarPrintActions.printSuccessfully());
+                })
+
+        } catch (error) {
+            dispatch(weeklyWfarPrintActions.requestFail({ error: "Sorry an error has occured while trying to export this table to PDF. Please try again later." }));
         }
     }
 }

@@ -5,6 +5,8 @@ import FilterButton from "../UI/FormControl/Button/FilterButton";
 import { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { retrieveWfarsSemestersList } from "../../store/myWfarsActions";
+import { retrieveActiveSemester } from "../../store/wfarActions";
 
 const FacultySubmission = () => {
     // hooks
@@ -16,6 +18,14 @@ const FacultySubmission = () => {
     const archivedWfarEntries = useSelector((state) => state.myWfarsArchived.archivedEntries);
     const semesters = useSelector((state) => state.wfarSemesters.semesters);
     const newChange = useSelector((state) => state.myWfarRefresh.newChange);
+
+
+    // retrieving wfars and archived wfars
+    useEffect(() => {
+        dispatch(retrieveWfarsSemestersList());
+        dispatch(retrieveActiveSemester());
+
+    }, []);
 
     return (
         <Fragment>
