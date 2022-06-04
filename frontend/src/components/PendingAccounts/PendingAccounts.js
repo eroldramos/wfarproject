@@ -343,13 +343,13 @@ const PendingAccounts = () => {
           ))}
       </ul>
       {/* TABLE END */}
-      <div className={styles["bottom-box-container"]}>
-        <div className={styles["paginator-container"]}>
-          <Paginator page={page} pages={pages} search={search} />
-        </div>
-
-        <div className={styles["clearfix"]}></div>
+      {/* <div className={styles["bottom-box-container"]}> */}
+      <div className={styles["paginator-container"]}>
+        <Paginator page={page} pages={pages} search={search} />
       </div>
+
+      <div className={styles["clearfix"]}></div>
+      {/* </div> */}
     </Fragment>
   );
 };
