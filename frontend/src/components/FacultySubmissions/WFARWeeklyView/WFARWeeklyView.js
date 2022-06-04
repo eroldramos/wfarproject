@@ -8,8 +8,9 @@ import StatusFilter from "./StatusFilter/StatusFilter";
 import Footer from "../Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { retrieveWfarsSemestersList } from "../../../store/myWfarsActions";
-import { retrieveActiveSemester, retrieveWeeklyWfars } from "../../../store/wfarActions";
+import { printWeeklyWfar, retrieveActiveSemester, retrieveWeeklyWfars } from "../../../store/wfarActions";
 import { wfarSelectedSemesterActions } from "../../../store/wfarReducers";
+import Swal from "sweetalert2";
 
 const WFARWeeklyView = () => {
 
@@ -18,6 +19,7 @@ const WFARWeeklyView = () => {
 
     const semesters = useSelector((state) => state.wfarSemesters.semesters);
     const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
+    const printError = useSelector((state) => state.weeklyWfarPrint.error);
 
 
     const pageNo = useSelector(state => state.weeklyWfarRetrieve.pageNo);
@@ -75,6 +77,19 @@ const WFARWeeklyView = () => {
         }
     }, [selectedSemester, selectedWeekNo, status, selectedPageNo, searchValue, sort])
 
+
+    useEffect(() => {
+        if (printError != null) {
+            Swal.fire({
+                html:
+                    '<h5>' + printError + '</h5>',
+                icon: 'error',
+                confirmButtonColor: '#BE5A40'
+            })
+        }
+    }, [printError])
+
+
     const onChangeSemester = (id) => {
         for (let sem of semesters) {
             if (sem.id == id) {
@@ -108,9 +123,8 @@ const WFARWeeklyView = () => {
         setStatus(statusNo);
     }
 
-
     const onClickExportHandler = () => {
-        // dispatch(printWfarsOverview(selectedSemester.id, sort));
+        dispatch(printWeeklyWfar(selectedSemester.id, selectedWeekNo, status, sort));
     }
 
     return (

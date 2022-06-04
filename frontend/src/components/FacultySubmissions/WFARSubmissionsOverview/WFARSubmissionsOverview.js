@@ -26,13 +26,6 @@ const WFARSubmissionsOverview = () => {
 	const [sort, setSort] = useState(0); // 0 - Ascending, 1 - Descending
 	const [isPrintSelected, setIsPrintOverview] = useState(false);
 
-	// retrieving wfars and archived wfars
-	useEffect(() => {
-		dispatch(retrieveWfarsSemestersList());
-		dispatch(retrieveActiveSemester());
-
-	}, []);
-
 	useEffect(() => {
 
 		if (selectedSemester == null && activeSemester != null) {
