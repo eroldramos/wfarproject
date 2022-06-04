@@ -319,7 +319,7 @@ const SideNav = (props) => {
                 fill="white"
               />
             </svg>
-            <span className="nav-open-text">Manage Faculties</span>
+            <span className="nav-open-text">Manage Faculty</span>
           </li>
           <li
             className={`nav-menu-item ${

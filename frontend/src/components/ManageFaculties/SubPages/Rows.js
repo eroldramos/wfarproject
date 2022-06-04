@@ -144,11 +144,11 @@ const Rows = (props) => {
               onClick={openViewFacultyModal}
               label={
                 props.user_type === 2 || props.user_type === 3
-                  ? "View Faculties"
+                  ? "View Faculty"
                   : "View Status"
               }
               type="primary"
-              widthSize = "custom-width"
+              widthSize="custom-width"
             ></TableCellButton>
             {props.user_type === 2 || props.user_type === 3
               ? viewFacultyModal && (

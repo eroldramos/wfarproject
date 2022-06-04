@@ -244,7 +244,7 @@ const PendingAccounts = () => {
         </Modal>
       )}
 
-      <h1>Pending Faculties</h1>
+      <h1>Pending Faculty</h1>
       <div className={styles["container"]}>
         <div className={styles["search-field-container"]}>
           <form onSubmit={onSubmitHandler}>
