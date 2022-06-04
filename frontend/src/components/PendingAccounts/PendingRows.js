@@ -47,13 +47,17 @@ const PendingRows = (props) => {
           className={`${table["col"]} ${table["col-7"]}`}
           data-label="Created"
         >
-          {props.createdAt}
+          {props.civilStatus == 1 && "Married"}
+          {props.civilStatus == 2 && "Widowed"}
+          {props.civilStatus == 3 && "Separated"}
+          {props.civilStatus == 4 && "Divorced"}
+          {props.civilStatus == 5 && "Single"}
         </div>
         <div
           className={`${table["col"]} ${table["col-8"]}`}
           data-label="Action"
         >
-          {props.actions}
+          {props.createdAt}
         </div>
       </li>
     </Fragment>

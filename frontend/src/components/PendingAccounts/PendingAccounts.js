@@ -311,12 +311,12 @@ const PendingAccounts = () => {
           <div
             className={`${table["col"]} ${table["col-7"]} ${table["col-header"]}`}
           >
-            Created At
+            Civil Status
           </div>
           <div
             className={`${table["col"]} ${table["col-8"]} ${table["col-header"]}`}
           >
-            Action
+            Created At
           </div>
         </li>
         {acceptIsError && <p>{acceptIsError}</p>}
@@ -336,6 +336,7 @@ const PendingAccounts = () => {
               email={data.email}
               contact_no={data.contact_no}
               createdAt={data.createdAt}
+              civilStatus={data.civil_status}
               key={index}
               checked={checkedState[index] ? checkedState[index] : false}
               onChange={() => handleOnChange(index)}

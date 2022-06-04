@@ -38,7 +38,7 @@ class PendingFacultySerializer(serializers.ModelSerializer):
     createdAt = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ['id', 'fullname', 'emp_no','username', 'email', 'contact_no', 'createdAt']
+        fields = ['id', 'fullname', 'emp_no','username', 'email', 'contact_no', 'createdAt', 'civil_status']
 
     def get_fullname(self, obj):
         name = f"{obj.last_name}, {obj.first_name} {obj.middle_name}"
