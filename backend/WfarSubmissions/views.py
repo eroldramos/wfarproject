@@ -2,13 +2,13 @@ import datetime
 from io import BytesIO
 
 from reportlab.platypus import Image, Table, TableStyle
-from reportlab.lib.units import cm, inch
+from reportlab.lib.units import cm, inch, mm
 from reportlab.lib.pagesizes import landscape
 from ReportGeneration.views import PageNumCanvas
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from core.serializers import WFARCheckingWFARSerializer #EROLD
+from core.serializers import WFARCheckingWFARSerializer  # EROLD
 from core.serializers import FacultyWfarSerializer, FacultyWeeklyWfarSerializer
 from core.permissions import IsAuthenticated
 from core.models import Semester, WFAR_Comment, WFAR, WFAR_Entry, Faculty, WFAR_Entry_Attachment, WFAR_Entry_Activity
@@ -89,6 +89,7 @@ class RetrieveFacultyWFAR(APIView):
             # pass
             return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class RetrieveFacultyWFARNoSearch(APIView):
     # permission_classes = [IsAdminAreaChairAndDeptHead]
 
@@ -98,7 +99,7 @@ class RetrieveFacultyWFARNoSearch(APIView):
 
             if (sort == '0'):
                 sort_filter1 = "last_name"
-                sort_filter2 = "first_name" 
+                sort_filter2 = "first_name"
             else:
                 sort_filter1 = "-last_name"
                 sort_filter2 = "-first_name"
@@ -185,195 +186,195 @@ def getWeeks(semester):
 class PrintWFAROverviewPDF(APIView):
     def post(self, request, semester_id, sort):
         # try:
-            semester = Semester.objects.get(pk=semester_id)
-            weeks = 1  # default
-            if (semester != None):
-                semester_id = semester.id
-                weeks = getWeeks(semester)
+        semester = Semester.objects.get(pk=semester_id)
+        weeks = 1  # default
+        if (semester != None):
+            semester_id = semester.id
+            weeks = getWeeks(semester)
 
-                week_brackets = weeks[0]
-                current_week = weeks[1]
+            week_brackets = weeks[0]
+            current_week = weeks[1]
 
-                if (sort == '0'):
-                    sort_filter1 = "last_name"
-                    sort_filter2 = "first_name"
-                else:
-                    sort_filter1 = "-last_name"
-                    sort_filter2 = "-first_name"
+            if (sort == '0'):
+                sort_filter1 = "last_name"
+                sort_filter2 = "first_name"
+            else:
+                sort_filter1 = "-last_name"
+                sort_filter2 = "-first_name"
 
-                faculty_checker_id = request.data['faculty_checker_id']
-                if faculty_checker_id == '0':
-                    faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
-                    description = f"This report shows the statuses of all the WFARs for A.Y. {semester.school_year} - {semester.label}."
-                else:
-                    facultyChecker = Faculty.objects.get(pk=faculty_checker_id)
-                    role = ""
-                    if facultyChecker.user_type == 2:
-                        role = "Department Head"
-                    elif facultyChecker.user_type == 3:
-                        role = "Area Chair"
+            faculty_checker_id = request.data['faculty_checker_id']
+            if faculty_checker_id == '0':
+                faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+                description = f"This report shows the statuses of all the WFARs for A.Y. {semester.school_year} - {semester.label}."
+            else:
+                facultyChecker = Faculty.objects.get(pk=faculty_checker_id)
+                role = ""
+                if facultyChecker.user_type == 2:
+                    role = "Department Head"
+                elif facultyChecker.user_type == 3:
+                    role = "Area Chair"
 
-                    faculties = Faculty.objects.filter(
-                        assignee_id=facultyChecker).order_by(sort_filter1, sort_filter2)
-                    description = f"This report shows the statuses of the WFARs submitted by the faculties assigned to {role} {facultyChecker.first_name} {facultyChecker.last_name} for S.Y. {semester.school_year} - {semester.label}."
+                faculties = Faculty.objects.filter(
+                    assignee_id=facultyChecker).order_by(sort_filter1, sort_filter2)
+                description = f"This report shows the statuses of the WFARs submitted by the faculties assigned to {role} {facultyChecker.first_name} {facultyChecker.last_name} for S.Y. {semester.school_year} - {semester.label}."
 
-                response = HttpResponse(content_type='application/pdf')
-                pdf_name = "report.pdf"
-                response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
+            response = HttpResponse(content_type='application/pdf')
+            pdf_name = "report.pdf"
+            response['Content-Disposition'] = 'attachment; filename=%s' % pdf_name
 
-                buff = BytesIO()
+            buff = BytesIO()
 
-                # paragraphStyle = getSampleStyleSheet()
-                contentStyle = ParagraphStyle(
-                    name='Normal',
-                    fontSize=9,
-                    alignment=TA_CENTER
-                )
+            # paragraphStyle = getSampleStyleSheet()
+            contentStyle = ParagraphStyle(
+                name='Normal',
+                fontSize=9,
+                alignment=TA_CENTER
+            )
 
-                contentStyleLeft = ParagraphStyle(
-                    name='Normal',
-                    fontSize=9,
-                )
+            contentStyleLeft = ParagraphStyle(
+                name='Normal',
+                fontSize=9,
+            )
 
-                data = []
+            data = []
 
-                semester_no_of_weeks = semester.no_of_weeks
-                col_widths = []
-                col_names = []
-                col_widths.append(40 * mm)
+            semester_no_of_weeks = semester.no_of_weeks
+            col_widths = []
+            col_names = []
+            col_widths.append(40 * mm)
+            col_names.append(
+                Paragraph(f"<b><font color='#000'>Faculty</font></b>", contentStyle))
+
+            width = 265/semester_no_of_weeks
+            week_label = "Week "
+            font_size = 7.5
+
+            for i in range(semester_no_of_weeks):
+                startWeek = week_brackets[(i * 2)].strftime("%b %d")
+                endWeek = week_brackets[(i * 2) + 1].strftime("%b %d")
+                startMonth = week_brackets[(i * 2)].month
+                endMonth = week_brackets[(i * 2) + 1].month
+
+                if (startMonth == endMonth):
+                    endWeek = week_brackets[(i * 2) + 1].strftime("%d")
+
+                # shorten...
+                if (semester_no_of_weeks > 12):
+                    font_size = 6.75
+
+                if (semester_no_of_weeks > 14):
+                    week_label = "W"
+
+                col_widths.append(width * mm)
                 col_names.append(
-                    Paragraph(f"<b><font color='#000'>Faculty</font></b>", contentStyle))
+                    Paragraph(f"<b><font color='#000'>{week_label}{i+1}<br /><font size='{font_size}'>{startWeek}-{endWeek}</font></font></b>", contentStyle))
 
+            data.append(col_names)
 
-                width = 265/semester_no_of_weeks;
-                week_label = "Week "
-                font_size = 7.5
-                
+            counterF = 0
+            for faculty in faculties:
+                newRow = []
+                middle_name = faculty.middle_name[0] + \
+                    "." if faculty.middle_name != None else ""
+                newRow.append(
+                    Paragraph(f"<b>{faculty.last_name}, {faculty.first_name} {middle_name}</b>", contentStyleLeft))
                 for i in range(semester_no_of_weeks):
-                    startWeek = week_brackets[(i * 2)].strftime("%b %d")
-                    endWeek = week_brackets[(i * 2) + 1].strftime("%b %d")
-                    startMonth = week_brackets[(i * 2)].month
-                    endMonth = week_brackets[(i * 2) + 1].month
 
-                    if (startMonth == endMonth):
-                        endWeek = week_brackets[(i * 2) + 1].strftime("%d")
-                    
-                    # shorten...
-                    if (semester_no_of_weeks > 12):
-                        font_size = 6.75
+                    wfar_status = ""
+                    wfar_id = -1
 
-                    if (semester_no_of_weeks > 14):
-                        week_label = "W"
-                    
-
-                    col_widths.append(width * mm)
-                    col_names.append(
-                        Paragraph(f"<b><font color='#000'>{week_label}{i+1}<br /><font size='{font_size}'>{startWeek}-{endWeek}</font></font></b>", contentStyle))
-
-                data.append(col_names)
-
-                counterF = 0
-                for faculty in faculties:
-                    newRow = []
-                    middle_name = faculty.middle_name[0] + "." if faculty.middle_name != None else ""
-                    newRow.append(
-                        Paragraph(f"<b>{faculty.last_name}, {faculty.first_name} {middle_name}</b>", contentStyleLeft))
-                    for i in range(semester_no_of_weeks):
-
-                        wfar_status = ""
-                        wfar_id = -1
-
-                        if i < len(faculty.wfars.all()) and i < (current_week + 1):
-                            wfar = faculty.wfars.all()[i]
-                            wfar_status = wfar.status
-                            wfar_id = wfar.id
-                        else:
-                            if i < (current_week + 1):
-                                wfar_status = 1
-                            else:
-                                wfar_status = ""
-
-                        newRow.append(
-                            getStatus(wfar_id, wfar_status, contentStyle))
-                    data.append(newRow)
-                    counterF += 1
-
-                pdf = SimpleDocTemplate(
-                    buff,
-                    pagesize=landscape([937, 612]),
-                    rightMargin=35,
-                    leftMargin=35, topMargin=35, bottomMargin=70
-                )
-
-                table = Table(data, colWidths=col_widths)
-
-                style = TableStyle([
-                    ('BACKGROUND', (0, 0), (semester_no_of_weeks+1, 0),
-                     colors.HexColor("#FFFFFF")),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 11),
-                    ('TOPPADDING', (0, 0), (-1, -1), 6),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 7)
-                ])
-
-                table.setStyle(style)
-
-                rowNumber = len(data)
-                for i in range(1, rowNumber):
-                    if i % 2 == 0:
-                        bc = colors.white
+                    if i < len(faculty.wfars.all()) and i < (current_week + 1):
+                        wfar = faculty.wfars.all()[i]
+                        wfar_status = wfar.status
+                        wfar_id = wfar.id
                     else:
-                        bc = colors.HexColor("#EEEEEE")
-                    ts = TableStyle(
-                        [('BACKGROUND', (0, i), (-1, i), bc)]
-                    )
-                    table.setStyle(ts)
+                        if i < (current_week + 1):
+                            wfar_status = 1
+                        else:
+                            wfar_status = ""
 
-                # borderStyle = TableStyle([
-                #     ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#333333")),
-                #     ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#333333"))
-                # ])
+                    newRow.append(
+                        getStatus(wfar_id, wfar_status, contentStyle))
+                data.append(newRow)
+                counterF += 1
 
-                borderStyle = TableStyle([
-                    ('BOX', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA")),
-                    ('GRID', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA"))
-                ])
+            pdf = SimpleDocTemplate(
+                buff,
+                pagesize=landscape([937, 612]),
+                rightMargin=35,
+                leftMargin=35, topMargin=35, bottomMargin=70
+            )
 
-                title = "WFARs Overview"
-                styles = getSampleStyleSheet()
-                styles.add(ParagraphStyle(name='Subtitle',
-                                          fontSize=12,
-                                          leading=14,
-                                          spaceAfter=6,
-                                          alignment=TA_CENTER,),
-                           alias='subtitle')
-                styles.add(ParagraphStyle(name='DefaultHeading',
-                                          fontSize=18,
-                                          leading=22,
-                                          spaceBefore=12,
-                                          spaceAfter=6,
-                                          alignment=TA_CENTER,),
-                           alias='dh')
+            table = Table(data, colWidths=col_widths)
 
-                table.setStyle(borderStyle)
+            style = TableStyle([
+                ('BACKGROUND', (0, 0), (semester_no_of_weeks+1, 0),
+                 colors.HexColor("#FFFFFF")),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                ('FONTSIZE', (0, 0), (-1, -1), 11),
+                ('TOPPADDING', (0, 0), (-1, -1), 6),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 7)
+            ])
 
-                elems = []
-                elems.append(Image('reports/logo_header.jpg',
-                                   width=11 * inch, height=.85 * inch))
-                # elems.append(Spacer(.25 * cm, .25 * cm))
-                elems.append(Spacer(1 * cm, 1 * cm))
-                # elems.append(Paragraph(title, styles['DefaultHeading']))
-                elems.append(Paragraph(description, styles['Subtitle']))
-                elems.append(Spacer(.25 * cm, .25 * cm))
-                elems.append(table)
-                elems.append(Spacer(1 * cm, 1 * cm))
+            table.setStyle(style)
 
-                pdf.build(elems, canvasmaker=PageNumCanvas)
+            rowNumber = len(data)
+            for i in range(1, rowNumber):
+                if i % 2 == 0:
+                    bc = colors.white
+                else:
+                    bc = colors.HexColor("#EEEEEE")
+                ts = TableStyle(
+                    [('BACKGROUND', (0, i), (-1, i), bc)]
+                )
+                table.setStyle(ts)
 
-                response.write(buff.getvalue())
-                buff.close()
-            return response
+            # borderStyle = TableStyle([
+            #     ('BOX', (0, 0), (-1, -1), .5, colors.HexColor("#333333")),
+            #     ('GRID', (0, 1), (-1, -1), .5, colors.HexColor("#333333"))
+            # ])
+
+            borderStyle = TableStyle([
+                ('BOX', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA")),
+                ('GRID', (0, 0), (-1, -1), .15, colors.HexColor("#AAAAAA"))
+            ])
+
+            title = "WFARs Overview"
+            styles = getSampleStyleSheet()
+            styles.add(ParagraphStyle(name='Subtitle',
+                                      fontSize=12,
+                                      leading=14,
+                                      spaceAfter=6,
+                                      alignment=TA_CENTER,),
+                       alias='subtitle')
+            styles.add(ParagraphStyle(name='DefaultHeading',
+                                      fontSize=18,
+                                      leading=22,
+                                      spaceBefore=12,
+                                      spaceAfter=6,
+                                      alignment=TA_CENTER,),
+                       alias='dh')
+
+            table.setStyle(borderStyle)
+
+            elems = []
+            elems.append(Image('reports/logo_header.jpg',
+                               width=10.5 * inch, height=.75 * inch))
+            # elems.append(Spacer(.25 * cm, .25 * cm))
+            elems.append(Spacer(1 * cm, 1 * cm))
+            # elems.append(Paragraph(title, styles['DefaultHeading']))
+            elems.append(Paragraph(description, styles['Subtitle']))
+            elems.append(Spacer(.25 * cm, .25 * cm))
+            elems.append(table)
+            elems.append(Spacer(1 * cm, 1 * cm))
+
+            pdf.build(elems, canvasmaker=PageNumCanvas)
+
+            response.write(buff.getvalue())
+            buff.close()
+        return response
+
 
 def getStatus(wfar_id, status, contentStyle):
     if status == 1:
@@ -446,7 +447,8 @@ class PrintWFARIndividualPDF(APIView):
                 f"<b>Faculty name:</b> {faculty.first_name} {faculty.last_name}", labelStyle)
             label2 = Paragraph(
                 f"<b>Department:</b> {faculty.program}", labelStyle)
-            label3 = Paragraph(f"<b>College of Information and Communications Technology</b>", labelStyle)
+            label3 = Paragraph(
+                f"<b>College of Information and Communications Technology</b>", labelStyle)
 
             weekLabel1 = Paragraph(f"<b>Week {week_no}</b>", contentStyle)
             weekLabel2 = Paragraph(
@@ -487,9 +489,12 @@ class PrintWFARIndividualPDF(APIView):
                 course_year_section = entry.course_year_section
                 no_of_attendees = entry.no_of_attendees
                 recording_url = entry.recording_url
-                activities = WFAR_Entry_Activity.objects.filter(wfar_entry_id=entry.id)
-                meet_attachments = WFAR_Entry_Attachment.objects.filter(wfar_entry_id=entry.id, type=1)
-                activity_attachments = WFAR_Entry_Attachment.objects.filter(wfar_entry_id=entry.id, type=2)
+                activities = WFAR_Entry_Activity.objects.filter(
+                    wfar_entry_id=entry.id)
+                meet_attachments = WFAR_Entry_Attachment.objects.filter(
+                    wfar_entry_id=entry.id, type=1)
+                activity_attachments = WFAR_Entry_Attachment.objects.filter(
+                    wfar_entry_id=entry.id, type=2)
 
                 date = accomplishment_date.strftime('%m/%d/%Y')
                 list.append(Paragraph(f"{date}", contentStyle))
@@ -507,7 +512,7 @@ class PrintWFARIndividualPDF(APIView):
                 list.append(Paragraph(f"{text}", contentStyleLeft))
                 data.append(list)
 
-                date = entry.accomplishment_date.strftime('%B %d, %Y');
+                date = entry.accomplishment_date.strftime('%B %d, %Y')
                 data5.append([Paragraph(
                     f"<b>{entry.course_year_section} - {entry.subject} ({date})</b>")])
 
@@ -516,13 +521,13 @@ class PrintWFARIndividualPDF(APIView):
                     meets.append(Image('static/' + meet_attachment.image_uri.url,
                                        width=3 * inch, height=2 * inch))
                     pass
-                
+
                 acts = []
                 for activity_attachment in activity_attachments:
                     acts.append(Image('static/' + activity_attachment.image_uri.url,
                                       width=3 * inch, height=2 * inch))
                     pass
-                
+
                 data5.append([meets, acts])
                 pass
 
@@ -582,24 +587,30 @@ class PrintWFARIndividualPDF(APIView):
             table2 = Table(data2, colWidths=[80*mm, 88*mm, 110*mm])
 
             data3 = []
-            data3.append([Paragraph(f"<b>Learning Outcomes: </b>", contentStyleLeft)])
+            data3.append(
+                [Paragraph(f"<b>Learning Outcomes: </b>", contentStyleLeft)])
             data3.append([Paragraph(
                 f"    •  Provide reading materials (online links/PowerPoint present/online PDF materials, etc.)", contentStyleLeft)])
-            data3.append([Paragraph(f"    •  Give online activities/assessment to the student", contentStyleLeft)])
-            data3.append([Paragraph(f"    •  Conduct synchronous class using google meet", contentStyleLeft)])
-            data3.append([Paragraph(f"    •  Attend online faculty meeting", contentStyleLeft)])
-            data3.append([Paragraph(f"    •  Conduct online faculty monitoring (for Dept. Heads only)", contentStyleLeft)])
+            data3.append([Paragraph(
+                f"    •  Give online activities/assessment to the student", contentStyleLeft)])
+            data3.append([Paragraph(
+                f"    •  Conduct synchronous class using google meet", contentStyleLeft)])
+            data3.append(
+                [Paragraph(f"    •  Attend online faculty meeting", contentStyleLeft)])
+            data3.append([Paragraph(
+                f"    •  Conduct online faculty monitoring (for Dept. Heads only)", contentStyleLeft)])
 
             table3 = Table(data3)
 
-            
             data4 = []
-            data4.append([Paragraph(f"<b>Attachments: </b>", contentStyleLeft)])
-            data4.append([Paragraph(f"    1.  Screenshot during actual Synchronous Class", contentStyleLeft)])
-            data4.append([Paragraph(f"    2.  Screenshot of Classwork", contentStyleLeft)])
+            data4.append(
+                [Paragraph(f"<b>Attachments: </b>", contentStyleLeft)])
+            data4.append([Paragraph(
+                f"    1.  Screenshot during actual Synchronous Class", contentStyleLeft)])
+            data4.append(
+                [Paragraph(f"    2.  Screenshot of Classwork", contentStyleLeft)])
 
             table4 = Table(data4)
-
 
             # data5.append(['', '', ''])
             table5 = Table(data5)
@@ -732,7 +743,7 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
 
     def post(self, request, semester_id, week_no, wfar_status, page_no, sort):
 
-        # try:
+        try:
 
             if (sort == '0'):
                 sort_filter1 = "last_name"
@@ -742,7 +753,7 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0  or faculty_checker_id == '0':
+            if faculty_checker_id == 0 or faculty_checker_id == '0':
                 faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
@@ -774,28 +785,49 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
 
             else:
                 return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
-        # except:
-        #     # pass
-        #     return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except:
+            # pass
+            return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class PrintWeeklyWFARPDF(APIView):
+    def post(self, request, semester_id, week, wfar_status, sort):
+        # See
+        faculty_checker_id = request.data['faculty_checker_id']
+        if (sort == '0'):
+            sort_filter1 = "last_name"
+            sort_filter2 = "first_name"
+        else:
+            sort_filter1 = "-last_name"
+            sort_filter2 = "-first_name"
 
+        if faculty_checker_id == 0 or faculty_checker_id == '0':
+            faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+        else:
+            faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
+                        pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+
+        pass
 
 # EROLD -------
 
 
 class RetrieveWFARPerUser(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self, request, pk):
-        # try:  
-            wfar = WFAR.objects.get(id=pk)
-            serializer = WFARCheckingWFARSerializer(wfar, many=False)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, pk):
+        # try:
+        wfar = WFAR.objects.get(id=pk)
+        serializer = WFARCheckingWFARSerializer(wfar, many=False)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
         # except:
-        #     return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+        #     return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class CreateCommentToWFAR(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         try:
             faculty_id = request.user.id
@@ -804,11 +836,11 @@ class CreateCommentToWFAR(APIView):
 
             faculty = Faculty.objects.get(id=faculty_id)
             wfar = WFAR.objects.get(id=wfar_id)
-            
+
             WFAR_Comment.objects.create(
-                faculty_id = faculty,
-                wfar_id = wfar,
-                description = description
+                faculty_id= faculty,
+                wfar_id= wfar,
+                description= description
 
             )
 
@@ -817,10 +849,12 @@ class CreateCommentToWFAR(APIView):
             }
             return Response(message, status=status.HTTP_200_OK)
         except:
-            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+            return Response({'detail': 'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)   
+
 
 class UpdateWFARStatus(APIView):
     permission_classes = [IsAuthenticated]
+
     def put(self, request, statusVal):
         try:
             if statusVal == 3:
@@ -841,13 +875,14 @@ class UpdateWFARStatus(APIView):
             }
             return Response(message, status=status.HTTP_200_OK)
         except:
-            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  
+            return Response({'detail': 'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)  
 
 
 class UpdateComment(APIView):
     permission_classes = [IsAuthenticated]
+
     def put(self, request, pk):
-        try:    
+        try:
             comment = WFAR_Comment.objects.get(id=pk)
             comment.description = request.data['description']
             comment.save()
@@ -857,11 +892,14 @@ class UpdateComment(APIView):
             }
             return Response(message, status=status.HTTP_200_OK)
         except:
-            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'detail': 'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class DeleteComment(APIView):
     permission_classes = [IsAuthenticated]
+
     def delete(self, request, pk):
-        try:    
+        try:
             comment = WFAR_Comment.objects.get(id=pk)
             comment.delete()
 
@@ -870,18 +908,8 @@ class DeleteComment(APIView):
             }
             return Response(message, status=status.HTTP_200_OK)
         except:
-            return Response({'detail':'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)    
+            return Response({'detail': 'Something went wrong!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)    
 
-
-
-
-
-
-
-    
-
-    
-    
 
         # except:
         #     return Response({"detail": "An error has occured while printing."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
