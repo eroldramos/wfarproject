@@ -23,7 +23,9 @@ class RetrievePendingFaculties(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
+                Q(middle_name__icontains = search)|
                 Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
 
             )

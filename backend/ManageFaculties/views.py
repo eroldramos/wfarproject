@@ -71,8 +71,9 @@ class RetrieveAllUnassignedFaculty(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
 
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
@@ -111,8 +112,9 @@ class RetrieveAllAssignedFaculty(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
             p = Paginator(assigned_faculties,6)
@@ -151,8 +153,9 @@ class RetrieveAllAssignedFacultyForAreaChairHead(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
             p = Paginator(assigned_faculties,6)
@@ -190,8 +193,9 @@ class RetrieveAllNormalFacultyUser(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
             p = Paginator(faculties, 6)
@@ -229,8 +233,9 @@ class RetrieveAllAreaChairUser(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
             p = Paginator(faculties, 6)
@@ -267,8 +272,9 @@ class RetrieveAllDepartmentHeadUser(APIView):
                 Q(username__icontains = search)|
                 Q(email__icontains = search)|
                 Q(first_name__icontains = search)|
-                Q(last_name__icontains = search)|
                 Q(middle_name__icontains = search)|
+                Q(last_name__icontains = search)|
+                Q(extension_name__icontains = search)|
                 Q(contact_no__icontains = search)
             ).exclude(accepted_at__isnull=True).exclude(deleted_at__isnull=False).order_by('last_name')
         
