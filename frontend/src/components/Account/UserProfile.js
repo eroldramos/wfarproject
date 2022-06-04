@@ -504,9 +504,9 @@ const UserProfile = () => {
                   return <p className="userinput" style={{ color: '#000000' }}> Admin </p>
                 }
                 return <p className="userinput" style={{ color: '#000000' }}> Faculty </p>
-              } else if (item.sex === 2) {
+              } else if (item.user_type === 2) {
                 return <p className="userinput" style={{ color: '#000000' }}> Area Chair </p>
-              } else if (item.sex === 3) {
+              } else if (item.user_type === 3) {
                 return <p className="userinput" style={{ color: '#000000' }}> Department Head </p>
               } else {
                 return <p className="userinput" style={{ color: '#000000' }}></p>
