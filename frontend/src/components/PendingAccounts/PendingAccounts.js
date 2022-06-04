@@ -347,9 +347,7 @@ const PendingAccounts = () => {
         <div className={styles["paginator-container"]}>
           <Paginator page={page} pages={pages} search={search} />
         </div>
-        <div className={styles["export-container"]}>
-          <PrintButton label="Export" type="cancel" size></PrintButton>
-        </div>
+
         <div className={styles["clearfix"]}></div>
       </div>
     </Fragment>

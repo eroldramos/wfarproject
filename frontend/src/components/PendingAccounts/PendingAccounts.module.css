@@ -1,7 +1,7 @@
 .container {
   margin-top: 30px;
 }
-.paginator-container{
+.paginator-container {
   display: flex;
   text-align: center;
   margin-top: 5px;
@@ -11,7 +11,7 @@
 .paginator-container {
   float: right;
 }
-.export-container{
+.export-container {
   /* border: 1px solid black; */
 }
 .small-btn-container,
@@ -36,17 +36,17 @@
   border-radius: 5px;
   padding: 5px 5px;
 }
-.no-pending-text{
+.no-pending-text {
   text-align: center;
   font-size: 20px;
   padding: 30px 0;
   margin: 0;
   font-weight: 600;
   color: #777777;
-  
+
   border: 1px solid #ebecee;
   border-top: none;
-  
+
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
