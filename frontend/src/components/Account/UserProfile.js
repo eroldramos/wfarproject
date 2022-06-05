@@ -77,6 +77,7 @@ const UserProfile = () => {
       showConfirmButton: true,
       showCancelButton: true,
       input: 'password',
+      confirmButtonColor: '#B16047',
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
         //delete
@@ -388,7 +389,8 @@ const UserProfile = () => {
         title: 'Success!',
         text: 'Changes has been saved',
         icon: 'success',
-        confirmButtonText: 'OK', showConfirmButton: true,
+        confirmButtonText: 'OK',
+        showConfirmButton: true,
         timer: 3000,
         timerProgressBar: true,
       }).then((result) => {
