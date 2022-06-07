@@ -64,6 +64,7 @@ const SideNav = (props) => {
   };
   //
   const [profile_pic, setprofile_pic] = useState();
+  const [profileInfo, setProfileInfo] = useState({});
 
   //   useEffect(() => {
   //     if (!userInfo) {
@@ -78,6 +79,7 @@ const SideNav = (props) => {
         const response = await fetch(url);
         const json = await response.json();
         setprofile_pic(json[0].profile_picture);
+        setProfileInfo(json[0]);
       } catch (error) {
         console.log("error: ", error);
       }
@@ -386,13 +388,17 @@ const SideNav = (props) => {
               ></div>
             </Link>
             <div className="account-label nav-open-text">
-              <span className="account-label-name">{userInfo.name}</span>
+              <span className="account-label-name">{profileInfo.name}</span>
               <span className="account-label-type">
-                {userInfo.isAdmin && "Administrator"}
-                {!userInfo.isAdmin && userInfo.userType == 1 && "Faculty"}
-                {!userInfo.isAdmin && userInfo.userType == 2 && "Area Chair"}
-                {!userInfo.isAdmin &&
-                  userInfo.userType == 3 &&
+                {profileInfo.isAdmin && "Administrator"}
+                {!profileInfo.isAdmin &&
+                  profileInfo.user_type == 1 &&
+                  "Faculty"}
+                {!profileInfo.isAdmin &&
+                  profileInfo.user_type == 2 &&
+                  "Area Chair"}
+                {!profileInfo.isAdmin &&
+                  profileInfo.user_type == 3 &&
                   "Department Head"}
               </span>
             </div>
