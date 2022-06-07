@@ -108,7 +108,7 @@
     height: 50%;
     width: 88%;
     padding-left: 2%;
-    font-size: 10px;
+    font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -120,7 +120,7 @@
     height: 50%;
     width: 88%;
     padding-left: 2%;
-    font-size: 8px;
+    font-size: 10px;
     color: rgb(113, 108, 108);
 }
 
@@ -487,6 +487,7 @@
     display: flex;
     align-items: center;
     padding: 5px;
+    cursor: pointer;
     /* border: solid black; */
 }
 

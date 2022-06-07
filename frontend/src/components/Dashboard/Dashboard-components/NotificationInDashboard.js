@@ -12,7 +12,6 @@ const NotificationInDashboard = (props) => {
 
     // notification
     const getNotification = useSelector((state) => state.getNotifications);
-    console.log(getNotification.error)
     const notificationOutput = getNotification.notifications != [] ?
         getNotification.notifications.map((notification) => {
             let output = <div key={notification.id} className="notification-item">
@@ -26,7 +25,6 @@ const NotificationInDashboard = (props) => {
                     </div>
                 </div>
             </div>;
-            console.log(notification)
             let direct_to = "/dashboard/";
             if(notification.type<6) direct_to = "/WFARChecking/"+notification.wfar_id;
             else if(notification.type==6) direct_to ="/pending-accounts/"
