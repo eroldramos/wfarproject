@@ -71,6 +71,7 @@ const Login = () => {
   };
 
   function startTimer() {
+    window.localStorage.setItem('timer', timer)
     if (timer > 0) {
       setTimeout(function () {
         setTimer(timer - 1);
