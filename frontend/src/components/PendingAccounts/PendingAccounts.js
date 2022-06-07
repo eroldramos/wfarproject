@@ -191,6 +191,9 @@ const PendingAccounts = () => {
 
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/pending-accounts/");
+    }
   };
 
   const onAcceptAccountsHandler = () => {
