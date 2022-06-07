@@ -154,7 +154,7 @@ const UserProfile = () => {
     reset: resetEmployeeNoInput,
     setEnteredValue: setEnteredEmpNo,
   } = useValidateInput(
-    (value) => value !== "" && onlyNumbers(value)
+    (value) => value !== ""
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
@@ -443,7 +443,7 @@ const UserProfile = () => {
       imageHeight: 200,
       imageAlt: 'Custom image',
       showCancelButton: true,
-      confirmButtonText: 'Edit',
+      confirmButtonText: 'Edit', confirmButtonColor: '#B16047',
     }).then((result) => {
       if (result.isConfirmed) {
         document.getElementById('input_file2').click();
@@ -528,11 +528,18 @@ const UserProfile = () => {
               label="Change Password"
               type="primary"
               size="c-s" />
-            <SmallButton
-              onClick={() => constaccountDeleteSwal()}
-              label="Delete account"
-              type="primary"
-              size="c-s" />
+            {state.map((item) => {
+              if (item.is_superuser === true) {
+                return ''
+              } else {
+                return <SmallButton
+                  onClick={() => constaccountDeleteSwal()}
+                  label="Delete account"
+                  type="primary"
+                  size="c-s" />
+              }
+            })}
+
           </div>
           {isOpen && <Modal onClose={onClose} size="m-long-height">
             <div className={styles["modal-inner-container"]}>
@@ -936,17 +943,19 @@ const UserProfile = () => {
                   <p>Sex: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  {state.map((item) => {
-                    if (item.sex === 1) {
-                      return <p className={styles["info-text"]}> Male </p>
-                    } else if (item.sex === 2) {
-                      return <p className={styles["info-text"]}> Female </p>
-                    } else if (item.sex === 3) {
-                      return <p className={styles["info-text"]}> Others </p>
-                    } else {
-                      return <p className={styles["info-text"]}></p>
-                    }
-                  })}
+                  <p className={styles["info-text"]}>
+                    {state.map((item) => {
+                      if (item.sex === 1) {
+                        return 'Male'
+                      } else if (item.sex === 2) {
+                        return 'Female'
+                      } else if (item.sex === 3) {
+                        return 'Others'
+                      } else {
+                        return ''
+                      }
+                    })}
+                  </p>
                 </div>
               </div>
               <div className={styles["user-info-container"]}>
