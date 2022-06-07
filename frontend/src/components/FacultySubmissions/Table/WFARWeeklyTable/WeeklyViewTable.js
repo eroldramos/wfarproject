@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import styles from "./WeeklyViewTable.module.css";
 import TableCellButton from '../../../UI/FormControl/Button/TableCellButton';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const WeeklyTable = (props) => {
 
     // hooks
+    const navigate = useNavigate();
     const facultiesWithWfars = useSelector(state => state.weeklyWfarRetrieve.facultiesWithWfars);
     const [sortSvgClass, setSortSvgClass] = useState('sortAscSvg');
 
@@ -54,6 +56,10 @@ const WeeklyTable = (props) => {
 
         const formatted = `${month[date.getMonth()]} ${day}, ${year} ${hours}:${minutesWithLeadingZero} ${timeLabel}`;
         return formatted;
+    }
+
+    const navigateToCheckWFAR = (index) => {
+        navigate("/WFARChecking/" + index)
     }
 
     return (
@@ -129,11 +135,31 @@ const WeeklyTable = (props) => {
                                 {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at == null && "N/A"}
                                 {faculty.wfars.length == 0 && "N/A"}
                             </td>
-                            <td><TableCellButton
-                                id={null}
-                                label={"Check Submission"}
-                                type="primary"
-                                onClick={null} /></td>
+                            <td>
+                                {faculty.wfars.length == 0 && 'No Entry' && 
+                                        <TableCellButton
+                                            id={null}
+                                            label={"No Submission"}
+                                            type="button"
+                                            onClick={null}
+                                            buttonEnabled={true} />}
+
+                                {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at == null &&
+                                    <TableCellButton
+                                        id={null}
+                                        label={"No Submission"}
+                                        type="button"
+                                        onClick={null}
+                                        buttonEnabled={true} /> }
+
+                                {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null &&
+                                    <TableCellButton
+                                        id={null}
+                                        label={"View Submission"}
+                                        type="primary"
+                                    onClick={() => navigateToCheckWFAR(faculty.wfars[0].id)}
+                                    buttonEnabled={false} />}
+                            </td>
                         </tr>)
                 })}
 
