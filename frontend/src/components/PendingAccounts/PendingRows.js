@@ -20,44 +20,44 @@ const PendingRows = (props) => {
           className={`${table["col"]} ${table["col-2"]}`}
           data-label="Full Name"
         >
-          {props.fullname}
+          <h5>{props.fullname}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-3"]}`}
           data-label="Employee No."
         >
-          {props.emp_no}
+          <h5>{props.emp_no}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-4"]}`}
           data-label="Username"
         >
-          {props.username}
+          <h5>{props.username}</h5>
         </div>
         <div className={`${table["col"]} ${table["col-5"]}`} data-label="Email">
-          {props.email}
+        <h5>{props.email}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-6"]}`}
           data-label="Contact"
         >
-          {props.contact_no}
+          <h5>{props.contact_no}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-7"]}`}
           data-label="Created"
         >
-          {props.civilStatus == 1 && "Married"}
-          {props.civilStatus == 2 && "Widowed"}
-          {props.civilStatus == 3 && "Separated"}
-          {props.civilStatus == 4 && "Divorced"}
-          {props.civilStatus == 5 && "Single"}
+          <h5>{props.civilStatus == 1 && "Married"}</h5>
+          <h5>{props.civilStatus == 2 && "Widowed"}</h5>
+          <h5>{props.civilStatus == 3 && "Separated"}</h5>
+          <h5>{props.civilStatus == 4 && "Divorced"}</h5>
+          <h5>{props.civilStatus == 5 && "Single"}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-8"]}`}
           data-label="Action"
         >
-          {props.createdAt}
+          <h5>{props.createdAt}</h5>
         </div>
       </li>
     </Fragment>
