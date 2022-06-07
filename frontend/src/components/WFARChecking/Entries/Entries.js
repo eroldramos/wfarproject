@@ -109,7 +109,7 @@ const Entries = (props) => {
         <div className={styles.entries}>
           <div className={styles.detailsContainer}>
             <div className={styles.entryTextContainer}>
-              <h3>Entry # 1</h3>
+              <h3>Entry # {props.number}</h3>
               <h3>Date Accomlished: </h3>
               <p>{props.entry.accomplishment_date}</p>
             </div>

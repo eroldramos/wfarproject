@@ -18,26 +18,25 @@ import SmallButton from "../UI/FormControl/Button/SmallButton";
 import { printWfarIndividual } from "../../store/wfarActions";
 
 const WFARChecking = () => {
-
-  // 
+  //
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUnsubmitted, setIsUnsubmitted] = useState(false);
 
   useEffect(() => {
-    if (isSubmitted === true && wfarData!==null) {
+    if (isSubmitted === true && wfarData !== null) {
       dispatch(submitWfar(wfarData.id, wfarData.week_no));
       setIsSubmitted(false);
     }
-  }, [isSubmitted])
+  }, [isSubmitted]);
 
   useEffect(() => {
     if (isUnsubmitted === true && wfarData !== null) {
       dispatch(unsubmitWfar(wfarData.id, wfarData.week_no));
       setIsUnsubmitted(false);
     }
-  }, [isUnsubmitted])
-  
+  }, [isUnsubmitted]);
+
   const params = useParams();
 
   const userInfo = useSelector((state) => state.login.userInfo);
@@ -191,7 +190,8 @@ const WFARChecking = () => {
     changeCheckStatusIsLoading,
     updateCommentIsLoading,
     deleteCommentIsLoading,
-    isSubmitted, isUnsubmitted
+    isSubmitted,
+    isUnsubmitted,
   ]);
 
   useEffect(() => {
@@ -202,19 +202,17 @@ const WFARChecking = () => {
 
   console.log(getComment);
 
-
   const printError = useSelector((state) => state.wfarPrintOverview.error);
 
   useEffect(() => {
     if (printError != null) {
       Swal.fire({
-        html:
-          '<h5>' + printError + '</h5>',
-        icon: 'error',
-        confirmButtonColor: '#BE5A40'
-      })
+        html: "<h5>" + printError + "</h5>",
+        icon: "error",
+        confirmButtonColor: "#BE5A40",
+      });
     }
-  }, [printError])
+  }, [printError]);
 
   const onClickExportHandler = () => {
     // setIsPrintOverview(true);
@@ -222,52 +220,53 @@ const WFARChecking = () => {
       // alert("id: " + wfarData.id);
       dispatch(printWfarIndividual(wfarData.id));
     }
-  }
+  };
 
-  const [jsxCodeForCheckButton, setJsxCodeForCheckButton] = useState('');
-  const [jsxCodeForSubmitButton, setJsxCodeForSubmitButton] = useState('');
-  const [jsxCodeForEntries, setJsxCodeForEntries] = useState('');
+  const [jsxCodeForCheckButton, setJsxCodeForCheckButton] = useState("");
+  const [jsxCodeForSubmitButton, setJsxCodeForSubmitButton] = useState("");
+  const [jsxCodeForEntries, setJsxCodeForEntries] = useState("");
   // let jsxCodeForCheckButton;
 
   const onSubmitOnClickHandler = () => {
     Swal.fire({
       html:
-        '<h4>Submit WFAR</h4>' +
-        '<h5>Are you sure you want to submit WFAR?</h5>',
-      icon: 'question',
+        "<h4>Submit WFAR</h4>" +
+        "<h5>Are you sure you want to submit WFAR?</h5>",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'Submit',
-      iconColor: '#D1D1D1',
-      confirmButtonColor: '#BE5A40',
-      cancelButtonColor: '#A1A1A1'
+      confirmButtonText: "Submit",
+      iconColor: "#D1D1D1",
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
     }).then((result) => {
       if (result.isConfirmed) {
         setIsSubmitted(true);
       }
-    })
-  }
+    });
+  };
 
   const onUnsubmitOnClickHandler = () => {
     Swal.fire({
       html:
-        '<h4>Unsubmit WFAR</h4>' +
-        '<h5>Are you sure you want to unsubmit your WFAR for Week ' + wfarData.week_no + '?</h5>',
-      icon: 'warning',
+        "<h4>Unsubmit WFAR</h4>" +
+        "<h5>Are you sure you want to unsubmit your WFAR for Week " +
+        wfarData.week_no +
+        "?</h5>",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Unsubmit',
-      confirmButtonColor: '#BE5A40'
+      confirmButtonText: "Unsubmit",
+      confirmButtonColor: "#BE5A40",
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         setIsUnsubmitted(true);
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (userInfo !== null && wfarData !== null) {
       if (wfarData.faculty !== null) {
-
         let timer1 = setTimeout(() => {
           console.log("userInfo");
           console.log(userInfo.id);
@@ -279,22 +278,50 @@ const WFARChecking = () => {
             setIsOwner(false);
             console.log("set is owner 1 " + isOwner);
             setJsxCodeForCheckButton(() => {
-              return !wfarData.checked_at ? (<Fragment><PrintWFARButton onClick={onClickExportHandler} /><CheckWFARButton /></Fragment>) : (<Fragment><PrintWFARButton onClick={onClickExportHandler} /><ReCheckWFARButton /></Fragment>);
+              return !wfarData.checked_at ? (
+                <Fragment>
+                  <PrintWFARButton onClick={onClickExportHandler} />
+                  <CheckWFARButton />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <PrintWFARButton onClick={onClickExportHandler} />
+                  <ReCheckWFARButton />
+                </Fragment>
+              );
             });
           } else {
             setIsOwner(true);
             console.log("set is owner 2 " + isOwner);
             if (wfarData.status === 1 && wfarData.entries.length > 0) {
-              setJsxCodeForSubmitButton(<Fragment><PrintWFARButton onClick={onClickExportHandler}/><SubmitWFARButton onClick={onSubmitOnClickHandler} /></Fragment>);
+              setJsxCodeForSubmitButton(
+                <Fragment>
+                  <PrintWFARButton onClick={onClickExportHandler} />
+                  <SubmitWFARButton onClick={onSubmitOnClickHandler} />
+                </Fragment>
+              );
             } else if (wfarData.status === 2 || wfarData.status === 4) {
-              setJsxCodeForSubmitButton(<Fragment><PrintWFARButton onClick={onClickExportHandler}/><div><SmallButton onClick={onUnsubmitOnClickHandler} label="Unsubmit" type="primary" /></div></Fragment>);
+              setJsxCodeForSubmitButton(
+                <Fragment>
+                  <PrintWFARButton onClick={onClickExportHandler} />
+                  <div>
+                    <SmallButton
+                      onClick={onUnsubmitOnClickHandler}
+                      label="Unsubmit"
+                      type="primary"
+                    />
+                  </div>
+                </Fragment>
+              );
             }
           }
 
           if (wfarData.entries.length > 0) {
-            setJsxCodeForEntries(<h3 className={styles.Label}>Entries:</h3>)
+            setJsxCodeForEntries(<h3 className={styles.Label}>Entries:</h3>);
           } else {
-            setJsxCodeForEntries(<h3 className={styles.Label}>No entries yet.</h3>)
+            setJsxCodeForEntries(
+              <h3 className={styles.Label}>No entries yet.</h3>
+            );
           }
         }, 500);
 
@@ -302,12 +329,8 @@ const WFARChecking = () => {
           clearTimeout(timer1);
         };
       }
-
-      
-
     }
   }, [userInfo, wfarData]);
-
 
   return (
     <Fragment>
@@ -316,8 +339,6 @@ const WFARChecking = () => {
           <div className={styles.firstContainer}>
             <h2>Viewing WFAR</h2>
             <div className={styles.print_CheckContainer}>
-              
-
               {/* {userInfo !== null 
                 (!wfarData.checked_at ? (
                 <CheckWFARButton />
@@ -349,15 +370,21 @@ const WFARChecking = () => {
           <div className={styles.mainContainer}>
             <div className={styles.entriesContainer}>
               {jsxCodeForEntries}
-              {wfarData.entries && (
+              {wfarData.entries &&
                 wfarData.entries.map((entry, index) => (
-                  <Entries entry={entry} week_no={wfarData.week_no} status={wfarData.status} key={index} />
-                ))) }
+                  <Entries
+                    entry={entry}
+                    week_no={wfarData.week_no}
+                    status={wfarData.status}
+                    key={index}
+                    number={index + 1}
+                  />
+                ))}
             </div>
             {/* <span className={styles.divider}/> */}
             <div className={styles.commentsContainer}>
               {!isOwner && <h3 className={styles.Label}> Comments/Remarks</h3>}
-              {(isNotFaculty && !isOwner)  && (
+              {isNotFaculty && !isOwner && (
                 <CommentInputs
                   id={params.id}
                   getComment={getComment}
