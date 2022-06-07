@@ -545,7 +545,7 @@ const UserProfile = () => {
                                     <p>Program: </p>
                                 </div>
                                 <div className={styles["details-placeholder"]}>
-                                    <p className={styles["info-text"]}>Sample</p>
+                                    <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
                                 </div>
                             </div>
                         </div>

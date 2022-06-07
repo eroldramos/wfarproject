@@ -108,14 +108,15 @@ const Rows = (props) => {
     //save ID to view_id
     let data = {
       view_id: id,
-    }
+    };
     axios({
-      method: 'POST',
-      url: 'http://127.0.0.1:8000/api/profile/view-faculty/' + userInfo.id + '/',
-      data: data
+      method: "POST",
+      url:
+        "http://127.0.0.1:8000/api/profile/view-faculty/" + userInfo.id + "/",
+      data: data,
     });
     //open viewfaculty
-    navigate('/view-faculty');
+    navigate("/view-faculty");
   };
 
   const loggedUser = useSelector((state) => state.login);

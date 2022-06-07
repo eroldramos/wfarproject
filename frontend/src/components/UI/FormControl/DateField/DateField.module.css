@@ -20,12 +20,19 @@
 }
 
 .label-control {
-    font-style: normal;
-    font-weight: 600;
+    font-weight: 600 !important;
     font-size: 1em;
     display: block;
     margin: 15px 0;
 }
+
+.form-control label {
+    font-weight: 600 !important;
+    font-size: 1em;
+    display: block;
+    margin: 15px 0;
+}
+
 .nm{
     margin: 0;
 }
