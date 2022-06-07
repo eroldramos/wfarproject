@@ -86,8 +86,9 @@ const MyWfarEntry = (props) => {
         <div className={styles.entryCard}>
             <div className={styles.entryNoLabel}>Entry {entryNo}</div>
             <div className={styles.entryDetails}>
-                <span>{accomplishmentDateLbl}</span>
-                <span>{courseYearSection} - {subject}</span>
+                <span className={styles.entryDate}>{accomplishmentDateLbl}</span>
+                <span className={styles.entryCourse}>{courseYearSection}</span> - 
+                <span className={styles.entrySubject}>{subject}</span>
             </div>
             <div className={styles.entryMoreOptions}>
                 {wfarStatus != 2 && <svg onClick={onClickMoreOptionsHandler} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

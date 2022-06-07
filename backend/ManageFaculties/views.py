@@ -329,10 +329,10 @@ class AssignedFaculties(APIView):
                 faculty.save()
 
                 if faculty_prev_assignee != None:
-                    detail = f"You have been reassigned to {faculty.last_name}, {faculty.first_name}."
+                    detail = f"You have been reassigned to {assignedTo.last_name}, {assignedTo.first_name}."
                     subject = "Faculty reassignment"
                 else:
-                    detail = f"You have been assigned to {faculty.last_name}, {faculty.first_name}."
+                    detail = f"You have been assigned to {assignedTo.last_name}, {assignedTo.first_name}."
                     subject = "Faculty assignment"
 
                 notification = Notification()

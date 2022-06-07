@@ -89,7 +89,20 @@
     height: 45px;
     padding: 4px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 2px solid rgba(255, 255, 255, .5);
+    transition: .25s linear;
+}
+
+.account-profile-image-container:hover {
+    /* opacity: 50%; */
+    border: 2px solid rgba(255, 255, 255, 1);
+    transition: .25s linear;
+}
+
+.account-profile-image-container.active {
+    /* opacity: 50%; */
+    border: 2px solid rgba(255, 255, 255, 1);
+    transition: .25s linear;
 }
 
 .account-profile-image-container > div {

@@ -170,7 +170,7 @@ class SubmitWfar(APIView):
 
             subject = "Faculty submited a WFAR"
             message = f"{faculty.last_name}, {faculty.first_name} has submitted WFAR for week {wfar.week_no}."
-            send_email(faculty.id, subject, message)
+            send_email(faculty_assignee.id, subject, message)
 
 
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been submitted."}, status = status.HTTP_200_OK);
@@ -199,7 +199,7 @@ class UnsubmitWfar(APIView):
 
             subject = "Faculty unsubmited a WFAR"
             message = f"{faculty.last_name}, {faculty.first_name} has unsubmitted WFAR for week {wfar.week_no}."
-            send_email(faculty.id, subject, message)
+            send_email(faculty_assignee.id, subject, message)
 
             return Response({"wfar": WfarSerializer(wfar).data, "detail": "The WFAR has been unsubmitted."}, status = status.HTTP_200_OK);
         except:
