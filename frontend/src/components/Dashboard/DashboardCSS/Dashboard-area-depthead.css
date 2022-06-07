@@ -62,6 +62,77 @@
 
 }
 
+.dashboard-area-depthead .notification-overlay{
+    position: absolute;
+    width: 380px;
+    height: 450px;
+    background-color: white;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    top: 15%;
+    right: 15%;
+    z-index: 100;
+    padding: 2% 1% 2% 2%;
+}
+
+.dashboard-area-depthead .notification-overlay .laman{
+    width: 100%;
+    height: 92%;
+    overflow-y: auto;
+    padding-right: 0%;
+}
+
+.dashboard-area-depthead .notification-overlay .label{
+    width: 100%;
+    height: 10%;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.dashboard-area-depthead .notification-overlay .notification-item{
+    height: 15%;
+    width: 100%;
+    float: left;
+    margin-bottom: 1%;
+}
+
+.dashboard-area-depthead .notification-overlay .notification-item div{
+    height: 100%;
+    width: 88%;
+    float: left;
+    padding-left: 2%;
+    padding-top: 1%;
+}
+
+.dashboard-area-depthead .notification-overlay .notification-item div .detail{
+    height: 50%;
+    width: 88%;
+    padding-left: 2%;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgb(86, 83, 83);
+    padding-top: 3%;
+}
+
+.dashboard-area-depthead .notification-overlay .notification-item div .date_time{
+    height: 50%;
+    width: 88%;
+    padding-left: 2%;
+    font-size: 8px;
+    color: rgb(113, 108, 108);
+}
+
+.dashboard-area-depthead .notification-overlay .notification-item img{
+    float: left;
+    margin-top: 2%;
+    height: 70%;
+    width: 12%;
+    border-radius: 50%;
+}
+
+
 .dashboard-area-depthead .notification-container {
     border-radius: 50%;
     height: 45px;
@@ -75,6 +146,7 @@
     display: block;
     width: 60%;
     height: 60%;
+    cursor: pointer;
 }
 
 .dashboard-area-depthead .greetings {

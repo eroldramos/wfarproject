@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllWFARinThisWeek, getAllUser, getActiveSem, getAllWFARwholeSem } from "../../store/dashboardAction";
+import { getAllNotification } from "../../store/notificationActions";
 
 const Dashboard = () => {
 
@@ -20,6 +21,7 @@ const Dashboard = () => {
         dispatch(getAllUser())
         dispatch(getActiveSem())
         dispatch(getAllWFARwholeSem(userID))
+        dispatch(getAllNotification(userID))
     }, [dispatch]);
 
     if (userInfo === null || error !== null) {

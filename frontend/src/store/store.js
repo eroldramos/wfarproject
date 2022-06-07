@@ -69,6 +69,11 @@ import {
   getWFARwholeSemReducer,
   getWFARCommentsReducer,
 } from "./dashboardReducer";
+
+import {
+  getNotificationReducer,
+}from "./notificationReducer";
+
 // erold
 import {
   getCheckWfarReducer,
@@ -113,6 +118,7 @@ const store = configureStore({
     // For Demo purpose only
 
     getAllSems: getAllSemsReducer.reducer,
+    getNotifications: getNotificationReducer.reducer,
 
     addSem: addSemReducer.reducer,
     myWfars: myWfarFetchReducer.reducer,
