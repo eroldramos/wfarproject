@@ -26,6 +26,8 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [attempts, setAttempts] = useState(4);
+  const [disabled, setDisabled] = useState(false);
 
   const [isEmptyPassword, setIsEmptyPassword] = useState(false);
   const [isEmptyEmail, setIsEmptyEmail] = useState(false);
@@ -68,6 +70,12 @@ const Login = () => {
   };
 
   const onLoginHandler = (event) => {
+    if (attempts === 1) {
+      //disable na yung mga input fields
+      setDisabled(true);
+    }
+    setAttempts(attempts - 1);
+
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (username == "" || password == "") {
@@ -125,7 +133,7 @@ const Login = () => {
             <p>Please login to your account</p>
           </div>
           <div className={styles["error-handler-container"]}>
-            {error && <p>{error}</p>}
+            {<p>{error}</p>}
           </div>
           <form
             className={styles["form-container"]}
@@ -145,6 +153,7 @@ const Login = () => {
                 custom="form-control-custom"
                 onChange={setUsernameValue}
                 onBlur={onBlurEmail}
+                disabled={disabled}
                 value={username}
                 error={isEmptyEmail ? "Please input a valid username." : null}
               />
@@ -160,6 +169,7 @@ const Login = () => {
                 size="lg"
                 noLabel="no-label-input"
                 custom="form-control-custom"
+                disabled={disabled}
                 onChange={setPasswordValue}
                 onBlur={onBluPassword}
                 value={password}
@@ -199,6 +209,13 @@ const Login = () => {
                 Don't have an account?
                 <h5 onClick={onNavigateToSignUp}> Sign up</h5>
               </p>
+            </div>
+            <div className={styles["error-handler-container"]}>
+              <div style={{ display: attempts < 4 ? 'block' : 'none' }}>
+
+                {<p style={{ display: attempts > 0 ? 'block' : 'none' }}>Login attempts: {attempts > 0 ? attempts : ''}</p>}
+
+              </div>
             </div>
           </form>
         </div>
