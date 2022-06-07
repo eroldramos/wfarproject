@@ -15,14 +15,29 @@
     align-items: center;
     justify-content: center;
 }
+
+
 .custom-width{
     width: 100%;
     margin: 5px 0px;
 }
 .button:hover {
     background: #E8B1A1;
-    transition: .1s linear;
+    transition: .2s linear;
 }
+
+.button.disabled {
+    background: #DDD;
+    color: #777;
+    transition: .2s linear;
+    cursor:auto;
+}
+
+/* .button.disabled:hover {
+    background: #CCC;
+    color: #777;
+    transition: .1s linear;
+} */
 
 @media only screen and (max-width: 768px) {
     .button {
