@@ -28,6 +28,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [attempts, setAttempts] = useState(4);
   const [disabled, setDisabled] = useState(false);
+  const [timer, setTimer] = useState(window.localStorage.getItem('timer'));
 
   const [isEmptyPassword, setIsEmptyPassword] = useState(false);
   const [isEmptyEmail, setIsEmptyEmail] = useState(false);
@@ -69,6 +70,28 @@ const Login = () => {
     }
   };
 
+  function startTimer() {
+    if (timer > 0) {
+      setTimeout(function () {
+        setTimer(timer - 1);
+        window.localStorage.setItem('timer', timer);
+      }.bind(this), 1000)
+    } else if (timer === 0) {
+      setAttempts(4);
+      setDisabled(false);
+      setTimer(120);
+      window.localStorage.setItem('timer', 120);
+    }
+  }
+
+  function AttemptMessage(props) {
+    if (attempts > 0) {
+      return <p>Login attempts: {attempts}</p>;
+    }
+    startTimer();
+    return <p>You have reached the maximum attempts. Please wait {timer} seconds</p>;
+  }
+
   const onLoginHandler = (event) => {
     if (attempts === 1) {
       //disable na yung mga input fields
@@ -96,6 +119,11 @@ const Login = () => {
   };
 
   useEffect(() => {
+    if (window.localStorage.getItem('timer') > 0 && window.localStorage.getItem('timer') < 120) {
+      startTimer();
+      setAttempts(0);
+      setDisabled(true);
+    }
     if (userInfo) {
       // if userInfo is null, can't be login
       navigate("/dashboard");
@@ -212,9 +240,7 @@ const Login = () => {
             </div>
             <div className={styles["error-handler-container"]}>
               <div style={{ display: attempts < 4 ? 'block' : 'none' }}>
-
-                {<p style={{ display: attempts > 0 ? 'block' : 'none' }}>Login attempts: {attempts > 0 ? attempts : ''}</p>}
-
+                {AttemptMessage()}
               </div>
             </div>
           </form>
