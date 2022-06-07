@@ -50,6 +50,33 @@ const Register = (props) => {
     }
   }, [navigate, success]);
 
+  useEffect(() => {
+    if (error) {
+      // let htmlString = "";
+      // error.map((err, index) => (htmlString += `<p>${error[index]}</p>`));
+      // Swal.fire({
+      //   html: `
+      //   <div class=${styles["error-handler-container"]}>
+      //       ${htmlString}
+      //     </div>
+      //   `,
+      //   icon: "warning",
+      //   showDenyButton: false,
+      //   showCancelButton: false,
+      //   confirmButtonText: "OK",
+      //   // iconColor: "#D1D1D1", // question icon color
+      //   confirmButtonColor: "#BE5A40",
+      //   cancelButtonColor: "#A1A1A1",
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //     // navigate("/");
+      //   } else if (result.isDenied) {
+      //   } else if (result.isDismissed) {
+      //   }
+      // });
+    }
+  }, [error]);
+
   const GENDERS = [
     { label: "Please Select Gender", value: "" },
     { label: "Male", value: "1" },
@@ -75,23 +102,38 @@ const Register = (props) => {
       enteredConfirmPasswordIsValid &&
       enteredFirstNameIsValid &&
       enteredLastNameIsValid &&
-      enteredMiddleNameIsValid &&
-      enteredExtensionNameIsValid &&
       enteredBirthdateIsValid &&
       enteredCivilStatusIsValid &&
       enteredSexIsValid &&
       enteredHouseNoIsValid &&
       enteredStreetIsValid &&
-      enteredSubdivisionIsValid &&
       enteredBarangayIsValid &&
       enteredMunicipalityIsValid &&
       enteredProvinceIsValid &&
       enteredZipCodeIsValid &&
       enteredContactNoIsValid &&
-      enteredEmployeeNoIsValid;
+      enteredEmployeeNoIsValid &&
+      enteredDepartmentIsValid;
 
     if (!formIsValid) {
-      // alert(formIsValid);
+      setIsTouched1(true);
+      setIsTouched2(true);
+      setIsTouched3(true);
+      setIsTouched4(true);
+      setIsTouched5(true);
+      setIsTouched6(true);
+      setIsTouched7(true);
+      setIsTouched8(true);
+      setIsTouched9(true);
+      setIsTouched10(true);
+      setIsTouched11(true);
+      setIsTouched12(true);
+      setIsTouched12(true);
+      setIsTouched13(true);
+      setIsTouched14(true);
+      setIsTouched15(true);
+      setIsTouched16(true);
+      setIsTouched17(true);
       return;
     }
 
@@ -115,6 +157,7 @@ const Register = (props) => {
       zip_code: enteredZipCode,
       contact_no: enteredContactNo,
       emp_no: enteredEmployeeNo,
+      department: enteredDepartment,
     };
 
     console.log(registrationObj);
@@ -135,6 +178,7 @@ const Register = (props) => {
     valueChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
     reset: resetUsernameInput,
+    setIsTouched: setIsTouched1,
   } = useValidateInput(
     (value) => value.trim() !== "" && value.trim().length > 6
   );
@@ -146,7 +190,7 @@ const Register = (props) => {
   }
   if (enteredUsername.length <= 6 && enteredUsername !== "") {
     usernameErrorMessage =
-      "Username must be at least morethan 6 characters long.";
+      "Username must be at least more than 6 characters long.";
   }
   //Email Validations
   const {
@@ -156,6 +200,7 @@ const Register = (props) => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
+    setIsTouched: setIsTouched2,
   } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
 
   let emailErrorMessage = "";
@@ -171,6 +216,7 @@ const Register = (props) => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
+    setIsTouched: setIsTouched3,
   } = useValidateInput(
     (value) =>
       value.trim() !== "" &&
@@ -189,7 +235,7 @@ const Register = (props) => {
   }
   if (enteredPassword.length <= 8 && enteredPassword !== "") {
     passwordErrorMessage =
-      "Character must be at least morethan 8 characters long.";
+      "Character must be at least more than 8 characters long.";
   }
   if (!containsNumber(enteredPassword.trim()) && enteredPassword !== "") {
     passwordErrorMessage = "Please include a number in the password.";
@@ -203,6 +249,7 @@ const Register = (props) => {
     valueChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
     reset: resetConfirmPasswordInput,
+    setIsTouched: setIsTouched4,
   } = useValidateInput(
     (value) => value.trim() !== "" && value.trim() === enteredPassword.trim()
   );
@@ -222,9 +269,8 @@ const Register = (props) => {
     valueChangeHandler: employeeNoChangeHandler,
     inputBlurHandler: employeeNoBlurHandler,
     reset: resetEmployeeNoInput,
-  } = useValidateInput(
-    (value) => value.trim() !== "" && onlyNumbers(value.trim())
-  );
+    setIsTouched: setIsTouched5,
+  } = useValidateInput((value) => value.trim() !== "");
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
   }
@@ -238,6 +284,17 @@ const Register = (props) => {
   ) {
     employeeNoErrorMessage = "Please enter a valid employee number.";
   }
+
+  // Department Validation
+  const {
+    value: enteredDepartment,
+    isValid: enteredDepartmentIsValid,
+    hasError: departmentInputHasError,
+    valueChangeHandler: departmentChangeHandler,
+    inputBlurHandler: departmentBlurHandler,
+    reset: resetDepartmentInput,
+    setIsTouched: setIsTouched6,
+  } = useValidateInput((value) => value.trim() !== "");
   // First Name Validations
   const {
     value: enteredFirstName,
@@ -246,6 +303,7 @@ const Register = (props) => {
     valueChangeHandler: firstNameChangeHandler,
     inputBlurHandler: firstNameBlurHandler,
     reset: resetFirstNameInput,
+    setIsTouched: setIsTouched7,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Middle Name Validations
@@ -266,6 +324,7 @@ const Register = (props) => {
     valueChangeHandler: lastNameChangeHandler,
     inputBlurHandler: lastNameBlurHandler,
     reset: resetLastNameInput,
+    setIsTouched: setIsTouched8,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Extension Name Validations
@@ -296,6 +355,7 @@ const Register = (props) => {
     valueChangeHandler: civilStatusChangeHandler,
     inputBlurHandler: civilStatusBlurHandler,
     reset: resetCivilStatusInput,
+    setIsTouched: setIsTouched9,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Sex Validations
@@ -306,6 +366,7 @@ const Register = (props) => {
     valueChangeHandler: sexChangeHandler,
     inputBlurHandler: sexBlurHandler,
     reset: resetSex,
+    setIsTouched: setIsTouched10,
   } = useValidateInput((value) => value.trim() !== "");
 
   // House No Validations
@@ -316,6 +377,7 @@ const Register = (props) => {
     valueChangeHandler: houseNoChangeHandler,
     inputBlurHandler: houseNoBlurHandler,
     reset: resetHouseNo,
+    setIsTouched: setIsTouched11,
   } = useValidateInput(
     (value) => value.trim() !== "" && onlyNumbers(value.trim())
   );
@@ -328,6 +390,7 @@ const Register = (props) => {
     valueChangeHandler: streetChangeHandler,
     inputBlurHandler: streetBlurHandler,
     reset: resetStreet,
+    setIsTouched: setIsTouched12,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Subdivision Validations
@@ -348,6 +411,7 @@ const Register = (props) => {
     valueChangeHandler: barangayChangeHandler,
     inputBlurHandler: barangayBlurHandler,
     reset: resetBarangay,
+    setIsTouched: setIsTouched13,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Municipality Validations
@@ -358,6 +422,7 @@ const Register = (props) => {
     valueChangeHandler: municipalityChangeHandler,
     inputBlurHandler: municipalityBlurHandler,
     reset: resetMunicipality,
+    setIsTouched: setIsTouched14,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Province Validations
@@ -368,6 +433,7 @@ const Register = (props) => {
     valueChangeHandler: provinceChangeHandler,
     inputBlurHandler: provinceBlurHandler,
     reset: resetProvince,
+    setIsTouched: setIsTouched17,
   } = useValidateInput((value) => value.trim() !== "");
 
   // Zip Code Validations
@@ -378,6 +444,7 @@ const Register = (props) => {
     valueChangeHandler: zipCodeChangeHandler,
     inputBlurHandler: zipCodeBlurHandler,
     reset: resetZipCode,
+    setIsTouched: setIsTouched15,
   } = useValidateInput(
     (value) => value.trim() !== "" && onlyNumbersAndPlusSign(value.trim())
   );
@@ -390,8 +457,9 @@ const Register = (props) => {
     valueChangeHandler: contactNoChangeHandler,
     inputBlurHandler: contactNoBlurHandler,
     reset: resetContactNo,
+    setIsTouched: setIsTouched16,
   } = useValidateInput(
-    (value) => value.trim() !== "" && onlyNumbers(value.trim())
+    (value) => value.trim() !== "" && onlyNumbersAndPlusSign(value.trim())
   );
 
   let inLoadClassForAnimation = "";
@@ -424,9 +492,9 @@ const Register = (props) => {
             <p>Please create an account to continue</p>
           </div>
 
-          <div className={styles["error-handler-container"]}>
+          {/* <div className={styles["error-handler-container"]}>
             {error && error.map((err, index) => <p>{error[index]}</p>)}
-          </div>
+          </div> */}
           <form
             className={styles["form-container"]}
             action=""
@@ -443,7 +511,7 @@ const Register = (props) => {
                   name="empNo"
                   labelName="Employee Number"
                   //inputName="empNo"
-                  placeholder="Employee Number"
+                  placeholder="Ex. EMP2018-XXXXXXX"
                   onChange={employeeNoChangeHandler}
                   onBlur={employeeNoBlurHandler}
                   value={enteredEmployeeNo}
@@ -458,6 +526,32 @@ const Register = (props) => {
                 {/* <label for="">Employee Number</label>
                             <input type="text" placeholder="Employee Number"/> */}
               </div>
+
+              <div className={styles["form-field"]}>
+                <InputField
+                  id="firstName"
+                  type="text"
+                  labelName="Department"
+                  name="firstName"
+                  //   inputName=""
+                  placeholder="Department"
+                  onChange={departmentChangeHandler}
+                  onBlur={departmentBlurHandler}
+                  value={enteredDepartment}
+                  error={
+                    departmentInputHasError
+                      ? "Please enter a valid department."
+                      : null
+                  }
+                  size="lg"
+                  // noLabel = "no-label-input"
+                  custom="form-control-custom"
+                  labelMargin="nm"
+                />
+                {/* <label for="">First Name</label>
+                            <input type="text" placeholder="First Name"/> */}
+              </div>
+
               <div className={styles["form-field"]}>
                 <InputField
                   id="firstName"
@@ -492,11 +586,7 @@ const Register = (props) => {
                   onChange={middleNameChangeHandler}
                   onBlur={middleNameBlurHandler}
                   value={enteredMiddleName}
-                  error={
-                    middleNameInputHasError
-                      ? "Please enter a middle name. Enter N/A if not available"
-                      : null
-                  }
+                  error={null}
                   size="lg"
                   // noLabel = "no-label-input"
                   custom="form-control-custom"
@@ -543,11 +633,7 @@ const Register = (props) => {
                     onChange={extensionNameChangeHandler}
                     onBlur={extensionNameBlurHandler}
                     value={enteredExtensionName}
-                    error={
-                      extensionNameInputHasError
-                        ? "Please enter an extension name. Enter N/A if not available."
-                        : null
-                    }
+                    error={null}
                     size="lg"
                     // noLabel = "no-label-input"
                     custom="form-control-custom"
@@ -778,11 +864,7 @@ const Register = (props) => {
                     onChange={subdivisionChangeHandler}
                     onBlur={subdivisionBlurHandler}
                     value={enteredSubdivision}
-                    error={
-                      subdivisionInputHasError
-                        ? "Please enter a valid subdivision."
-                        : null
-                    }
+                    error={null}
                     size="lg"
                     // noLabel = "no-label-input"
                     custom="form-control-custom"

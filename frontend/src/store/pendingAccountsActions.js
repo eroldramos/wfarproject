@@ -2,7 +2,7 @@ import {
   getPendingAccountsActions,
   acceptAccountsActions,
 } from "./pendingAccountsReducers";
-
+import Swal from "sweetalert2";
 export const getPendingAccounts = (search = "") => {
   return async (dispatch, getState) => {
     let url = `/api/retrieve-pending-faculties/${search}`;
@@ -71,6 +71,17 @@ export const acceptAccounts = (arrayId) => {
       dispatch(
         acceptAccountsActions.acceptAccountSuccess({ success: data.detail })
       );
+
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       dispatch(
         acceptAccountsActions.acceptAccountFail({ error: error.message })

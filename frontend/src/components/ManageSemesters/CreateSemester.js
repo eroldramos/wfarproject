@@ -37,6 +37,7 @@ const CreateSemester = () => {
     valueChangeHandler: labelChangeHandler,
     inputBlurHandler: labelBlurHandler,
     reset: resetLabel,
+    setIsTouched: setLabelIsTouched,
   } = useValidateInput((value) => value.trim() !== "");
 
   const {
@@ -46,6 +47,7 @@ const CreateSemester = () => {
     valueChangeHandler: schoolYearChangeHandler,
     inputBlurHandler: schoolYearBlurHandler,
     reset: resetSchoolYear,
+    setIsTouched: setSchoolYearIsTouched,
   } = useValidateInput((value) => value.trim() !== "");
 
   const {
@@ -55,6 +57,7 @@ const CreateSemester = () => {
     valueChangeHandler: startDateChangeHandler,
     inputBlurHandler: startDateBlurHandler,
     reset: resetStartDate,
+    setIsTouched: setStartDateIsTouched,
   } = useValidateInput((value) => value.trim() !== "");
 
   const {
@@ -64,6 +67,7 @@ const CreateSemester = () => {
     valueChangeHandler: endDateChangeHandler,
     inputBlurHandler: endDateBlurHandler,
     reset: resetEndDate,
+    setIsTouched: setEndDateIsTouched,
   } = useValidateInput((value) => value.trim() !== "");
 
   const submit = (e) => {
@@ -83,7 +87,10 @@ const CreateSemester = () => {
     }
 
     if (formErrors > 0) {
-      alert("All fields are required!");
+      setLabelIsTouched(true);
+      setSchoolYearIsTouched(true);
+      setStartDateIsTouched(true);
+      setEndDateIsTouched(true);
       return;
     }
 
@@ -118,7 +125,7 @@ const CreateSemester = () => {
         showDenyButton: false,
         showCancelButton: false,
         confirmButtonText: "OK",
-        iconColor: "#D1D1D1", // question icon color
+        // iconColor: "#D1D1D1", // question icon color
         confirmButtonColor: "#BE5A40",
         cancelButtonColor: "#A1A1A1",
       }).then((result) => {

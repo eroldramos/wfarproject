@@ -4,7 +4,8 @@ import {
   forgetPasswordActions,
   resetPasswordActions,
 } from "./authReducers";
-
+import styles from "../components/Login_Register/Register.module.css";
+import Swal from "sweetalert2";
 export const login = (username, password, loginMode) => {
   return async (dispatch, getState) => {
     let url = "/api/faculty-login/";
@@ -83,6 +84,32 @@ export const register = (registrationObj) => {
         console.log(error.message);
       }
       dispatch(authRegisterActions.registerFail({ error: errorMessages }));
+
+      let htmlString = "";
+
+      errors.map((err, index) => (htmlString += `<p>${err}</p>`));
+
+      Swal.fire({
+        html: `
+        
+        <div class=${styles["error-handler-container"]}>
+            ${htmlString}
+          </div>
+        `,
+        icon: "warning",
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: "OK",
+        // iconColor: "#D1D1D1", // question icon color
+        confirmButtonColor: "#BE5A40",
+        cancelButtonColor: "#A1A1A1",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // navigate("/");
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     }
   };
 };

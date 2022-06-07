@@ -71,13 +71,15 @@ const Faculty = () => {
     event.preventDefault();
     if (searchFaculty) {
       navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
-    } else {
-      navigate(window.location);
     }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/faculty/");
+    }
   };
+
   return (
     <Fragment>
       <div className={styles["search-field-container"]}>

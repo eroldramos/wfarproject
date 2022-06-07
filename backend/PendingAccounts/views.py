@@ -59,9 +59,9 @@ class AcceptFacultyAccount(APIView):
                 faculty.save()
 
                 subject = "Account accepted"
-                message = f"Your account has been accepted. You are able to login now."
+                message = f'Your account has been accepted. You are able to login now.'
 
-                send_email(faculty.id, subject, message)
+                send_email(faculty.id, subject, message, True)
             message = {"detail":"Account(s) accepted!"}
             return Response(message,status=status.HTTP_200_OK)
         except:

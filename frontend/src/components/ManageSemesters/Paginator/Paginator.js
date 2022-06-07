@@ -9,7 +9,7 @@ const Paginator = ({ pages, page, search = "", url }) => {
     pages >= 1 && (
       <Fragment>
         <div className={styles["pagination"]}>
-          <Link to={`/pending-accounts/?search=${search}&page=${1}`}>
+          <Link to={`${url}?search=${search}&page=${1}`}>
             <svg
               width="7"
               height="10"
@@ -26,14 +26,14 @@ const Paginator = ({ pages, page, search = "", url }) => {
           {[...Array(pages).keys()].map((x) => (
             <Link
               key={x + 1}
-              to={`/pending-accounts/?search=${search}&page=${x + 1}`}
+              to={`${url}?search=${search}&page=${x + 1}`}
               className={x + 1 === page ? styles["active"] : ""}
             >
               {x + 1}
             </Link>
           ))}
 
-          <Link to={`/pending-accounts/?search=${search}&page=${pages}`}>
+          <Link to={`${url}?search=${search}&page=${pages}`}>
             <svg
               width="7"
               height="10"

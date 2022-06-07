@@ -75,6 +75,9 @@ const DepartmentHead = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/faculty/department-head/");
+    }
   };
   const onHandleChange = (event) => {
     setAssigneeId(event.target.value);

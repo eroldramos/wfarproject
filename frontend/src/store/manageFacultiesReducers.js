@@ -73,6 +73,10 @@ export const getDepartmentHeadsReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload.error;
     },
+    getDepartmentHeadsFail(state, action) {
+      state.isLoading = false;
+      state.error = action.payload.error;
+    },
   },
 });
 
