@@ -339,7 +339,7 @@ export const restoreWfarEntry = (id) => {
             Swal.fire({
                 html:
                     '<h4>' + error.message + '</h4>',
-                icon: 'error',
+                icon: 'warning',
                 confirmButtonColor: '#BE5A40'
             })
         }

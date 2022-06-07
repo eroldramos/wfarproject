@@ -64,7 +64,7 @@
 }
 
 
-.dashboard-area-depthead .notification-overlay{
+.dashboard-faculty .notification-overlay{
     position: absolute;
     width: 380px;
     height: 450px;
@@ -77,28 +77,28 @@
     padding: 2% 1% 2% 2%;
 }
 
-.dashboard-area-depthead .notification-overlay .laman{
+.dashboard-faculty .notification-overlay .laman{
     width: 100%;
     height: 92%;
     overflow-y: auto;
     padding-right: 0%;
 }
 
-.dashboard-area-depthead .notification-overlay .label{
+.dashboard-faculty .notification-overlay .label{
     width: 100%;
     height: 10%;
     font-weight: bold;
     font-size: 20px;
 }
 
-.dashboard-area-depthead .notification-overlay .notification-item{
+.dashboard-faculty .notification-overlay .notification-item{
     height: 15%;
     width: 100%;
     float: left;
     margin-bottom: 1%;
 }
 
-.dashboard-area-depthead .notification-overlay .notification-item div{
+.dashboard-faculty .notification-overlay .notification-item div{
     height: 100%;
     width: 88%;
     float: left;
@@ -106,11 +106,11 @@
     padding-top: 1%;
 }
 
-.dashboard-area-depthead .notification-overlay .notification-item div .detail{
+.dashboard-faculty .notification-overlay .notification-item div .detail{
     height: 50%;
     width: 88%;
     padding-left: 2%;
-    font-size: 10px;
+    font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -118,15 +118,15 @@
     padding-top: 3%;
 }
 
-.dashboard-area-depthead .notification-overlay .notification-item div .date_time{
+.dashboard-faculty .notification-overlay .notification-item div .date_time{
     height: 50%;
     width: 88%;
     padding-left: 2%;
-    font-size: 8px;
+    font-size: 10px;
     color: rgb(113, 108, 108);
 }
 
-.dashboard-area-depthead .notification-overlay .notification-item img{
+.dashboard-faculty .notification-overlay .notification-item img{
     float: left;
     margin-top: 2%;
     height: 70%;

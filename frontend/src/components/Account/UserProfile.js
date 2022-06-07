@@ -53,6 +53,7 @@ const UserProfile = () => {
         setEnteredLastName(json[0].last_name);
         setEnteredEmpNo(json[0].emp_no);
         setEnteredCivilStatus(json[0].civil_status);
+        setEnteredSex(json[0].sex);
         setEnteredHouseNo(json[0].house_no);
         setEnteredStreet(json[0].street);
         setEnteredSubdivision(json[0].subdivision);

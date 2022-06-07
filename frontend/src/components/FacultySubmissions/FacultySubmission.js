@@ -27,7 +27,11 @@ const FacultySubmission = () => {
 
     useEffect(() => {
         if (selectedSemester == null && activeSemester != null) {
+            console.log("active semester")
+            console.log(activeSemester)
             dispatch(wfarSelectedSemesterActions.setSelectedSemester({ semester: activeSemester[0] }));
+            console.log("selectedSemester")
+            console.log(selectedSemester)
         }
     }, [activeSemester, selectedSemester])
 

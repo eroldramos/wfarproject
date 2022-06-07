@@ -198,7 +198,7 @@ class WfarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WFAR
-        fields = ('id', 'status', 'submitted_at', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
+        fields = ('id', 'status', 'faculty_id','submitted_at', 'week_no', 'semester', 'week_bracket', 'wfar_entries')
 
     def get_semester(self, obj):
         return (SemesterSerializer(obj.semester_id).data)
@@ -331,14 +331,46 @@ class FacultyWeeklyWfarSerializer(serializers.ModelSerializer):
 # SHEEN
 #-------DASHBOARD
 class CommentsSerializer(serializers.ModelSerializer):
-    created_at_date = serializers.SerializerMethodField(read_only=True)
+    created_at_fix = serializers.SerializerMethodField(read_only=True)
+    wfar_owner_id= serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = WFAR_Comment
-        fields = ('id','description','wfar_id','faculty_id','created_at_date','updated_at')
+        fields = ('id','description','wfar_id','faculty_id','wfar_owner_id','created_at_fix','updated_at')
 
-    def get_created_at_date(self, obj):
-        datee = obj.created_at.date()
-        return datee
+    def get_wfar_owner_id(self, obj):
+        num = ""
+        for c in str(obj.wfar_id):
+            if c.isdigit():
+                num = num + c
+        wfars = WFAR.objects.get(id=int(num))
+        serializer = WfarSerializer(wfars, many=False)
+        return serializer.data
+
+    def get_created_at_fix(self, obj):
+        d = obj.created_at
+        if d is not None:
+            diff = timezone.now() - d
+            s = diff.seconds
+            if diff.days > 30 or diff.days < 0:
+                return d.strftime('Y-m-d H:i')
+            elif diff.days == 1:
+                return 'One day ago'
+            elif diff.days > 1:
+                return '{} days ago'.format(diff.days)
+            elif s <= 1:
+                return 'just now'
+            elif s < 60:
+                return '{} seconds ago'.format(s)
+            elif s < 120:
+                return 'one minute ago'
+            elif s < 3600:
+                return '{} minutes ago'.format(round(s/60))
+            elif s < 7200:
+                return 'one hour ago'
+            else:
+                return '{} hours ago'.format(round(s/3600))
+        else:
+            return None       
 
 class GetAllWFAR(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField(read_only=True)
@@ -360,7 +392,7 @@ class GetAllUser(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ('id', 'username', 'email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
+        fields = ('id', 'username', 'accepted_at','email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
 
     def get_isAdmin(self, obj):   
         return obj.is_staff
@@ -373,21 +405,12 @@ class GetAllUser(serializers.ModelSerializer):
         return name
 
 class GetAllNotificationSerializer(serializers.ModelSerializer):
-    faculty_name = serializers.SerializerMethodField(read_only=True)
-    faculty_picture = serializers.SerializerMethodField(read_only=True)
+    
     notif_at = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Notification
-        fields = ('id','detail','type','notif_at','read_at','owner_id','faculty_registered_id','faculty_name','faculty_picture','wfar_id','wfar_comment_id')
+        fields = ('id','detail','type','notif_at','read_at','owner_id','faculty_registered_id','wfar_id','wfar_comment_id')
 
-    def get_faculty_name(self, obj):
-        name = f"{obj.faculty_registered_id.first_name} {obj.faculty_registered_id.last_name}"
-        if name == " ":
-            name = obj.email
-        return name
-    def get_faculty_picture(self, obj):
-        faculty = Faculty.objects.get(id=obj.faculty_registered_id.id)
-        return "/images/"+str(faculty.profile_picture)  
     def get_notif_at(self, obj):
         d = obj.created_at
         if d is not None:
@@ -412,20 +435,7 @@ class GetAllNotificationSerializer(serializers.ModelSerializer):
             else:
                 return '{} hours ago'.format(round(s/3600))
         else:
-            return None
-
-        # class Notification(models.Model):
-#     detail = models.TextField(max_length=1000)
-#     type = models.PositiveSmallIntegerField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     read_at = models.DateTimeField(null=True)
-#     owner_id = models.ForeignKey(
-#         Faculty, related_name="faculty_owner", on_delete=models.CASCADE, null=True)
-#     wfar_id = models.ForeignKey(WFAR, on_delete=models.CASCADE, null=True)
-#     wfar_comment_id = models.ForeignKey(
-#         WFAR_Comment, on_delete=models.CASCADE, null=True)
-#     faculty_registered_id = models.ForeignKey(
-#         Faculty, related_name="faculty_registered", on_delete=models.CASCADE, null=True)        
+            return None       
 
 
 # EROLD --------------------- WFARCHECKING ----------------------------------

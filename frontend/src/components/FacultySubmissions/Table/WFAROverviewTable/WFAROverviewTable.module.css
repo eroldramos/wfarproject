@@ -99,6 +99,10 @@
     font-weight: 600;
 }
 
+.table td:first-child {
+    cursor: pointer;
+}
+
 .noSubmission {
     font-weight: 600;
     color: #EC5151;
@@ -107,6 +111,11 @@
 .forChecking {
     font-weight: 600;
     color: #777777;
+}
+
+.table td:hover {
+    background: #f4f4f4 !important;
+    transition: .15s linear;
 }
 
 .withRevisions {

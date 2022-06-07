@@ -1,5 +1,6 @@
 from calendar import week
 from django.shortcuts import render
+from itsdangerous import Serializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -54,18 +55,18 @@ class GetAllCommentsByID(APIView):
     def get(self, request):
         wfar_id = request.GET.get('wfar_id')
         try:
-            comments = WFAR_Comment.objects.all().filter(wfar_id=wfar_id)
-            serializer = CommentsSerializer(comments, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            comments = WFAR_Comment.objects.all()
+            commentsJson = CommentsSerializer(comments, many=True)
+            return Response(commentsJson.data, status=status.HTTP_200_OK)
         except:
-            return Response({"detail": "An error has occured while retrieving your comments."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"detail": comments }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class GetAllUserForDashboard(APIView):
     
     def get(self, request):
 
         try:
-            users = Faculty.objects.all()
+            users = Faculty.objects.all().exclude(accepted_at=None)
             serializer = GetAllUser(users, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
