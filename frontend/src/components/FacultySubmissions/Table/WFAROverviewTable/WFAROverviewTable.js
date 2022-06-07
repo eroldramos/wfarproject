@@ -3,6 +3,7 @@ import styles from "./WFAROverviewTable.module.css";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const WFAROverviewTable = (props) => {
 
@@ -10,6 +11,7 @@ const WFAROverviewTable = (props) => {
 	const navigate = useNavigate();
 	const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
 	const selectedSemester = useSelector(state => state.wfarSelectedSemester.semester);
+	const userInfo = useSelector((state) => state.login.userInfo);
 
 	// constants
 	const month = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -66,8 +68,8 @@ const WFAROverviewTable = (props) => {
 			for (let i = 0; i < faculties.length; i++) {
 				wfarsBuffer[i] = []
 				let wfarWithWeeks = faculties[i].wfars.length;
-				console.log("weeks: " + wfarWithWeeks);
-				console.log("current_week_no: " + currentWeekNo);
+				// console.log("weeks: " + wfarWithWeeks);
+				// console.log("current_week_no: " + currentWeekNo);
 				for (let j = wfarWithWeeks; j < semesterNoOfWeeks; j++) {
 
 					if (j + 1 <= currentWeekNo) {
@@ -102,6 +104,22 @@ const WFAROverviewTable = (props) => {
 		console.log(element.scrollLeft)
 	}
 
+
+	const ViewFaculty = (id) => {
+		//save ID to view_id
+		let data = {
+			view_id: id,
+		};
+		axios({
+			method: "POST",
+			url:
+				"http://127.0.0.1:8000/api/profile/view-faculty/" + userInfo.id + "/",
+			data: data,
+		});
+		//open viewfaculty
+		navigate("/view-faculty");
+	};
+
 	return (
 		// <div className={styles.tableContainer}>
 		<table className={styles.table} id="tableWFAROverview" onScroll={onScrollHandler}>
@@ -125,7 +143,7 @@ const WFAROverviewTable = (props) => {
 			{facultiesWithWfars !== null && facultiesWithWfars.map((faculty, index) => {
 				return (
 					<tr>
-						<td className={styles['fixed']}>
+						<td className={styles['fixed']} onClick={() => ViewFaculty(faculty.id)}>
 							<strong>{faculty.last_name}</strong>, {faculty.first_name + " "}
 							{faculty.middle_name != null && faculty.middle_name != "N/a" ? faculty.middle_name[0] + ". " : ""}
 							{faculty.extension_name != null && faculty.extension_name != "N/a" ? faculty.extension_name : ""}

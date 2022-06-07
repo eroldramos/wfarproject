@@ -6,7 +6,6 @@ const SemesterDropdownField = (props) => {
 
     let semesters = [];
     props.options.map((semester) => {
-        console.log(semester);
         semesters.push({
             value: semester.id,
             label: semester.school_year + " - " + semester.label,

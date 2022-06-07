@@ -25,6 +25,7 @@
 .weeklyTable tr td:nth-child(1) {
     text-align: left;
     padding-left: 40px;
+    cursor: pointer;
 }
 
 .weeklyTable tr td:nth-child(5) {
@@ -100,6 +101,12 @@ td {
 
 .ok {
     color: #1A9E50;
+    display: flex;
+    justify-content: center;
+}
+
+.ok svg{
+    margin-right: 10px;
 }
 
 .weeklyTable tr:not(:first-child){
