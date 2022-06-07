@@ -39,7 +39,7 @@ const ManageSemesters = () => {
       onClick: () => onChangePageHandler(1),
     },
     {
-      label: "Archives",
+      label: "Archived Semesters",
       id: 2,
       side: false,
       onClick: () => onChangePageHandler(2),

@@ -13,7 +13,7 @@ const NotificationInDashboard = (props) => {
             </div>
             <div className="greetings">
                 <h3>Hi {userInfo.name},</h3>
-                <p>Good Evening!</p>
+                <p>Good day!</p>
             </div>
         </div>
     )

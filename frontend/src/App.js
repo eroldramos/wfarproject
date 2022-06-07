@@ -47,12 +47,11 @@ function App() {
   useEffect(() => {
     if (userInfo != null) {
       console.log(userInfo);
-      // if (!userInfo.c) {
+      if (!userInfo.isAdmin) {
+        console.log("WFAR creation");
         dispatch(createWfar());
-      // }
+      }
     }
-
-    console.log("hello!");
   }, [userInfo]);
 
   return (

@@ -85,9 +85,10 @@ const SemesterRows = (props) => {
         className={styles["sem-container"]}
         onMouseLeave={closePopMenuHandler}
       >
-        <strong>
-          {props.schoolYear} {props.label}
-        </strong>
+        <span className={styles["sem-label"]}>
+          <strong><em>{props.schoolYear}</em></strong> 
+          {props.label}
+        </span>
 
         <div className={styles["popup-menu-container"]}>
           <span style={{ cursor: "pointer" }} onClick={openPopMenuHandler}>
