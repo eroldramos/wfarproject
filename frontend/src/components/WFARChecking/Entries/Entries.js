@@ -110,7 +110,7 @@ const Entries = (props) => {
           <div className={styles.detailsContainer}>
             <div className={styles.entryTextContainer}>
               <h3>Entry # {props.number}</h3>
-              <h3>Date Accomlished: </h3>
+              <h3>Date Accomplished: </h3>
               <p>{props.entry.accomplishment_date}</p>
             </div>
             <div className={styles.attachmentContainer}>

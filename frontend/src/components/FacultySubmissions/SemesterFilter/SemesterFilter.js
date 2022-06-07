@@ -4,15 +4,15 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const SemesterFilter = (props) => {
+	const redux_semesters = useSelector((state) => state.wfarSemesters.semesters);
 	const selectedSemester = useSelector(state => state.wfarSelectedSemester.semester);
 	const [semesters, setSemesters] = useState([]);
 
 	useEffect(() => {
-
 		const temp = [];
 
-		if (selectedSemester != null) {
-			props.options.map((semester) => {
+		if (selectedSemester != null && redux_semesters != null) {
+			redux_semesters.map((semester) => {
 				console.log(semester);
 				temp.push({
 					value: semester.id,
@@ -24,7 +24,7 @@ const SemesterFilter = (props) => {
 			setSemesters(temp);
 		}
 
-	}, [selectedSemester])
+	}, [selectedSemester, redux_semesters])
 
 
 	return (
