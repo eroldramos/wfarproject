@@ -392,7 +392,7 @@ class GetAllUser(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Faculty
-        fields = ('id', 'username', 'email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
+        fields = ('id', 'username', 'accepted_at','email', 'name','first_name','last_name', 'isAdmin', 'userType', 'profile_picture','assignee_id')
 
     def get_isAdmin(self, obj):   
         return obj.is_staff

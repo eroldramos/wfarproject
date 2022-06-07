@@ -33,7 +33,9 @@ const PerRoleTotalSubmission = (props) => {
     if(percentageOfSubmitted>0){
         let progress =  setInterval(() => {
             progressValue ++;
+            if(valueContainer!=null)
             valueContainer.textContent = progressValue +"%";
+            if(progressBar!=null)
             progressBar.style.background = `conic-gradient(#BE5A40   ${progressValue *3.6}deg,#F1BFB2 ${progressValue *3.6}deg)`;
             if (progressValue == progressEndValue){
                 clearInterval(progress);

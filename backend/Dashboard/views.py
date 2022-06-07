@@ -66,7 +66,7 @@ class GetAllUserForDashboard(APIView):
     def get(self, request):
 
         try:
-            users = Faculty.objects.all()
+            users = Faculty.objects.all().exclude(accepted_at=None)
             serializer = GetAllUser(users, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
