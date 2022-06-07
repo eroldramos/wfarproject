@@ -108,6 +108,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
+}
+.table-row .col-1 h5:hover {
+  color: #BE5A40;
 }
 .table-row .col-7 {
   padding: 2px 0px;

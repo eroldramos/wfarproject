@@ -427,6 +427,7 @@ const UserProfile = () => {
                     </div>
                 </div>
                 <div className={styles["details-container"]}>
+                    <div className={styles["edit-buttons-container"]}></div>
                     <div className={styles["user-details-container"]}>
                         <div className={styles["scrollable-area"]}>
                             <h3 className={styles["section-text"]}>Personal Information</h3>
@@ -544,7 +545,7 @@ const UserProfile = () => {
                                     <p>Program: </p>
                                 </div>
                                 <div className={styles["details-placeholder"]}>
-                                    <p className={styles["info-text"]}>Sample</p>
+                                    <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
                                 </div>
                             </div>
                         </div>

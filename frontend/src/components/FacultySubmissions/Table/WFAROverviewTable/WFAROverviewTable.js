@@ -125,7 +125,11 @@ const WFAROverviewTable = (props) => {
 			{facultiesWithWfars !== null && facultiesWithWfars.map((faculty, index) => {
 				return (
 					<tr>
-						<td className={styles['fixed']}><strong>{faculty.last_name}</strong>, {faculty.first_name}</td>
+						<td className={styles['fixed']}>
+							<strong>{faculty.last_name}</strong>, {faculty.first_name + " "}
+							{faculty.middle_name != null && faculty.middle_name != "N/a" ? faculty.middle_name[0] + ". " : ""}
+							{faculty.extension_name != null && faculty.extension_name != "N/a" ? faculty.extension_name : ""}
+						</td>
 						{faculty.wfars.map((wfars, index) => {
 
 

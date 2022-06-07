@@ -54,6 +54,7 @@ const UserProfile = () => {
         setEnteredZip(json[0].zip_code);
         setEnteredContactNo(json[0].contact_no);
         setEnteredEmail(json[0].email);
+        setEnteredSpecialization(json[0].specialization);
       } catch (error) {
         console.log("error: ", error);
       }
@@ -81,21 +82,31 @@ const UserProfile = () => {
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
         //delete
-        Swal.fire({
-          title: 'Account Delete',
-          text: 'You will now be redirected to the login page',
-          icon: 'success',
-          confirmButtonText: 'OK',
-          timer: 3000,
-          timerProgressBar: true,
-        }).then((result) => {
-          axios({
-            method: 'POST',
-            url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
-            data: {}
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
+          data: { password: login },
+        }).then(function () {
+          Swal.fire({
+            title: 'Account Deleted',
+            text: 'You will now be redirected to the login page',
+            icon: 'success',
+            confirmButtonColor: '#B16047',
+            confirmButtonText: 'OK',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(function () {
+            dispatch(logout());
+            navigate('/');
           });
-          dispatch(logout());
-          navigate('/');
+        }).catch(function (err) {
+          Swal.fire({
+            title: 'Password incorrect',
+            text: 'Please type your password to delete your account',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#B16047',
+          });
         });
       },
     });
@@ -260,6 +271,19 @@ const UserProfile = () => {
     (value) => value !== "" && onlyNumbers(value)
   );
 
+  // Specialization Validations
+  const {
+    value: enteredSpecialization,
+    isValid: enteredSpecializationIsValid,
+    hasError: zSpecializationInputHasError,
+    valueChangeHandler: SpecializationChangeHandler,
+    inputBlurHandler: SpecializationBlurHandler,
+    reset: resetSpecialization,
+    setEnteredValue: setEnteredSpecialization,
+  } = useValidateInput(
+    (value) => value !== "" && onlyNumbers(value)
+  );
+
   // Contact No Validations
   const {
     value: enteredContactNo,
@@ -384,6 +408,7 @@ const UserProfile = () => {
         zip_code: enteredZipCode,
         contact_no: enteredContactNo,
         email: enteredEmail,
+        specialization: enteredSpecialization,
       }
       Swal.fire({
         title: 'Success!',
@@ -391,6 +416,7 @@ const UserProfile = () => {
         icon: 'success',
         confirmButtonText: 'OK',
         showConfirmButton: true,
+        confirmButtonColor: '#B16047',
         timer: 3000,
         timerProgressBar: true,
       }).then((result) => {
@@ -408,24 +434,36 @@ const UserProfile = () => {
     if (enteredPasswordIsValid &&
       enteredConfirmPasswordIsValid
     ) {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Password has been updated',
-        icon: 'success',
-        confirmButtonText: 'OK', showConfirmButton: true,
-        timer: 3000,
-        timerProgressBar: true,
-        allowOutsideClick: false,
-      }).then((result) => {
-        window.location.reload(false);
-      });
       let data = {
-        password: enteredPassword
+        current: enteredCurrentPassword,
+        password: enteredPassword,
       }
       axios({
         method: 'POST',
         url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
         data: data
+      }).then(function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Password has been updated',
+          icon: 'success',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK', showConfirmButton: true,
+          timer: 3000,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+        }).then(function () {
+          window.location.reload(false);
+        });
+      }).catch(function () {
+        Swal.fire({
+          title: 'Incorrect Password',
+          text: 'Please type your current password on the field provided',
+          icon: 'error',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK',
+          showConfirmButton: true,
+        });
       });
     }
   }
@@ -790,7 +828,23 @@ const UserProfile = () => {
                     onChange={emailChangeHandler}
                     onBlur={emailBlurHandler}
                     value={enteredEmail}
-                    error={emailInputHasError ? emailErrorMessage : null}
+                    error={emailInputHasError ? 'Specialization cannot be empty' : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="specialization"
+                    name="specialization"
+                    labelName="Specialization"
+                    placeholder="Specialization"
+                    onChange={SpecializationChangeHandler}
+                    onBlur={SpecializationChangeHandler}
+                    value={enteredSpecialization}
+                    error={zSpecializationInputHasError ? emailErrorMessage : null}
                     size="lg"
                     custom="edit-profile-form-control"
                     labelMargin="nm"
@@ -1005,7 +1059,7 @@ const UserProfile = () => {
                   <p>Program: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>None</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Signature</h3>

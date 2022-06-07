@@ -60,7 +60,7 @@ class RetrieveFacultyWFAR(APIView):
                         first_name__icontains=search),
                     assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
-            pages = Paginator(faculties, 10)
+            pages = Paginator(faculties, 6)
             faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
@@ -112,7 +112,7 @@ class RetrieveFacultyWFARNoSearch(APIView):
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
                     pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
-            pages = Paginator(faculties, 10)
+            pages = Paginator(faculties, 6)
             faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
@@ -168,7 +168,7 @@ class RetrieveFacultyWeeklyWFAR(APIView):
                         first_name__icontains=search),
                     assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
-            pages = Paginator(faculties, 10)
+            pages = Paginator(faculties, 6)
             faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
@@ -220,7 +220,7 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
                     pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
-            pages = Paginator(faculties, 10)
+            pages = Paginator(faculties, 6)
             faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
