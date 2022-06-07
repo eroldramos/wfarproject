@@ -48,9 +48,9 @@ function App() {
   useEffect(() => {
     if (userInfo != null) {
       console.log(userInfo);
-      if (!userInfo.c) {
+      // if (!userInfo.c) {
         dispatch(createWfar());
-      }
+      // }
     }
 
     console.log("hello!");
