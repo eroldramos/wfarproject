@@ -149,7 +149,7 @@ class RetrieveFacultyWeeklyWFAR(APIView):
 
     def post(self, request, semester_id, week_no, wfar_status, page_no, sort, search):
 
-        try:
+        # try:
 
             if (sort == '0'):
                 sort_filter1 = "last_name"
@@ -159,24 +159,34 @@ class RetrieveFacultyWeeklyWFAR(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
+            if faculty_checker_id == 0 or faculty_checker_id == '0':
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
+
             else:
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(
                         first_name__icontains=search),
                     assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+                
+            new_faculties = []
+            if wfar_status == 0 or wfar_status == '0' or wfar_status == 1 or wfar_status == '1':
+                new_faculties = faculties
+            else:
+                for faculty in faculties:
+                    wfar = WFAR.objects.filter(faculty_id=faculty.id, semester_id=semester_id, week_no=week_no, status=wfar_status).first()
+                    if wfar != None:
+                        new_faculties.append(faculty);
 
-            pages = Paginator(faculties, 6)
-            faculties = pages.get_page(page_no)
+            pages = Paginator(new_faculties, 6)
+            new_faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
             if (semester != None):
                 semester_id = semester.id
                 weeks = getWeeks(semester)
 
-                serializer = FacultyWeeklyWfarSerializer(faculties, context={
+                serializer = FacultyWeeklyWfarSerializer(new_faculties, context={
                     "semester_id": semester_id, "week_no": week_no, "wfar_status": wfar_status}, many=True)
 
                 data = {
@@ -194,9 +204,9 @@ class RetrieveFacultyWeeklyWFAR(APIView):
 
             else:
                 return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
-        except:
-            # pass
-            return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # except:
+        #     # pass
+        #     return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class RetrieveFacultyWeeklyWFARNoSearch(APIView):
@@ -216,19 +226,29 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
             faculty_checker_id = request.data['faculty_checker_id']
             if faculty_checker_id == 0 or faculty_checker_id == '0':
                 faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
                     pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
-            pages = Paginator(faculties, 6)
-            faculties = pages.get_page(page_no)
+            new_faculties = []
+            if wfar_status == 0 or wfar_status == '0' or wfar_status == 1 or wfar_status == '1':
+                new_faculties = faculties
+            else:
+                for faculty in faculties:
+                    wfar = WFAR.objects.filter(faculty_id=faculty.id, semester_id=semester_id, week_no=week_no, status=wfar_status).first()
+                    if wfar != None:
+                        new_faculties.append(faculty);
+
+            pages = Paginator(new_faculties, 6)
+            new_faculties = pages.get_page(page_no)
 
             semester = Semester.objects.get(pk=semester_id)
             if (semester != None):
                 semester_id = semester.id
                 weeks = getWeeks(semester)
 
-                serializer = FacultyWeeklyWfarSerializer(faculties, context={
+                serializer = FacultyWeeklyWfarSerializer(new_faculties, context={
                     "semester_id": semester_id, "week_no": week_no, "wfar_status": wfar_status}, many=True)
 
                 data = {
@@ -376,7 +396,7 @@ class PrintWFAROverviewPDF(APIView):
                             wfar_status = ""
 
                     newRow.append(
-                        getStatus(wfar_id, wfar_status, contentStyle))
+                        getStatus(wfar_id, wfar_status, 8.5, contentStyle))
                 data.append(newRow)
                 counterF += 1
 
@@ -576,14 +596,15 @@ class PrintWFARIndividualPDF(APIView):
                 for meet_attachment in meet_attachments:
                     meets.append(Image('static/' + meet_attachment.image_uri.url,
                                        width=3 * inch, height=2 * inch))
-                    pass
+
+                meets = meets if len(meets) > 0 else "No meeting attachments"
 
                 acts = []
                 for activity_attachment in activity_attachments:
                     acts.append(Image('static/' + activity_attachment.image_uri.url,
                                       width=3 * inch, height=2 * inch))
-                    pass
 
+                acts = acts if len(acts) > 0 else "No activity attachments"
                 data5.append([meets, acts])
                 pass
 
@@ -750,7 +771,17 @@ class PrintWeeklyWFARPDF(APIView):
             description = f"This report shows the WFARs for A.Y. {semester.school_year} - {semester.label}, Week {week_no}."
             faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
         else:
-            description = f"This report shows the statuses of all the WFARs for A.Y. {semester.school_year}, {semester.label} - Week {week_no} ."
+            status_label = ""
+            if (wfar_status == 0 or wfar_status == '0' or wfar_status == 1 or wfar_status == '1'):
+                status_label = "that are not yet submitted"
+            elif (wfar_status == 2 or wfar_status == '2'):
+                status_label = "with status of to be checked"
+            elif (wfar_status == 3 or wfar_status == '3'):
+                status_label = "with the status of OK"
+            elif (wfar_status == 4 or wfar_status == '4'):
+                status_label = "that have revisions"
+            
+            description = f"This report shows the WFARs for A.Y. {semester.school_year}, {semester.label} - Week {week_no} {status_label}."
             faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
                 pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
@@ -789,7 +820,7 @@ class PrintWeeklyWFARPDF(APIView):
                 wfar = WFAR.objects.filter(
                     faculty_id=faculty.id, semester_id=semester_id, week_no=week_no).first()
             else:
-                return Response({"wfar_status": wfar_status})
+                # return Response({"wfar_status": wfar_status})
                 wfar = WFAR.objects.filter(
                     faculty_id=faculty.id, semester_id=semester_id, week_no=week_no, status=wfar_status).first()
 
@@ -812,7 +843,7 @@ class PrintWeeklyWFARPDF(APIView):
                     date = "N/A"
 
                 cols.append(Paragraph(f"{no_of_entries_lbl}", contentStyle))
-                cols.append(getStatus(wfar.id, wfar.status, contentStyle))
+                cols.append(getStatus(wfar.id, wfar.status, 11, contentStyle))
                 cols.append(Paragraph(f"{date}", contentStyle))
 
                 data.append(cols)
@@ -910,13 +941,31 @@ class PrintWeeklyWFARPDF(APIView):
         return response
 
 
-def getStatus(wfar_id, status, contentStyle):
+# def getStatus(wfar_id, status, contentStyle):
+#     if status == 1:
+#         return Paragraph(f"<font color='maroon'>Not submitted</font>", contentStyle)
+#     if status == 2:
+#         return Paragraph(f"<font>For checking</font>", contentStyle)
+#     if status == 3:
+#         return Paragraph(f"<font color='green'>OK</font>", contentStyle)
+#     if status == 4:
+#         if wfar_id != -1:
+#             # pass
+#             wfar_comments = WFAR_Comment.objects.filter(
+#                 wfar_id=wfar_id).order_by('-created_at')
+#             if (wfar_comments):
+#                 return Paragraph(f"{wfar_comments[0].description}", contentStyle)
+#         return Paragraph(f"With Revisions", contentStyle)
+#     if status == "":
+#         return ""
+
+def getStatus(wfar_id, status, size, contentStyle):
     if status == 1:
-        return Paragraph(f"<font color='maroon' size='8.5'>Not submitted</font>", contentStyle)
+        return Paragraph(f"<font color='maroon' size='{size}'>Not submitted</font>", contentStyle)
     if status == 2:
-        return Paragraph(f"<font size='8.5'>For checking</font>", contentStyle)
+        return Paragraph(f"<font size='{size}'>For checking</font>", contentStyle)
     if status == 3:
-        return Paragraph(f"<font color='green' size='8.5'>OK</font>", contentStyle)
+        return Paragraph(f"<font color='green' size='{size}'>OK</font>", contentStyle)
     if status == 4:
         if wfar_id != -1:
             # pass

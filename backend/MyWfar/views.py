@@ -314,6 +314,10 @@ class UnarchiveWfarEntry(APIView):
     def put(self, request, pk):
         try:
             entry = WFAR_Entry.objects.get(pk=pk)
+            wfar = WFAR.objects.get(pk=entry.wfar_id.id)
+            if wfar.submitted_at != None:
+                return Response({"detail": "The WFAR entry cannot be restored, because the WFAR is already submitted."}, status = status.HTTP_500_INTERNAL_SERVER_ERROR);
+
             entry.deleted_at = None
             entry.save()
             return Response({"wfar_entry": WfarEntrySerializer(entry).data, "detail": "The WFAR entry has been restored successfully."}, status = status.HTTP_200_OK);
