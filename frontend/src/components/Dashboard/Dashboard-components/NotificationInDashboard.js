@@ -12,10 +12,11 @@ const NotificationInDashboard = (props) => {
 
     // notification
     const getNotification = useSelector((state) => state.getNotifications);
+    console.log(getNotification.error)
     const notificationOutput = getNotification.notifications != [] ?
         getNotification.notifications.map((notification) => {
             let output = <div key={notification.id} className="notification-item">
-                <img src={notification.faculty_picture}></img>
+                <img src="/images/avatar.svg"></img>
                 <div>
                     <div className="detail">
                         {notification.detail}
@@ -25,10 +26,14 @@ const NotificationInDashboard = (props) => {
                     </div>
                 </div>
             </div>;
-            const direct_to = "/pending-accounts/"
+            console.log(notification)
+            let direct_to = "/dashboard/";
+            if(notification.type<6) direct_to = "/WFARChecking/"+notification.wfar_id;
+            else if(notification.type==6) direct_to ="/pending-accounts/"
+            else if(notification.type==7 || notification.type == 8 || notification.type ==10) direct_to = "/manage-faculty/faculty/"
             return <Link className="" to={direct_to}>
                         {output}
-                    </Link>;
+                   </Link>;
         }) : <p>No notification</p>
 
     return (
