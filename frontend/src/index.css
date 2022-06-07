@@ -72,3 +72,31 @@ a {
 img {
   object-fit: cover !important;
 }
+
+.notifications .detail {
+  font-size: 12.5px !important;
+}
+
+.notifications .laman::-webkit-scrollbar {
+  width: 10px;
+  height: 30px;
+}
+
+.notifications .laman::-webkit-scrollbar-thumb {
+  background: #C4C4C4;
+  border-radius: 5px;
+}
+.notifications .notification-item:hover {
+  background-color: rgba(176, 83, 60, .1);
+  border-radius: 8px;
+  transition: .15s ease-in;
+}
+
+.notifications .notification-item {
+  transition: .15s ease-out;
+}
+
+.notifications .notification-item img {
+  height: 32.5px !important;
+  width: 32.5px !important;
+}
