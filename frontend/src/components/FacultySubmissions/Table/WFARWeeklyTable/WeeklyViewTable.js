@@ -62,6 +62,14 @@ const WeeklyTable = (props) => {
         navigate("/WFARChecking/" + index)
     }
 
+    const rowClick = (wfars) => {
+        if (wfars.length > 0) {
+            if (wfars[0].submitted_at != null) {
+                navigateToCheckWFAR(wfars[0].id);
+            }
+        }
+    }
+
     return (
         <div className={styles.weeklyTableContainer}>
             <table className={styles.weeklyTable}>
@@ -114,6 +122,7 @@ const WeeklyTable = (props) => {
                     return (
                         <tr key={index}
                             className={faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null ? styles['clickable'] : ""}
+                            onClick={() => rowClick(faculty.wfars)}
 
                         > {/* row 1  */}
                             <td><strong>{faculty.last_name}</strong>, {faculty.first_name + " "} 

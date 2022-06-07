@@ -8,6 +8,7 @@ const FilterButton = (props) => {
 
     const onClickHandler = () => {
         navigate(props.linkTo);
+        props.navigateName(props.label);
     }
 
     return (
