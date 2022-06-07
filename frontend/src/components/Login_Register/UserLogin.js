@@ -123,6 +123,8 @@ const Login = () => {
       startTimer();
       setAttempts(0);
       setDisabled(true);
+    } else {
+      window.localStorage.setItem('timer', 120)
     }
     if (userInfo) {
       // if userInfo is null, can't be login
