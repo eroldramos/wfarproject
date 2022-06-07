@@ -936,19 +936,17 @@ const UserProfile = () => {
                   <p>Sex: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>
-                    {state.map((item) => {
-                      if (item.sex === 1) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Male </p>
-                      } else if (item.sex === 2) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Female </p>
-                      } else if (item.sex === 3) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Others </p>
-                      } else {
-                        return <p className="userinput" style={{ color: '#000000' }}></p>
-                      }
-                    })}
-                  </p>
+                  {state.map((item) => {
+                    if (item.sex === 1) {
+                      return <p className={styles["info-text"]}> Male </p>
+                    } else if (item.sex === 2) {
+                      return <p className={styles["info-text"]}> Female </p>
+                    } else if (item.sex === 3) {
+                      return <p className={styles["info-text"]}> Others </p>
+                    } else {
+                      return <p className={styles["info-text"]}></p>
+                    }
+                  })}
                 </div>
               </div>
               <div className={styles["user-info-container"]}>
@@ -998,7 +996,7 @@ const UserProfile = () => {
                   <p>Program: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>Sample</p>
+                  <p className={styles["info-text"]}>None</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Signature</h3>

@@ -351,3 +351,11 @@
   text-align: center;
   color: #1de054;
 }
+.error-handler-container{
+  margin-top: 20px;
+}
+.error-handler-container p{
+  text-align: center;
+  color: red;
+  margin: 5px 0;
+}

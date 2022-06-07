@@ -91,7 +91,7 @@ const Register = (props) => {
       enteredEmployeeNoIsValid;
 
     if (!formIsValid) {
-      alert(formIsValid);
+      // alert(formIsValid);
       return;
     }
 

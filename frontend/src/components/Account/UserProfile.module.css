@@ -159,8 +159,9 @@ background: #c4c4c4;
 border-radius: 5px;
 }
 #UploadSignature{
-      cursor: pointer !important;
+    color: #888888;
+    cursor: pointer !important;
 }
 #UploadSignature:hover{
-      color: rgb(235, 193, 137);
+    color: rgb(235, 193, 137);
 }
