@@ -13,6 +13,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
+localStorage.setItem("initialReload", null);
 document.addEventListener(
   "keyup",
   (event) => {
@@ -44,7 +45,6 @@ const Login = () => {
     }
   }, [userInfo]);
 
-  localStorage.setItem("initialReload", null);
   return (
     <div>
       <div
