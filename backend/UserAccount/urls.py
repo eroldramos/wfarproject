@@ -14,7 +14,8 @@ urlpatterns = [
          name=''),
     path('profile/delete-account/<str:pk>/', views.DeleteAccount.as_view(),
          name=''),
-
+    path('profile/view-faculty/<str:pk>/', views.ViewFaculty.as_view(),
+         name=''),
 
 
 

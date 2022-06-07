@@ -124,7 +124,9 @@ const Login = () => {
             <p>Welcome Back!</p>
             <p>Please login to your account</p>
           </div>
-          {error && <p className={styles["error"]}>{error}</p>}
+          <div className={styles["error-handler-container"]}>
+            {error && <p>{error}</p>}
+          </div>
           <form
             className={styles["form-container"]}
             action=""

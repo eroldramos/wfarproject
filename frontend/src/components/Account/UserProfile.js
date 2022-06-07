@@ -154,7 +154,7 @@ const UserProfile = () => {
     reset: resetEmployeeNoInput,
     setEnteredValue: setEnteredEmpNo,
   } = useValidateInput(
-    (value) => value !== "" && onlyNumbers(value)
+    (value) => value !== ""
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
@@ -443,7 +443,7 @@ const UserProfile = () => {
       imageHeight: 200,
       imageAlt: 'Custom image',
       showCancelButton: true,
-      confirmButtonText: 'Edit',
+      confirmButtonText: 'Edit', confirmButtonColor: '#B16047',
     }).then((result) => {
       if (result.isConfirmed) {
         document.getElementById('input_file2').click();
@@ -528,11 +528,18 @@ const UserProfile = () => {
               label="Change Password"
               type="primary"
               size="c-s" />
-            <SmallButton
-              onClick={() => constaccountDeleteSwal()}
-              label="Delete account"
-              type="primary"
-              size="c-s" />
+            {state.map((item) => {
+              if (item.is_superuser === true) {
+                return ''
+              } else {
+                return <SmallButton
+                  onClick={() => constaccountDeleteSwal()}
+                  label="Delete account"
+                  type="primary"
+                  size="c-s" />
+              }
+            })}
+
           </div>
           {isOpen && <Modal onClose={onClose} size="m-long-height">
             <div className={styles["modal-inner-container"]}>
@@ -939,13 +946,13 @@ const UserProfile = () => {
                   <p className={styles["info-text"]}>
                     {state.map((item) => {
                       if (item.sex === 1) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Male </p>
+                        return 'Male'
                       } else if (item.sex === 2) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Female </p>
+                        return 'Female'
                       } else if (item.sex === 3) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Others </p>
+                        return 'Others'
                       } else {
-                        return <p className="userinput" style={{ color: '#000000' }}></p>
+                        return ''
                       }
                     })}
                   </p>
@@ -998,7 +1005,7 @@ const UserProfile = () => {
                   <p>Program: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>Sample</p>
+                  <p className={styles["info-text"]}>None</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Signature</h3>

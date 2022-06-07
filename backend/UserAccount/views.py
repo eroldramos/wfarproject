@@ -86,3 +86,13 @@ class SetSignature(APIView):
         user.signature = request.FILES['signature']
         user.save()
         return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+
+
+class ViewFaculty(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        user = Faculty.objects.get(pk=pk)
+        user.view_id = request.data['view_id']
+        user.save()
+        return Response({"detail": "Edited"}, status=status.HTTP_200_OK)

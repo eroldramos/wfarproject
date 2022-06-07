@@ -10,6 +10,8 @@ import ViewStatusModal from "./Modals/ViewStatusModal";
 import FacultyAssignModal from "./Modals/FacultyAssignModal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -109,7 +111,7 @@ const Rows = (props) => {
     <Fragment>
       <li className={table["table-row"]} onMouseLeave={closePopMenuHandler}>
         <div className={`${table["col"]} ${table["col-1"]}`}>
-          <h5>{props.fullname}</h5>
+          <h5 onClick={() => ViewFaculty(props.id)}>{props.fullname}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-2"]}`}

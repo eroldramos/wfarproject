@@ -141,7 +141,8 @@ const ResetPassword = () => {
     enteredConfirmPassword !== enteredPassword ||
     enteredConfirmPassword === ""
   ) {
-    confirmPasswordErrorMessage = "Password and confirm password do not match.";
+    confirmPasswordErrorMessage =
+      "New Password and confirm password do not match.";
   }
 
   return (
@@ -162,7 +163,7 @@ const ResetPassword = () => {
             </div>
           </div>
           <div className={styles["form-greetings"]}>
-            <p>Password reset.</p>
+            <p>Reset Password</p>
             <p>Please enter a new password.</p>
           </div>
           {isLoading && <LoadingSpinner />}
@@ -199,7 +200,7 @@ const ResetPassword = () => {
                 type="password"
                 labelName=""
                 name="confirmPassword"
-                placeholder="Confirm Password"
+                placeholder="Confirm New Password"
                 onChange={confirmPasswordChangeHandler}
                 onBlur={confirmPasswordBlurHandler}
                 value={enteredConfirmPassword}
@@ -218,7 +219,7 @@ const ResetPassword = () => {
             <div></div>
             <div className={styles["signin-button-container"]}>
               <SmallButton
-                label="Request Password Reset"
+                label="Reset Password"
                 type="primary"
                 size="l-l"
               ></SmallButton>
