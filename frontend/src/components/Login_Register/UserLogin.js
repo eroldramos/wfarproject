@@ -27,22 +27,52 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isEmptyPassword, setIsEmptyPassword] = useState(false);
+  const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+
   const loggedUser = useSelector((state) => state.login);
   const { error, isLoading, userInfo } = loggedUser;
 
   const setUsernameValue = (event) => {
     setUsername(event.target.value);
+    if (event.target.value.length > 0) {
+      setIsEmptyEmail(false);
+    } else {
+      setIsEmptyEmail(true);
+    }
   };
 
   const setPasswordValue = (event) => {
     setPassword(event.target.value);
+    if (event.target.value.length > 0) {
+      setIsEmptyPassword(false);
+    } else {
+      setIsEmptyPassword(true);
+    }
+  };
+
+  const onBlurEmail = (event) => {
+    if (event.target.value.length > 0) {
+      setIsEmptyEmail(false);
+    } else {
+      setIsEmptyEmail(true);
+    }
+  };
+
+  const onBluPassword = (event) => {
+    if (event.target.value.length > 0) {
+      setIsEmptyPassword(false);
+    } else {
+      setIsEmptyPassword(true);
+    }
   };
 
   const onLoginHandler = (event) => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (username == "" || password == "") {
-      // alert("fields can't be empty");
+      setIsEmptyEmail(true);
+      setIsEmptyPassword(true);
       return;
     }
 
@@ -114,7 +144,9 @@ const Login = () => {
                 noLabel="no-label-input"
                 custom="form-control-custom"
                 onChange={setUsernameValue}
+                onBlur={onBlurEmail}
                 value={username}
+                error={isEmptyEmail ? "Please input a valid username." : null}
               />
               {/* <input type="text" placeholder="Username or Email"/> */}
             </div>
@@ -129,7 +161,11 @@ const Login = () => {
                 noLabel="no-label-input"
                 custom="form-control-custom"
                 onChange={setPasswordValue}
+                onBlur={onBluPassword}
                 value={password}
+                error={
+                  isEmptyPassword ? "Please input a valid password." : null
+                }
               />
               {/* <input type="password" placeholder="Password"/> */}
             </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
 import Sample from "./components/Sample/Sample";
@@ -131,9 +131,7 @@ function App() {
           {/* AUTHENTICATION ROUTES */}
           <Route path="/*" element={<LandingPage />} />
 
-          {/* <Route path="*">
-            <p>Not Found</p>
-          </Route> */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </div>

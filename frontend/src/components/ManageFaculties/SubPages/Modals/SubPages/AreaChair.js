@@ -72,6 +72,9 @@ const AreaChair = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/faculty/area-chair/");
+    }
   };
   const onHandleChange = (event) => {
     setAssigneeId(event.target.value);
@@ -94,9 +97,9 @@ const AreaChair = (props) => {
     props.onCloseAssignModal();
   };
 
-  const closeModal = () =>{
+  const closeModal = () => {
     props.onCloseAssignModal();
-  }
+  };
   console.log(assigneeId);
   return (
     <Fragment>
@@ -119,7 +122,9 @@ const AreaChair = (props) => {
           <div
             className={`${table["col"]} ${table["col-1"]} ${table["col-header"]}`}
           ></div>
-          <div className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}>
+          <div
+            className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
+          >
             <div className={table["label-container"]}>Choose An Area Chair</div>
             {/* <div className={table["icon-container2"]}>
               <TransparentButton
@@ -167,12 +172,7 @@ const AreaChair = (props) => {
       </div>
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
-          <Button
-            onClick={closeModal}
-            label="Cancel"
-            type="cancel"
-            size="s"
-          />
+          <Button onClick={closeModal} label="Cancel" type="cancel" size="s" />
         </div>
         <div className={styles["assign-btn-container"]}>
           {assigneeId > 0 && (

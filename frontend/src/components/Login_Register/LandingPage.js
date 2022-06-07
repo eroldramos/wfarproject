@@ -9,7 +9,9 @@ import AdminLogin from "./AdminLogin";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import UserRegister from "./UserRegister";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 document.addEventListener(
   "keyup",
@@ -31,6 +33,17 @@ document.addEventListener(
 );
 
 const Login = () => {
+  let navigate = useNavigate();
+
+  const loggedUser = useSelector((state) => state.login);
+  const { error, isLoading, userInfo } = loggedUser;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/dashboard/");
+    }
+  }, [userInfo]);
+
   localStorage.setItem("initialReload", null);
   return (
     <div>

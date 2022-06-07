@@ -157,6 +157,14 @@ const UnassignedFaculty = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      if (window.location.pathname.split("/")[2] == "area-chair") {
+        navigate("/manage-faculty/area-chair/unassigned-faculty/");
+      }
+      if (window.location.pathname.split("/")[2] == "department-head") {
+        navigate("/manage-faculty/department-head/unassigned-faculty/");
+      }
+    }
   };
   const onAssignedFacultyHandler = () => {
     let selectedId = [];
@@ -173,9 +181,9 @@ const UnassignedFaculty = (props) => {
     alert("Assigned Successfully");
     props.onClose();
   };
-  const closeModal = () =>{
+  const closeModal = () => {
     props.onClose();
-  }
+  };
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
@@ -251,12 +259,7 @@ const UnassignedFaculty = (props) => {
       </div>
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
-          <Button
-            onClick={closeModal}
-            label="Cancel"
-            type="cancel"
-            size="s"
-          />
+          <Button onClick={closeModal} label="Cancel" type="cancel" size="s" />
         </div>
         <div className={styles["icon-container"]}>
           {selectedUser.length > 0 && (
