@@ -870,8 +870,8 @@ const UserProfile = () => {
                     type="text"
                     id="specialization"
                     name="specialization"
-                    labelName="Specialization"
-                    placeholder="Specialization"
+                    labelName="Department"
+                    placeholder="Enter your Department"
                     onChange={SpecializationChangeHandler}
                     onBlur={SpecializationChangeHandler}
                     value={enteredSpecialization}
