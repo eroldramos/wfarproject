@@ -1053,10 +1053,10 @@ const UserProfile = () => {
                   <p className={styles["info-text"]}>{state.map((item) => item.contact_no)}</p>
                 </div>
               </div>
-              <h3 className={styles["section-text"]}>Specialization</h3>
+              <h3 className={styles["section-text"]}>Employee Information</h3>
               <div className={styles["user-info-container"]}>
                 <div className={styles["details-placeholder"]}>
-                  <p>Program: </p>
+                  <p>Department: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
                   <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
