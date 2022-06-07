@@ -7,18 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { retrieveWfarsSemestersList } from "../../store/myWfarsActions";
 import { retrieveActiveSemester } from "../../store/wfarActions";
+import { wfarSelectedSemesterActions } from "../../store/wfarReducers";
 
 const FacultySubmission = () => {
     // hooks
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [selectedMenu, setSelectedMenu] = useState("Overview")
 
     // redux states, objects
-    const wfars = useSelector((state) => state.myWfars.wfars);
-    const archivedWfarEntries = useSelector((state) => state.myWfarsArchived.archivedEntries);
-    const semesters = useSelector((state) => state.wfarSemesters.semesters);
-    const newChange = useSelector((state) => state.myWfarRefresh.newChange);
-
+    const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
+    const selectedSemester = useSelector(state => state.wfarSelectedSemester.semester);
 
     // retrieving wfars and archived wfars
     useEffect(() => {
@@ -27,23 +25,35 @@ const FacultySubmission = () => {
 
     }, []);
 
+    useEffect(() => {
+        if (selectedSemester == null && activeSemester != null) {
+            dispatch(wfarSelectedSemesterActions.setSelectedSemester({ semester: activeSemester[0] }));
+        }
+    }, [activeSemester, selectedSemester])
+
+    const updateSelectedMenu = (text) => {
+        setSelectedMenu(text);
+    }
+
     return (
         <Fragment>
-            <div className={styles.mainConainter}>
+            <div className={styles.mainContainer}>
                 <h1>Weekly Faculty Accomplishment Reports</h1>
                 <div style={{ width: "fit-content", float: "left" }}>
-                    <h3>Faculty Submissions</h3>
+                    <h3>Faculty Submissions {selectedMenu}</h3> 
                 </div>
 
                 <div className={styles.viewOptionsContainer}>
                     <FilterButton
                         label="Overview"
                         type="primary"
-                        linkTo="overview" />
+                        linkTo="overview"
+                        navigateName={updateSelectedMenu} />
                     <FilterButton
                         label="Weekly View"
                         type="primary"
-                        linkTo="weekly-view" />
+                        linkTo="weekly-view"
+                        navigateName={updateSelectedMenu} />
                 </div>
 
             </div>

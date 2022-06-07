@@ -620,9 +620,9 @@ class PrintWFARIndividualPDF(APIView):
 
             data2.append(col_names)
 
-            if faculty.sex == 0:
+            if faculty.sex == 1:
                 sex = "Mr."
-            elif faculty.sex == 1:
+            elif faculty.sex == 2:
                 sex = "Ms."
             else:
                 sex = ""
@@ -630,8 +630,10 @@ class PrintWFARIndividualPDF(APIView):
             name = sex + " " + faculty.first_name + " " + faculty.last_name
 
             data2.append(
-                [Paragraph(f"<b>{name.upper()}</b>", contentStyleLeft),
-                 Paragraph(f"<b>DR. ROSEMARIE M. BAUTISTA</b>",
+                [
+                 [Image(faculty.signature, width=1 * inch, height=.35 * inch),
+                 Paragraph(f"<b>{name.upper()}</b>", contentStyleLeft)],
+                 Paragraph(f"<b>DR. ROSEMARIE M. BAUTISTA</b>", 
                            contentStyleLeft),
                  Paragraph(f"<b>DR. KENO C. PIAD</b>", contentStyleLeft)])
 
@@ -698,7 +700,7 @@ class PrintWFARIndividualPDF(APIView):
 
             elems = []
             elems.append(Image('reports/logo_header.jpg',
-                               width=11 * inch, height=.85 * inch))
+                               width=11 * inch, height=.78 * inch))
             elems.append(Spacer(1 * cm, 1 * cm))
             elems.append(title)
             elems.append(Spacer(.75 * cm, .75 * cm))

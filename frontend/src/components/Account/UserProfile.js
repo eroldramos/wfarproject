@@ -26,6 +26,12 @@ const UserProfile = () => {
     { label: "Divorced ", value: 4 },
     { label: "Single ", value: 5 },
   ];
+  const SEX = [
+    { label: "Sex", value: "" },
+    { label: "Male", value: 1 },
+    { label: "Female ", value: 2 },
+    { label: "Others ", value: 3 },
+  ];
   const [state, setState] = useState([]);
   const [emails, setEmails] = useState([]);
   const [emailDuplicate, setEmailDuplicate] = useState(false);
@@ -47,6 +53,7 @@ const UserProfile = () => {
         setEnteredLastName(json[0].last_name);
         setEnteredEmpNo(json[0].emp_no);
         setEnteredCivilStatus(json[0].civil_status);
+        setEnteredSex(json[0].sex);
         setEnteredHouseNo(json[0].house_no);
         setEnteredStreet(json[0].street);
         setEnteredSubdivision(json[0].subdivision);
@@ -197,6 +204,17 @@ const UserProfile = () => {
     inputBlurHandler: civilStatusBlurHandler,
     reset: resetCivilStatusInput,
     setEnteredValue: setEnteredCivilStatus,
+  } = useValidateInput((value) => value !== "");
+
+  // Sex Validations
+  const {
+    value: enteredSex,
+    isValid: enteredSexIsValid,
+    hasError: sexInputHasError,
+    valueChangeHandler: sexChangeHandler,
+    inputBlurHandler: sexBlurHandler,
+    reset: resetSexInput,
+    setEnteredValue: setEnteredSex,
   } = useValidateInput((value) => value !== "");
 
   // House No Validations
@@ -426,6 +444,7 @@ const UserProfile = () => {
           last_name: enteredLastName,
           emp_no: enteredEmployeeNo,
           civil_status: enteredCivilStatus,
+          sex: enteredSex,
           house_no: enteredHouseNo,
           street: enteredStreet,
           subdivision: enteredSubdivision,
@@ -580,7 +599,7 @@ const UserProfile = () => {
               } else if (item.user_type === 3) {
                 return <p className="userinput" style={{ color: '#000000' }}> Department Head </p>
               } else {
-                return <p className="userinput" style={{ color: '#000000' }}></p>
+                return <p className="userinput" style={{ color: '#000000' }}>n/a</p>
               }
             })}</p>
           </div>
@@ -697,6 +716,26 @@ const UserProfile = () => {
                     error={
                       civilStatusInputHasError
                         ? "Please select a civil status."
+                        : null
+                    }
+                    size="l"
+                    custom="custom-dropdown"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <CustomDropdownField
+                    id="sex"
+                    name="sex"
+                    labelName="Sex"
+                    onChange={sexChangeHandler}
+                    onBlur={sexBlurHandler}
+                    value={enteredSex}
+                    options={SEX}
+                    type="form"
+                    setEnteredValue=''
+                    error={
+                      sexInputHasError
+                        ? "Sex"
                         : null
                     }
                     size="l"
@@ -973,7 +1012,7 @@ const UserProfile = () => {
                   <p>Employee Number: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>{state.map((item) => item.emp_no)}</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.emp_no ? item.emp_no : 'n/a')}</p>
                 </div>
               </div>
               <div className={styles["user-info-container"]}>
@@ -1037,7 +1076,7 @@ const UserProfile = () => {
                       } else if (item.sex === 3) {
                         return 'Others'
                       } else {
-                        return ''
+                        return 'n/a'
                       }
                     })}
                   </p>
@@ -1061,7 +1100,7 @@ const UserProfile = () => {
                       return <p className={styles["info-text"]}> Single </p>
                     }
                     else {
-                      return <p className={styles["info-text"]}> </p>
+                      return <p className={styles["info-text"]}> n/a </p>
                     }
                   })}
                 </div>
@@ -1073,7 +1112,7 @@ const UserProfile = () => {
                   <p>Email Address: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>{state.map((item) => item.email)}</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.email ? item.email : 'n/a')}</p>
                 </div>
               </div>
               <div className={styles["user-info-container"]}>
@@ -1081,7 +1120,7 @@ const UserProfile = () => {
                   <p>Contact Number: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>{state.map((item) => item.contact_no)}</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.contact_no ? item.contact_no : 'n/a')}</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Employee Information</h3>
@@ -1090,7 +1129,7 @@ const UserProfile = () => {
                   <p>Department: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.specialization ? item.specialization : 'n/a')}</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Signature</h3>

@@ -23,11 +23,15 @@ const EntryDetails = (props) => {
       </div>
       <div className={styles.entryDetailsTextContainer}>
         <h3>No of Attendees: </h3>
-        <p>{props.entry.no_of_attendess}</p>
+        <p>{props.entry.no_of_attendees}</p>
       </div>
       <div className={styles.entryDetailsTextContainer}>
         <h3>Link of Team Meet Recording: </h3>
-        <p>{props.entry.recording_url}</p>
+        <p>
+          <a href={props.entry.recording_url} target="_blank">
+            {props.entry.recording_url}
+          </a>
+        </p>
       </div>
       <div className={styles.learningActivitiesContainer}>
         <h3>Learning Activities: </h3>
