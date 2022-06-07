@@ -6,6 +6,7 @@ import Button from "../../../UI/FormControl/Button/Button";
 import { changeUserType } from "../../../../store/manageFacultiesActions";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 const PromoteModal = (props) => {
   let user_type = "Faculty";
   if (props.user_type === 2) {
@@ -58,8 +59,29 @@ const PromoteModal = (props) => {
       id: props.id,
       new_user_type: selectedRole,
     };
-    console.log(data);
-    dispatch(changeUserType(data));
+    props.onClose();
+    Swal.fire({
+      html: `<h4>Do you want to promote ${props.fullname} to ${
+        selectedRole == 1
+          ? "normal Faculty"
+          : selectedRole == 2
+          ? "Area Chair"
+          : "Department Head"
+      }</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(changeUserType(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
   };
   console.log(selectedRole);
   return (

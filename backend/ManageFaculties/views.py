@@ -28,6 +28,16 @@ class ChangeUserType(APIView):
 
             subject = "Demoted to a normal Faculty position"
 
+            if request.data['new_user_type']==1:
+                assignedFaculties = faculty.faculty_set.all()
+                for faculty in assignedFaculties:
+                    print(faculty.id)
+                    facultyUnassigned = Faculty.objects.get(id=faculty.id)
+                    facultyUnassigned.assignee_id = None
+                    facultyUnassigned.save()
+
+
+
             if request.data['new_user_type']==2:
                 message = "Role updated to Area Chair."
                 if faculty_prev_user_type == 3:
@@ -343,7 +353,7 @@ class AssignedFaculties(APIView):
 
                 send_email(faculty.id, subject, detail)
                 
-            message = {"detail":"faculties assigned!"}
+            message = {"detail":"Faculty assigned!"}
 
             notification = Notification()
             notification.detail = f"You have been assigned faculties."

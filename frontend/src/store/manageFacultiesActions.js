@@ -304,6 +304,16 @@ export const unassignedFaculty = (obj) => {
           success: data.detail,
         })
       );
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(
@@ -346,6 +356,17 @@ export const assignedFaculty = (obj) => {
           success: data.detail,
         })
       );
+
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(

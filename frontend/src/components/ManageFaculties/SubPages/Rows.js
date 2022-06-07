@@ -247,7 +247,16 @@ const Rows = (props) => {
           )}
 
           {popupMenuIsShown && (
-            <PopupMenu items={ITEMS} onMouseLeave={closePopMenuHandler} />
+            <PopupMenu
+              items={
+                props.user_type == 1
+                  ? ITEMS.slice(0, 1)
+                  : props.user_type == 3
+                  ? ITEMS.slice(1, 2)
+                  : ITEMS
+              }
+              onMouseLeave={closePopMenuHandler}
+            />
           )}
 
           <div className={styles["clearfix"]}></div>

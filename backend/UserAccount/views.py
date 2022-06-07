@@ -20,7 +20,23 @@ class RetrieveAccountDetails(APIView):
         try:
             faculty = Faculty.objects.filter(pk=pk)
             serializer = ProfileSerializer(faculty, many=True)
+
             return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({"detail": 'error'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class RetrieveEmails(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            listEmails = []
+            users = Faculty.objects.exclude(pk=pk)
+            for user in users:
+                listEmails.append(user.email)
+
+            return Response(listEmails, status=status.HTTP_200_OK)
         except:
             return Response({"detail": 'error'}, status=status.HTTP_404_NOT_FOUND)
 

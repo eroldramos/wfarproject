@@ -22,7 +22,8 @@
   z-index: 2;
   border-radius: 0;
   animation: bg-color 2s forwards;
-  animation-delay: 4.5s;
+  /* animation-delay: 4.5s; */
+  animation-delay: 2.5s;
 }
 .form-container {
   /* border: 1px solid black; */
@@ -31,7 +32,8 @@
 }
 .login-form-container {
   animation: fade-in ease 2s both;
-  animation-delay: 7s;
+  /* animation-delay: 7s; */
+  animation-delay: 5s;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -305,7 +307,8 @@
 
 .logo-splashscreen2 p {
   animation: text-color 2s forwards;
-  animation-delay: 4.5s;
+  /* animation-delay: 4.5s; */
+  animation-delay: 2.5s;
 }
 
 .logo-splashscreen2 .logo-text {
@@ -341,7 +344,8 @@
   left: 0;
   z-index: 4;
   animation: fade-out ease 1s forwards;
-  animation-delay: 6s;
+  /* animation-delay: 6s; */
+  animation-delay: 4s;
 }
 .error {
   text-align: center;
