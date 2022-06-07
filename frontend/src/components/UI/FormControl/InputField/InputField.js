@@ -29,6 +29,7 @@ const InputField = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         pattern={props.pattern}
+        disabled={props.disabled}
       />
       <p className="">{props.error}</p>
     </div>

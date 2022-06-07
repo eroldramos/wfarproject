@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import SideNav from "./components/Layout/SideNav";
 import Sample from "./components/Sample/Sample";
@@ -17,6 +17,7 @@ import DummyDashBoard from "./components/Sample/DummyDashBoard";
 import CreateSemesterScreen from "./components/Screens/CreateSemesterScreen";
 import EditSemesterScreen from "./components/Screens/EditSemesterScreen";
 import AccountScreen from "./components/Screens/AccountScreen";
+import FacultyView from "./components/Screens/FacultyView";
 import ManageFacultiesScreen from "./components/Screens/ManageFacultiesScreen";
 import WFARSubmissionsOverview from "./components/Screens/ManageFacultiesScreen";
 import SampleRedux from "./SampleRedux";
@@ -47,12 +48,11 @@ function App() {
   useEffect(() => {
     if (userInfo != null) {
       console.log(userInfo);
-      if (!userInfo.c) {
+      if (!userInfo.isAdmin) {
+        console.log("WFAR creation");
         dispatch(createWfar());
       }
     }
-
-    console.log("hello!");
   }, [userInfo]);
 
   return (
@@ -91,7 +91,10 @@ function App() {
             path="/manage-faculty/*"
             element={<ManageFacultiesScreen />}
           ></Route>
-
+          <Route
+            path="/view-faculty/*"
+            element={<FacultyView />}
+          ></Route>
           <Route
             path="/manage-semesters/*"
             element={<ManageSemestersScreen />}
@@ -128,9 +131,7 @@ function App() {
           {/* AUTHENTICATION ROUTES */}
           <Route path="/*" element={<LandingPage />} />
 
-          {/* <Route path="*">
-            <p>Not Found</p>
-          </Route> */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </div>

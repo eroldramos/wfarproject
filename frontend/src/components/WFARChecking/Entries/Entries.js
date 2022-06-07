@@ -2,8 +2,8 @@ import styles from "./Entries.module.css";
 import React, { useState, Fragment, useEffect } from "react";
 import EntryData from "./ExpandedEntry/EntryData";
 import PopupMenu from "../PopupMenu/PopupMenu";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { archiveWfarEntry } from "../../../store/myWfarsActions";
 import Swal from "sweetalert2";
 
@@ -11,7 +11,6 @@ const Entries = (props) => {
   const expandAttachments = () => {};
   const [isFacultyView, setIsFacultyView] = useState(true);
   const [expandIsCLicked, setExpandIsCLicked] = useState(false);
-
 
   // hooks
   const dispatch = useDispatch();
@@ -22,7 +21,20 @@ const Entries = (props) => {
   const [isArchive, setIsArchive] = useState(false);
 
   // constants
-  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   // props
   let wfarId = props.entry.id;
@@ -31,57 +43,65 @@ const Entries = (props) => {
 
   const onEditClickHandler = () => {
     console.log(props.entry);
-    navigate('/mySubmission/wfar/' + wfarId + '/week/' + wfarWeekNo + '/edit-entry/' + id);
-  }
+    navigate(
+      "/mySubmission/wfar/" +
+        wfarId +
+        "/week/" +
+        wfarWeekNo +
+        "/edit-entry/" +
+        id
+    );
+  };
 
   // handlers
   const onArchiveClickHandler = () => {
     Swal.fire({
       html:
-        '<h4>Archiving Entry from WFAR Week ' + wfarWeekNo + '</h4>' +
-        '<h5>Are you sure you want to archive this entry?</h5>',
-      icon: 'question',
+        "<h4>Archiving Entry from WFAR Week " +
+        wfarWeekNo +
+        "</h4>" +
+        "<h5>Are you sure you want to archive this entry?</h5>",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'Submit',
-      iconColor: '#D1D1D1',
-      confirmButtonColor: '#BE5A40',
-      cancelButtonColor: '#A1A1A1'
+      confirmButtonText: "Submit",
+      iconColor: "#D1D1D1",
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
     }).then((result) => {
       if (result.isConfirmed) {
         setIsArchive(true);
       }
-    })
-  }
+    });
+  };
 
   // handlers
   const onClickMoreOptionsHandler = () => {
     let display = displayPopup === "open" ? "close" : "open";
     setDisplayPopup(display);
-  }
+  };
 
   // use effects
   useEffect(() => {
     if (isArchive) {
-      console.log("i am in use effect")
+      console.log("i am in use effect");
       dispatch(archiveWfarEntry(id));
       setIsArchive(false);
     }
-  }, [isArchive])
+  }, [isArchive]);
 
   // popup
   const popup_items = [
     {
       id: 1,
       label: "Edit",
-      onClick: onEditClickHandler
+      onClick: onEditClickHandler,
     },
     {
       id: 2,
       label: "Archive",
-      onClick: onArchiveClickHandler
-    }
+      onClick: onArchiveClickHandler,
+    },
   ];
-
 
   return (
     <Fragment>
@@ -89,12 +109,12 @@ const Entries = (props) => {
         <div className={styles.entries}>
           <div className={styles.detailsContainer}>
             <div className={styles.entryTextContainer}>
-              <h3>Entry # 1</h3>
+              <h3>Entry # {props.number}</h3>
               <h3>Date Accomlished: </h3>
               <p>{props.entry.accomplishment_date}</p>
             </div>
             <div className={styles.attachmentContainer}>
-              <h3>No attachments</h3>
+              <h3>{props.entry.attachments.length == 0 && "No attachments"}</h3>
               {!expandIsCLicked && (
                 <div
                   className={styles.chevronDown}
@@ -131,12 +151,12 @@ const Entries = (props) => {
                       fill="#323232"
                     />
                   </svg>
-
                 </div>
               )}
-              {(isFacultyView && props.status === 1) && (
+              {isFacultyView && props.status === 1 && (
                 <div className={styles.moreSettingsContainer}>
-                  <svg onClick={onClickMoreOptionsHandler}
+                  <svg
+                    onClick={onClickMoreOptionsHandler}
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -149,9 +169,11 @@ const Entries = (props) => {
                     />
                   </svg>
 
-                  <div className={styles["pop-up"] + ' ' + styles[displayPopup]}>
+                  <div
+                    className={styles["pop-up"] + " " + styles[displayPopup]}
+                  >
                     <ul>
-                      {popup_items.map(item => {
+                      {popup_items.map((item) => {
                         return (
                           <li key={item.id} onClick={item.onClick}>
                             {item.label}

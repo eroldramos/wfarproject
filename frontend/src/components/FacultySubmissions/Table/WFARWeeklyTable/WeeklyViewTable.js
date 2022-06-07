@@ -1,22 +1,16 @@
 
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./WeeklyViewTable.module.css";
 import TableCellButton from '../../../UI/FormControl/Button/TableCellButton';
 import { useDispatch, useSelector } from "react-redux";
-import { retrieveWeeklyWfars } from "../../../../store/wfarActions";
+import { useNavigate } from "react-router-dom";
 
 const WeeklyTable = (props) => {
 
     // hooks
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const facultiesWithWfars = useSelector(state => state.weeklyWfarRetrieve.facultiesWithWfars);
     const [sortSvgClass, setSortSvgClass] = useState('sortAscSvg');
-
-
-    useEffect(() => {
-
-    }, [facultiesWithWfars]);
-
 
     const onClickSortHandler = () => {
         props.onSortClicked();
@@ -51,7 +45,6 @@ const WeeklyTable = (props) => {
 
     function dateFormat(dateSubmitted) {
 
-        // constants
         const date = new Date(dateSubmitted);
         const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const day = date.getDay();
@@ -63,8 +56,10 @@ const WeeklyTable = (props) => {
 
         const formatted = `${month[date.getMonth()]} ${day}, ${year} ${hours}:${minutesWithLeadingZero} ${timeLabel}`;
         return formatted;
+    }
 
-
+    const navigateToCheckWFAR = (index) => {
+        navigate("/WFARChecking/" + index)
     }
 
     return (
@@ -121,7 +116,9 @@ const WeeklyTable = (props) => {
                             className={faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null ? styles['clickable'] : ""}
 
                         > {/* row 1  */}
-                            <td><strong>{faculty.last_name}</strong>, {faculty.first_name} {faculty.middle_name != null ? faculty.middle_name[0] + "." : ""} {faculty.extension_name != null ? faculty.extension_name : ""}
+                            <td><strong>{faculty.last_name}</strong>, {faculty.first_name + " "} 
+                                {faculty.middle_name != null && faculty.middle_name != "N/a" ? faculty.middle_name[0] + ". " : ""} 
+                                {faculty.extension_name != null && faculty.extension_name != "N/a" ? faculty.extension_name : ""}
                             </td>
                             <td>
                                 {faculty.wfars.length == 0 && 'No Entry'}
@@ -138,11 +135,31 @@ const WeeklyTable = (props) => {
                                 {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at == null && "N/A"}
                                 {faculty.wfars.length == 0 && "N/A"}
                             </td>
-                            <td><TableCellButton
-                                id={null}
-                                label={"Check Submission"}
-                                type="primary"
-                                onClick={null} /></td>
+                            <td>
+                                {faculty.wfars.length == 0 && 'No Entry' && 
+                                        <TableCellButton
+                                            id={null}
+                                            label={"No Submission"}
+                                            type="button"
+                                            onClick={null}
+                                            buttonEnabled={true} />}
+
+                                {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at == null &&
+                                    <TableCellButton
+                                        id={null}
+                                        label={"No Submission"}
+                                        type="button"
+                                        onClick={null}
+                                        buttonEnabled={true} /> }
+
+                                {faculty.wfars.length > 0 && faculty.wfars[0].submitted_at != null &&
+                                    <TableCellButton
+                                        id={null}
+                                        label={"View Submission"}
+                                        type="primary"
+                                    onClick={() => navigateToCheckWFAR(faculty.wfars[0].id)}
+                                    buttonEnabled={false} />}
+                            </td>
                         </tr>)
                 })}
 

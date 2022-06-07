@@ -110,7 +110,11 @@
                           margin: 0;
                         "
                       >
-                        {{message}}
+                        {{message}} {% if enableUrl %}
+                        <a href="http://localhost:3000/"
+                          >Click here to login.</a
+                        >
+                        {% endif %}
                       </p>
                     </td>
                   </tr>

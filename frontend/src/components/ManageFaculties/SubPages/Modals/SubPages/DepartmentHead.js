@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Paginator from "../../../SubComponents/Paginator";
+import Swal from "sweetalert2";
 const DepartmentHead = (props) => {
   const icon = (
     <svg
@@ -63,6 +64,7 @@ const DepartmentHead = (props) => {
     },
   ]);
   const [assigneeId, setAssigneeId] = useState("");
+  const [assigneeName, setAssigneeName] = useState("");
   const onSubmitHandler = (event) => {
     event.preventDefault();
     if (searchFaculty) {
@@ -75,9 +77,20 @@ const DepartmentHead = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/faculty/department-head/");
+    }
   };
   const onHandleChange = (event) => {
     setAssigneeId(event.target.value);
+    listFaculty &&
+      listFaculty.map((data, index) => {
+        if (data.id == event.target.value) {
+          setAssigneeName(
+            `${data.last_name}, ${data.first_name} ${data.middle_name}`
+          );
+        }
+      });
   };
 
   const onAssignedFacultyHandler = () => {
@@ -90,11 +103,23 @@ const DepartmentHead = (props) => {
       assignee_id: assigneeId,
       assigned_faculties: selectedId,
     };
-
-    dispatch(assignedFaculty(data));
-    console.log(data);
-    alert("Assigned Successfully");
     props.onCloseAssignModal();
+    Swal.fire({
+      html: `<h4>Do you want to assign ${props.fullname} to ${assigneeName}?</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(assignedFaculty(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
   };
 
   console.log(assigneeId);

@@ -8,9 +8,10 @@ import {
   unassignedFacultyActions,
   assignedFacultyActions,
 } from "./manageFacultiesReducers";
-
+import Swal from "sweetalert2";
 export const getFaculties = (search = "") => {
   return async (dispatch, getState) => {
+    dispatch(changeUserTypeActions.changeUserTypeReset());
     let url = `/api/retrieve-all-normal-faculty-user/${search}`;
 
     const {
@@ -52,6 +53,7 @@ export const getFaculties = (search = "") => {
 
 export const getAreaChairs = (search = "") => {
   return async (dispatch, getState) => {
+    dispatch(changeUserTypeActions.changeUserTypeReset());
     let url = `/api/retrieve-all-area-chair-user/${search}`;
 
     const {
@@ -92,6 +94,8 @@ export const getAreaChairs = (search = "") => {
 
 export const getDepartmentHeads = (search = "") => {
   return async (dispatch, getState) => {
+    dispatch(changeUserTypeActions.changeUserTypeReset());
+
     let url = `/api/retrieve-all-department-head-user/${search}`;
 
     const {
@@ -247,6 +251,17 @@ export const changeUserType = (obj) => {
       dispatch(
         changeUserTypeActions.changeUserTypeSuccess({ success: data.detail })
       );
+
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(
@@ -289,6 +304,16 @@ export const unassignedFaculty = (obj) => {
           success: data.detail,
         })
       );
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(
@@ -331,6 +356,17 @@ export const assignedFaculty = (obj) => {
           success: data.detail,
         })
       );
+
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       console.log(error);
       dispatch(

@@ -165,6 +165,7 @@ export const archiveSemReducer = createSlice({
     archiveSemRequest(state, action) {
       state.isLoading = true;
       state.error = null;
+      state.success = null;
     },
     archiveSemSuccess(state, action) {
       state.isLoading = false;
@@ -173,6 +174,7 @@ export const archiveSemReducer = createSlice({
     },
     archiveSemFail(state, action) {
       state.isLoading = false;
+      state.success = null;
       state.error = action.payload.error;
     },
     archiveSemReset(state, action) {
@@ -196,6 +198,7 @@ export const restoreSemReducer = createSlice({
     restoreSemRequest(state, action) {
       state.isLoading = true;
       state.error = null;
+      state.success = null;
     },
     restoreSemSuccess(state, action) {
       state.isLoading = false;
@@ -204,6 +207,7 @@ export const restoreSemReducer = createSlice({
     },
     restoreSemFail(state, action) {
       state.isLoading = false;
+      state.success = null;
       state.error = action.payload.error;
     },
     restoreSemReset(state, action) {
@@ -227,6 +231,7 @@ export const activateSemReducer = createSlice({
     activateSemRequest(state, action) {
       state.isLoading = true;
       state.error = null;
+      state.success = null;
     },
     activateSemSuccess(state, action) {
       state.isLoading = false;
@@ -236,6 +241,7 @@ export const activateSemReducer = createSlice({
     activateSemFail(state, action) {
       state.isLoading = false;
       state.error = action.payload.error;
+      state.success = null;
     },
     activateSemReset(state, action) {
       state.isLoading = false;

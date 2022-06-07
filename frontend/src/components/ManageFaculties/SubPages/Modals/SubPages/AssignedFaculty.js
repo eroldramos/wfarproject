@@ -11,7 +11,10 @@ import {
   getAssignedFaculties,
   unassignedFaculty,
 } from "../../../../../store/manageFacultiesActions";
+
 import Paginator from "../../../SubComponents/Paginator";
+import Swal from "sweetalert2";
+
 const AssignedFaculty = (props) => {
   let navigate = useNavigate();
   const search = useLocation().search;
@@ -161,6 +164,18 @@ const AssignedFaculty = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      if (window.location.pathname.split("/")[2] == "area-chair") {
+        navigate(
+          "/manage-faculty/area-chair/assigned-faculty/" + params.id + "/"
+        );
+      }
+      if (window.location.pathname.split("/")[2] == "department-head") {
+        navigate(
+          "/manage-faculty/department-head/assigned-faculty/" + params.id + "/"
+        );
+      }
+    }
   };
 
   const onUnassignedFacultyHandler = () => {
@@ -173,13 +188,27 @@ const AssignedFaculty = (props) => {
       unassigned_faculties: selectedId,
     };
 
-    dispatch(unassignedFaculty(data));
-    alert("Removed Successfully");
+    props.onClose();
+    Swal.fire({
+      html: `<h4>Do you want to unassign some faculty from ${props.fullname}</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(unassignedFaculty(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
+  };
+  const closeModal = () => {
     props.onClose();
   };
-  const closeModal = () =>{
-    props.onClose();
-  }
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
@@ -255,12 +284,7 @@ const AssignedFaculty = (props) => {
       </div>
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
-          <Button
-            onClick={closeModal}
-            label="Cancel"
-            type="cancel"
-            size="s"
-          />
+          <Button onClick={closeModal} label="Cancel" type="cancel" size="s" />
         </div>
         <div className={styles["icon-container"]}>
           {selectedUser.length > 0 && (

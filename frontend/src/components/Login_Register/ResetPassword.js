@@ -43,7 +43,8 @@ const ResetPassword = () => {
       !enteredPasswordIsValid ||
       !enteredConfirmPasswordIsValid
     ) {
-      alert("form is invalid");
+      setIsTouchedPassword(true);
+      setIsTouchedConfirmPassword(true);
       return;
     }
     let data = {
@@ -55,11 +56,11 @@ const ResetPassword = () => {
     if (success) {
       Swal.fire({
         html: `<h4>${success}</h4>` + "<h5>Click ok to login.</h5>",
-        icon: "warning",
+        icon: "success",
         showDenyButton: false,
         showCancelButton: false,
         confirmButtonText: "OK",
-        iconColor: "#D1D1D1", // question icon color
+        // iconColor: "#D1D1D1", // question icon color
         confirmButtonColor: "#BE5A40",
         cancelButtonColor: "#A1A1A1",
       }).then((result) => {
@@ -98,6 +99,7 @@ const ResetPassword = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
+    setIsTouched: setIsTouchedPassword,
   } = useValidateInput(
     (value) =>
       value.trim() !== "" &&
@@ -130,6 +132,7 @@ const ResetPassword = () => {
     valueChangeHandler: confirmPasswordChangeHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
     reset: resetConfirmPasswordInput,
+    setIsTouched: setIsTouchedConfirmPassword,
   } = useValidateInput(
     (value) => value.trim() !== "" && value.trim() === enteredPassword.trim()
   );
@@ -138,7 +141,8 @@ const ResetPassword = () => {
     enteredConfirmPassword !== enteredPassword ||
     enteredConfirmPassword === ""
   ) {
-    confirmPasswordErrorMessage = "Password and confirm password do not match.";
+    confirmPasswordErrorMessage =
+      "New Password and confirm password do not match.";
   }
 
   return (
@@ -159,7 +163,7 @@ const ResetPassword = () => {
             </div>
           </div>
           <div className={styles["form-greetings"]}>
-            <p>Password reset.</p>
+            <p>Reset Password</p>
             <p>Please enter a new password.</p>
           </div>
           {isLoading && <LoadingSpinner />}
@@ -196,7 +200,7 @@ const ResetPassword = () => {
                 type="password"
                 labelName=""
                 name="confirmPassword"
-                placeholder="Confirm Password"
+                placeholder="Confirm New Password"
                 onChange={confirmPasswordChangeHandler}
                 onBlur={confirmPasswordBlurHandler}
                 value={enteredConfirmPassword}
@@ -215,7 +219,7 @@ const ResetPassword = () => {
             <div></div>
             <div className={styles["signin-button-container"]}>
               <SmallButton
-                label="Request Password Reset"
+                label="Reset Password"
                 type="primary"
                 size="l-l"
               ></SmallButton>

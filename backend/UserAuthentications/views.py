@@ -183,6 +183,7 @@ class FacultyRegister(APIView):
                 province = data['province'].capitalize(),
                 zip_code = data['zip_code'],
                 contact_no = data['contact_no'],
+                specialization = data['department']
                 )
             
                 notification = Notification()

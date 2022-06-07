@@ -6,24 +6,35 @@
   border-radius: 8px;
 }
 
+.sem-label {
+  font-weight: 600;
+}
+
+.sem-label em {
+  /* background-color: #87C387; */
+  margin: 0 25px;
+  /* color:  */
+}
+
 .popup-menu-container {
   float: right;
 }
 
 .active-status.active {
-  height: 15px;
-  width: 15px;
   border-radius: 50%;
-  background: #87C387;
-  margin-top: 5px;
+  border: 1px solid #6AD96A;
+  background: #7AEC7A;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
   float: right;
 }
 
 .active-status.inactive {
-  height: 15px;
-  width: 15px;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
   border-radius: 50%;
-  background: #F17878;
-  margin-top: 5px;
+  background: #949494;
   float: right;
 }

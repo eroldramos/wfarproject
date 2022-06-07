@@ -46,8 +46,8 @@ const NotificationInDashboard = (props) => {
                 <img src={notificationIcon} alt="" onClick={()=> setNotificationIsClicked(!notificationIsClicked)}/>
             </div>
             <div className="greetings">
-                <p>Good Evening, </p>
-                <h3>{userInfo.name} !</h3>
+                <h3>Hi {userInfo.name},</h3>
+                <p>Good day!</p>
             </div>
         </div>
     )

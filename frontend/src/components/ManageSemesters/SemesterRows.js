@@ -26,6 +26,23 @@ const SemesterRows = (props) => {
     },
   ];
   const [popupMenuIsShown, setPopupMenuIsShown] = useState(false);
+  const archiveSemReducersValues = useSelector((state) => state.archiveSem);
+  const { success: archiveSuccess } = archiveSemReducersValues;
+  useEffect(() => {
+    if (archiveSuccess) {
+      Swal.fire({
+        html: `<h4>${archiveSuccess}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(window.location.pathname);
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
+    }
+  }, [archiveSuccess]);
 
   const openPopMenuHandler = () => {
     setPopupMenuIsShown(true);
@@ -85,9 +102,10 @@ const SemesterRows = (props) => {
         className={styles["sem-container"]}
         onMouseLeave={closePopMenuHandler}
       >
-        <strong>
-          {props.schoolYear} {props.label}
-        </strong>
+        <span className={styles["sem-label"]}>
+          <strong><em>{props.schoolYear}</em></strong> 
+          {props.label}
+        </span>
 
         <div className={styles["popup-menu-container"]}>
           <span style={{ cursor: "pointer" }} onClick={openPopMenuHandler}>

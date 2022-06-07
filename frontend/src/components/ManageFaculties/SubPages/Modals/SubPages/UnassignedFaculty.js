@@ -12,6 +12,7 @@ import {
   assignedFaculty,
 } from "../../../../../store/manageFacultiesActions";
 import Paginator from "../../../SubComponents/Paginator";
+import Swal from "sweetalert2";
 const UnassignedFaculty = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -157,6 +158,14 @@ const UnassignedFaculty = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      if (window.location.pathname.split("/")[2] == "area-chair") {
+        navigate("/manage-faculty/area-chair/unassigned-faculty/");
+      }
+      if (window.location.pathname.split("/")[2] == "department-head") {
+        navigate("/manage-faculty/department-head/unassigned-faculty/");
+      }
+    }
   };
   const onAssignedFacultyHandler = () => {
     let selectedId = [];
@@ -168,14 +177,27 @@ const UnassignedFaculty = (props) => {
       assignee_id: props.id,
       assigned_faculties: selectedId,
     };
-
-    dispatch(assignedFaculty(data));
-    alert("Assigned Successfully");
+    props.onClose();
+    Swal.fire({
+      html: `<h4>Do you want to assign some faculty to ${props.fullname}</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(assignedFaculty(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
+  };
+  const closeModal = () => {
     props.onClose();
   };
-  const closeModal = () =>{
-    props.onClose();
-  }
   console.log(isChecked);
   console.log(checkedState);
   console.log(selectedUser);
@@ -251,18 +273,13 @@ const UnassignedFaculty = (props) => {
       </div>
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
-          <Button
-            onClick={closeModal}
-            label="Cancel"
-            type="cancel"
-            size="s"
-          />
+          <Button onClick={closeModal} label="Cancel" type="cancel" size="s" />
         </div>
         <div className={styles["icon-container"]}>
           {selectedUser.length > 0 && (
             <TransparentButton
               onClick={onAssignedFacultyHandler}
-              label="Remove"
+              label="Assign"
               type="transparent"
               size="cs"
               svg={icon}

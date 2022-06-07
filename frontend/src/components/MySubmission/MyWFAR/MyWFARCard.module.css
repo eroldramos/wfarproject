@@ -4,7 +4,13 @@
     padding: 20px 25px;
     margin: 15px 0;
     width: 100%;
-    
+    transition: .12s linear;
+}
+
+
+.card:hover {
+    background: #E5E5E5;
+    transition: .12s linear;
 }
 
 .wfarContainer {
@@ -71,7 +77,7 @@
     font-weight: 500;
     font-size: .875em;
     padding: 5px 7.5px 5px 7.5px;
-    color: #999999;
+    color: #777;
     text-align: center;
 }
 

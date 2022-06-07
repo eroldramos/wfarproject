@@ -26,7 +26,9 @@ const UserProfile = () => {
     { label: "Divorced ", value: 4 },
     { label: "Single ", value: 5 },
   ];
-  const [state, setState] = useState([])
+  const [state, setState] = useState([]);
+  const [emails, setEmails] = useState([]);
+  const [emailDuplicate, setEmailDuplicate] = useState(false);
   const loggedUser = useSelector((state) => state.login);
   const { userInfo } = loggedUser;
 
@@ -54,10 +56,19 @@ const UserProfile = () => {
         setEnteredZip(json[0].zip_code);
         setEnteredContactNo(json[0].contact_no);
         setEnteredEmail(json[0].email);
+        setEnteredSpecialization(json[0].specialization);
       } catch (error) {
         console.log("error: ", error);
       }
-    };
+    }
+    axios.get('http://127.0.0.1:8000/api/profile/get-email/' + userInfo.id + '/', {}, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (result) {
+      setEmails(result.data);
+    });
+
     fetchData();
   }, []);
 
@@ -81,21 +92,31 @@ const UserProfile = () => {
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
         //delete
-        Swal.fire({
-          title: 'Account Delete',
-          text: 'You will now be redirected to the login page',
-          icon: 'success',
-          confirmButtonText: 'OK',
-          timer: 3000,
-          timerProgressBar: true,
-        }).then((result) => {
-          axios({
-            method: 'POST',
-            url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
-            data: {}
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
+          data: { password: login },
+        }).then(function () {
+          Swal.fire({
+            title: 'Account Deleted',
+            text: 'You will now be redirected to the login page',
+            icon: 'success',
+            confirmButtonColor: '#B16047',
+            confirmButtonText: 'OK',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(function () {
+            dispatch(logout());
+            navigate('/');
           });
-          dispatch(logout());
-          navigate('/');
+        }).catch(function (err) {
+          Swal.fire({
+            title: 'Password incorrect',
+            text: 'Please type your password to delete your account',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#B16047',
+          });
         });
       },
     });
@@ -154,7 +175,7 @@ const UserProfile = () => {
     reset: resetEmployeeNoInput,
     setEnteredValue: setEnteredEmpNo,
   } = useValidateInput(
-    (value) => value !== "" && onlyNumbers(value)
+    (value) => value !== ""
   );
   function onlyNumbers(str) {
     return /^[0-9]+$/.test(str);
@@ -260,6 +281,19 @@ const UserProfile = () => {
     (value) => value !== "" && onlyNumbers(value)
   );
 
+  // Specialization Validations
+  const {
+    value: enteredSpecialization,
+    isValid: enteredSpecializationIsValid,
+    hasError: zSpecializationInputHasError,
+    valueChangeHandler: SpecializationChangeHandler,
+    inputBlurHandler: SpecializationBlurHandler,
+    reset: resetSpecialization,
+    setEnteredValue: setEnteredSpecialization,
+  } = useValidateInput(
+    (value) => value !== "" && onlyNumbers(value)
+  );
+
   // Contact No Validations
   const {
     value: enteredContactNo,
@@ -351,7 +385,6 @@ const UserProfile = () => {
     reset: resetCurrentPassword,
   } = useValidateInput(
     (value) => value !== "");
-
   const onSubmit = () => {
     if (
       enteredFirstNameIsValid &&
@@ -369,38 +402,62 @@ const UserProfile = () => {
       enteredContactNoIsValid &&
       enteredEmailIsValid
     ) {
-      let data = {
-        first_name: enteredFirstName,
-        middle_name: enteredMiddleName,
-        last_name: enteredLastName,
-        emp_no: enteredEmployeeNo,
-        civil_status: enteredCivilStatus,
-        house_no: enteredHouseNo,
-        street: enteredStreet,
-        subdivision: enteredSubdivision,
-        barangay: enteredBarangay,
-        municipality: enteredMunicipality,
-        province: enteredProvince,
-        zip_code: enteredZipCode,
-        contact_no: enteredContactNo,
-        email: enteredEmail,
+      setEmailDuplicate(false);
+      for (const email in emails) {
+        if (enteredEmail === emails[email]) {
+          Swal.fire({
+            title: 'Invalid Email',
+            text: 'This email address is already used in another account.',
+            icon: 'error',
+            confirmButtonColor: '#B16047',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+          }).then(function () {
+            setEmailDuplicate(true);
+            setIsopen(true);
+          });
+        }
       }
-      Swal.fire({
-        title: 'Success!',
-        text: 'Changes has been saved',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        showConfirmButton: true,
-        timer: 3000,
-        timerProgressBar: true,
-      }).then((result) => {
-        window.location.reload(false);
-      });
-      axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
-        data: data
-      });
+
+      if (!emailDuplicate) {
+        let data = {
+          first_name: enteredFirstName,
+          middle_name: enteredMiddleName,
+          last_name: enteredLastName,
+          emp_no: enteredEmployeeNo,
+          civil_status: enteredCivilStatus,
+          house_no: enteredHouseNo,
+          street: enteredStreet,
+          subdivision: enteredSubdivision,
+          barangay: enteredBarangay,
+          municipality: enteredMunicipality,
+          province: enteredProvince,
+          zip_code: enteredZipCode,
+          contact_no: enteredContactNo,
+          email: enteredEmail,
+          specialization: enteredSpecialization,
+        }
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
+          data: data
+        }).then(function () {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Changes has been saved',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            confirmButtonColor: '#B16047',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then((result) => {
+            window.location.reload(false);
+          });
+        }).catch(function () {
+          setIsopen(false);
+        });
+      }
     }
   }
 
@@ -408,24 +465,36 @@ const UserProfile = () => {
     if (enteredPasswordIsValid &&
       enteredConfirmPasswordIsValid
     ) {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Password has been updated',
-        icon: 'success',
-        confirmButtonText: 'OK', showConfirmButton: true,
-        timer: 3000,
-        timerProgressBar: true,
-        allowOutsideClick: false,
-      }).then((result) => {
-        window.location.reload(false);
-      });
       let data = {
-        password: enteredPassword
+        current: enteredCurrentPassword,
+        password: enteredPassword,
       }
       axios({
         method: 'POST',
         url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
         data: data
+      }).then(function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Password has been updated',
+          icon: 'success',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK', showConfirmButton: true,
+          timer: 3000,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+        }).then(function () {
+          window.location.reload(false);
+        });
+      }).catch(function () {
+        Swal.fire({
+          title: 'Incorrect Password',
+          text: 'Please type your current password on the field provided',
+          icon: 'error',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK',
+          showConfirmButton: true,
+        });
       });
     }
   }
@@ -443,7 +512,7 @@ const UserProfile = () => {
       imageHeight: 200,
       imageAlt: 'Custom image',
       showCancelButton: true,
-      confirmButtonText: 'Edit',
+      confirmButtonText: 'Edit', confirmButtonColor: '#B16047',
     }).then((result) => {
       if (result.isConfirmed) {
         document.getElementById('input_file2').click();
@@ -528,11 +597,18 @@ const UserProfile = () => {
               label="Change Password"
               type="primary"
               size="c-s" />
-            <SmallButton
-              onClick={() => constaccountDeleteSwal()}
-              label="Delete account"
-              type="primary"
-              size="c-s" />
+            {state.map((item) => {
+              if (item.is_superuser === true) {
+                return ''
+              } else {
+                return <SmallButton
+                  onClick={() => constaccountDeleteSwal()}
+                  label="Delete account"
+                  type="primary"
+                  size="c-s" />
+              }
+            })}
+
           </div>
           {isOpen && <Modal onClose={onClose} size="m-long-height">
             <div className={styles["modal-inner-container"]}>
@@ -783,7 +859,23 @@ const UserProfile = () => {
                     onChange={emailChangeHandler}
                     onBlur={emailBlurHandler}
                     value={enteredEmail}
-                    error={emailInputHasError ? emailErrorMessage : null}
+                    error={emailInputHasError ? 'Specialization cannot be empty' : null}
+                    size="lg"
+                    custom="edit-profile-form-control"
+                    labelMargin="nm"
+                  />
+                </div>
+                <div className={styles["form-field"]}>
+                  <InputField
+                    type="text"
+                    id="specialization"
+                    name="specialization"
+                    labelName="Department"
+                    placeholder="Enter your Department"
+                    onChange={SpecializationChangeHandler}
+                    onBlur={SpecializationChangeHandler}
+                    value={enteredSpecialization}
+                    error={zSpecializationInputHasError ? emailErrorMessage : null}
                     size="lg"
                     custom="edit-profile-form-control"
                     labelMargin="nm"
@@ -939,13 +1031,13 @@ const UserProfile = () => {
                   <p className={styles["info-text"]}>
                     {state.map((item) => {
                       if (item.sex === 1) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Male </p>
+                        return 'Male'
                       } else if (item.sex === 2) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Female </p>
+                        return 'Female'
                       } else if (item.sex === 3) {
-                        return <p className="userinput" style={{ color: '#000000' }}> Others </p>
+                        return 'Others'
                       } else {
-                        return <p className="userinput" style={{ color: '#000000' }}></p>
+                        return ''
                       }
                     })}
                   </p>
@@ -992,13 +1084,13 @@ const UserProfile = () => {
                   <p className={styles["info-text"]}>{state.map((item) => item.contact_no)}</p>
                 </div>
               </div>
-              <h3 className={styles["section-text"]}>Specialization</h3>
+              <h3 className={styles["section-text"]}>Employee Information</h3>
               <div className={styles["user-info-container"]}>
                 <div className={styles["details-placeholder"]}>
-                  <p>Program: </p>
+                  <p>Department: </p>
                 </div>
                 <div className={styles["details-placeholder"]}>
-                  <p className={styles["info-text"]}>Sample</p>
+                  <p className={styles["info-text"]}>{state.map((item) => item.specialization)}</p>
                 </div>
               </div>
               <h3 className={styles["section-text"]}>Signature</h3>

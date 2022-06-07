@@ -24,6 +24,7 @@ const CommentInput = (props) => {
       description: comment,
     };
     console.log(data);
+    setComment("");
     dispatch(postComment(data));
   };
 

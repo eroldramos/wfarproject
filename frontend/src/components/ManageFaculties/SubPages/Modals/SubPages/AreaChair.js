@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import Paginator from "../../../SubComponents/Paginator";
+import Swal from "sweetalert2";
 const AreaChair = (props) => {
   const icon = (
     <svg
@@ -62,6 +63,7 @@ const AreaChair = (props) => {
     },
   ]);
   const [assigneeId, setAssigneeId] = useState("");
+  const [assigneeName, setAssigneeName] = useState("");
   const onSubmitHandler = (event) => {
     event.preventDefault();
     if (searchFaculty) {
@@ -72,9 +74,20 @@ const AreaChair = (props) => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/faculty/area-chair/");
+    }
   };
   const onHandleChange = (event) => {
     setAssigneeId(event.target.value);
+    listFaculty &&
+      listFaculty.map((data, index) => {
+        if (data.id == event.target.value) {
+          setAssigneeName(
+            `${data.last_name}, ${data.first_name} ${data.middle_name}`
+          );
+        }
+      });
   };
 
   const onAssignedFacultyHandler = () => {
@@ -88,15 +101,28 @@ const AreaChair = (props) => {
       assigned_faculties: selectedId,
     };
 
-    dispatch(assignedFaculty(data));
-    console.log(data);
-    alert("Assigned Successfully");
     props.onCloseAssignModal();
+    Swal.fire({
+      html: `<h4>Do you want to assign ${props.fullname} to ${assigneeName}?</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(assignedFaculty(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
   };
 
-  const closeModal = () =>{
+  const closeModal = () => {
     props.onCloseAssignModal();
-  }
+  };
   console.log(assigneeId);
   return (
     <Fragment>
@@ -119,7 +145,9 @@ const AreaChair = (props) => {
           <div
             className={`${table["col"]} ${table["col-1"]} ${table["col-header"]}`}
           ></div>
-          <div className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}>
+          <div
+            className={`${table["col"]} ${table["col-2"]} ${table["col-header"]}`}
+          >
             <div className={table["label-container"]}>Choose An Area Chair</div>
             {/* <div className={table["icon-container2"]}>
               <TransparentButton
@@ -167,12 +195,7 @@ const AreaChair = (props) => {
       </div>
       <div className={styles["button-container"]}>
         <div className={styles["cancel-btn-container"]}>
-          <Button
-            onClick={closeModal}
-            label="Cancel"
-            type="cancel"
-            size="s"
-          />
+          <Button onClick={closeModal} label="Cancel" type="cancel" size="s" />
         </div>
         <div className={styles["assign-btn-container"]}>
           {assigneeId > 0 && (

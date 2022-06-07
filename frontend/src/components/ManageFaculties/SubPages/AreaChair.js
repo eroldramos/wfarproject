@@ -60,12 +60,17 @@ const AreaChair = () => {
     if (searchFaculty) {
       navigate(`${window.location.pathname}?search=${searchFaculty}&page=1`);
     } else {
-      navigate(window.location);
+      navigate(window.location.pathname);
     }
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/area-chair/");
+    }
+    // navigate(`${window.location.pathname}?search=${event.target.value}&page=1`);
   };
+
   return (
     <Fragment>
       <div className={styles["search-field-container"]}>
@@ -159,7 +164,7 @@ const AreaChair = () => {
           search={search}
           page={page}
           pages={pages}
-          url={"/manage-faculty/area-chair/"}
+          url={window.location.pathname}
         />
       </div>
     </Fragment>

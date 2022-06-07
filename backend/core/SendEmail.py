@@ -8,13 +8,15 @@ from core.models import Faculty
 
 
 
-def send_email(faculty_id, subject, message):
+def send_email(faculty_id, subject, message, enableUrl=False):
     faculty = Faculty.objects.get(id=faculty_id)
     subject = subject
     email_from = settings.EMAIL_HOST_USER
     html_content = render_to_string('notification_body.html', {
         "faculty": faculty,
-        "message": message
+        "message": message,
+        "enableUrl": enableUrl,
+
     })
     text_content = strip_tags(html_content)
     recipient_list = [faculty.email]

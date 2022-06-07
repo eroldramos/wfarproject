@@ -26,23 +26,84 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [attempts, setAttempts] = useState(4);
+  const [disabled, setDisabled] = useState(false);
+  const [timer, setTimer] = useState(window.localStorage.getItem('timer'));
+
+  const [isEmptyPassword, setIsEmptyPassword] = useState(false);
+  const [isEmptyEmail, setIsEmptyEmail] = useState(false);
 
   const loggedUser = useSelector((state) => state.login);
   const { error, isLoading, userInfo } = loggedUser;
 
   const setUsernameValue = (event) => {
     setUsername(event.target.value);
+    if (event.target.value.length > 0) {
+      setIsEmptyEmail(false);
+    } else {
+      setIsEmptyEmail(true);
+    }
   };
 
   const setPasswordValue = (event) => {
     setPassword(event.target.value);
+    if (event.target.value.length > 0) {
+      setIsEmptyPassword(false);
+    } else {
+      setIsEmptyPassword(true);
+    }
   };
 
+  const onBlurEmail = (event) => {
+    if (event.target.value.length > 0) {
+      setIsEmptyEmail(false);
+    } else {
+      setIsEmptyEmail(true);
+    }
+  };
+
+  const onBluPassword = (event) => {
+    if (event.target.value.length > 0) {
+      setIsEmptyPassword(false);
+    } else {
+      setIsEmptyPassword(true);
+    }
+  };
+
+  function startTimer() {
+    if (timer > 0) {
+      setTimeout(function () {
+        setTimer(timer - 1);
+        window.localStorage.setItem('timer', timer);
+      }.bind(this), 1000)
+    } else if (timer === 0) {
+      setAttempts(4);
+      setDisabled(false);
+      setTimer(120);
+      window.localStorage.setItem('timer', 120);
+    }
+  }
+
+  function AttemptMessage(props) {
+    if (attempts > 0) {
+      return <p>Login attempts: {attempts}</p>;
+    }
+    startTimer();
+    return <p>You have reached the maximum attempts. Please wait {timer} seconds</p>;
+  }
+
   const onLoginHandler = (event) => {
+    if (attempts === 1) {
+      //disable na yung mga input fields
+      setDisabled(true);
+    }
+    setAttempts(attempts - 1);
+
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (username == "" || password == "") {
-      alert("fields can't be empty");
+      setIsEmptyEmail(true);
+      setIsEmptyPassword(true);
       return;
     }
 
@@ -58,6 +119,11 @@ const Login = () => {
   };
 
   useEffect(() => {
+    if (window.localStorage.getItem('timer') > 0 && window.localStorage.getItem('timer') < 120) {
+      startTimer();
+      setAttempts(0);
+      setDisabled(true);
+    }
     if (userInfo) {
       // if userInfo is null, can't be login
       navigate("/dashboard");
@@ -94,7 +160,9 @@ const Login = () => {
             <p>Welcome Back!</p>
             <p>Please login to your account</p>
           </div>
-          {error && <p className={styles["error"]}>{error}</p>}
+          <div className={styles["error-handler-container"]}>
+            {<p>{error}</p>}
+          </div>
           <form
             className={styles["form-container"]}
             action=""
@@ -112,7 +180,10 @@ const Login = () => {
                 noLabel="no-label-input"
                 custom="form-control-custom"
                 onChange={setUsernameValue}
+                onBlur={onBlurEmail}
+                disabled={disabled}
                 value={username}
+                error={isEmptyEmail ? "Please input a valid username." : null}
               />
               {/* <input type="text" placeholder="Username or Email"/> */}
             </div>
@@ -126,8 +197,13 @@ const Login = () => {
                 size="lg"
                 noLabel="no-label-input"
                 custom="form-control-custom"
+                disabled={disabled}
                 onChange={setPasswordValue}
+                onBlur={onBluPassword}
                 value={password}
+                error={
+                  isEmptyPassword ? "Please input a valid password." : null
+                }
               />
               {/* <input type="password" placeholder="Password"/> */}
             </div>
@@ -161,6 +237,11 @@ const Login = () => {
                 Don't have an account?
                 <h5 onClick={onNavigateToSignUp}> Sign up</h5>
               </p>
+            </div>
+            <div className={styles["error-handler-container"]}>
+              <div style={{ display: attempts < 4 ? 'block' : 'none' }}>
+                {AttemptMessage()}
+              </div>
             </div>
           </form>
         </div>
