@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.serializers import ProfileSerializer
 from core.permissions import IsAuthenticated
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 
 
 class RetrieveAccountDetails(APIView):
@@ -54,9 +54,11 @@ class EditPassword(APIView):
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
-        user.password = make_password(request.data['password'])
-        user.save()
-        return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+        if(check_password(request.data['current'], user.password)):
+            user.password = make_password(request.data['password'])
+            user.save()
+            return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+        return Response({"error": "Incorrect Password"}, status=status.HTTP_304_NOT_MODIFIED)
 
 
 class EditProfilePic(APIView):
@@ -74,9 +76,11 @@ class DeleteAccount(APIView):
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
-        user.deleted_at = datetime.datetime.now()
-        user.save()
-        return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+        if(check_password(request.data['password'], user.password)):
+            user.deleted_at = datetime.datetime.now()
+            user.save()
+            return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
+        return Response({"error": "Incorrect Password"}, status=status.HTTP_304_NOT_MODIFIED)
 
 
 class SetSignature(APIView):

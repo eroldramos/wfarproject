@@ -82,22 +82,31 @@ const UserProfile = () => {
       showLoaderOnConfirm: true,
       preConfirm: (login) => {
         //delete
-        Swal.fire({
-          title: 'Account Delete',
-          text: 'You will now be redirected to the login page',
-          icon: 'success',
-          confirmButtonColor: '#B16047',
-          confirmButtonText: 'OK',
-          timer: 3000,
-          timerProgressBar: true,
-        }).then((result) => {
-          axios({
-            method: 'POST',
-            url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
-            data: {}
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/profile/delete-account/' + userInfo.id + '/',
+          data: { password: login },
+        }).then(function () {
+          Swal.fire({
+            title: 'Account Deleted',
+            text: 'You will now be redirected to the login page',
+            icon: 'success',
+            confirmButtonColor: '#B16047',
+            confirmButtonText: 'OK',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then(function () {
+            dispatch(logout());
+            navigate('/');
           });
-          dispatch(logout());
-          navigate('/');
+        }).catch(function (err) {
+          Swal.fire({
+            title: 'Password incorrect',
+            text: 'Please type your password to delete your account',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#B16047',
+          });
         });
       },
     });
@@ -425,25 +434,36 @@ const UserProfile = () => {
     if (enteredPasswordIsValid &&
       enteredConfirmPasswordIsValid
     ) {
-      Swal.fire({
-        title: 'Success!',
-        text: 'Password has been updated',
-        icon: 'success',
-        confirmButtonColor: '#B16047',
-        confirmButtonText: 'OK', showConfirmButton: true,
-        timer: 3000,
-        timerProgressBar: true,
-        allowOutsideClick: false,
-      }).then((result) => {
-        window.location.reload(false);
-      });
       let data = {
-        password: enteredPassword
+        current: enteredCurrentPassword,
+        password: enteredPassword,
       }
       axios({
         method: 'POST',
         url: 'http://127.0.0.1:8000/api/profile/edit-password/' + userInfo.id + '/',
         data: data
+      }).then(function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Password has been updated',
+          icon: 'success',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK', showConfirmButton: true,
+          timer: 3000,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+        }).then(function () {
+          window.location.reload(false);
+        });
+      }).catch(function () {
+        Swal.fire({
+          title: 'Incorrect Password',
+          text: 'Please type your current password on the field provided',
+          icon: 'error',
+          confirmButtonColor: '#B16047',
+          confirmButtonText: 'OK',
+          showConfirmButton: true,
+        });
       });
     }
   }
