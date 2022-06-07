@@ -44,6 +44,7 @@ class EditAccountDetails(APIView):
         user.zip_code = request.data['zip_code']
         user.contact_no = request.data['contact_no']
         user.email = request.data['email']
+        user.specialization = request.data['specialization']
         user.save()
         return Response({"detail": "Edited"}, status=status.HTTP_200_OK)
 
