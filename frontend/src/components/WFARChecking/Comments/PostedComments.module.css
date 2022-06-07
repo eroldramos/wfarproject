@@ -48,6 +48,9 @@
   font-weight: 400;
   font-size: 16px;
 }
+.details_TimeContainer h5:nth-child(2) {
+  font-size: 12px;
+}
 .details_TimeContainer h4:nth-child(1) {
   font-weight: normal;
 }
