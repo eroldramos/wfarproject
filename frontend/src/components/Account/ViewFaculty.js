@@ -427,6 +427,7 @@ const UserProfile = () => {
                     </div>
                 </div>
                 <div className={styles["details-container"]}>
+                    <div className={styles["edit-buttons-container"]}></div>
                     <div className={styles["user-details-container"]}>
                         <div className={styles["scrollable-area"]}>
                             <h3 className={styles["section-text"]}>Personal Information</h3>
