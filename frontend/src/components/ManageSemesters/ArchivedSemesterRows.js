@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styles from "./SemesterRows.module.css";
 import PopupMenu from "./PopupMenu";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +11,6 @@ const ArchivedSemesterRows = (props) => {
   const ITEMS = [
     {
       id: 1,
-      label: "Edit",
-      onClick: () => onNavigateEditSemester(props.semId),
-    },
-    {
-      id: 2,
       label: "Restore",
       onClick: () => onRestoreSemester(props.semId),
     },
@@ -29,9 +24,29 @@ const ArchivedSemesterRows = (props) => {
   const closePopMenuHandler = () => {
     setPopupMenuIsShown(false);
   };
-  const onNavigateEditSemester = (semId) => {
-    navigate(`/edit-semester/${semId}/`);
-  };
+  // const onNavigateEditSemester = (semId) => {
+  //   navigate(`/edit-semester/${semId}/`);
+  // };
+
+  const restoreSemReducerValues = useSelector((state) => state.restoreSem);
+  const { success: restoreSuccess } = restoreSemReducerValues;
+
+  useEffect(() => {
+    if (restoreSuccess) {
+      Swal.fire({
+        html: `<h4>${restoreSuccess}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(window.location.pathname);
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
+    }
+  }, [restoreSuccess]);
+
   const onRestoreSemester = (semId) => {
     Swal.fire({
       html:

@@ -86,6 +86,9 @@ const DepartmentHead = () => {
   };
   const setSearchFacultyValue = (event) => {
     setSearchFaculty(event.target.value);
+    if (event.target.value.length == 0) {
+      navigate("/manage-faculty/department-head/");
+    }
   };
   return (
     <Fragment>

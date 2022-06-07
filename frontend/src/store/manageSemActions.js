@@ -8,6 +8,7 @@ import {
   restoreSemActions,
   activateSemActions,
 } from "./manageSemReducers";
+import Swal from "sweetalert2";
 export const createSem = (obj) => {
   return async (dispatch, getState) => {
     let url = "/api/create-sem/";
@@ -48,6 +49,8 @@ export const createSemReset = () => {
 
 export const getSems = (search) => {
   return async (dispatch, getState) => {
+    dispatch(archiveSemActions.archiveSemReset());
+    dispatch(restoreSemActions.restoreSemReset());
     let url = `/api/retrieve-all-sem/${search}`;
     const {
       login: { userInfo },
@@ -276,6 +279,16 @@ export const activateSem = (semId) => {
 
       const data = await response.json();
       dispatch(activateSemActions.activateSemSuccess({ success: data.detail }));
+      Swal.fire({
+        html: `<h4>${data.detail}</h4>`,
+        icon: "success",
+        confirmButtonColor: "#BE5A40",
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+        } else if (result.isDismissed) {
+        }
+      });
     } catch (error) {
       dispatch(activateSemActions.activateSemFail({ error: error.message }));
     }

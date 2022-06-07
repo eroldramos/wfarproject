@@ -38,7 +38,7 @@ class CreateSemester(APIView):
                 school_year=data['school_year'],
                 start_date=data['start_date'],
                 end_date=data['end_date'],
-                no_of_weeks=no_of_weeks,
+                no_of_weeks=no_of_weeks+1,
             )
             print(request.data)
             print("num of weeks", no_of_weeks)
@@ -135,7 +135,7 @@ class UpdateSemester(APIView):
             semester.school_year = data['school_year']
             semester.start_date = data['start_date']
             semester.end_date = data['end_date']
-            semester.no_of_weeks = no_of_weeks
+            semester.no_of_weeks = no_of_weeks+1
             semester.save()
 
             return Response({"detail": "Semester updated!"}, status=status.HTTP_200_OK)

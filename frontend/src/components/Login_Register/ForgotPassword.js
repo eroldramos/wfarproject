@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (enteredEmail == "" && !enteredEmailIsValid) {
-      alert("fields can't be empty");
+      setIsTouchedEmail(true);
       return;
     }
     let data = {
@@ -83,6 +83,7 @@ const ForgotPassword = () => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
+    setIsTouched: setIsTouchedEmail,
   } = useValidateInput((value) => value.includes("@") && value.trim() !== "");
 
   let emailErrorMessage = "";
