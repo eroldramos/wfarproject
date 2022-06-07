@@ -12,6 +12,7 @@ import {
   assignedFaculty,
 } from "../../../../../store/manageFacultiesActions";
 import Paginator from "../../../SubComponents/Paginator";
+import Swal from "sweetalert2";
 const UnassignedFaculty = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -176,10 +177,23 @@ const UnassignedFaculty = (props) => {
       assignee_id: props.id,
       assigned_faculties: selectedId,
     };
-
-    dispatch(assignedFaculty(data));
-    alert("Assigned Successfully");
     props.onClose();
+    Swal.fire({
+      html: `<h4>Do you want to assign some faculty to ${props.fullname}</h4>`,
+      icon: "question",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      iconColor: "#D1D1D1", // question icon color
+      confirmButtonColor: "#BE5A40",
+      cancelButtonColor: "#A1A1A1",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(assignedFaculty(data));
+      } else if (result.isDenied) {
+      } else if (result.isDismissed) {
+      }
+    });
   };
   const closeModal = () => {
     props.onClose();
@@ -265,7 +279,7 @@ const UnassignedFaculty = (props) => {
           {selectedUser.length > 0 && (
             <TransparentButton
               onClick={onAssignedFacultyHandler}
-              label="Remove"
+              label="Assign"
               type="transparent"
               size="cs"
               svg={icon}
