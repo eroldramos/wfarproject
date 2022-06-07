@@ -26,7 +26,9 @@ const UserProfile = () => {
     { label: "Divorced ", value: 4 },
     { label: "Single ", value: 5 },
   ];
-  const [state, setState] = useState([])
+  const [state, setState] = useState([]);
+  const [emails, setEmails] = useState([]);
+  const [emailDuplicate, setEmailDuplicate] = useState(false);
   const loggedUser = useSelector((state) => state.login);
   const { userInfo } = loggedUser;
 
@@ -58,7 +60,15 @@ const UserProfile = () => {
       } catch (error) {
         console.log("error: ", error);
       }
-    };
+    }
+    axios.get('http://127.0.0.1:8000/api/profile/get-email/' + userInfo.id + '/', {}, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (result) {
+      setEmails(result.data);
+    });
+
     fetchData();
   }, []);
 
@@ -375,7 +385,6 @@ const UserProfile = () => {
     reset: resetCurrentPassword,
   } = useValidateInput(
     (value) => value !== "");
-
   const onSubmit = () => {
     if (
       enteredFirstNameIsValid &&
@@ -393,43 +402,62 @@ const UserProfile = () => {
       enteredContactNoIsValid &&
       enteredEmailIsValid
     ) {
-      let data = {
-        first_name: enteredFirstName,
-        middle_name: enteredMiddleName,
-        last_name: enteredLastName,
-        emp_no: enteredEmployeeNo,
-        civil_status: enteredCivilStatus,
-        house_no: enteredHouseNo,
-        street: enteredStreet,
-        subdivision: enteredSubdivision,
-        barangay: enteredBarangay,
-        municipality: enteredMunicipality,
-        province: enteredProvince,
-        zip_code: enteredZipCode,
-        contact_no: enteredContactNo,
-        email: enteredEmail,
-        specialization: enteredSpecialization,
+      setEmailDuplicate(false);
+      for (const email in emails) {
+        if (enteredEmail === emails[email]) {
+          Swal.fire({
+            title: 'Invalid Email',
+            text: 'This email address is already used in another account.',
+            icon: 'error',
+            confirmButtonColor: '#B16047',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+          }).then(function () {
+            setEmailDuplicate(true);
+            setIsopen(true);
+          });
+        }
       }
-      axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
-        data: data
-      }).then(function () {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Changes has been saved',
-          icon: 'success',
-          confirmButtonText: 'OK',
-          showConfirmButton: true,
-          confirmButtonColor: '#B16047',
-          timer: 3000,
-          timerProgressBar: true,
-        }).then((result) => {
-          window.location.reload(false);
+
+      if (!emailDuplicate) {
+        let data = {
+          first_name: enteredFirstName,
+          middle_name: enteredMiddleName,
+          last_name: enteredLastName,
+          emp_no: enteredEmployeeNo,
+          civil_status: enteredCivilStatus,
+          house_no: enteredHouseNo,
+          street: enteredStreet,
+          subdivision: enteredSubdivision,
+          barangay: enteredBarangay,
+          municipality: enteredMunicipality,
+          province: enteredProvince,
+          zip_code: enteredZipCode,
+          contact_no: enteredContactNo,
+          email: enteredEmail,
+          specialization: enteredSpecialization,
+        }
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
+          data: data
+        }).then(function () {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Changes has been saved',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            showConfirmButton: true,
+            confirmButtonColor: '#B16047',
+            timer: 3000,
+            timerProgressBar: true,
+          }).then((result) => {
+            window.location.reload(false);
+          });
+        }).catch(function () {
+          setIsopen(false);
         });
-      }).catch(function () {
-        setIsopen(false);
-      });
+      }
     }
   }
 
