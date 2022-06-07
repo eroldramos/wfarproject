@@ -14,7 +14,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 
 class RetrieveAccountDetails(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, pk):
         try:
@@ -26,10 +26,27 @@ class RetrieveAccountDetails(APIView):
 
 
 class EditAccountDetails(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
+        if(user.first_name == request.data['first_name']
+           and user.middle_name == request.data['middle_name']
+           and user.last_name == request.data['last_name']
+           and user.middle_name == request.data['middle_name']
+           and user.emp_no == request.data['emp_no']
+           and user.civil_status == request.data['civil_status']
+           and user.house_no == request.data['house_no']
+           and user.street == request.data['street']
+           and user.subdivision == request.data['subdivision']
+           and user.barangay == request.data['barangay']
+           and user.municipality == request.data['municipality']
+           and user.province == request.data['province']
+           and user.zip_code == request.data['zip_code']
+           and user.contact_no == request.data['contact_no']
+           and user.email == request.data['email']
+           and user.specialization == request.data['specialization']):
+            return Response({"error": "nothing edited"}, status=status.HTTP_304_NOT_MODIFIED)
         user.first_name = request.data['first_name']
         user.middle_name = request.data['middle_name']
         user.last_name = request.data['last_name']
@@ -50,7 +67,7 @@ class EditAccountDetails(APIView):
 
 
 class EditPassword(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
@@ -62,7 +79,7 @@ class EditPassword(APIView):
 
 
 class EditProfilePic(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
@@ -72,7 +89,7 @@ class EditProfilePic(APIView):
 
 
 class DeleteAccount(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
@@ -84,7 +101,7 @@ class DeleteAccount(APIView):
 
 
 class SetSignature(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)
@@ -94,7 +111,7 @@ class SetSignature(APIView):
 
 
 class ViewFaculty(APIView):
-    #permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         user = Faculty.objects.get(pk=pk)

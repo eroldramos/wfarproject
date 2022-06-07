@@ -410,22 +410,25 @@ const UserProfile = () => {
         email: enteredEmail,
         specialization: enteredSpecialization,
       }
-      Swal.fire({
-        title: 'Success!',
-        text: 'Changes has been saved',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        showConfirmButton: true,
-        confirmButtonColor: '#B16047',
-        timer: 3000,
-        timerProgressBar: true,
-      }).then((result) => {
-        window.location.reload(false);
-      });
       axios({
         method: 'POST',
         url: 'http://127.0.0.1:8000/api/profile/edit/' + userInfo.id + '/',
         data: data
+      }).then(function () {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Changes has been saved',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          showConfirmButton: true,
+          confirmButtonColor: '#B16047',
+          timer: 3000,
+          timerProgressBar: true,
+        }).then((result) => {
+          window.location.reload(false);
+        });
+      }).catch(function () {
+        setIsopen(false);
       });
     }
   }
