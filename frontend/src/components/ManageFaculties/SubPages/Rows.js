@@ -10,6 +10,8 @@ import ViewStatusModal from "./Modals/ViewStatusModal";
 import FacultyAssignModal from "./Modals/FacultyAssignModal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 const Rows = (props) => {
   const ITEMS = [
     {
@@ -102,11 +104,30 @@ const Rows = (props) => {
     let backHistory = `/${urlArray[1]}/${urlArray[2]}/`;
     navigate(backHistory);
   };
+
+
+  const loggedUser = useSelector((state) => state.login);
+  const { userInfo } = loggedUser;
+
+  const ViewFaculty = (id) => {
+    //save ID to view_id
+    let data = {
+      view_id: id,
+    }
+    axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:8000/api/profile/view-faculty/' + userInfo.id + '/',
+      data: data
+    });
+    //open viewfaculty
+    navigate('/view-faculty');
+  };
+
   return (
     <Fragment>
       <li className={table["table-row"]} onMouseLeave={closePopMenuHandler}>
         <div className={`${table["col"]} ${table["col-1"]}`}>
-          <h5>{props.fullname}</h5>
+          <h5 onClick={() => ViewFaculty(props.id)}>{props.fullname}</h5>
         </div>
         <div
           className={`${table["col"]} ${table["col-2"]}`}
@@ -152,26 +173,26 @@ const Rows = (props) => {
             ></TableCellButton>
             {props.user_type === 2 || props.user_type === 3
               ? viewFacultyModal && (
-                  <ViewFacultyModal
-                    onClose={closeViewFacultyModal}
-                    id={props.id}
-                    fullname={props.fullname}
-                    user_type={props.user_type}
-                  />
-                )
+                <ViewFacultyModal
+                  onClose={closeViewFacultyModal}
+                  id={props.id}
+                  fullname={props.fullname}
+                  user_type={props.user_type}
+                />
+              )
               : viewFacultyModal && (
-                  <ViewStatusModal
-                    closeViewFacultyModal={closeViewFacultyModal}
-                    closeViewFacultyModalTransition={
-                      closeViewFacultyModalTransition
-                    }
-                    onOpenAssign={openFacultyAssignModal}
-                    id={props.id}
-                    fullname={props.fullname}
-                    user_type={props.user_type}
-                    assignee_id={props.assignee_id}
-                  />
-                )}
+                <ViewStatusModal
+                  closeViewFacultyModal={closeViewFacultyModal}
+                  closeViewFacultyModalTransition={
+                    closeViewFacultyModalTransition
+                  }
+                  onOpenAssign={openFacultyAssignModal}
+                  id={props.id}
+                  fullname={props.fullname}
+                  user_type={props.user_type}
+                  assignee_id={props.assignee_id}
+                />
+              )}
 
             {facultyAssignModal && (
               <FacultyAssignModal

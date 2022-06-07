@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (enteredEmail == "" && !enteredEmailIsValid) {
-      alert("fields can't be empty");
+      // alert("fields can't be empty");
       return;
     }
     let data = {
@@ -108,7 +108,7 @@ const ForgotPassword = () => {
           </div>
           <div className={styles["form-greetings"]}>
             <p>Forgot your password?</p>
-            <p>Please enter your email!</p>
+            <p>Please enter your email</p>
           </div>
           {isLoading && <LoadingSpinner />}
           {success && <p className={styles["success"]}>{success}</p>}

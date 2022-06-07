@@ -42,7 +42,7 @@ const Login = () => {
     event.preventDefault(); // to prevent from sending request and from reloading the page
 
     if (username == "" || password == "") {
-      alert("fields can't be empty");
+      // alert("fields can't be empty");
       return;
     }
 
@@ -94,7 +94,9 @@ const Login = () => {
             <p>Welcome Back!</p>
             <p>Please login to your account</p>
           </div>
-          {error && <p className={styles["error"]}>{error}</p>}
+          <div className={styles["error-handler-container"]}>
+            {error && <p>{error}</p>}
+          </div>
           <form
             className={styles["form-container"]}
             action=""
