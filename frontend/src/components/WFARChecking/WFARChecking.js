@@ -280,12 +280,12 @@ const WFARChecking = () => {
             setJsxCodeForCheckButton(() => {
               return !wfarData.checked_at ? (
                 <Fragment>
-                  <PrintWFARButton onClick={onClickExportHandler} />
+                  {/* <PrintWFARButton onClick={onClickExportHandler} /> */}
                   <CheckWFARButton />
                 </Fragment>
               ) : (
                 <Fragment>
-                  <PrintWFARButton onClick={onClickExportHandler} />
+                  {/* <PrintWFARButton onClick={onClickExportHandler} /> */}
                   <ReCheckWFARButton />
                 </Fragment>
               );
@@ -296,14 +296,14 @@ const WFARChecking = () => {
             if (wfarData.status === 1 && wfarData.entries.length > 0) {
               setJsxCodeForSubmitButton(
                 <Fragment>
-                  <PrintWFARButton onClick={onClickExportHandler} />
+                  {/* <PrintWFARButton onClick={onClickExportHandler} /> */}
                   <SubmitWFARButton onClick={onSubmitOnClickHandler} />
                 </Fragment>
               );
             } else if (wfarData.status === 2 || wfarData.status === 4) {
               setJsxCodeForSubmitButton(
                 <Fragment>
-                  <PrintWFARButton onClick={onClickExportHandler} />
+                  {/* <PrintWFARButton onClick={onClickExportHandler} /> */}
                   <div>
                     <SmallButton
                       onClick={onUnsubmitOnClickHandler}
@@ -345,6 +345,8 @@ const WFARChecking = () => {
               ) : (
                 <ReCheckWFARButton />
               )) } */}
+
+              <PrintWFARButton onClick={onClickExportHandler} />
               {jsxCodeForCheckButton}
 
               {/* Gagawin pang dynamic */}
