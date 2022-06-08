@@ -1,0 +1,50 @@
+.footerComponent {
+    /* background: #F1F2F3;
+    box-shadow: 0px 1px 0px #EBECEE; */
+    border-radius: 5px;
+    /* padding-top: px; */
+    padding: 1% 0;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    user-select: none;
+    display: flex;
+    justify-content: right;
+}
+.paginationContainer {
+    /* position: absolute;
+    right: 0; */
+}
+
+.paginationContainer ul {
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    margin: 0 25px;
+}
+
+.paginationContainer ul li {
+    padding: 5px 0;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    /* transition: .15s linear; */
+}
+
+.paginationContainer ul li svg {
+    opacity: .5;
+}
+
+.paginationContainer ul li:hover {
+    font-weight: 700;
+    background-color: #BBB;
+    border-radius: 50px;
+    transition: .15s linear;
+}
+
+.paginationContainer ul li:hover,
+.paginationContainer ul .active {
+    font-weight: 700;
+    /* transition: .15s linear; */
+}

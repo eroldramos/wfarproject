@@ -28,7 +28,11 @@ export const myWfarCreateReducer = createSlice({
 const initialWfarsState = {
     isLoading: false,
     wfars: [],
-    error: false
+    error: false,
+    pageNo: 1,
+    noOfPages: 1,
+    firstPage: 1,
+    lastPage:1
 }
 
 export const myWfarFetchReducer = createSlice({
@@ -43,6 +47,10 @@ export const myWfarFetchReducer = createSlice({
             state.isLoading = false;
             state.error = null;
             state.wfars = action.payload.wfars;
+            state.pageNo = action.payload.pageNo;
+            state.noOfPages = action.payload.noOfPages;
+            state.firstPage = action.payload.firstPage;
+            state.lastPage = action.payload.lastPage;
         },
         retrieveFail(state, action) {
             state.isLoading = false;

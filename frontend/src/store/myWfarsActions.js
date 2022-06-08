@@ -51,14 +51,14 @@ export const createWfar = () => {
     }
 }
 
-export const retrieveWfars = (filterSemester) => {
+export const retrieveWfars = (filterSemester, filterPage) => {
     return async (dispatch, getState) => {
 
         const {
             login: { userInfo },
         } = getState();
 
-        let url = "/api/myWfar/?faculty_id="+userInfo.id+"&semester_id=" + filterSemester;
+        let url = "/api/myWfar/?faculty_id=" + userInfo.id + "&semester_id=" + filterSemester + "&page_no=" + filterPage;
 
         try {
             dispatch(myWfarFetchActions.retrieveRequest());
@@ -78,7 +78,21 @@ export const retrieveWfars = (filterSemester) => {
             }
 
             const data = await response.json();
-            dispatch(myWfarFetchActions.retrieveSuccessfully({ wfars: data }));
+            // console.log("my wfar");
+            // console.log(data);
+            // console.log(data.wfars);
+            // console.log(data.faculties);
+            // console.log(data.page_no);
+            // console.log(data.no_of_pages);
+            // console.log(data.first_page);
+            // console.log(data.last_page);
+            dispatch(myWfarFetchActions.retrieveSuccessfully({ 
+                wfars: data.faculties,
+                pageNo: data.page_no,
+                noOfPages: data.no_of_pages,
+                firstPage: data.first_page,
+                lastPage: data.last_page
+            }));
         } catch (error) {
             dispatch(myWfarFetchActions.retrieveFail({ error: error.message }));
         }
