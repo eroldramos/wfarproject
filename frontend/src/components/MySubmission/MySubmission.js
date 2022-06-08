@@ -7,7 +7,7 @@ import styles from "./MySubmission.module.css";
 import MyWFAR from "./MyWFAR/MyWFAR";
 import { useSelector, useDispatch } from "react-redux";
 import { retrieveWfars, retrieveArchivedWfars, retrieveWfarsSemestersList } from "../../store/myWfarsActions";
-import { myWfarSemesterFilterActions, myWfarRefreshActions } from "../../store/myWfarReducers";
+import { myWfarRefreshActions } from "../../store/myWfarReducers";
 import { retrieveActiveSemester } from "../../store/wfarActions";
 
 const MySubmission = (props) => {
@@ -18,12 +18,15 @@ const MySubmission = (props) => {
 
     // redux states, objects
     const wfars = useSelector((state) => state.myWfars.wfars);
+    const pageNo = useSelector((state) => state.myWfars.pageNo);
+    const noOfPages = useSelector((state) => state.myWfars.noOfPages);
     const archivedWfarEntries = useSelector((state) => state.myWfarsArchived.archivedEntries);
     const semesters = useSelector((state) => state.wfarSemesters.semesters);
     const newChange = useSelector((state) => state.myWfarRefresh.newChange);
     
     // redux states, filter
     const [filterSemester, setFilterSemester] = useState(1);
+    const [filterWfarPage, setFilterWfarPage] = useState(1);
     const activeSemester = useSelector(state => state.wfarActiveSemester.semester);
 
     useEffect(() => {
@@ -38,17 +41,15 @@ const MySubmission = (props) => {
 
     // retrieving wfars and archived wfars
     useEffect(() => {
-        dispatch(retrieveWfars(filterSemester));
-        dispatch(retrieveWfars(filterSemester));
+        dispatch(retrieveWfars(filterSemester, filterWfarPage));
         dispatch(retrieveArchivedWfars(filterSemester));
         dispatch(retrieveWfarsSemestersList(filterSemester));
 
-    }, [filterSemester]);
+    }, [filterSemester, filterWfarPage]);
 
     useEffect(() => {
         if (newChange === true) {
-            console.log("NEW CHANGE RETRIEVE");
-            dispatch(retrieveWfars(filterSemester));
+            dispatch(retrieveWfars(filterSemester, 1));
             dispatch(retrieveArchivedWfars(filterSemester));
             dispatch(myWfarRefreshActions.resetNewChange());
         }
@@ -56,8 +57,13 @@ const MySubmission = (props) => {
 
     // handlers
     const onChangeSemesterHandler = (id) => {
-        console.log("on change semester id: " + id);
+        // console.log("on change semester id: " + id);
         setFilterSemester(id);
+    }
+
+    const onChangeFilterWfarPage = (pageNo) => {
+        // alert("hello???");
+        setFilterWfarPage(pageNo);
     }
 
     // tab
@@ -112,10 +118,17 @@ const MySubmission = (props) => {
             <div className={styles["tab-container"]}>
                 <Tab items={tab_items} currentPage={currentPage} />
                 <Routes>
-                    <Route path="" element={<MyWFAR items={wfars} />}></Route>
+                    <Route path="" element=
+                        {<MyWFAR items={wfars} 
+                                pageNo={pageNo}
+                                noOfPages={noOfPages}
+                                onSelectedPage={onChangeFilterWfarPage}/>}></Route>
                     <Route path="archived" element={<ArchivedEntries items={archivedWfarEntries} />}></Route>
                 </Routes>
+
             </div>
+
+            
         </Fragment>
     )
 }

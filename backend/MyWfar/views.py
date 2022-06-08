@@ -29,10 +29,22 @@ class RetrieveMyWfar(APIView):
         try:
             faculty_id = request.GET.get('faculty_id')
             semester_id = request.GET.get('semester_id')
+            page_no = request.GET.get('page_no')
 
-            wfar = WFAR.objects.filter(faculty_id=faculty_id, semester_id=semester_id).order_by('-week_no')
-            serializer = WfarSerializer(wfar, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            wfars = WFAR.objects.filter(faculty_id=faculty_id, semester_id=semester_id).order_by('-week_no')
+            pages = Paginator(wfars, 5)
+            wfars = pages.get_page(page_no)
+
+            serializer = WfarSerializer(wfars, many=True)
+
+            data = {
+                    "faculties": serializer.data,
+                    "page_no": page_no,
+                    "no_of_pages": pages.num_pages,
+                    "first_page": 1,
+                    "last_page": pages.num_pages
+                }
+            return Response(data, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "An error has occured while retrieving your WFARs."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

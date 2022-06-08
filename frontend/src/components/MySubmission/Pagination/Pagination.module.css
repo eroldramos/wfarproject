@@ -1,35 +1,20 @@
-.footerComponent{
-    background: #F1F2F3;
-    box-shadow: 0px 1px 0px #EBECEE;
+.footerComponent {
+    /* background: #F1F2F3;
+    box-shadow: 0px 1px 0px #EBECEE; */
     border-radius: 5px;
-    padding-top: 2px;
-    margin-top: 10px;
+    /* padding-top: px; */
+    padding: 1% 0;
+    margin-top: 25px;
     display: flex;
     align-items: center;
     position: relative;
     user-select: none;
-}
-.exportContainer{
     display: flex;
-    width: fit-content;
-    padding: 0 30px;
-}
-.exportContainer svg{
-    margin: 16px 15px;
-    cursor: pointer;
-}
-.exportContainer svg:nth-child(3){
-    margin: 20px 15px;
-}
-.exportContainer h6{
-    margin: 17px 0;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer;
+    justify-content: right;
 }
 .paginationContainer {
-    position: absolute;
-    right: 0;
+    /* position: absolute;
+    right: 0; */
 }
 
 .paginationContainer ul {
@@ -58,7 +43,8 @@
     transition: .15s linear;
 }
 
-.paginationContainer ul li:hover, .paginationContainer ul .active {
+.paginationContainer ul li:hover,
+.paginationContainer ul .active {
     font-weight: 700;
     /* transition: .15s linear; */
 }
