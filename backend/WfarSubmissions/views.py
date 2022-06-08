@@ -521,8 +521,16 @@ class PrintWFARIndividualPDF(APIView):
                 f"<b>Weekly Accomplishment Report A.Y. {semester.school_year}, {semester.label}</b>", headingStyle)
             label1 = Paragraph(
                 f"<b>Faculty name:</b> {faculty.first_name} {faculty.last_name}", labelStyle)
+
+            if faculty.program != None:
+                department = faculty.program
+            elif faculty.specialization != None:
+                department = faculty.specialization
+            else:
+                department = "Information Technology"
+
             label2 = Paragraph(
-                f"<b>Department:</b> {faculty.program}", labelStyle)
+                f"<b>Department:</b> {department}", labelStyle)
             label3 = Paragraph(
                 f"<b>College of Information and Communications Technology</b>", labelStyle)
 
