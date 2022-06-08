@@ -45,114 +45,114 @@ const WFARChecking = () => {
   const [isOwner, setIsOwner] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
   const [wfarData, setWfarData] = useState({
-    id: 2,
-    status: 4,
-    checked_at: null,
-    submitted_at: "May 19, 2022 02:57 AM",
-    week_no: 2,
-    semester: {
-      id: 1,
-      label: "a",
-      school_year: "2021-2022",
-      is_active: true,
-    },
-    faculty: {
-      id: 1,
-      last_name: "Ramos",
-      first_name: "Erold",
-      middle_name: "fsdf",
-      profile_picture: "/images/avatar.svg",
-    },
-    entries: [
-      {
-        id: 1,
-        accomplishment_date: "2022-05-17",
-        subject: "eqweqw",
-        course_year_section: "rqw",
-        no_of_attendees: 3,
-        recording_url: "rqwr",
-        attachments: [
-          {
-            id: 1,
-            image_uri: "/images/uploads/ReactJS_Udemy.jpg",
-            type: 1,
-          },
-          {
-            id: 2,
-            image_uri: "/images/uploads/ReactJS_Udemy_5gMVIit.jpg",
-            type: 2,
-          },
-        ],
-        activities: [
-          {
-            id: 1,
-            description: "213",
-          },
-        ],
-      },
-    ],
-    comments: [
-      {
-        id: 1,
-        created_at: "2022-05-19T15:07:57.835371+08:00",
-        faculty: {
-          id: 5,
-          last_name: "Ramos",
-          first_name: "Erold",
-          middle_name: "Galang",
-          profile_picture: "/images/avatar.svg",
-        },
-        description: "tama ang pag kakalagay",
-      },
-      {
-        id: 2,
-        created_at: "2022-05-19T15:57:11.780943+08:00",
-        faculty: {
-          id: 2,
-          last_name: "Ramos",
-          first_name: "Erold",
-          middle_name: "Galang",
-          profile_picture: "/images/avatar.svg",
-        },
-        description: "hello world",
-      },
-      {
-        id: 3,
-        created_at: "2022-05-19T17:09:13.666421+08:00",
-        faculty: {
-          id: 3,
-          last_name: "Ramos",
-          first_name: "Erold",
-          middle_name: "Galang",
-          profile_picture: "/images/avatar.svg",
-        },
-        description: "hello world 2",
-      },
-      {
-        id: 4,
-        created_at: "2022-05-19T17:09:46.538159+08:00",
-        faculty: {
-          id: 3,
-          last_name: "Ramos",
-          first_name: "Erold",
-          middle_name: "Galang",
-          profile_picture: "/images/avatar.svg",
-        },
-        description: "hello world 3",
-      },
-      {
-        id: 5,
-        created_at: "2022-05-19T17:13:54.265314+08:00",
-        faculty: {
-          id: 3,
-          last_name: "Ramos",
-          first_name: "Erold",
-          middle_name: "Galang",
-          profile_picture: "/images/avatar.svg",
-        },
-        description: "hello world 3",
-      },
-    ],
+    // id: 2,
+    // status: 4,
+    // checked_at: null,
+    // submitted_at: "May 19, 2022 02:57 AM",
+    // week_no: 2,
+    // semester: {
+    //   id: 1,
+    //   label: "a",
+    //   school_year: "2021-2022",
+    //   is_active: true,
+    // },
+    // faculty: {
+    //   id: 1,
+    //   last_name: "Ramos",
+    //   first_name: "Erold",
+    //   middle_name: "fsdf",
+    //   profile_picture: "/images/avatar.svg",
+    // },
+    // entries: [
+    //   {
+    //     id: 1,
+    //     accomplishment_date: "2022-05-17",
+    //     subject: "eqweqw",
+    //     course_year_section: "rqw",
+    //     no_of_attendees: 3,
+    //     recording_url: "rqwr",
+    //     attachments: [
+    //       {
+    //         id: 1,
+    //         image_uri: "/images/uploads/ReactJS_Udemy.jpg",
+    //         type: 1,
+    //       },
+    //       {
+    //         id: 2,
+    //         image_uri: "/images/uploads/ReactJS_Udemy_5gMVIit.jpg",
+    //         type: 2,
+    //       },
+    //     ],
+    //     activities: [
+    //       {
+    //         id: 1,
+    //         description: "213",
+    //       },
+    //     ],
+    //   },
+    // ],
+    // comments: [
+    //   {
+    //     id: 1,
+    //     created_at: "2022-05-19T15:07:57.835371+08:00",
+    //     faculty: {
+    //       id: 5,
+    //       last_name: "Ramos",
+    //       first_name: "Erold",
+    //       middle_name: "Galang",
+    //       profile_picture: "/images/avatar.svg",
+    //     },
+    //     description: "tama ang pag kakalagay",
+    //   },
+    //   {
+    //     id: 2,
+    //     created_at: "2022-05-19T15:57:11.780943+08:00",
+    //     faculty: {
+    //       id: 2,
+    //       last_name: "Ramos",
+    //       first_name: "Erold",
+    //       middle_name: "Galang",
+    //       profile_picture: "/images/avatar.svg",
+    //     },
+    //     description: "hello world",
+    //   },
+    //   {
+    //     id: 3,
+    //     created_at: "2022-05-19T17:09:13.666421+08:00",
+    //     faculty: {
+    //       id: 3,
+    //       last_name: "Ramos",
+    //       first_name: "Erold",
+    //       middle_name: "Galang",
+    //       profile_picture: "/images/avatar.svg",
+    //     },
+    //     description: "hello world 2",
+    //   },
+    //   {
+    //     id: 4,
+    //     created_at: "2022-05-19T17:09:46.538159+08:00",
+    //     faculty: {
+    //       id: 3,
+    //       last_name: "Ramos",
+    //       first_name: "Erold",
+    //       middle_name: "Galang",
+    //       profile_picture: "/images/avatar.svg",
+    //     },
+    //     description: "hello world 3",
+    //   },
+    //   {
+    //     id: 5,
+    //     created_at: "2022-05-19T17:13:54.265314+08:00",
+    //     faculty: {
+    //       id: 3,
+    //       last_name: "Ramos",
+    //       first_name: "Erold",
+    //       middle_name: "Galang",
+    //       profile_picture: "/images/avatar.svg",
+    //     },
+    //     description: "hello world 3",
+    //   },
+    // ],
   });
 
   const dispatch = useDispatch();

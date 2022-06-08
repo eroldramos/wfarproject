@@ -15,17 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./Login.module.css";
 import { login } from "../../store/authActions";
 
-
-
 let inLoadClassForAnimation = "";
-if(localStorage.getItem("initialReload") == "true"){
+if (localStorage.getItem("initialReload") == "true") {
   inLoadClassForAnimation = "login-form-delay";
   console.log(inLoadClassForAnimation);
 }
 localStorage.setItem("initialReload", "true");
 const Login = () => {
-  
-
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -59,6 +55,11 @@ const Login = () => {
     navigate("/register");
   };
 
+  const onNavigateForgetPassword = () => {
+    localStorage.setItem("initialReload", "true");
+    navigate("/forgot-password");
+  };
+
   useEffect(() => {
     if (userInfo) {
       // if userInfo is null, can't be login
@@ -66,16 +67,19 @@ const Login = () => {
     }
   }, [navigate, userInfo]);
 
-
   let inLoadClassForAnimation = "";
-  if(localStorage.getItem("initialReload") == "true"){
+  if (localStorage.getItem("initialReload") == "true") {
     inLoadClassForAnimation = "login-form-delay";
   }
 
   localStorage.setItem("initialReload", "true");
   return (
     <Fragment>
-      <div className={styles["login-form-container"]+ " " + styles[inLoadClassForAnimation]}>
+      <div
+        className={
+          styles["login-form-container"] + " " + styles[inLoadClassForAnimation]
+        }
+      >
         <div className={styles["login-form"]}>
           <div className={styles["cict-wfar-logo"]}>
             <div className={styles["image-container"]}>
@@ -142,7 +146,7 @@ const Login = () => {
                                 <label for="remember-me">Remember me</label> */}
               </div>
               <div className={styles["forgot-password"]}>
-                <h5>Forgot password?</h5>
+                <h5 onClick={onNavigateForgetPassword}>Forgot password?</h5>
               </div>
             </div>
             <div className={styles["signin-button-container"]}>
