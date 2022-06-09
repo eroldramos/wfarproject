@@ -312,9 +312,9 @@ class PrintWFAROverviewPDF(APIView):
                 facultyChecker = Faculty.objects.get(pk=faculty_checker_id)
                 role = ""
                 if facultyChecker.user_type == 2:
-                    role = "Department Head"
-                elif facultyChecker.user_type == 3:
                     role = "Area Chair"
+                elif facultyChecker.user_type == 3:
+                    role = "Department Head"
 
                 faculties = Faculty.objects.filter(
                     assignee_id=facultyChecker).order_by(sort_filter1, sort_filter2)
