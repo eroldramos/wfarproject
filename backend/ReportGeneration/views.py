@@ -1,32 +1,12 @@
-from django.shortcuts import render
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Image
 from datetime import datetime
 from reportlab.lib.units import inch
 
-from tkinter import CENTER, Image
-from tkinter.ttk import Style
-from tkinter import CENTER
 from django.shortcuts import render
 from datetime import datetime
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import Paragraph, Spacer, Image
-from reportlab.lib.units import cm, inch
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate
-from reportlab.platypus import TableStyle
-from reportlab.platypus import Table
-from reportlab.lib import colors
+from reportlab.platypus import Image
+from reportlab.lib.units import  inch
 from reportlab.pdfgen import canvas
-from django.utils import timezone
-import PIL.Image
-from reportlab.rl_config import defaultPageSize
-from django.db.models import Q
-from io import BytesIO
-from reportlab.lib.units import mm
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
 import datetime
 
 

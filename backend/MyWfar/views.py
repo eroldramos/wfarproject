@@ -1,16 +1,7 @@
-from calendar import week
 from datetime import datetime
-from email.policy import HTTP
-from multiprocessing import context
-from os import stat
-from random import sample
-from tokenize import maybe
-from urllib import response
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from yaml import serialize
 from core.serializers import WfarEntryAttachmentSerializer
 from core.serializers import WfarSerializer, WfarEntrySerializer, WfarArchivedEntrySerializer, WfarEntryViewSerializer, FacultyWfarSerializer
 from core.permissions import IsAuthenticated, IsAdminAreaChairAndDeptHead, IsAuthenticatedAndNotAdmin
@@ -18,7 +9,6 @@ from core.models import Notification, Semester,  WFAR, WFAR_Entry, Faculty, WFAR
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import timedelta, date
-from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from core.SendEmail import send_email
 class RetrieveMyWfar(APIView):

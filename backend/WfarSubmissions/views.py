@@ -204,10 +204,6 @@ class RetrieveFacultyWeeklyWFAR(APIView):
 
             else:
                 return Response({"detail": "That semester doesn't exist."}, status=status.HTTP_404_NOT_FOUND)
-        # except:
-        #     # pass
-        #     return Response({"detail": "An error has occured while retrieving WFARs for that semester."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class RetrieveFacultyWeeklyWFARNoSearch(APIView):
     # permission_classes = [IsAdminAreaChairAndDeptHead]
@@ -326,7 +322,6 @@ class PrintWFAROverviewPDF(APIView):
 
             buff = BytesIO()
 
-            # paragraphStyle = getSampleStyleSheet()
             contentStyle = ParagraphStyle(
                 name='Normal',
                 fontSize=9,
@@ -482,8 +477,6 @@ class PrintWFARIndividualPDF(APIView):
             entries = WFAR_Entry.objects.filter(wfar_id=wfar)
             week_no = wfar.week_no
             weeks = getWeeks(semester)[0]
-
-            # return Response({"test": len(weeks), "week_no": week_no})
 
             week_bracket = []
             week_bracket.append(weeks[(week_no - 1) * 2])
@@ -949,23 +942,6 @@ class PrintWeeklyWFARPDF(APIView):
         return response
 
 
-# def getStatus(wfar_id, status, contentStyle):
-#     if status == 1:
-#         return Paragraph(f"<font color='maroon'>Not submitted</font>", contentStyle)
-#     if status == 2:
-#         return Paragraph(f"<font>For checking</font>", contentStyle)
-#     if status == 3:
-#         return Paragraph(f"<font color='green'>OK</font>", contentStyle)
-#     if status == 4:
-#         if wfar_id != -1:
-#             # pass
-#             wfar_comments = WFAR_Comment.objects.filter(
-#                 wfar_id=wfar_id).order_by('-created_at')
-#             if (wfar_comments):
-#                 return Paragraph(f"{wfar_comments[0].description}", contentStyle)
-#         return Paragraph(f"With Revisions", contentStyle)
-#     if status == "":
-#         return ""
 
 def getStatus(wfar_id, status, size, contentStyle):
     if status == 1:
