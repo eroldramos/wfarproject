@@ -301,7 +301,7 @@ class PrintWFAROverviewPDF(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == '0':
+            if faculty_checker_id == 0:
                 faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
                 description = f"This report shows the statuses of all the WFARs for A.Y. {semester.school_year} - {semester.label}."
             else:

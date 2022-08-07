@@ -11,21 +11,26 @@ const WFARstatusDashboard = (props) => {
     // let percentage2 = -1;
     // let percentage3 = -1;
 
-    if (sem) {
+    try {
+        if (sem) {
         label = sem[0].label;
         school_year = sem[0].school_year;
         // if(allWFARS){
         //     let no_submission = allWFARS.filter(x => x.status == 1).length;
         //     let needrevision = allWFARS.filter(x => x.status == 4).length;
         //     let ok = allWFARS.filter(x => x.status == 3).length;
-            
+
         //     let total = no_submission + needrevision + ok;
-            
+
         //     percentage1 = (ok/total)*100;
         //     percentage2 = (needrevision/total)*100;
         //     percentage3 = (no_submission/total)*100;
         // }
+        }
+    } catch(error) {
+        console.log("Error: " + error)
     }
+    
     // console.log("ok percentage: "+percentage1 + " need revision: "+percentage2+"  no_sub: "+percentage3);
 
     // let percentageToDegree1 = -1;

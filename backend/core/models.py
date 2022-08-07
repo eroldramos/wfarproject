@@ -10,7 +10,7 @@ class Faculty(AbstractUser):
     # Bale pag ni call ung field user.password, kahit di man kita dito ung password field
     email = models.EmailField(max_length=100, unique=True)
     # determines if normal faculty, area chair or dept head
-    user_type = models.PositiveSmallIntegerField(default=1)
+    user_type = models.PositiveSmallIntegerField(default=0)
     emp_no = models.CharField(max_length=25, unique=True)
     # fname = models.CharField(max_length=200) remove na natin kasi may first_name naman kay abstract user
     middle_name = models.CharField(

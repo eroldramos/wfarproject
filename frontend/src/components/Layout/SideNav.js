@@ -123,6 +123,10 @@ const SideNav = (props) => {
     document.getElementsByClassName("account-profile")[0].style.display =
       "block";
   };
+
+  
+    console.log("userInfo", userInfo);
+
   return (
     <Fragment>
       <div id="side-nav">
@@ -390,7 +394,7 @@ const SideNav = (props) => {
             <div className="account-label nav-open-text">
               <span className="account-label-name">{profileInfo.name}</span>
               <span className="account-label-type">
-                {profileInfo.isAdmin && "Administrator"}
+                {profileInfo.user_type == 0 && "Administrator"}
                 {!profileInfo.isAdmin &&
                   profileInfo.user_type == 1 &&
                   "Faculty"}

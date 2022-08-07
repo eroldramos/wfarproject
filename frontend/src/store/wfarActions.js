@@ -79,31 +79,52 @@ export const printWfarsOverview = (filterSemester, filterSort) => {
                 login: { userInfo },
             } = getState();
 
-            fetch(`/api/wfar/overview/semester=${filterSemester}/sort=${filterSort}/print`,
-                {
-                    method: "POST",
-                    body: JSON.stringify({ "faculty_checker_id": userInfo.id }),
-                    headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + userInfo.token }
-                }).then(response => response.blob()).then(response => {
+            let userId = userInfo.id;
+            if (userInfo.isAdmin) {
+                userId = 0
+            }
 
-                    let date = new Date();
+            fetch(
+              `/api/wfar/overview/semester=${filterSemester}/sort=${filterSort}/print`,
+              {
+                method: "POST",
+                body: JSON.stringify({ faculty_checker_id: userId }),
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + userInfo.token,
+                },
+              }
+            )
+              .then((response) => response.blob())
+              .then((response) => {
+                let date = new Date();
 
-                    const fileURL = URL.createObjectURL(response);
-                    let a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    a.href = fileURL;
+                const fileURL = URL.createObjectURL(response);
+                let a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display: none";
+                a.href = fileURL;
 
-                    const timestamp = date.getFullYear() + "" + (date.getMonth() + 1) + "" + date.getDate() + "" +
-                        date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+                const timestamp =
+                  date.getFullYear() +
+                  "" +
+                  (date.getMonth() + 1) +
+                  "" +
+                  date.getDate() +
+                  "" +
+                  date.getHours() +
+                  "" +
+                  date.getMinutes() +
+                  "" +
+                  date.getSeconds();
 
-                    console.log(timestamp);
-                    a.download = "WFAR_Overview_" + timestamp+".pdf";
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(fileURL);
-                    dispatch(wfarPrintOverviewActions.printSuccessfully());
-                })
+                console.log(timestamp);
+                a.download = "WFAR_Overview_" + timestamp + ".pdf";
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(fileURL);
+                dispatch(wfarPrintOverviewActions.printSuccessfully());
+              });
 
         } catch (error) {
             dispatch(wfarPrintOverviewActions.requestFail({ error: "Sorry an error has occured while trying to export this table to pdf. Please try again later." }));
