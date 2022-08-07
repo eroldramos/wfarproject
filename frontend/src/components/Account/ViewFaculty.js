@@ -409,7 +409,7 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div className={styles["name-container"]}>
-                        <h3>{state.map((item) => item.name)}</h3>
+                        <h3>{state && state.map((item) => item.name)}</h3>
                         <p>    {state.map((item) => {
                             if (item.user_type === 1) {
                                 if (item.is_superuser) {
