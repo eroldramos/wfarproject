@@ -589,14 +589,14 @@ const UserProfile = () => {
           <div className={styles["name-container"]}>
             <h3>{state.map((item) => item.name)}</h3>
             <p>    {state.map((item) => {
-              if (item.user_type === 1) {
+              if (item.user_type === 0) {
                 if (item.is_superuser) {
                   return <p className="userinput" style={{ color: '#000000' }}> Admin </p>
                 }
                 return <p className="userinput" style={{ color: '#000000' }}> Faculty </p>
-              } else if (item.user_type === 2) {
+              } else if (item.user_type === 1) {
                 return <p className="userinput" style={{ color: '#000000' }}> Area Chair </p>
-              } else if (item.user_type === 3) {
+              } else if (item.user_type === 2) {
                 return <p className="userinput" style={{ color: '#000000' }}> Department Head </p>
               } else {
                 return <p className="userinput" style={{ color: '#000000' }}>n/a</p>
