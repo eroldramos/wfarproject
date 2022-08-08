@@ -37,7 +37,6 @@ const WFARWeeklyView = () => {
     useEffect(() => {
         dispatch(retrieveWfarsSemestersList());
         dispatch(retrieveActiveSemester());
-
     }, []);
 
     useEffect(() => {
@@ -58,18 +57,26 @@ const WFARWeeklyView = () => {
             }
 
             setWeeks(tempWeeks);
-            if (selectedSemester.id == activeSemester[0].id) {
-                setSelectedWeekNo(selectedSemester.current_week);
-            } else {
+            // if (selectedSemester.id == activeSemester[0].id) {
+            //     setSelectedWeekNo(selectedSemester.current_week);
+            // } else {
                 setSelectedWeekNo(1);
-            }
+                dispatch(
+                  retrieveWeeklyWfars(
+                    selectedSemester.id,
+                    selectedWeekNo,
+                    status,
+                    selectedPageNo,
+                    sort,
+                    searchValue
+                  )
+                );
+            // }
         }
     }, [selectedSemester, activeSemester])
 
     useEffect(() => {
         if (selectedSemester != null) {
-            // alert(sort);
-            console.log("status: " + status);
             dispatch(retrieveWeeklyWfars(selectedSemester.id, selectedWeekNo, status, selectedPageNo, sort, searchValue));
         }
     }, [selectedSemester, selectedWeekNo, status, selectedPageNo, searchValue, sort])
@@ -121,6 +128,7 @@ const WFARWeeklyView = () => {
     }
 
     const onClickExportHandler = () => {
+        alert("selected week no is " + selectedWeekNo);
         dispatch(printWeeklyWfar(selectedSemester.id, selectedWeekNo, status, sort));
     }
 

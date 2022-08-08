@@ -49,11 +49,12 @@ class RetrieveFacultyWFAR(APIView):
             else:
                 sort_filter1 = "-last_name"
                 sort_filter2 = "-first_name"
-
+            
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
-                faculties = Faculty.objects.filter(
-                    Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
+            faculty = Faculty.objects.get(pk=faculty_checker_id)
+
+            if faculty.is_superuser:
+                faculties = Faculty.objects.filter((Q(last_name__icontains=search) | Q(first_name__icontains=search)), ~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(
@@ -106,8 +107,10 @@ class RetrieveFacultyWFARNoSearch(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
-                faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+            faculty = Faculty.objects.get(pk=faculty_checker_id)
+            
+            if faculty.is_superuser:
+                faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
                     pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
@@ -159,10 +162,10 @@ class RetrieveFacultyWeeklyWFAR(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0 or faculty_checker_id == '0':
-                faculties = Faculty.objects.filter(
-                    Q(last_name__icontains=search) | Q(first_name__icontains=search)).order_by(sort_filter1, sort_filter2)
-
+            faculty = Faculty.objects.get(pk=faculty_checker_id)
+            
+            if faculty.is_superuser:
+                faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(
                     Q(last_name__icontains=search) | Q(
@@ -220,8 +223,10 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0 or faculty_checker_id == '0':
-                faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+            faculty = Faculty.objects.get(pk=faculty_checker_id)
+            
+            if faculty.is_superuser:
+                faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
             else:
                 faculties = Faculty.objects.filter(assignee_id=Faculty.objects.get(
@@ -277,7 +282,6 @@ class RetrieveFacultyWeeklyWFARNoSearch(APIView):
                 fontSize=9,
             )
 
-
 class PrintWFAROverviewPDF(APIView):
     def post(self, request, semester_id, sort):
         # try:
@@ -301,8 +305,9 @@ class PrintWFAROverviewPDF(APIView):
                 sort_filter2 = "-first_name"
 
             faculty_checker_id = request.data['faculty_checker_id']
-            if faculty_checker_id == 0:
-                faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
+            faculty = Faculty.objects.get(pk=faculty_checker_id)
+            if faculty.is_superuser:
+                faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
                 description = f"This report shows the statuses of all the WFARs for A.Y. {semester.school_year} - {semester.label}."
             else:
                 facultyChecker = Faculty.objects.get(pk=faculty_checker_id)
@@ -768,9 +773,12 @@ class PrintWeeklyWFARPDF(APIView):
             sort_filter2 = "-first_name"
 
         title = f"<b>A.Y. {semester.school_year}, {semester.label} - Week {week_no}</b>"
-        if faculty_checker_id == 0 or faculty_checker_id == '0':
+
+        faculty_checker_id = request.data['faculty_checker_id']
+        faculty = Faculty.objects.get(pk=faculty_checker_id)
+        if faculty.is_superuser:
+            faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             description = f"This report shows the WFARs for A.Y. {semester.school_year} - {semester.label}, Week {week_no}."
-            faculties = Faculty.objects.all().order_by(sort_filter1, sort_filter2)
         else:
             status_label = ""
             if (wfar_status == 0 or wfar_status == '0' or wfar_status == 1 or wfar_status == '1'):
@@ -850,7 +858,7 @@ class PrintWeeklyWFARPDF(APIView):
                 data.append(cols)
             elif wfar_status == '1' or wfar_status == '0':
                 cols.append(Paragraph("No entries yet", contentStyle))
-                cols.append(getStatus(0, 1, contentStyle))
+                cols.append(getStatus(0, 1, 11, contentStyle))
                 cols.append(Paragraph(f"N/A", contentStyle))
                 data.append(cols)
 

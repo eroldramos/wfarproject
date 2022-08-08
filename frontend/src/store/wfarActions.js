@@ -25,9 +25,7 @@ export const retrieveWfarsOverview = (filterSemester, filterPage, filterSort, fi
                 login: { userInfo },
             } = getState();
 
-            const userId = userInfo.isAdmin ? 0 : userInfo.id;
-            console.log("userfffffffffinfo");
-            console.log(userInfo);
+            const userId = userInfo.id;
 
             const response = await fetch(url, {
                 method: "POST",
@@ -80,9 +78,9 @@ export const printWfarsOverview = (filterSemester, filterSort) => {
             } = getState();
 
             let userId = userInfo.id;
-            if (userInfo.isAdmin) {
-                userId = 0
-            }
+            // if (userInfo.isAdmin) {
+            //     userId = 0
+            // }
 
             fetch(
               `/api/wfar/overview/semester=${filterSemester}/sort=${filterSort}/print`,
@@ -282,7 +280,7 @@ export const retrieveWeeklyWfars = (filterSemester, filterWeek, status, filterPa
             console.log("THE USER INFO IS ___________");
             console.log(userInfo);
 
-            const userId = userInfo.isAdmin ? 0 : userInfo.id;
+            const userId = userInfo.id;
 
             console.log("USER ID ___________");
             console.log(userId);
