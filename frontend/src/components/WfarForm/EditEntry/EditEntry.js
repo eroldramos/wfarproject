@@ -55,10 +55,8 @@ const EditEntry = (props) => {
 
     useEffect(() => {
 
-        console.log("-entry to be edited");
 
         if (entryToBeEdited !== null) {
-            console.log("+entry to be edited");
             console.log(entryToBeEdited);
             setAccomplishedDate({ value: entryToBeEdited.accomplishment_date, error: null });
             setSubject({ value: entryToBeEdited.subject, error: null });
@@ -79,12 +77,10 @@ const EditEntry = (props) => {
                     })
                 }
             }
-            console.log("image edit upload");
 
             let fileArr = [];
             let images = entryToBeEdited.wfar_entry_attachments;
 
-            console.log("anuba");
 
             setTeamMeetScreenshots(() => {
                 return [];
@@ -155,7 +151,6 @@ const EditEntry = (props) => {
 
     useEffect(() => {
         if (isSubmitted) {
-            console.log("for submission na...");
             dispatch(updateWfarEntry(id, entry, attachmentFormData))
             setIsSubmitted(false);
 
@@ -299,13 +294,12 @@ const EditEntry = (props) => {
             return [...prevState];
         });
 
-        console.log(learningActivities);
     }
 
     const learningActivityOnBlur = (index, event) => {
         if (event.target.value === '') {
             setLearningActivities((prevState) => {
-                prevState[index].value = event.target.value;
+                prevState[index].value = '';
                 prevState[index].error = learningActivityRequiredError;
                 return [...prevState];
             });
@@ -344,7 +338,6 @@ const EditEntry = (props) => {
         })
 
 
-        console.log(teamMeetScreenshots);
     }
 
     const editEntry = (event) => {
@@ -391,7 +384,7 @@ const EditEntry = (props) => {
             if (learningActivities[index].value === '') {
                 hasNoError = false;
                 setLearningActivities((prevState) => {
-                    prevState[index].value = event.target.value;
+                    prevState[index].value = '';
                     prevState[index].error = learningActivityRequiredError;
                     return [...prevState];
                 });

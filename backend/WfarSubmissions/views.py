@@ -54,11 +54,10 @@ class RetrieveFacultyWFAR(APIView):
             faculty = Faculty.objects.get(pk=faculty_checker_id)
 
             if faculty.is_superuser:
-                faculties = Faculty.objects.filter((Q(last_name__icontains=search) | Q(first_name__icontains=search)), ~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+                faculties = Faculty.objects.filter((Q(last_name__icontains=search) | Q(first_name__icontains=search) | Q(middle_name__istartswith=search)), ~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(
-                    Q(last_name__icontains=search) | Q(
-                        first_name__icontains=search),
+                   (Q(last_name__icontains=search) | Q(first_name__icontains=search) | Q(middle_name__istartswith=search)),
                     assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
 
             pages = Paginator(faculties, 6)
@@ -165,10 +164,11 @@ class RetrieveFacultyWeeklyWFAR(APIView):
             faculty = Faculty.objects.get(pk=faculty_checker_id)
             
             if faculty.is_superuser:
-                faculties = Faculty.objects.filter(~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
+                
+                faculties = Faculty.objects.filter((Q(last_name__icontains=search) | Q(first_name__icontains=search) | Q(middle_name__istartswith=search)), ~Q(id=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
             else:
                 faculties = Faculty.objects.filter(
-                    Q(last_name__icontains=search) | Q(
+                    (Q(last_name__icontains=search) | Q(first_name__icontains=search) | Q(middle_name__istartswith=search)) | Q(
                         first_name__icontains=search),
                     assignee_id=Faculty.objects.get(pk=faculty_checker_id)).order_by(sort_filter1, sort_filter2)
                 

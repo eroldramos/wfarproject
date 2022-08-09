@@ -128,7 +128,6 @@ const WFARWeeklyView = () => {
     }
 
     const onClickExportHandler = () => {
-        alert("selected week no is " + selectedWeekNo);
         dispatch(printWeeklyWfar(selectedSemester.id, selectedWeekNo, status, sort));
     }
 

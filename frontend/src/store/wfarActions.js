@@ -45,7 +45,6 @@ export const retrieveWfarsOverview = (filterSemester, filterPage, filterSort, fi
             }
 
             const data = await response.json();
-            console.log(data)
             dispatch(wfarRetrieveOverviewActions.retrieveSuccessfully({
                 facultiesWithWfars: data.faculties,
                 pageNo: data.page_no,
@@ -57,11 +56,8 @@ export const retrieveWfarsOverview = (filterSemester, filterPage, filterSort, fi
                 currentWeekNo: data.current_week_no
             }));
 
-            console.log(data);
 
         } catch (error) {
-            console.log("error encountered here3");
-            console.log(error.message)
             dispatch(wfarRetrieveOverviewActions.retrieveFail({ error: error.message }));
         }
     }

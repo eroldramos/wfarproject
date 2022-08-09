@@ -5,7 +5,6 @@ import CheckingModal from "../../CheckingModal/CheckingModal";
 const CheckWFARButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => {
-    console.log("ASDSD");
     setIsOpen(false);
   };
   return (

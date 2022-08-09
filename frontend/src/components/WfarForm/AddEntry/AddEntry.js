@@ -192,13 +192,12 @@ const AddEntry = (props) => {
             return [...prevState];
         });
 
-        console.log(learningActivities);
     }
 
     const learningActivityOnBlur = (index, event) => {
         if (event.target.value === '') {
             setLearningActivities((prevState) => {
-                prevState[index].value = event.target.value;
+                prevState[index].value = '';
                 prevState[index].error = learningActivityRequiredError;
                 return [...prevState];
             });
@@ -237,7 +236,6 @@ const AddEntry = (props) => {
         })
 
 
-        console.log(teamMeetScreenshots);
     }
 
     const addEntry = (event) => {
@@ -280,11 +278,15 @@ const AddEntry = (props) => {
             })
         }
 
+        // if (learningActivities.length == 0) {
+        //     hasNoError = false;
+        // }
+
         for (let index in learningActivities) {
             if (learningActivities[index].value === '') {
                 hasNoError = false;
                 setLearningActivities((prevState) => {
-                    prevState[index].value = event.target.value;
+                    prevState[index].value = '';
                     prevState[index].error = learningActivityRequiredError;
                     return [...prevState];
                 });

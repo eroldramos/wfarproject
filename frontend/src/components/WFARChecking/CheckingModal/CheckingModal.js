@@ -31,6 +31,7 @@ const CheckingModal = (props) => {
     };
     console.log(data, status);
     dispatch(changeCheckStatus(data, status));
+    props.onClose();
   };
 
   return (
