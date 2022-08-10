@@ -18,7 +18,7 @@ class GetNotification(APIView):
                 notifications = Notification.objects.filter(type=6)
             else:
                 notifications = Notification.objects.filter(owner_id=user_id)
-            serializer = GetAllNotificationSerializer(notifications, many=True)
+            serializer = GetAllNotificationSerializer(list(reversed(notifications)), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response({"detail": "An error has occured while retrieving your notifications."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

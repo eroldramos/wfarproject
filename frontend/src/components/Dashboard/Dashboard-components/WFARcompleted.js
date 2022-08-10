@@ -9,7 +9,7 @@ const WFARcompleted = (props) => {
 
     return (
         <div className="wfar-completed">
-            <Link className='text-link' to={'/FacultySubmission/overview'}>
+            <Link className='text-link' to={'/mySubmission/'}>
                 <div className="info">
                     <h3>WFAR</h3>
                     <h3>Completed</h3>

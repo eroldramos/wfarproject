@@ -53,6 +53,8 @@ const DashboardFaculty = () => {
                 <div className="total-submission-container">
                     <WFARcompleted />
                     <WFARuncheckedFaculty />
+
+                    
                 </div>
 
                 <div className="my-wfar">

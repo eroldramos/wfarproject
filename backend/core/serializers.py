@@ -352,7 +352,8 @@ class CommentsSerializer(serializers.ModelSerializer):
             diff = timezone.now() - d
             s = diff.seconds
             if diff.days > 30 or diff.days < 0:
-                return d.strftime('Y-m-d H:i')
+                # return d.strftime('Y-m-d H:i')
+                return '{:02d}-{:02d}-{:02}'.format(d.month, d.day, d.year) + "   "+d.strftime("%I:%M %p")
             elif diff.days == 1:
                 return 'One day ago'
             elif diff.days > 1:
@@ -417,7 +418,8 @@ class GetAllNotificationSerializer(serializers.ModelSerializer):
             diff = timezone.now() - d
             s = diff.seconds
             if diff.days > 30 or diff.days < 0:
-                return d.strftime('Y-m-d H:i')
+                # return d.strftime('Y-m-d H:i')
+                return '{:02d}-{:02d}-{:02}'.format(d.month, d.day, d.year)+ "   "+d.strftime("%I:%M %p")
             elif diff.days == 1:
                 return 'One day ago'
             elif diff.days > 1:
@@ -536,6 +538,7 @@ class WFARCheckingWFARCommentsSerializer(serializers.ModelSerializer):
             s = diff.seconds
             if diff.days > 30 or diff.days < 0:
                 return d.strftime('Y-m-d H:i')
+                #return '{:02d}-{:02d}-{:02}'.format(d.month, d.day, d.year)
             elif diff.days == 1:
                 return 'One day ago'
             elif diff.days > 1:

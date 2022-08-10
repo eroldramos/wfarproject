@@ -7,7 +7,7 @@ const WFARuncheckedFaculty = (props) => {
 
     return (
         <div className="wfar-inprogress">
-            <Link className='text-link' to={'/FacultySubmission/overview'}>
+            <Link className='text-link' to={'/mySubmission/'}>
                 <div className="info">
                     <h3>WFAR</h3>
                     <h3>Not checked</h3>
